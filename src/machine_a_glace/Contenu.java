@@ -1,15 +1,15 @@
 package machine_a_glace;
 
 public enum Contenu {
-	Vide(" "),Obstacle("O"),Opérateur("W"),Robot("R"),Joueur("J");
-	
+	Vide(" "), Obstacle("O"), Opérateur("W"), Robot("R"), Joueur("J");
+
 	private String affichage;
-	
-	private Contenu(String s){
-		affichage=s;
+
+	private Contenu(String s) {
+		affichage = s;
 	}
-	
-	public String affichage(){
+
+	public String affichage() {
 		return affichage;
 	}
 }
