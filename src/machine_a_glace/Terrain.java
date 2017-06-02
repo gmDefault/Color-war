@@ -1,5 +1,7 @@
 package machine_a_glace;
 
+import java.util.concurrent.TimeUnit;
+
 public class Terrain {
 	private static int taille = 10;
 	public static Case terrain[][] = new Case[taille][taille];
@@ -36,7 +38,10 @@ public class Terrain {
 	public static void afficher() {
 		for (int i = 0; i < 10; i++) {
 			for (Case c : terrain[i]) {
-				System.out.print(c.toString() + "|");
+				if (c.isJoueur())
+					System.out.print("J|");
+				else
+					System.out.print(c.toString() + "|");
 			}
 			System.out.println();
 			for (int j = 0; j < 10; j++) {
@@ -46,42 +51,53 @@ public class Terrain {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
+		int count = 0;
 		Terrain.initialiser();
 		Terrain.afficher();
 
 		Entite e = new Entite(4, 4);
 
 		while (true) {
-			if(e.next_case().isAccessible()){
+			count++;
+			if (e.next_case().isAccessible()) {
 				e.Avancer(1);
-			}else{
-				if(Math.random()<0.5){
-					switch (e.direction()){
-					case Nord:e.Tourner(Direction.Est);
-					break;
-					case Est:e.Tourner(Direction.Sud);
-					break;
-					case Sud:e.Tourner(Direction.Ouest);
-					break;
-					case Ouest:e.Tourner(Direction.Nord);
-					break;
+			} else {
+				if (Math.random() < 0.5) {
+					switch (e.direction()) {
+					case Nord:
+						e.Tourner(Direction.Est);
+						break;
+					case Est:
+						e.Tourner(Direction.Sud);
+						break;
+					case Sud:
+						e.Tourner(Direction.Ouest);
+						break;
+					case Ouest:
+						e.Tourner(Direction.Nord);
+						break;
 					}
-				}else{
-					switch (e.direction()){
-					case Nord:e.Tourner(Direction.Ouest);
-					break;
-					case Est:e.Tourner(Direction.Nord);
-					break;
-					case Sud:e.Tourner(Direction.Est);
-					break;
-					case Ouest:e.Tourner(Direction.Sud);
-					break;
+				} else {
+					switch (e.direction()) {
+					case Nord:
+						e.Tourner(Direction.Ouest);
+						break;
+					case Est:
+						e.Tourner(Direction.Nord);
+						break;
+					case Sud:
+						e.Tourner(Direction.Est);
+						break;
+					case Ouest:
+						e.Tourner(Direction.Sud);
+						break;
 					}
 				}
 			}
-			
-			System.out.println(e.toString());
+			Terrain.afficher();
+			TimeUnit.SECONDS.sleep(1);
+
 		}
 	}
 }
