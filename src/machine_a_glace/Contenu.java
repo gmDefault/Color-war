@@ -9,7 +9,7 @@ public enum Contenu {
 		affichage = s;
 	}
 
-	public String affichage() {
+	public String toString() {
 		return affichage;
 	}
 }
