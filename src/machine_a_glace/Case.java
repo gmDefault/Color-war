@@ -3,6 +3,7 @@ package machine_a_glace;
 public class Case {
 	private Couleur coul;
 	private Contenu cont;
+	private Operateur op;
 
 	public Case() {
 		coul = Couleur.Neutre;
@@ -11,6 +12,10 @@ public class Case {
 
 	public boolean isAccessible() {
 		return (cont != Contenu.Obstacle && cont != Contenu.Joueur && cont != Contenu.Robot);
+	}
+
+	public boolean isOperateur() {
+		return (cont == Contenu.Opérateur);
 	}
 
 	public boolean isJoueur() {
@@ -24,8 +29,19 @@ public class Case {
 	public void setCouleur(Couleur c) {
 		coul = c;
 	}
+	
+	public Operateur op(){
+		return op;
+	}
 
 	public String toString() {
-		return cont.affichage();
+		if (isOperateur())
+			return op.toString();
+		else
+			return cont.toString();
+	}
+
+	public void setOp(Operateur op) {
+		this.op = op;
 	}
 }

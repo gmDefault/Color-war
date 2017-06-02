@@ -24,8 +24,15 @@ public class Terrain {
 						terrain[i][j].setCase(Contenu.Obstacle);
 					} else {
 						terrain[i][j] = new Case();
-						if (Math.random() < 0.20) {
+						double r = Math.random();
+						if (r < 0.20) {
 							terrain[i][j].setCase(Contenu.Obstacle);
+						} else if (r < 0.40) {
+							terrain[i][j].setCase(Contenu.Opérateur);
+							terrain[i][j].setOp(Operateur.PointVirgule);
+						} else if (r < 0.60) {
+							terrain[i][j].setCase(Contenu.Opérateur);
+							terrain[i][j].setOp(Operateur.Deuxpoints);
 						}
 					}
 
@@ -39,9 +46,10 @@ public class Terrain {
 		for (int i = 0; i < 10; i++) {
 			for (Case c : terrain[i]) {
 				if (c.isJoueur())
-					System.out.print("J|");
+					System.out.print("J");
 				else
-					System.out.print(c.toString() + "|");
+					System.out.print(c.toString());
+				System.out.print("|");
 			}
 			System.out.println();
 			for (int j = 0; j < 10; j++) {
@@ -50,16 +58,18 @@ public class Terrain {
 			System.out.println();
 		}
 	}
+	
+	public static Case casexy(int ligne, int colonne){
+		return terrain[ligne][colonne];
+	}
 
 	public static void main(String[] args) throws InterruptedException {
-		int count = 0;
 		Terrain.initialiser();
 		Terrain.afficher();
 
 		Entite e = new Entite(4, 4);
 
 		while (true) {
-			count++;
 			if (e.next_case().isAccessible()) {
 				e.Avancer(1);
 			} else {
@@ -96,6 +106,7 @@ public class Terrain {
 				}
 			}
 			Terrain.afficher();
+			e.afficher_inventaire();
 			TimeUnit.SECONDS.sleep(1);
 
 		}

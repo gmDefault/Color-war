@@ -1,9 +1,12 @@
 package machine_a_glace;
 
+import java.util.ArrayList;
+
 public class Entite {
 
 	private Direction d;
 	private int col, line;
+	private ArrayList<Operateur> inventaire;
 
 	public Entite(int x, int y) {
 		if (Terrain.terrain[x][y].isAccessible()) {
@@ -11,6 +14,7 @@ public class Entite {
 			col = y;
 			d = Direction.Nord;
 			Terrain.terrain[line][col].setCase(Contenu.Joueur);
+			inventaire = new ArrayList<Operateur>();
 		} else {
 			throw new JeuException("entite non creable sur une case non accessible");
 		}
@@ -37,6 +41,10 @@ public class Entite {
 			col -= pas;
 
 		}
+		if (Terrain.casexy(line,col).isOperateur()){
+			inventaire.add(Terrain.casexy(line,col).op());
+			Terrain.casexy(line,col).setOp(null);
+		}
 		Terrain.terrain[line][col].setCase(Contenu.Joueur);
 	}
 
@@ -61,5 +69,14 @@ public class Entite {
 
 	public String toString() {
 		return "( " + line + "," + col + " )";
+	}
+	
+	public void afficher_inventaire(){
+		System.out.print("Inventaire : ");
+		if(!inventaire.isEmpty() ){
+			System.out.print(inventaire.toString());
+		}
+		System.out.println();
+		
 	}
 }
