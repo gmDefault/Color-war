@@ -17,6 +17,10 @@ public class Case {
 		return (cont == Contenu.Joueur);
 	}
 
+	public boolean isRobot() {
+		return (cont == Contenu.Robot);
+	}
+
 	public void setCase(Contenu c) {
 		cont = c;
 	}

@@ -3,7 +3,7 @@ package machine_a_glace;
 import java.util.concurrent.TimeUnit;
 
 public class Terrain {
-	private static int taille = 10;
+	private static int taille = 30;
 	public static Case terrain[][] = new Case[taille][taille];
 
 	private Terrain() {
@@ -38,14 +38,11 @@ public class Terrain {
 	public static void afficher() {
 		for (int i = 0; i < 10; i++) {
 			for (Case c : terrain[i]) {
-				if (c.isJoueur())
-					System.out.print("J|");
-				else
-					System.out.print(c.toString() + "|");
+				System.out.print(c.toString() + "|");
 			}
 			System.out.println();
 			for (int j = 0; j < 10; j++) {
-				System.out.print("--");
+				System.out.print("------");
 			}
 			System.out.println();
 		}
@@ -56,41 +53,78 @@ public class Terrain {
 		Terrain.initialiser();
 		Terrain.afficher();
 
-		Entite e = new Entite(4, 4);
+		Joueur j = new Joueur(4, 4, Couleur.Bleu);
+		Robot r = new Robot(3, 3, Couleur.Rouge);
 
 		while (true) {
 			count++;
-			if (e.next_case().isAccessible()) {
-				e.Avancer(1);
+			if (j.next_case().isAccessible()) {
+				j.Avancer(1);
 			} else {
 				if (Math.random() < 0.5) {
-					switch (e.direction()) {
+					switch (j.direction()) {
 					case Nord:
-						e.Tourner(Direction.Est);
+						j.Tourner(Direction.Est);
 						break;
 					case Est:
-						e.Tourner(Direction.Sud);
+						j.Tourner(Direction.Sud);
 						break;
 					case Sud:
-						e.Tourner(Direction.Ouest);
+						j.Tourner(Direction.Ouest);
 						break;
 					case Ouest:
-						e.Tourner(Direction.Nord);
+						j.Tourner(Direction.Nord);
 						break;
 					}
 				} else {
-					switch (e.direction()) {
+					switch (j.direction()) {
 					case Nord:
-						e.Tourner(Direction.Ouest);
+						j.Tourner(Direction.Ouest);
 						break;
 					case Est:
-						e.Tourner(Direction.Nord);
+						j.Tourner(Direction.Nord);
 						break;
 					case Sud:
-						e.Tourner(Direction.Est);
+						j.Tourner(Direction.Est);
 						break;
 					case Ouest:
-						e.Tourner(Direction.Sud);
+						j.Tourner(Direction.Sud);
+						break;
+					}
+				}
+			}
+
+			if (r.next_case().isAccessible()) {
+				r.Avancer(1);
+			} else {
+				if (Math.random() < 0.5) {
+					switch (r.direction()) {
+					case Nord:
+						r.Tourner(Direction.Est);
+						break;
+					case Est:
+						r.Tourner(Direction.Sud);
+						break;
+					case Sud:
+						r.Tourner(Direction.Ouest);
+						break;
+					case Ouest:
+						r.Tourner(Direction.Nord);
+						break;
+					}
+				} else {
+					switch (r.direction()) {
+					case Nord:
+						r.Tourner(Direction.Ouest);
+						break;
+					case Est:
+						r.Tourner(Direction.Nord);
+						break;
+					case Sud:
+						r.Tourner(Direction.Est);
+						break;
+					case Ouest:
+						r.Tourner(Direction.Sud);
 						break;
 					}
 				}

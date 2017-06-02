@@ -1,16 +1,18 @@
 package machine_a_glace;
 
-public class Entite {
+public abstract class Entite {
 
 	private Direction d;
 	private int col, line;
+	Couleur couleur;
 
-	public Entite(int x, int y) {
+	public Entite(int x, int y, Couleur c) {
 		if (Terrain.terrain[x][y].isAccessible()) {
-			line = x;
-			col = y;
-			d = Direction.Nord;
-			Terrain.terrain[line][col].setCase(Contenu.Joueur);
+			setLine(x);
+			setCol(y);
+			setD(Direction.Nord);
+			couleur = c;
+
 		} else {
 			throw new JeuException("entite non creable sur une case non accessible");
 		}
@@ -18,48 +20,55 @@ public class Entite {
 	}
 
 	public Direction direction() {
-		return d;
+		return getD();
 	}
 
-	public void Avancer(int pas) {
-		Terrain.terrain[line][col].setCase(Contenu.Vide);
-		switch (d) {
-		case Nord:
-			line -= pas;
-			break;
-		case Est:
-			col += pas;
-			break;
-		case Sud:
-			line += pas;
-			break;
-		case Ouest:
-			col -= pas;
-
-		}
-		Terrain.terrain[line][col].setCase(Contenu.Joueur);
-	}
+	public abstract void Avancer(int pas);
 
 	public void Tourner(Direction d) {
-		this.d = d;
+		this.setD(d);
 	}
 
 	public Case next_case() {
-		switch (d) {
+		switch (getD()) {
 		case Nord:
-			return Terrain.terrain[line - 1][col];
+			return Terrain.terrain[getLine() - 1][getCol()];
 		case Est:
-			return Terrain.terrain[line][col + 1];
+			return Terrain.terrain[getLine()][getCol() + 1];
 		case Sud:
-			return Terrain.terrain[line + 1][col];
+			return Terrain.terrain[getLine() + 1][getCol()];
 		case Ouest:
-			return Terrain.terrain[line][col - 1];
+			return Terrain.terrain[getLine()][getCol() - 1];
 		default:
-			return Terrain.terrain[line][col];
+			return Terrain.terrain[getLine()][getCol()];
 		}
 	}
 
 	public String toString() {
-		return "( " + line + "," + col + " )";
+		return "( " + getLine() + "," + getCol() + " )";
+	}
+
+	public int getLine() {
+		return line;
+	}
+
+	public void setLine(int line) {
+		this.line = line;
+	}
+
+	public int getCol() {
+		return col;
+	}
+
+	public void setCol(int col) {
+		this.col = col;
+	}
+
+	public Direction getD() {
+		return d;
+	}
+
+	public void setD(Direction d) {
+		this.d = d;
 	}
 }
