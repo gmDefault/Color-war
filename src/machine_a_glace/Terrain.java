@@ -36,13 +36,13 @@ public class Terrain {
 	}
 
 	public static void afficher() {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < taille; i++) {
 			for (Case c : terrain[i]) {
 				System.out.print(c.toString() + "|");
 			}
 			System.out.println();
-			for (int j = 0; j < 10; j++) {
-				System.out.print("------");
+			for (int j = 0; j < taille; j++) {
+				System.out.print("--");
 			}
 			System.out.println();
 		}
