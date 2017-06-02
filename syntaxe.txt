@@ -1,0 +1,43 @@
+###
+### Définition de la syntaxe des expressions pour ColorWar
+###
+
+~~ Deux types d'éléments distincts dans la grammaire :
+    - Comportement : codé en lettre
+    - Opérateur : codé avec des signes
+
+__________________________________________________
+|                                                 |
+| Liste des opérateurs et exemples d'utilisation  |
+|_________________________________________________|
+
+
+Opérateur séquence :
+  - syntaxe ->  ;
+
+  utilisation  :        (;  a  b)
+    avec a et b des comportements.
+
+  - syntaxe ->  :
+
+  utilisation :         (:  a  X)
+    avec a un comportement et X un nombre
+
+                [More soon]
+
+
+__________________________________________________
+|                                                 |
+|Liste des comportement et exemples d'utilisation |
+|_________________________________________________|
+
+
+Comportement explorateur :
+  - Syntaxe -> X
+
+
+
+Comportement attaquant :
+  - Syntaxe -> A
+
+               [More soon]
