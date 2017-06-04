@@ -3,7 +3,7 @@ package machine_a_glace;
 import java.util.concurrent.TimeUnit;
 
 public class Terrain {
-	private static int taille = 10;
+	private static int taille = 30;
 	public static Case terrain[][] = new Case[taille][taille];
 
 	private Terrain() {
@@ -36,7 +36,7 @@ public class Terrain {
 	}
 
 	public static void afficher() {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < taille; i++) {
 			for (Case c : terrain[i]) {
 				if (c.isJoueur())
 					System.out.print("J|");
@@ -44,8 +44,8 @@ public class Terrain {
 					System.out.print(c.toString() + "|");
 			}
 			System.out.println();
-			for (int j = 0; j < 10; j++) {
-				System.out.print("--");
+			for (int j = 0; j < taille; j++) {
+				System.out.print("----");
 			}
 			System.out.println();
 		}
