@@ -23,7 +23,7 @@ Opérateur séquence :
   utilisation :         (:  a  X)
     avec a un comportement et X un nombre
 
-                [More soon]
+[More soon]
 
 
 __________________________________________________
@@ -40,4 +40,4 @@ Comportement explorateur :
 Comportement attaquant :
   - Syntaxe -> A
 
-               [More soon]
+[More soon]
