@@ -3,7 +3,7 @@ package machine_a_glace;
 import java.util.concurrent.TimeUnit;
 
 public class Terrain {
-	private static int taille = 30;
+	private static int taille = 10;
 	public static Case terrain[][] = new Case[taille][taille];
 
 	private Terrain() {
