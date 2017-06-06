@@ -3,7 +3,7 @@ DEBUG_PARSER=false;
 STATIC=false;
 }
 PARSER_BEGIN(Reader)
-package jus.aoo.lisp.kernel ;
+package machine_a_glace ;
 import java.io.*;
 
 
@@ -12,36 +12,49 @@ public class Reader {
   
 /** le support de lecture */
 protected static java.io.Reader in;
-protected static Reader parser;
+protected static Reader parser = new Reader(System.in);
 
+/** lecture d'une S-EXPR au terminal
+* @return SEXPR : la SEXPR construite.
+* @throws LispException une erreur de syntaxe
+*/
+public static Node read() throws JeuException{
+  parser.ReInit(in);
+  try { return parser.EXPR(); }
+  catch ( ParseException e) {
+	throw new JeuException(e);
+    }
+ }
+ 
 /** lecture d'une S-EXPR à partir de la chaîne
 * @param s : la chaîne
 * @return SEXPR : la SEXPR construite.
 * @throws LispException une erreur de syntaxe
 */
-public static Sexpr read(String s) throws LispException{
-	java.io.Reader save = in;
+public static Node read(String s) throws JeuException{
   in = new StringReader(s);
-  Sexpr r =  read();
-  in = save;
-  return r;
+  Node n =  read();
+  return n;
 }
-/** évaluation de la séquence S-EXPRs à partir du fichier s
-* @param s : le nom du fichier
-* @return SEXPR : symbole du nom du fichier.
-* @throws LispException une erreur de lecture
-*/
-public static Sexpr importe(String s) throws LispException,FileNotFoundException{
-  parser.ReInit(new FileInputStream(s));
-  try {  parser.SEXPRESSIONS(); }
-  catch ( ParseException e) {
-	throw new LispException(e);
-    }
-    return Symbole.newSymbole(s);
-}
-private Sexpr quote(Sexpr s) { return new Scons(Symbole.newSymbole("quote"),new Scons(s, Nil.Nil));}
 
-private Sexpr quote(Sexpr s1,Sexpr s2) { return new Scons(s1,s2); }
+Comportement StringtoComp(String s) {
+	switch (s) {
+	  case "X": return Comportement.Explore;
+	  case "A": return Comportement.Attack;
+	  default : throw new JeuException("Comportement non declarer");
+	}
+}
+Operateur StringtoOp(String s) {
+	switch(s) {
+	case ";":return Operateur.PointVirgule;
+	case ":":return Operateur.Deuxpoints;
+	default: throw new JeuException("Operateur non declarer");
+	}
+
+}
+
+
+
 
 }
 
@@ -65,43 +78,27 @@ MORE :
 <IN_ML_COMMENT> SPECIAL_TOKEN :{<ML_COMMENT: "*/" > : DEFAULT}
 <IN_SL_COMMENT,IN_ML_COMMENT> SKIP :{< ~[] >}// les lexèmes du langage
 TOKEN :{
-  < #LETTER : ["a"-"z"] | [ "A"-"Z"] >
-| < #DIGIT: ["0"-"9"] >
-| <LPAR : "(">
-| <RPAR : ")"> 
-| <QUOTE : "'">
-| <DOT : ".">
-| <ID : (< LETTER > | < DIGIT >)+>
+  < OP : ";" | ":" | "< " | " >" | "|" | "||" >
+| < COMP: "X" | "C" | "D" | "K" >
+| <LACC : "{">
+| <RACC : "}"> 
 }
 
-Sexpr ATOME(): {Sexpr s1;} {s1=SYMBOLE(){ return s1;}}
-Sexpr SYMBOLE(): {Token t;} {t=< ID > { return Symbole.newSymbole(t.image);}}
 
 
-//SEXPR LISTE() : { } { < LPAR > ATOME() < RPAR >}
-void SEXPRESSIONS() : {Sexpr s1;}{
-	(s1=SEXPR(){s1.eval();})* <EOF>{}
+
+Node EXPRbis(): {Node arbre, arbre2; Token c; } {
+< LACC > arbre=EXPRbis() < RACC > arbre2=L(){return new Node(arbre2.Gram,arbre,arbre2.FD); }
+| c=< COMP > arbre=L(){if (arbre != null)return new Node(arbre.Gram,new Node(StringtoComp(c.image)),arbre.FD);else return new Node(StringtoComp(c.image)); }
+
 }
 
-Sexpr SEXPRESSION() :
-
-{ Sexpr s1; }
-
-{
-  (s1=SEXPR() { s1 = s1.eval(); } )* < EOF >
-  {
-   	return Symbole.newSymbole("..."); 
+Node L() : { Node Arbre1; Token exp; } {
+	 exp = <OP> Arbre1 = EXPRbis() {return new Node(StringtoOp(exp.image), null, Arbre1.FD); }
+	 | { return null; }
   }
-   < EOF >
+
+Node EXPR(): {Node arbre1, arbre2;} {
+	< LACC > arbre1=EXPRbis() arbre2=L()< RACC > {if (arbre2 != null) return new Node(arbre2.Gram,arbre1,arbre2.FD); else return arbre1;}
 }
 
-Sexpr SEXPR() : { Sexpr s1;} {
-  s1=ATOME(){ return s1;}
-| < LPAR > s1=LISTE() < RPAR >{ return s1;}
-| < QUOTE > s1=SEXPR(){ return quote(s1);}
- }
-
-Sexpr LISTE() : {Sexpr s1,s2; } {
-  s1=SEXPR()(< DOT > s2=SEXPR()| s2=LISTE()){ return new Scons(s1,s2);}
-| { return Nil.Nil;}
-}

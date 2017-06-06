@@ -1,19 +1,19 @@
 package machine_a_glace;
 
-public enum Comportement {
+public enum Comportement implements Expr {
 	Explore("X"), Attack("A");
 
 	String affichage;
-	
-	private Comportement(String s){
+
+	private Comportement(String s) {
 		affichage = s;
 	}
 
-	public boolean isComportement(){
+	public boolean isComportement() {
 		return true;
 	}
-	
-	public boolean isOperateur(){
+
+	public boolean isOperateur() {
 		return false;
 	}
 
