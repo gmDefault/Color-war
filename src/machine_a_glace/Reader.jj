@@ -41,6 +41,8 @@ Comportement StringtoComp(String s) {
 	switch (s) {
 	  case "X": return Comportement.Explore;
 	  case "A": return Comportement.Attack;
+	  case "P": return Comportement.Protect;
+	  case "K": return Comportement.Kamikaze;
 	  default : throw new JeuException("Comportement non declarer");
 	}
 }
@@ -48,6 +50,9 @@ Operateur StringtoOp(String s) {
 	switch(s) {
 	case ";":return Operateur.PointVirgule;
 	case ":":return Operateur.Deuxpoints;
+	case ">":return Operateur.Priorite;
+	case "|":return Operateur.Choixequi;
+	case "||":return Operateur.Choix;
 	default: throw new JeuException("Operateur non declarer");
 	}
 
@@ -78,10 +83,10 @@ MORE :
 <IN_ML_COMMENT> SPECIAL_TOKEN :{<ML_COMMENT: "*/" > : DEFAULT}
 <IN_SL_COMMENT,IN_ML_COMMENT> SKIP :{< ~[] >}// les lexèmes du langage
 TOKEN :{
-  < OP : ";" | ":" | "< " | " >" | "|" | "||" >
-| < COMP: "X" | "C" | "D" | "K" >
+  < OP : ";" | ":" | "<" | ">" | "|" | "||" >
+| < COMP: "X" | "A" | "K" | "P"   >
 | <LACC : "{">
-| <RACC : "}"> 
+| <RACC : "}">
 }
 
 
@@ -94,8 +99,8 @@ Node EXPRbis(): {Node arbre, arbre2; Token c; } {
 }
 
 Node L() : { Node Arbre1; Token exp; } {
-	 exp = <OP> Arbre1 = EXPRbis() {return new Node(StringtoOp(exp.image), null, Arbre1.FD); }
-	 | { return null; }
+	 exp = <OP> Arbre1 = EXPRbis() {return new Node(StringtoOp(exp.image), null, Arbre1); }
+	 |{ return null; }
   }
 
 Node EXPR(): {Node arbre1, arbre2;} {
