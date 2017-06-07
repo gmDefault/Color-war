@@ -1,7 +1,7 @@
 package machine_a_glace;
 
-public enum Operateur {
-	PointVirgule(";"), Deuxpoints(":");
+public enum Operateur implements Expr {
+	PointVirgule(";"), Deuxpoints(":"),Priorite(">"),Choixequi("|"),Choix("||");
 
 	String affichage;
 
@@ -11,5 +11,15 @@ public enum Operateur {
 
 	public String toString() {
 		return affichage;
+	}
+
+	@Override
+	public boolean isComportement() {
+		return false;
+	}
+
+	@Override
+	public boolean isOperateur() {
+		return true;
 	}
 }
