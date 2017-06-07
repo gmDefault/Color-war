@@ -1,7 +1,7 @@
 package machine_a_glace;
 
 public enum Operateur implements Expr {
-	PointVirgule(";"), Deuxpoints(":");
+	PointVirgule(";"), Deuxpoints(":"),Priorite(">"),Choixequi("|"),Choix("||");
 
 	String affichage;
 

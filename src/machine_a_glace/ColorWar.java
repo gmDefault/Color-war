@@ -8,7 +8,7 @@ public class ColorWar {
 		Terrain.initialiser();
 		Terrain.afficher();
 		
-		String expr = "{X;A}";
+		String expr = "{ X ; {P ; K}>A; K }";
 		Node a;
 
 		Joueur j = new Joueur(4, 4, Couleur.Bleu);
@@ -93,6 +93,6 @@ public class ColorWar {
 //
 //		}
 		a = Reader.read(expr);
-		Terrain.afficher();
+		System.out.println(a.toString());
 	}
 }
