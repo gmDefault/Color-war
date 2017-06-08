@@ -8,7 +8,7 @@ public class ColorWar {
 		Terrain.initialiser();
 		Terrain.afficher();
 		
-		String expr = "{ X ; {P ; K}>A; K }";
+		String expr = "{X:9 > {K}}";
 		Node a;
 
 		Joueur j = new Joueur(4, 4, Couleur.Bleu);

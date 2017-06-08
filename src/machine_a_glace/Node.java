@@ -20,6 +20,11 @@ public class Node {
 		this.FD = FD;
 	}
 	
+	public static void SetLeftChild (Node G, Node NG){
+		
+		G.FG=NG;
+		
+	}
 	public String toString(){
 		if (FG != null && FD !=null) return "("+FG.toString()+Gram.toString()+FD.toString()+")";
 		else if(FG ==null && FD == null) return "("+Gram.toString()+")";
