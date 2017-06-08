@@ -8,7 +8,7 @@ public class ColorWar {
 		Terrain.initialiser();
 		Terrain.afficher();
 
-		String expr = "{ K ; {{X;K} > A} ; P}";
+		String expr = "{ K; P}";
 		Node a;
 
 		Joueur j = new Joueur(4, 4, Couleur.Bleu);
@@ -92,11 +92,17 @@ public class ColorWar {
 		// TimeUnit.SECONDS.sleep(1);
 		//
 		// }
-		a = Reader.read(expr);
-		System.out.println(a.toString());
-		a = new Node(Operateur.Star, null, a);
-		Automate auto = new Automate(a);
-		System.out.println("block");
+		try{
+			a = Reader.read(expr);
+
+			System.out.println(a.toString());
+			a = new Node(Operateur.Star, null, a);
+			Automate auto = new Automate(a);
+			System.out.println("block");
+		}catch(Exception e){
+			System.out.println("Syntaxe Incorrect");
+		}
+		
 		
 	}
 }
