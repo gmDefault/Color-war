@@ -10,6 +10,7 @@ public class Terrain {
 
 	}
 
+
 	public static void initialiser() {
 		for (int i = 0; i < taille; i++) {
 			if (i == 0 || i == taille - 1) {
@@ -24,24 +25,17 @@ public class Terrain {
 						terrain[i][j].setCase(Contenu.Obstacle);
 					} else {
 						terrain[i][j] = new Case();
-						double r = Math.random();
-						if (r < 0.20) {
-							terrain[i][j].setCase(Contenu.Obstacle);
-						} else if (r < 0.40) {
-							terrain[i][j].setCase(Contenu.Opérateur);
-							terrain[i][j].setOp(Operateur.PointVirgule);
-						} else if (r < 0.60) {
-							terrain[i][j].setCase(Contenu.Opérateur);
-							terrain[i][j].setOp(Operateur.Deuxpoints);
-						}
+						//terrain[i][j].setCase(Contenu.Vide);
+//						if (Math.random() < 0.20) {
+//							terrain[i][j].setCase(Contenu.Obstacle);
+//						}
 					}
 
 				}
 			}
 
 		}
-	}
-
+}
 	public static void afficher() {
 		for (int i = 0; i < taille; i++) {
 			for (Case c : terrain[i]) {
