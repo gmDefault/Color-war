@@ -14,6 +14,11 @@ public class Case {
 		return (cont != Contenu.Obstacle && cont != Contenu.Joueur && cont != Contenu.Robot);
 	}
 
+	public Couleur getCouleur(){
+		return coul;
+	}
+	
+	
 	public boolean isOperateur() {
 		return (cont == Contenu.Opérateur);
 	}
