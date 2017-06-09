@@ -11,7 +11,11 @@ public class ColorWar {
 		String expr = "{ K; P}";
 		Node a;
 
-		Joueur j = new Joueur(4, 4, Couleur.Bleu);
+		Joueur j1 = new Joueur(15,1,Couleur.Rouge);
+		Joueur j2 = new Joueur(15,28,Couleur.Bleu);
+
+		    	
+		    	j1.setD(Direction.Sud);
 		Robot r = new Robot(3, 3, Couleur.Rouge,null);
 		int[] borne = new int[4];
 		borne = r.BorneDistance(1, 1, 3);
@@ -19,6 +23,8 @@ public class ColorWar {
 			System.out.println(borne[i]);
 		}
 		System.out.println();
+		
+		View.launch_game(j1, j2);
 //		while (true) {
 //			if (j.next_case().isAccessible()) {
 //				j.Avancer(1);
