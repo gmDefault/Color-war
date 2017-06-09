@@ -8,8 +8,17 @@ public abstract class Entite {
 	private int col, line;
 	private ArrayList<Operateur> inventaire;
 	Couleur couleur;
-
-	public Entite(int x, int y, Couleur c) {
+	int pdv;
+	/**
+	 * Si ajout des bonus/malus : 
+	 * 		Ajout des variables Portée et dégâts
+	 * 
+	 * Bonus : +1 Portée d'attaque, +X dégâts, + ... ?
+	 * Malus : -1 Portée (>0), -X dégâts, poison (3/5/7 ticks)
+	 */
+	
+	
+	public Entite(int x, int y, Couleur c, int pointsdv) {
 		if (Terrain.terrain[x][y].isAccessible()) {
 			setLine(x);
 			setCol(y);
@@ -17,7 +26,7 @@ public abstract class Entite {
 			couleur = c;
 			Terrain.terrain[line][col].setCase(Contenu.Joueur);
 			inventaire = new ArrayList<Operateur>();
-
+			pdv = pointsdv;
 		} else {
 			throw new JeuException("entite non creable sur une case non accessible");
 		}
@@ -102,5 +111,13 @@ public abstract class Entite {
 		}
 		System.out.println();
 
+	}
+	
+	public Couleur getCouleur(){
+		return couleur;
+	}
+	
+	public void Degat(int x){
+			pdv -= x;
 	}
 }
