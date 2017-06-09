@@ -613,7 +613,6 @@ public class View extends BasicGame {
 	        	}
 	        	break;
 	        
-	        
 	        case Input.KEY_T: 
 	        	
 	        	JOptionPane r2 = new JOptionPane(); 
@@ -626,7 +625,14 @@ public class View extends BasicGame {
 	        		JOptionPane.showInputDialog(tab2, "Saisissez votre expression");
 	        	}
 	        	break;
-	        
+	        	
+		    case Input.KEY_P:
+	        	
+	        	JOptionPane pause = new JOptionPane();
+	        	String[] boutonP = {"Reprendre"};
+	        	pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
+	        	break;
+	        	
 	        case Input.KEY_Z:    this.direction2 = 0; this.moving2 = true; break;
 	        case Input.KEY_Q:  this.direction2 = 1; this.moving2 = true; break;
 	        case Input.KEY_S:  this.direction2 = 2; this.moving2 = true; break;
