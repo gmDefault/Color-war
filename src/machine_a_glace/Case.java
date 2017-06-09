@@ -54,7 +54,6 @@ public class Case {
 		this.op = op;
 	}
 	
-
 	public Couleur getCouleurInverse() {
 		if (coul == Couleur.Bleu)
 			return Couleur.Rouge;
@@ -63,4 +62,5 @@ public class Case {
 		else
 			return Couleur.Neutre;
 	}
+
 }
