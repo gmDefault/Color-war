@@ -48,4 +48,9 @@ public class Case {
 	public void setOp(Operateur op) {
 		this.op = op;
 	}
+
+	public Couleur getCouleur() {
+		
+		return coul;
+	}
 }
