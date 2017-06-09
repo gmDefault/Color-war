@@ -52,6 +52,8 @@ public class View extends BasicGame {
 	
 	private Entite e;
 	private Entite e2;
+	
+	private Joueur j1, j2;
 
 	private boolean moving2 = false;
 	private Animation[] animations = new Animation[8];
@@ -128,6 +130,8 @@ public class View extends BasicGame {
 	    	    }
 	    	}
 	    }
+	    
+	 //   j1 = new Joueur()
 		//Terrain.afficher();
 
 	//	this.e = new Entite(15, 20);
