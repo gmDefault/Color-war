@@ -4,6 +4,7 @@ public class Case {
 	private Couleur coul;
 	private Contenu cont;
 	private Operateur op;
+	private Entite ent;
 
 	public Case() {
 		coul = Couleur.Neutre;
@@ -34,11 +35,19 @@ public class Case {
 	public void setCase(Contenu c) {
 		cont = c;
 	}
+	
+	public void setEntite(Entite ent){
+		this.ent = ent;
+	}
 
 	public void setCouleur(Couleur c) {
 		coul = c;
 	}
 
+	public Entite getEntite(){
+		return ent;
+	}
+	
 	public Operateur op() {
 		return op;
 	}

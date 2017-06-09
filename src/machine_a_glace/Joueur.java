@@ -2,14 +2,17 @@ package machine_a_glace;
 
 public class Joueur extends Entite {
 
+	
 	public Joueur(int x, int y, Couleur c) {
-		super(x, y, c);
+		super(x, y, c,100);
 		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
+		Terrain.terrain[getLine()][getCol()].setEntite(this);
 	}
 
 	public void Avancer(int pas) {
 
 		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
+		Terrain.terrain[getLine()][getCol()].setEntite(null);
 		switch (getD()) {
 		case Nord:
 			setLine(getLine() - pas);
@@ -29,6 +32,7 @@ public class Joueur extends Entite {
 			Terrain.casexy(getLine(),getCol()).setOp(null);
 		}
 		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
+		Terrain.terrain[getLine()][getCol()].setEntite(this);
 	}
 	
 	public boolean isJoueur(){
