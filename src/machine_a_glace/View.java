@@ -130,6 +130,7 @@ public class View extends BasicGame {
 	    	    }
 	    	}
 	    }
+	    Terrain.afficher();
 
 	//	this.e = new Entite(15, 20);
 	//	this.e2 = new Entite(16, 19);
@@ -274,7 +275,10 @@ public class View extends BasicGame {
 
 		g.drawAnimation(animations[direction + (moving ? 4 : 0)], x - 32, y - 60);
 		g.drawAnimation(animations2[direction2 + (moving2 ? 4 : 0)], xx - 32, yy - 60);
-
+		
+		j1.afficher_inventaire();
+		j2.afficher_inventaire();
+		
 		//System.out.println("( "+ x + " , " + y + " ) ");
 
 	}

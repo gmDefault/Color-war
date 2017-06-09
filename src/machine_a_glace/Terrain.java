@@ -19,6 +19,13 @@ public class Terrain {
 			}
 
 		}
+		
+		
+
+	    Terrain.terrain[15][2].setCase(Contenu.Opérateur);
+	    Terrain.terrain[15][2].setOp(Operateur.PointVirgule);
+	    Terrain.terrain[15][27].setCase(Contenu.Opérateur);
+	    Terrain.terrain[15][27].setOp(Operateur.Deuxpoints);
 	}
 
 	public static void afficher() {
