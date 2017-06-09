@@ -39,12 +39,12 @@ public class Terrain {
 		}
 	}
 
-	public static int getTaille() {
-		return taille;
-	}
-
 	public static Case casexy(int ligne, int colonne) {
 		return terrain[ligne][colonne];
+	}
+
+	public static int getTaille() {
+		return taille;
 	}
 
 }
