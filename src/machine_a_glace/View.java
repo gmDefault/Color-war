@@ -67,8 +67,11 @@ public class View extends BasicGame {
 	private String tab2[] = {"Manger","Fumer", "Rond-Poing"};
 	
 
-	public View() {
+	public View(Joueur j1, Joueur j2) {
+
 		super("Fenetre");
+		this.j1 = j1;
+		this.j2 = j2;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -636,7 +639,7 @@ public class View extends BasicGame {
 	        	
 	        case Input.KEY_Z:    this.direction2 = 0; this.moving2 = true; break;
 	        case Input.KEY_Q:  this.direction2 = 1; this.moving2 = true; break;
-	        case Input.KEY_S:  this.direction2 = 2; this.moving2 = true; break;
+	        case Input.KEY_S:  this.direction2 = 2; this.moving2 = true; break; 
 	        case Input.KEY_D: this.direction2 = 3; this.moving2 = true; break;
 	    }
 	}
@@ -645,19 +648,20 @@ public class View extends BasicGame {
 	public static void launch_game(Joueur j1, Joueur j2) {
 		 AppGameContainer game;
 		try {
-			game = new AppGameContainer(new View(), 1920, 960, false);
+			game = new AppGameContainer(new View(j1,j2), 1920, 960, false);
 			game.start();
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		
+		
 		 //game.setFullscreen(true);
 		 //game.setDisplayMode(1920, 1080, true);
 
 	}
-	 public static void main(String[] args) throws SlickException {
 
-		 //new AppGameContainer(new View(), 1920, 960, false).start();
-	 }
 
 }
