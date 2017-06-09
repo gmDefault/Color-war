@@ -12,8 +12,13 @@ public class ColorWar {
 		Node a;
 
 		Joueur j = new Joueur(4, 4, Couleur.Bleu);
-		Robot r = new Robot(3, 3, Couleur.Rouge);
-
+		Robot r = new Robot(3, 3, Couleur.Rouge,null);
+		int[] borne = new int[4];
+		borne = r.BorneDistance(1, 1, 3);
+		for(int i = 0; i<4; i++){
+			System.out.println(borne[i]);
+		}
+		System.out.println();
 //		while (true) {
 //			if (j.next_case().isAccessible()) {
 //				j.Avancer(1);
@@ -92,7 +97,7 @@ public class ColorWar {
 //			TimeUnit.SECONDS.sleep(1);
 //
 //		}
-		a = Reader.read(expr);
-		System.out.println(a.toString());
+//		a = Reader.read(expr);
+//		System.out.println(a.toString());
 	}
 }

@@ -20,5 +20,7 @@ public enum Comportement implements Expr {
 	public boolean isOperateur() {
 		return false;
 	}
+	
+	
 
 }
