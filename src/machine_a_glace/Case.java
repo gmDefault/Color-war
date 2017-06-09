@@ -54,8 +54,4 @@ public class Case {
 		this.op = op;
 	}
 
-	public Couleur getCouleur() {
-		
-		return coul;
-	}
 }
