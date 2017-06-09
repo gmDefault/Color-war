@@ -613,7 +613,6 @@ public class View extends BasicGame {
 	        	}
 	        	break;
 	        
-	        
 	        case Input.KEY_T: 
 	        	
 	        	JOptionPane r2 = new JOptionPane(); 
