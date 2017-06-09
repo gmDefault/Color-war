@@ -14,8 +14,10 @@ public class Terrain {
 		for (int i = 0; i < taille; i++) {
 			for (int j = 0; j < taille; j++) {
 				Terrain.terrain[i][j] = new Case();
-				if (i == 0 || i == taille - 1)	Terrain.terrain[i][j].setCase(Contenu.Obstacle);
+				if (i == 0 || i == taille - 1 || j == 0 || j == taille - 1)
+					terrain[i][j].setCase(Contenu.Obstacle);
 			}
+
 		}
 	}
 

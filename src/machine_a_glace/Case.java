@@ -14,9 +14,6 @@ public class Case {
 		return (cont != Contenu.Obstacle && cont != Contenu.Joueur && cont != Contenu.Robot);
 	}
 
-	public Couleur getCouleur(){
-		return coul;
-	}
 	
 	
 	public boolean isOperateur() {
@@ -52,5 +49,10 @@ public class Case {
 
 	public void setOp(Operateur op) {
 		this.op = op;
+	}
+
+	public Couleur getCouleur() {
+		
+		return coul;
 	}
 }

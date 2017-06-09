@@ -128,7 +128,7 @@ public class View extends BasicGame {
 	    	    }
 	    	}
 	    }
-//		Terrain.afficher();
+		Terrain.afficher();
 
 	//	this.e = new Entite(15, 20);
 	//	this.e2 = new Entite(16, 19);
