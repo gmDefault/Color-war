@@ -130,9 +130,6 @@ public class View extends BasicGame {
 	    	    }
 	    	}
 	    }
-//		Terrain.afficher();
-    	Terrain.afficher();
-
 
 	//	this.e = new Entite(15, 20);
 	//	this.e2 = new Entite(16, 19);
@@ -644,7 +641,7 @@ public class View extends BasicGame {
 	    }
 	}
 
-	
+
 	public static void launch_game(Joueur j1, Joueur j2) {
 		 AppGameContainer game;
 		try {
@@ -662,6 +659,5 @@ public class View extends BasicGame {
 		 //game.setDisplayMode(1920, 1080, true);
 
 	}
-
 
 }
