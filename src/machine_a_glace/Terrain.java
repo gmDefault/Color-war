@@ -10,32 +10,17 @@ public class Terrain {
 
 	}
 
-
 	public static void initialiser() {
 		for (int i = 0; i < taille; i++) {
-			if (i == 0 || i == taille - 1) {
-				for (int j = 0; j < taille; j++) {
-					terrain[i][j] = new Case();
+			for (int j = 0; j < taille; j++) {
+				Terrain.terrain[i][j] = new Case();
+				if (i == 0 || i == taille - 1 || j == 0 || j == taille - 1)
 					terrain[i][j].setCase(Contenu.Obstacle);
-				}
-			} else {
-				for (int j = 0; j < taille; j++) {
-					if (j == 0 || j == taille - 1) {
-						terrain[i][j] = new Case();
-						terrain[i][j].setCase(Contenu.Obstacle);
-					} else {
-						terrain[i][j] = new Case();
-						//terrain[i][j].setCase(Contenu.Vide);
-//						if (Math.random() < 0.20) {
-//							terrain[i][j].setCase(Contenu.Obstacle);
-//						}
-					}
-
-				}
 			}
 
 		}
-}
+	}
+
 	public static void afficher() {
 		for (int i = 0; i < taille; i++) {
 			for (Case c : terrain[i]) {

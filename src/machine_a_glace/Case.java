@@ -4,6 +4,7 @@ public class Case {
 	private Couleur coul;
 	private Contenu cont;
 	private Operateur op;
+	private Entite ent;
 
 	public Case() {
 		coul = Couleur.Neutre;
@@ -14,10 +15,6 @@ public class Case {
 		return (cont != Contenu.Obstacle && cont != Contenu.Joueur && cont != Contenu.Robot);
 	}
 
-	public Couleur getCouleur(){
-		return coul;
-	}
-	
 	
 	public boolean isOperateur() {
 		return (cont == Contenu.Opérateur);
@@ -34,12 +31,21 @@ public class Case {
 	public void setCase(Contenu c) {
 		cont = c;
 	}
+	
+	public void setEntite(Entite ent){
+		this.ent = ent;
+	}
 
 	public void setCouleur(Couleur c) {
 		coul = c;
 	}
 
+	public Entite getEntite(){
+		return ent;
+	}
+	
 	public Operateur op() {
+
 		return op;
 	}
 
@@ -54,13 +60,7 @@ public class Case {
 		this.op = op;
 	}
 	
-	public Couleur getCouleurInverse() {
-		if (coul == Couleur.Bleu)
-			return Couleur.Rouge;
-		else if (coul == Couleur.Rouge)
-			return Couleur.Bleu;
-		else
-			return Couleur.Neutre;
+	public Couleur getCouleur(){
+		return coul;
 	}
-
 }
