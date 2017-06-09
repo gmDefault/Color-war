@@ -33,8 +33,8 @@ public class Case {
 	public void setCouleur(Couleur c) {
 		coul = c;
 	}
-	
-	public Operateur op(){
+
+	public Operateur op() {
 		return op;
 	}
 
@@ -48,4 +48,19 @@ public class Case {
 	public void setOp(Operateur op) {
 		this.op = op;
 	}
+
+	public Couleur getCouleur() {
+		return coul;
+	}
+	
+
+	public Couleur getCouleurInverse() {
+		if (coul == Couleur.Bleu)
+			return Couleur.Rouge;
+		else if (coul == Couleur.Rouge)
+			return Couleur.Bleu;
+		else
+			return Couleur.Neutre;
+	}
+
 }
