@@ -315,7 +315,7 @@ public class View extends BasicGame {
 						//this.j1.setD(Direction.Ouest);
 						//this.y -= (1024/32);
 						this.j1.Avancer(1);
-						System.out.println("passe ici");
+						//System.out.println("passe ici");
 					//	Terrain.afficher();
 						
 						Point p = new Point(15*32+this.j1.getCol()*32+16, this.j1.getLine()*32+16);
@@ -449,7 +449,7 @@ public class View extends BasicGame {
 						//this.j1.setD(Direction.Ouest);
 						//this.y -= (1024/32);
 						this.j2.Avancer(1);
-						System.out.println("passe ici");
+					//	System.out.println("passe ici");
 					//	Terrain.afficher();
 						
 						Point p = new Point(15*32+this.j2.getCol()*32+16, this.j2.getLine()*32+16);
