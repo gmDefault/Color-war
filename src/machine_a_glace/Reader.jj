@@ -1,110 +1,248 @@
-options {
-DEBUG_PARSER=false;
-STATIC=false;
+options
+{
+  DEBUG_PARSER = false;
+  STATIC = false;
 }
+
 PARSER_BEGIN(Reader)
-package machine_a_glace ;
+package machine_a_glace;
 import java.io.*;
 
+public class Reader
+{
+  /** le support de lecture */
+  protected static java.io.Reader in;
 
-public class Reader {
+  protected static Reader parser = new Reader(System.in);
 
-  
-/** le support de lecture */
-protected static java.io.Reader in;
-protected static Reader parser = new Reader(System.in);
-
-/** lecture d'une S-EXPR au terminal
-* @return SEXPR : la SEXPR construite.
-* @throws LispException une erreur de syntaxe
-*/
-public static Node read() throws JeuException{
-  parser.ReInit(in);
-  try { return parser.EXPR(); }
-  catch ( ParseException e) {
-	throw new JeuException(e);
+  public static Node read() throws JeuException
+  {
+    parser.ReInit(in);
+    try
+    {
+      return parser.EXPR();
     }
- }
- 
-/** lecture d'une S-EXPR à partir de la chaîne
-* @param s : la chaîne
-* @return SEXPR : la SEXPR construite.
-* @throws LispException une erreur de syntaxe
-*/
-public static Node read(String s) throws JeuException{
-  in = new StringReader(s);
-  Node n =  read();
-  return n;
-}
+    catch (ParseException e)
+    {
+      throw new JeuException(e);
+    }
+  }
 
-Comportement StringtoComp(String s) {
-	switch (s) {
-	  case "X": return Comportement.Explore;
-	  case "A": return Comportement.Attack;
-	  case "P": return Comportement.Protect;
-	  case "K": return Comportement.Kamikaze;
-	  default : throw new JeuException("Comportement non declarer");
-	}
-}
-Operateur StringtoOp(String s) {
-	switch(s) {
-	case ";":return Operateur.PointVirgule;
-	case ":":return Operateur.Deuxpoints;
-	case ">":return Operateur.Priorite;
-	case "|":return Operateur.Choixequi;
-	case "||":return Operateur.Choix;
-	default: throw new JeuException("Operateur non declarer");
-	}
-
-}
-
-
-
-
+  public static Node read(String s) throws JeuException
+  {
+    in = new StringReader(s);
+    Node n = read();
+    return n;
+  }
+  Comportement StringtoComp(String s)
+  {
+    switch (s)
+    {
+      case "X" : return Comportement.Explore;
+      case "A" : return Comportement.Attack;
+      case "P" : return Comportement.Protect;
+      case "K" : return Comportement.Kamikaze;
+      case "1" : return Comportement.Un;
+      case "2" : return Comportement.Deux;
+      case "3" : return Comportement.Trois;
+      case "4" : return Comportement.Quatre;
+      case "5" : return Comportement.Cinq;
+      case "6" : return Comportement.Six;
+      case "7" : return Comportement.Sept;
+      case "8" : return Comportement.Huit;
+      case "9" : return Comportement.Neuf;
+      default : throw new JeuException("Comportement non declarer");
+    }
+  }
+  Operateur StringtoOp(String s)
+  {
+    switch (s)
+    {
+      case ";" : return Operateur.PointVirgule;
+      case ":" : return Operateur.Deuxpoints;
+      case ">" : return Operateur.Priorite;
+      case "|" : return Operateur.Choixequi;
+      case "||" : return Operateur.Choix;
+      default : throw new JeuException("Operateur non declarer");
+    }
+  }
 }
 
 PARSER_END(Reader)
+
 // les caractères ignorés
 SKIP :
 {
-" " | "\t" | "\r"| "\n"
-// attention élimine la notion de fin de ligne
-| "\u0000" | "\u0001" | "\u0002" | "\u0003" | "\u0004" | "\u0005" | "\u0006" | "\u0007"
-| "\u0008" | "\u000B" | "\u000C" | "\u000E" | "\u000F" | "\u0010" | "\u0011" | "\u0012"
-| "\u0013" | "\u0014" | "\u0015" | "\u0016" | "\u0017" | "\u0018" | "\u0019" | "\u001A"
-| "\u001B" | "\u001C" | "\u001D" | "\u001E" | "\u001F" | "\u007F"
+  " "
+| "\t"
+| "\r"
+| "\n"
+  // attention élimine la notion de fin de ligne
+| ""
+| "\u0001"
+| "\u0002"
+| "\u0003"
+| "\u0004"
+| "\u0005"
+| "\u0006"
+| "\u0007"
+| "\u0008"
+| "\u000b"
+| "\u000c"
+| "\u000e"
+| "\u000f"
+| "\u0010"
+| "\u0011"
+| "\u0012"
+| "\u0013"
+| "\u0014"
+| "\u0015"
+| "\u0016"
+| "\u0017"
+| "\u0018"
+| "\u0019"
+| "\u001a"
+| "\u001b"
+| "\u001c"
+| "\u001d"
+| "\u001e"
+| "\u001f"
+| "\u007f"
 }
+
 MORE :
 {
-"//" : IN_SL_COMMENT
+  "//" : IN_SL_COMMENT
 | "/*" : IN_ML_COMMENT
 }
-<IN_SL_COMMENT> SPECIAL_TOKEN :{<SL_COMMENT: "\n" | "\r" | "\r\n"> : DEFAULT}
-<IN_ML_COMMENT> SPECIAL_TOKEN :{<ML_COMMENT: "*/" > : DEFAULT}
-<IN_SL_COMMENT,IN_ML_COMMENT> SKIP :{< ~[] >}// les lexèmes du langage
-TOKEN :{
-  < OP : ";" | ":" | "<" | ">" | "|" | "||" >
-| < COMP: "X" | "A" | "K" | "P"   >
-| <LACC : "{">
-| <RACC : "}">
-| < DIGIT : (["1"-"9"]) >
+
+< IN_SL_COMMENT >
+SPECIAL_TOKEN :
+{
+  < SL_COMMENT :
+    "\n"
+  | "\r"
+  | "\r\n" > : DEFAULT
 }
 
-
-
-
-Node EXPRbis(): {Node arbre, arbre2; Token c; } {
-< LACC > arbre=EXPRbis() < RACC > arbre2=L(){return new Node(arbre2.Gram,arbre,arbre2.FD); }
-| c=< COMP > arbre=L(){if (arbre != null)return new Node(arbre.Gram,new Node(StringtoComp(c.image)),arbre.FD);else return new Node(StringtoComp(c.image)); }
-
+< IN_ML_COMMENT >
+SPECIAL_TOKEN :
+{
+  < ML_COMMENT : "*/" > : DEFAULT
 }
 
-Node L() : { Node Arbre1; Token exp; } {
-	 exp = <OP> Arbre1 = EXPRbis() {return new Node(StringtoOp(exp.image), null, Arbre1); }
-	 |{ return null; }
+< IN_SL_COMMENT, IN_ML_COMMENT >
+SKIP :
+{
+  < ~[ ] >
+} // les lexèmes du langage
+
+TOKEN :
+{
+  < OP :
+    ";"
+  | "<"
+  | ">"
+  | "|"
+  | "||" >
+| < COMP :
+    "X"
+  | "A"
+  | "K"
+  | "P" >
+| < LACC : "{" >
+| < RACC : "}" >
+| < NUM : [ "1"-"9" ] >
+| < PP : ":" >
+}
+
+Node EXPRbis() :
+{
+  Node arbre, arbre2;
+  Token c;
+  Node d;
+}
+{
+  < LACC > arbre = EXPRbis() < RACC > arbre2 = Lbis()
+  {
+    if (arbre2.Gram == Operateur.PointVirgule && arbre2.FG != null)
+    {
+      Node.SetLeftChild(arbre2.FG, arbre);
+      return arbre2;
+    }
+    else if (arbre2.Gram == Operateur.PointVirgule && arbre2.FG == null)
+    {
+      return new Node(arbre2.Gram, arbre, arbre2.FD);
+    }
+    else return new Node(arbre2.Gram, arbre, arbre2.FD);
   }
-
-Node EXPR(): {Node arbre1, arbre2;} {
-	< LACC > arbre1=EXPRbis() arbre2=L()< RACC > {if (arbre2 != null) return new Node(arbre2.Gram,arbre1,arbre2.FD); else return arbre1;}
+| c = < COMP > arbre = L()
+  {
+    if (arbre != null && arbre.FG == null) 
+    return new Node(arbre.Gram, new Node(StringtoComp(c.image)), arbre.FD);
+    else if (arbre != null && arbre.FG != null)
+    {
+      d = new Node(StringtoComp(c.image));
+      Node.SetLeftChild(arbre.FG, d);
+      return arbre;
+    }
+    else return new Node(StringtoComp(c.image));
+  }
 }
 
+Node L() :
+{
+  Node Arbre1;
+  Token exp, exp2;
+}
+{
+  exp = < OP > Arbre1 = EXPRbis()
+  {
+    if (StringtoOp(exp.image) != Operateur.PointVirgule && Arbre1.Gram == Operateur.PointVirgule) 
+    return new Node(Arbre1.Gram, new Node(StringtoOp(exp.image), null, Arbre1.FG), Arbre1.FD);
+    else 
+    return new Node(StringtoOp(exp.image), null, Arbre1);
+  }
+| exp = < PP > exp2 = < NUM > Arbre1 = Lbis()
+  {
+    if (Arbre1 != null)
+    {
+      return new Node(Arbre1.Gram, new Node(StringtoOp(exp.image), null, new Node(StringtoComp(exp2.image))), Arbre1.FD);
+    }
+    else return new Node(StringtoOp(exp.image), null, new Node(StringtoComp(exp2.image)));
+  }
+|
+  {
+    return null;
+  }
+}
+
+Node Lbis() :
+{
+  Node Arbre1;
+  Token exp, exp2;
+}
+{
+  exp = < OP > Arbre1 = EXPRbis()
+  {
+    if (StringtoOp(exp.image) != Operateur.PointVirgule && Arbre1.Gram == Operateur.PointVirgule) 
+    return new Node(Arbre1.Gram, new Node(StringtoOp(exp.image), null, Arbre1.FG), Arbre1.FD);
+    else 
+    return new Node(StringtoOp(exp.image), null, Arbre1);
+  }
+|
+  {
+    return null;
+  }
+}
+
+Node EXPR() :
+{
+  Node arbre1;
+}
+{
+  < LACC > arbre1 = EXPRbis() < RACC >
+  {
+    return arbre1;
+  }
+}

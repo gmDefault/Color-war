@@ -7,8 +7,8 @@ public class ColorWar {
 	public static void main(String[] args) throws InterruptedException {
 		Terrain.initialiser();
 		Terrain.afficher();
-		
-		String expr = "{ X ; {P ; K}>A; K }";
+
+		String expr = "{ K; P}";
 		Node a;
 
 		Joueur j = new Joueur(4, 4, Couleur.Bleu);
