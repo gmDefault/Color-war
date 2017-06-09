@@ -61,9 +61,9 @@ public class View extends BasicGame {
 	private String item2[] = {"Robot1","Robot2","Robot3"};
 	private JComboBox robot = new JComboBox(item);
 	private JComboBox robot2 = new JComboBox(item2);
+	private ImageIcon ic = new ImageIcon("maps/robot.png");
 	private ImageIcon icr = new ImageIcon("maps/tete_robot_rouge.png");
 	private ImageIcon icb = new ImageIcon("maps/tete_robot_bleu.png");
-	private ImageIcon icP = new ImageIcon("maps/sablier.png");
 	private Dimension d = new Dimension(100,100);
 	private String tab[] = {"Frapper","Explorer", "Kamikaze",";","*",">"};
 	private String tab2[] = {"Manger","Fumer", "Rond-Poing"};
@@ -128,10 +128,14 @@ public class View extends BasicGame {
 	    	for (int j = 32; j <= 28*32; j+=32) {
 	    	    tile = this.map.getTileImage((int) i / tileW, (int) j / tileH, logicLayer);
 	    	    if (tile!=null) {
-	    	    	Terrain.terrain[i/tileW-15][j/tileH].setCase(Contenu.Obstacle);
+	    	    	Terrain.terrain[j/tileW][i/tileH-15].setCase(Contenu.Obstacle);
 	    	    }
 	    	}
 	    }
+//		Terrain.afficher();
+    //	Terrain.afficher();
+    	System.out.println("get line : "+j1.getLine());
+
 
 	//	this.e = new Entite(15, 20);
 	//	this.e2 = new Entite(16, 19);
@@ -274,8 +278,8 @@ public class View extends BasicGame {
 			//System.out.println(e.toString());
 		
 
-		g.drawAnimation(animations[direction + (moving ? 4 : 0)], x - 32, y - 60);
-		g.drawAnimation(animations2[direction2 + (moving2 ? 4 : 0)], xx - 32, yy - 60);
+		g.drawAnimation(animations[direction + (moving ? 4 : 0)], (15*32+this.j1.getCol()*32+16)-32, (this.j1.getLine()*32+16) - 60);
+		g.drawAnimation(animations2[direction2 + (moving2 ? 4 : 0)], (15*32+this.j2.getCol()*32+16)-32, (this.j2.getLine()*32+16) - 60);
 
 		//System.out.println("( "+ x + " , " + y + " ) ");
 
@@ -306,13 +310,17 @@ public class View extends BasicGame {
 	public void update(GameContainer arg0, int delta) throws SlickException {
 		// TODO Auto-generated method stub
 		if (this.moving) {
-			switch (this.direction) {
-			case 0:
+			//switch (this.j1.getD()) {
+			//case Nord:
 				if (canmove) {
-					if (!isCollision(this.x, this.y - (1024/32))) {
-						this.y -= (1024/32);
+				//	if (!isCollision(15*32+this.j1.getCol()*32+16, this.j1.getLine()*32+16 - (1024/32))) {
+						//this.j1.setD(Direction.Ouest);
+						//this.y -= (1024/32);
+						this.j1.Avancer(1);
+						//System.out.println("passe ici");
+					//	Terrain.afficher();
 						
-						Point p = new Point(this.x, this.y);
+						Point p = new Point(15*32+this.j1.getCol()*32+16, this.j1.getLine()*32+16);
 						for(int i = 0; i<this.pos_color.size(); i++){
 							if (this.pos_color.get(i).equals(p)) {
 								this.pos_color.remove(this.pos_color.get(i));
@@ -332,7 +340,7 @@ public class View extends BasicGame {
 						//grass_b.draw(x, y);
 
 
-					}
+					//}
 
 				}
 				//System.out.println("pos : " + x + " - " + y);
@@ -342,213 +350,226 @@ public class View extends BasicGame {
 					lasttime = System.currentTimeMillis();
 					canmove = true;
 				}
-				break;
-			case 1:
-				if (canmove) {
-					if (!isCollision(this.x - (1024/32), this.y))
-					this.x -= (1024/32);
-					Point p = new Point(this.x, this.y);
-					
-					for(int i = 0; i<this.pos_color.size(); i++){
-						if (this.pos_color.get(i).equals(p)) {
-							this.pos_color.remove(this.pos_color.get(i));
-						}
-					}
-					
-					this.pos_color.add(p);
-
-						
-					for(int i = 0; i<this.pos_color_2.size(); i++){
-						if (this.pos_color_2.get(i).equals(p)) {
-							this.pos_color_2.remove(this.pos_color_2.get(i));
-						}
-					}
-					
-				}
-				//System.out.println("pos : " + x + " - " + y);
-
-				if (System.currentTimeMillis()-lasttime<500) {
-					canmove = false;
-				} else {
-					lasttime = System.currentTimeMillis();
-					canmove = true;
-				}
-				break;
-			case 2:
-				if (canmove) {
-					if (!isCollision(this.x, this.y + (1024/32)))
-					this.y += (1024/32);
-					Point p = new Point(this.x, this.y);
-					for(int i = 0; i<this.pos_color.size(); i++){
-						if (this.pos_color.get(i).equals(p)) {
-							this.pos_color.remove(this.pos_color.get(i));
-						}
-					}
-					
-					this.pos_color.add(p);
-					
-					for(int i = 0; i<this.pos_color_2.size(); i++){
-						if (this.pos_color_2.get(i).equals(p)) {
-							this.pos_color_2.remove(this.pos_color_2.get(i));
-						}
-					}
-				}
-				//System.out.println("pos : " + x + " - " + y);
-
-				if (System.currentTimeMillis()-lasttime<500) {
-					canmove = false;
-				} else {
-					lasttime = System.currentTimeMillis();
-					canmove = true;
-				}
-				break;
-			case 3:
-				if (canmove) {
-					if (!isCollision(this.x + (1024/32), this.y))
-					this.x += (1024/32);
-					
-					Point p = new Point(this.x, this.y);
-					for(int i = 0; i<this.pos_color.size(); i++){
-						if (this.pos_color.get(i).equals(p)) {
-							this.pos_color.remove(this.pos_color.get(i));
-						}
-					}
-					
-					this.pos_color.add(p);
-					
-					for(int i = 0; i<this.pos_color_2.size(); i++){
-						if (this.pos_color_2.get(i).equals(p)) {
-							this.pos_color_2.remove(this.pos_color_2.get(i));
-						}
-					}
-				}
-				//System.out.println("pos : " + x + " - " + y);
-
-				if (System.currentTimeMillis()-lasttime<500) {
-					canmove = false;
-				} else {
-					lasttime = System.currentTimeMillis();
-					canmove = true;
-				}
-				break;
-
-			}
-}
+		}
+		//		break;
+//			case Ouest:
+//				if (canmove) {
+//					if (!isCollision(this.x - (1024/32), this.y))
+//					this.x -= (1024/32);
+//					Point p = new Point(this.x, this.y);
+//					
+//					for(int i = 0; i<this.pos_color.size(); i++){
+//						if (this.pos_color.get(i).equals(p)) {
+//							this.pos_color.remove(this.pos_color.get(i));
+//						}
+//					}
+//					
+//					this.pos_color.add(p);
+//
+//						
+//					for(int i = 0; i<this.pos_color_2.size(); i++){
+//						if (this.pos_color_2.get(i).equals(p)) {
+//							this.pos_color_2.remove(this.pos_color_2.get(i));
+//						}
+//					}
+//					
+//				}
+//				//System.out.println("pos : " + x + " - " + y);
+//
+//				if (System.currentTimeMillis()-lasttime<500) {
+//					canmove = false;
+//				} else {
+//					lasttime = System.currentTimeMillis();
+//					canmove = true;
+//				}
+//				break;
+//			case Sud:
+//				if (canmove) {
+//					if (!isCollision(this.x, this.y + (1024/32)))
+//					this.y += (1024/32);
+//					Point p = new Point(this.x, this.y);
+//					for(int i = 0; i<this.pos_color.size(); i++){
+//						if (this.pos_color.get(i).equals(p)) {
+//							this.pos_color.remove(this.pos_color.get(i));
+//						}
+//					}
+//					
+//					this.pos_color.add(p);
+//					
+//					for(int i = 0; i<this.pos_color_2.size(); i++){
+//						if (this.pos_color_2.get(i).equals(p)) {
+//							this.pos_color_2.remove(this.pos_color_2.get(i));
+//						}
+//					}
+//				}
+//				//System.out.println("pos : " + x + " - " + y);
+//
+//				if (System.currentTimeMillis()-lasttime<500) {
+//					canmove = false;
+//				} else {
+//					lasttime = System.currentTimeMillis();
+//					canmove = true;
+//				}
+//				break;
+//			case Est:
+//				if (canmove) {
+//					if (!isCollision(this.x + (1024/32), this.y))
+//					this.x += (1024/32);
+//					
+//					Point p = new Point(this.x, this.y);
+//					for(int i = 0; i<this.pos_color.size(); i++){
+//						if (this.pos_color.get(i).equals(p)) {
+//							this.pos_color.remove(this.pos_color.get(i));
+//						}
+//					}
+//					
+//					this.pos_color.add(p);
+//					
+//					for(int i = 0; i<this.pos_color_2.size(); i++){
+//						if (this.pos_color_2.get(i).equals(p)) {
+//							this.pos_color_2.remove(this.pos_color_2.get(i));
+//						}
+//					}
+//				}
+//				//System.out.println("pos : " + x + " - " + y);
+//
+//				if (System.currentTimeMillis()-lasttime<500) {
+//					canmove = false;
+//				} else {
+//					lasttime = System.currentTimeMillis();
+//					canmove = true;
+//				}
+//				break;
+//
+//			}
+//}
 		if (this.moving2) {
-			switch (this.direction2) {
-			case 0:
+			//switch (this.j1.getD()) {
+			//case Nord:
 				if (canmove2) {
-					if (!isCollision(this.xx, this.yy - (1024/32)))
-					this.yy -= (1024/32);
-					Point p = new Point(this.xx, this.yy);
-					
-					for(int i = 0; i<this.pos_color_2.size(); i++){
-						if (this.pos_color_2.get(i).equals(p)) {
-							this.pos_color_2.remove(this.pos_color_2.get(i));
+				//	if (!isCollision(15*32+this.j1.getCol()*32+16, this.j1.getLine()*32+16 - (1024/32))) {
+						//this.j1.setD(Direction.Ouest);
+						//this.y -= (1024/32);
+						this.j2.Avancer(1);
+					//	System.out.println("passe ici");
+					//	Terrain.afficher();
+						
+						Point p = new Point(15*32+this.j2.getCol()*32+16, this.j2.getLine()*32+16);
+						for(int i = 0; i<this.pos_color_2.size(); i++){
+							if (this.pos_color_2.get(i).equals(p)) {
+								this.pos_color_2.remove(this.pos_color_2.get(i));
+							}
 						}
-					}
-					
-					this.pos_color_2.add(p);
-					
-					for(int i = 0; i<this.pos_color.size(); i++){
-						if (this.pos_color.get(i).equals(p)) {
-							this.pos_color.remove(this.pos_color.get(i));
+						
+						this.pos_color_2.add(p);
+							
+						for(int i = 0; i<this.pos_color.size(); i++){
+							if (this.pos_color.get(i).equals(p)) {
+								this.pos_color.remove(this.pos_color.get(i));
+							}
 						}
-					}
+						
+						//this.container.getGraphics().drawImage(grass_b, x, y);
+						//arg0.getGraphics().drawImage(grass_b, x, y);
+						//grass_b.draw(x, y);
+
+
+					//}
 
 				}
+				//System.out.println("pos : " + x + " - " + y);
 				if (System.currentTimeMillis()-lasttime2<500) {
 					canmove2 = false;
 				} else {
 					lasttime2 = System.currentTimeMillis();
 					canmove2 = true;
-				}				
-				break;
-			case 1:
-				if (canmove2) {
-					if (!isCollision(this.xx - (1024/32), this.yy))
-					this.xx -= (1024/32);
-					Point p = new Point(this.xx, this.yy);
-					for(int i = 0; i<this.pos_color_2.size(); i++){
-						if (this.pos_color_2.get(i).equals(p)) {
-							this.pos_color_2.remove(this.pos_color_2.get(i));
-						}
-					}
-					
-					this.pos_color_2.add(p);
-					
-					for(int i = 0; i<this.pos_color.size(); i++){
-						if (this.pos_color.get(i).equals(p)) {
-							this.pos_color.remove(this.pos_color.get(i));
-						}
-					}
-
 				}
-				if (System.currentTimeMillis()-lasttime2<500) {
-					canmove2 = false;
-				} else {
-					lasttime2 = System.currentTimeMillis();
-					canmove2 = true;
-				}	
-				break;
-			case 2:
-				if (canmove2) {
-					if (!isCollision(this.xx, this.yy + (1024/32)))
-					this.yy += (1024/32);
-					Point p = new Point(this.xx, this.yy);
-					for(int i = 0; i<this.pos_color_2.size(); i++){
-						if (this.pos_color_2.get(i).equals(p)) {
-							this.pos_color_2.remove(this.pos_color_2.get(i));
-						}
-					}
-					
-					this.pos_color_2.add(p);
-					
-					for(int i = 0; i<this.pos_color.size(); i++){
-						if (this.pos_color.get(i).equals(p)) {
-							this.pos_color.remove(this.pos_color.get(i));
-						}
-					}
-
-				}
-				if (System.currentTimeMillis()-lasttime2<500) {
-					canmove2 = false;
-				} else {
-					lasttime2 = System.currentTimeMillis();
-					canmove2 = true;
-				}	
-				break;
-			case 3:
-				if (canmove2) {
-					if (!isCollision(this.xx + (1024/32), this.yy))
-					this.xx += (1024/32);
-					Point p = new Point(this.xx, this.yy);
-					for(int i = 0; i<this.pos_color_2.size(); i++){
-						if (this.pos_color_2.get(i).equals(p)) {
-							this.pos_color_2.remove(this.pos_color_2.get(i));
-						}
-					}
-					
-					this.pos_color_2.add(p);
-					
-					for(int i = 0; i<this.pos_color.size(); i++){
-						if (this.pos_color.get(i).equals(p)) {
-							this.pos_color.remove(this.pos_color.get(i));
-						}
-					}
-					
-
-				}
-				if (System.currentTimeMillis()-lasttime2<500) {
-					canmove2 = false;
-				} else {
-					lasttime2 = System.currentTimeMillis();
-					canmove2 = true;
-				}	
-				break;
-
-			}
-}
+		}
+//			case 1:
+//				if (canmove2) {
+//					if (!isCollision(this.xx - (1024/32), this.yy))
+//					this.xx -= (1024/32);
+//					Point p = new Point(this.xx, this.yy);
+//					for(int i = 0; i<this.pos_color_2.size(); i++){
+//						if (this.pos_color_2.get(i).equals(p)) {
+//							this.pos_color_2.remove(this.pos_color_2.get(i));
+//						}
+//					}
+//					
+//					this.pos_color_2.add(p);
+//					
+//					for(int i = 0; i<this.pos_color.size(); i++){
+//						if (this.pos_color.get(i).equals(p)) {
+//							this.pos_color.remove(this.pos_color.get(i));
+//						}
+//					}
+//
+//				}
+//				if (System.currentTimeMillis()-lasttime2<500) {
+//					canmove2 = false;
+//				} else {
+//					lasttime2 = System.currentTimeMillis();
+//					canmove2 = true;
+//				}	
+//				break;
+//			case 2:
+//				if (canmove2) {
+//					if (!isCollision(this.xx, this.yy + (1024/32)))
+//					this.yy += (1024/32);
+//					Point p = new Point(this.xx, this.yy);
+//					for(int i = 0; i<this.pos_color_2.size(); i++){
+//						if (this.pos_color_2.get(i).equals(p)) {
+//							this.pos_color_2.remove(this.pos_color_2.get(i));
+//						}
+//					}
+//					
+//					this.pos_color_2.add(p);
+//					
+//					for(int i = 0; i<this.pos_color.size(); i++){
+//						if (this.pos_color.get(i).equals(p)) {
+//							this.pos_color.remove(this.pos_color.get(i));
+//						}
+//					}
+//
+//				}
+//				if (System.currentTimeMillis()-lasttime2<500) {
+//					canmove2 = false;
+//				} else {
+//					lasttime2 = System.currentTimeMillis();
+//					canmove2 = true;
+//				}	
+//				break;
+//			case 3:
+//				if (canmove2) {
+//					if (!isCollision(this.xx + (1024/32), this.yy))
+//					this.xx += (1024/32);
+//					Point p = new Point(this.xx, this.yy);
+//					for(int i = 0; i<this.pos_color_2.size(); i++){
+//						if (this.pos_color_2.get(i).equals(p)) {
+//							this.pos_color_2.remove(this.pos_color_2.get(i));
+//						}
+//					}
+//					
+//					this.pos_color_2.add(p);
+//					
+//					for(int i = 0; i<this.pos_color.size(); i++){
+//						if (this.pos_color.get(i).equals(p)) {
+//							this.pos_color.remove(this.pos_color.get(i));
+//						}
+//					}
+//					
+//
+//				}
+//				if (System.currentTimeMillis()-lasttime2<500) {
+//					canmove2 = false;
+//				} else {
+//					lasttime2 = System.currentTimeMillis();
+//					canmove2 = true;
+//				}	
+//				break;
+//
+//			}
+//}
 
 	}
 	
@@ -597,76 +618,95 @@ public class View extends BasicGame {
 	@Override
 	public void keyPressed(int key, char c) {
 	    switch (key) {
-	        case Input.KEY_UP: this.direction = 0; this.moving = true; break;
-	        case Input.KEY_LEFT: this.direction = 1; this.moving = true; break;
-	        case Input.KEY_DOWN: this.direction = 2; this.moving = true; break;
-	        case Input.KEY_RIGHT: this.direction = 3; this.moving = true; break;
+//	        case Input.KEY_UP: this.direction = 0; this.moving = true; break;
+//	        case Input.KEY_LEFT: this.direction = 1; this.moving = true; break;
+//	        case Input.KEY_DOWN: this.direction = 2; this.moving = true; break;
+//	        case Input.KEY_RIGHT: this.direction = 3; this.moving = true; break;
+	    
+	    	case Input.KEY_UP: j1.setD(Direction.Nord) ; this.direction = 0;  this.moving = true; break;
+	    	case Input.KEY_LEFT: j1.setD(Direction.Ouest); this.direction = 1; this.moving = true; break;
+	    	case Input.KEY_DOWN: j1.setD(Direction.Sud); this.direction = 2; this.moving = true; break;
+	    	case Input.KEY_RIGHT: j1.setD(Direction.Est); this.direction = 3; this.moving = true; break;
 	        
 	        case Input.KEY_R: 
-	        	JOptionPane r = new JOptionPane(); 
-	        	r.setSize(d);
-	        	String[] bouton ={"Créer","Modifier"};
-	        	int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
-	        	if (retour == 1 ){
-	        		String inputrm = JOptionPane.showInputDialog(robot);
+	        	
+	        	inputtrue: while(true){
+	        		JOptionPane r = new JOptionPane(); 
+	        		r.setSize(d);
+	        		String[] bouton ={"Créer","Modifier"};
+	        		int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
+	        		if (retour == 1 ){
+	        			String inputrm = JOptionPane.showInputDialog(robot);
+	        			
+	        			if (inputrm == null){
+	        				JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+	        				break inputtrue;
+	        			}else{
+	        				break;
+	        			}
 	        		
-	        	}
-	        	if (retour == 0){
-	        		JOptionPane p = new JOptionPane();
-	        		String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
-//	        		System.out.println(inputrc);
-	        	}
+	        		}
+	        		if (retour == 0){
+	        			JOptionPane p = new JOptionPane();
+	        			String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
+//	        			System.out.println(inputrc);
+	        			
+	        			if (inputrc == null){
+	        				JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+	        				break inputtrue;
+	        			}else{
+	        				break;
+	        			}
+	        		}
+	        	}	
 	        	break;
 	        
 	        case Input.KEY_T: 
+	        	inputtrue: while(true){
 	        	
-	        	JOptionPane r2 = new JOptionPane(); 
-	        	r2.setSize(d);
-	        	String[] bouton2 ={"Créer","Modifier"};
-	        	int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
-	        	
-	        	if (retour2 == 1 ){
-	        		String inputbm = JOptionPane.showInputDialog(robot2);
-	        		
-	        		if (inputbm == null){
-	        			int retour3 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-	        			if (retour3 == 0){
+	        		JOptionPane r2 = new JOptionPane(); 
+	        		r2.setSize(d);
+	        		String[] bouton2 ={"Créer","Modifier"};
+	        		int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
+	        		if (retour2 == 1 ){
+	        			String inputbm = JOptionPane.showInputDialog(robot2); 
 	        			
+	        			if (inputbm == null){
+	        				JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+	        				break inputtrue;
 	        			}else{
 	        				break;
 	        			}
 	        		}
-	        	}
-	        	if (retour2 == 0){
-	        		JOptionPane rbc = new JOptionPane();
-	        		String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
-	        	
-	        		if (inputbc == null){
-	        			int retour3 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-	        			if (retour3 == 0){
-	        			
+	        		if (retour2 == 0){
+	        			JOptionPane rbc = new JOptionPane();
+	        			String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
+	        		
+	        			if (inputbc == null){
+	        				JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+	        				break inputtrue;
 	        			}else{
 	        				break;
 	        			}
 	        		}
 	        	}
 	        	break;
-	        	
+	        
 		    case Input.KEY_P:
 	        	
 	        	JOptionPane pause = new JOptionPane();
 	        	String[] boutonP = {"Reprendre"};
-	        	pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icP, boutonP, null);
+	        	pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
 	        	break;
 	        	
-	        case Input.KEY_Z:    this.direction2 = 0; this.moving2 = true; break;
-	        case Input.KEY_Q:  this.direction2 = 1; this.moving2 = true; break;
-	        case Input.KEY_S:  this.direction2 = 2; this.moving2 = true; break; 
-	        case Input.KEY_D: this.direction2 = 3; this.moving2 = true; break;
+	        case Input.KEY_Z:    this.j2.setD(Direction.Nord); this.direction2 = 0; this.moving2 = true; break;
+	        case Input.KEY_Q: this.j2.setD(Direction.Ouest); this.direction2 = 1; this.moving2 = true; break;
+	        case Input.KEY_S: this.j2.setD(Direction.Sud); this.direction2 = 2; this.moving2 = true; break; 
+	        case Input.KEY_D: this.j2.setD(Direction.Est); this.direction2 = 3; this.moving2 = true; break;
 	    }
 	}
 
-
+	
 	public static void launch_game(Joueur j1, Joueur j2) {
 		 AppGameContainer game;
 		try {
@@ -684,5 +724,6 @@ public class View extends BasicGame {
 		 //game.setDisplayMode(1920, 1080, true);
 
 	}
+
 
 }
