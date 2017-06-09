@@ -61,7 +61,9 @@ public class View extends BasicGame {
 	private String item2[] = {"Robot1","Robot2","Robot3"};
 	private JComboBox robot = new JComboBox(item);
 	private JComboBox robot2 = new JComboBox(item2);
-	private ImageIcon ic = new ImageIcon("robot.png");
+	private ImageIcon icr = new ImageIcon("maps/tete_robot_rouge.png");
+	private ImageIcon icb = new ImageIcon("maps/tete_robot_bleu.png");
+	private ImageIcon icP = new ImageIcon("maps/sablier.png");
 	private Dimension d = new Dimension(100,100);
 	private String tab[] = {"Frapper","Explorer", "Kamikaze",";","*",">"};
 	private String tab2[] = {"Manger","Fumer", "Rond-Poing"};
@@ -604,13 +606,14 @@ public class View extends BasicGame {
 	        	JOptionPane r = new JOptionPane(); 
 	        	r.setSize(d);
 	        	String[] bouton ={"Créer","Modifier"};
-	        	int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.ic, bouton, bouton[0]);
+	        	int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
 	        	if (retour == 1 ){
-	        		JOptionPane.showInputDialog(robot);
+	        		String inputrm = JOptionPane.showInputDialog(robot);
 	        		
 	        	}if (retour == 0){
 	        		JOptionPane p = new JOptionPane();
-	        		p.showInputDialog(tab, "Saisissez votre expression");
+	        		String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
+	        		System.out.println(inputrc);
 	        	}
 	        	break;
 	        
@@ -619,11 +622,11 @@ public class View extends BasicGame {
 	        	JOptionPane r2 = new JOptionPane(); 
 	        	r2.setSize(d);
 	        	String[] bouton2 ={"Créer","Modifier"};
-	        	int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.ic, bouton2, bouton2[0]);
+	        	int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
 	        	if (retour2 == 1 ){
-	        		JOptionPane.showInputDialog(robot2); 
+	        		String inputbm = JOptionPane.showInputDialog(robot2); 
 	        	}if (retour2 == 0){
-	        		JOptionPane.showInputDialog(tab2, "Saisissez votre expression");
+	        		String inputbc = JOptionPane.showInputDialog(tab2, "Saisissez votre expression");
 	        	}
 	        	break;
 	        	
@@ -631,7 +634,7 @@ public class View extends BasicGame {
 	        	
 	        	JOptionPane pause = new JOptionPane();
 	        	String[] boutonP = {"Reprendre"};
-	        	pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
+	        	pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icP, boutonP, null);
 	        	break;
 	        	
 	        case Input.KEY_Z:    this.direction2 = 0; this.moving2 = true; break;
