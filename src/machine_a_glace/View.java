@@ -629,8 +629,8 @@ public class View extends BasicGame {
 	    	case Input.KEY_RIGHT: j1.setD(Direction.Est); this.direction = 3; this.moving = true; break;
 	        
 	        case Input.KEY_R: 
-	        	
-	        	inputtrue: while(true){
+	        	int t = 0;
+	        	while(t<5){
 	        		JOptionPane r = new JOptionPane(); 
 	        		r.setSize(d);
 	        		String[] bouton ={"Créer","Modifier"};
@@ -639,12 +639,11 @@ public class View extends BasicGame {
 	        			String inputrm = JOptionPane.showInputDialog(robot);
 	        			
 	        			if (inputrm == null){
-	        				JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-	        				break inputtrue;
-	        			}else{
-	        				break;
+	        				int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+	        				if (k==1){
+	        					t=5;
+	        				}
 	        			}
-	        		
 	        		}
 	        		if (retour == 0){
 	        			JOptionPane p = new JOptionPane();
@@ -652,18 +651,20 @@ public class View extends BasicGame {
 //	        			System.out.println(inputrc);
 	        			
 	        			if (inputrc == null){
-	        				JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-	        				break inputtrue;
-	        			}else{
-	        				break;
+	        				int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+	        				if (k==1){
+	        					t=5;
+	        				}
 	        			}
 	        		}
+	        		t++;
 	        	}	
 	        	break;
 	        
 	        case Input.KEY_T: 
-	        	inputtrue: while(true){
 	        	
+	        	int t2 = 0;
+	        	while(t2<5){
 	        		JOptionPane r2 = new JOptionPane(); 
 	        		r2.setSize(d);
 	        		String[] bouton2 ={"Créer","Modifier"};
@@ -672,10 +673,10 @@ public class View extends BasicGame {
 	        			String inputbm = JOptionPane.showInputDialog(robot2); 
 	        			
 	        			if (inputbm == null){
-	        				JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-	        				break inputtrue;
-	        			}else{
-	        				break;
+	        				int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+	        				if (k2 == 1){
+	        					t2=5;
+	        				}
 	        			}
 	        		}
 	        		if (retour2 == 0){
@@ -683,12 +684,13 @@ public class View extends BasicGame {
 	        			String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
 	        		
 	        			if (inputbc == null){
-	        				JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-	        				break inputtrue;
-	        			}else{
-	        				break;
+	        				int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+	        				if (k2 == 1){
+	        					t2=5;
+	        				}
 	        			}
 	        		}
+	        		t2++;
 	        	}
 	        	break;
 	        
