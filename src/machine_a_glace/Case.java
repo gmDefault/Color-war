@@ -63,4 +63,14 @@ public class Case {
 	public Couleur getCouleur(){
 		return coul;
 	}
+	
+	public Couleur getCouleurInverse(){
+		if(coul == Couleur.Rouge){
+			return Couleur.Bleu;
+		}
+		else if(coul == Couleur.Bleu){
+			return Couleur.Rouge;
+		}
+		else return Couleur.Neutre;
+	}
 }
