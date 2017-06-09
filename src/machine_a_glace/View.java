@@ -50,8 +50,8 @@ public class View extends BasicGame {
 	private boolean canmove = false;
 	private boolean canmove2 = false;
 	
-	private Entite e;
-	private Entite e2;
+	
+	private Joueur j1, j2;
 
 	private boolean moving2 = false;
 	private Animation[] animations = new Animation[8];
@@ -124,11 +124,9 @@ public class View extends BasicGame {
 	    	    tile = this.map.getTileImage((int) i / tileW, (int) j / tileH, logicLayer);
 	    	    if (tile!=null) {
 	    	    	Terrain.terrain[i/tileW-15][j/tileH].setCase(Contenu.Obstacle);
-//	    	    	Terrain.afficher();
 	    	    }
 	    	}
 	    }
-//		Terrain.afficher();
 
 	//	this.e = new Entite(15, 20);
 	//	this.e2 = new Entite(16, 19);
@@ -640,5 +638,19 @@ public class View extends BasicGame {
 	    }
 	}
 
+
+	public static void launch_game(Joueur j1, Joueur j2) {
+		 AppGameContainer game;
+		try {
+			game = new AppGameContainer(new View(), 1920, 960, false);
+			game.start();
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 //game.setFullscreen(true);
+		 //game.setDisplayMode(1920, 1080, true);
+
+	}
 
 }
