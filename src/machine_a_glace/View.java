@@ -124,7 +124,7 @@ public class View extends BasicGame {
 	    	    tile = this.map.getTileImage((int) i / tileW, (int) j / tileH, logicLayer);
 	    	    if (tile!=null) {
 	    	    	Terrain.terrain[i/tileW-15][j/tileH].setCase(Contenu.Obstacle);
-	    	    	Terrain.afficher();
+//	    	    	Terrain.afficher();
 	    	    }
 	    	}
 	    }
@@ -634,12 +634,5 @@ public class View extends BasicGame {
 	    }
 	}
 
-	 public static void main(String[] args) throws SlickException {
-		 AppGameContainer game = new AppGameContainer(new View(), 1920, 960, false);
-		 //game.setFullscreen(true);
-		 //game.setDisplayMode(1920, 1080, true);
-		 game.start();
-		 //new AppGameContainer(new View(), 1920, 960, false).start();
-	 }
 
 }

@@ -11,9 +11,12 @@ public class Terrain {
 	}
 
 	public static void initialiser() {
-		
-		
-	
+		for (int i = 0; i < taille; i++) {
+			for (int j = 0; j < taille; j++) {
+				Terrain.terrain[i][j] = new Case();
+				if (i == 0 || i == taille - 1)	Terrain.terrain[i][j].setCase(Contenu.Obstacle);
+			}
+		}
 	}
 
 	public static void afficher() {
@@ -33,14 +36,13 @@ public class Terrain {
 			System.out.println();
 		}
 	}
-	
-	public static int getTaille(){
+
+	public static int getTaille() {
 		return taille;
 	}
-	
-	public static Case casexy(int ligne, int colonne){
+
+	public static Case casexy(int ligne, int colonne) {
 		return terrain[ligne][colonne];
 	}
 
-	
 }
