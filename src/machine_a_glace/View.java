@@ -616,7 +616,13 @@ public class View extends BasicGame {
 	        		p.showInputDialog(tab, "Saisissez votre expression");
 	        	}
 	        	break;
-	        
+	        	
+		    case Input.KEY_P:
+	        	
+	        	JOptionPane pause = new JOptionPane();
+	        	String[] boutonP = {"Reprendre"};
+	        	pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
+	        	break;
 	        
 	        case Input.KEY_T: 
 	        	
