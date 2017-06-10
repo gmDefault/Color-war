@@ -6,8 +6,8 @@ public abstract class Entite {
 
 	private Direction d;
 	private int col, line;
-	private ArrayList<Operateur> inventaire;
-	Couleur couleur;
+	private ArrayList<Expr> inventaire;
+	private Couleur couleur;
 	int pdv;
 	/**
 	 * Si ajout des bonus/malus : 
@@ -25,7 +25,7 @@ public abstract class Entite {
 			setD(Direction.Nord);
 			couleur = c;
 			Terrain.terrain[line][col].setCase(Contenu.Joueur);
-			inventaire = new ArrayList<Operateur>();
+			inventaire = new ArrayList<Expr>();
 			pdv = pointsdv;
 		} else {
 			throw new JeuException("entite non creable sur une case non accessible");
@@ -37,7 +37,7 @@ public abstract class Entite {
 		return getD();
 	}
 
-	public ArrayList<Operateur> inventaire() {
+	public ArrayList<Expr> inventaire() {
 		return inventaire;
 	}
 
@@ -120,4 +120,5 @@ public abstract class Entite {
 	public void Degat(int x){
 			pdv -= x;
 	}
+	
 }

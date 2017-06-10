@@ -28,9 +28,9 @@ public class Joueur extends Entite {
 				setCol(getCol() - pas);
 
 			}
-			if (Terrain.casexy(getLine(),getCol()).isOperateur()){
-				super.inventaire().add(Terrain.casexy(getLine(),getCol()).op());
-				Terrain.casexy(getLine(),getCol()).setOp(null);
+			if (Terrain.casexy(getLine(),getCol()).isExpr()){
+				super.inventaire().add(Terrain.casexy(getLine(),getCol()).expr());
+				Terrain.casexy(getLine(),getCol()).setExpr(null);
 			}
 			Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
 		}

@@ -22,10 +22,38 @@ public class Terrain {
 		
 		
 
-	    Terrain.terrain[15][2].setCase(Contenu.Opérateur);
-	    Terrain.terrain[15][2].setOp(Operateur.PointVirgule);
-	    Terrain.terrain[15][27].setCase(Contenu.Opérateur);
-	    Terrain.terrain[15][27].setOp(Operateur.Deuxpoints);
+	    Terrain.terrain[3][15].setCase(Contenu.Expression);
+	    Terrain.terrain[3][15].setExpr(Operateur.PointVirgule);
+	    Terrain.terrain[26][15].setCase(Contenu.Expression);
+	    Terrain.terrain[26][15].setExpr(Operateur.Deuxpoints);
+	    Terrain.terrain[4][15].setCase(Contenu.Expression);
+	    Terrain.terrain[4][15].setExpr(Comportement.Attack);
+
+	    Terrain.terrain[5][15].setCase(Contenu.Expression);
+	    Terrain.terrain[5][15].setExpr(Operateur.Deuxpoints);
+	    Terrain.terrain[6][15].setCase(Contenu.Expression);
+	    Terrain.terrain[6][15].setExpr(Operateur.PointVirgule);
+	    Terrain.terrain[7][15].setCase(Contenu.Expression);
+	    Terrain.terrain[7][15].setExpr(Comportement.Kamikaze);
+	    Terrain.terrain[8][15].setCase(Contenu.Expression);
+	    Terrain.terrain[8][15].setExpr(Operateur.PointVirgule);
+	    Terrain.terrain[9][15].setCase(Contenu.Expression);
+	    Terrain.terrain[9][15].setExpr(Operateur.Deuxpoints);
+
+	    Terrain.terrain[4][16].setCase(Contenu.Expression);
+	    Terrain.terrain[4][16].setExpr(Comportement.Attack);
+
+	    Terrain.terrain[5][16].setCase(Contenu.Expression);
+	    Terrain.terrain[5][16].setExpr(Operateur.Deuxpoints);
+	    Terrain.terrain[6][16].setCase(Contenu.Expression);
+	    Terrain.terrain[6][16].setExpr(Operateur.PointVirgule);
+	    Terrain.terrain[7][16].setCase(Contenu.Expression);
+	    Terrain.terrain[7][16].setExpr(Comportement.Kamikaze);
+	    Terrain.terrain[8][16].setCase(Contenu.Expression);
+	    Terrain.terrain[8][16].setExpr(Operateur.PointVirgule);
+	    Terrain.terrain[9][16].setCase(Contenu.Expression);
+	    Terrain.terrain[9][16].setExpr(Operateur.Deuxpoints);
+	    
 	}
 
 	public static void afficher() {
