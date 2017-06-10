@@ -61,7 +61,9 @@ public class View extends BasicGame {
 	private String item2[] = {"Robot1","Robot2","Robot3"};
 	private JComboBox robot = new JComboBox(item);
 	private JComboBox robot2 = new JComboBox(item2);
-	private ImageIcon ic = new ImageIcon("robot.png");
+	private ImageIcon ic = new ImageIcon("maps/robot.png");
+	private ImageIcon icr = new ImageIcon("maps/tete_robot_rouge.png");
+	private ImageIcon icb = new ImageIcon("maps/tete_robot_bleu.png");
 	private Dimension d = new Dimension(100,100);
 	private String tab[] = {"Frapper","Explorer", "Kamikaze",";","*",">"};
 	private String tab2[] = {"Manger","Fumer", "Rond-Poing"};
@@ -626,32 +628,71 @@ public class View extends BasicGame {
 	    	case Input.KEY_RIGHT: j1.setD(Direction.Est); this.direction = 3; this.moving = true; break;
 	        
 	        case Input.KEY_R: 
-	        	JOptionPane r = new JOptionPane(); 
-	        	r.setSize(d);
-	        	String[] bouton ={"Créer","Modifier"};
-	        	int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.ic, bouton, bouton[0]);
-	        	if (retour == 1 ){
-	        		JOptionPane.showInputDialog(robot);
-	        		
-	        	}if (retour == 0){
-	        		JOptionPane p = new JOptionPane();
-	        		p.showInputDialog(tab, "Saisissez votre expression");
-	        	}
+	        	int t = 0;
+	        	while(t<5){
+	        		JOptionPane r = new JOptionPane(); 
+	        		r.setSize(d);
+	        		String[] bouton ={"Créer","Modifier"};
+	        		int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
+	        		if (retour == 1 ){
+	        			String inputrm = JOptionPane.showInputDialog(robot);
+	        			
+	        			if (inputrm == null){
+	        				int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+	        				if (k==1){
+	        					t=5;
+	        				}
+	        			}
+	        		}
+	        		if (retour == 0){
+	        			JOptionPane p = new JOptionPane();
+	        			String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
+//	        			System.out.println(inputrc);
+	        			
+	        			if (inputrc == null){
+	        				int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+	        				if (k==1){
+	        					t=5;
+	        				}
+	        			}
+	        		}
+	        		t++;
+	        	}	
 	        	break;
 	        
 	        case Input.KEY_T: 
 	        	
-	        	JOptionPane r2 = new JOptionPane(); 
-	        	r2.setSize(d);
-	        	String[] bouton2 ={"Créer","Modifier"};
-	        	int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.ic, bouton2, bouton2[0]);
-	        	if (retour2 == 1 ){
-	        		JOptionPane.showInputDialog(robot2); 
-	        	}if (retour2 == 0){
-	        		JOptionPane.showInputDialog(tab2, "Saisissez votre expression");
+	        	int t2 = 0;
+	        	while(t2<5){
+	        		JOptionPane r2 = new JOptionPane(); 
+	        		r2.setSize(d);
+	        		String[] bouton2 ={"Créer","Modifier"};
+	        		int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
+	        		if (retour2 == 1 ){
+	        			String inputbm = JOptionPane.showInputDialog(robot2); 
+	        			
+	        			if (inputbm == null){
+	        				int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+	        				if (k2 == 1){
+	        					t2=5;
+	        				}
+	        			}
+	        		}
+	        		if (retour2 == 0){
+	        			JOptionPane rbc = new JOptionPane();
+	        			String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
+	        		
+	        			if (inputbc == null){
+	        				int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+	        				if (k2 == 1){
+	        					t2=5;
+	        				}
+	        			}
+	        		}
+	        		t2++;
 	        	}
 	        	break;
-	        	
+	        
 		    case Input.KEY_P:
 	        	
 	        	JOptionPane pause = new JOptionPane();
