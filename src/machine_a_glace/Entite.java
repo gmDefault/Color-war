@@ -77,6 +77,13 @@ public abstract class Entite {
 	public int getCol() {
 		return col;
 	}
+	public int getPdv() {
+		return pdv;
+	}
+
+	public void setPdv(int pv) {
+		this.pdv = pv;
+	}
 
 	public void setCol(int col) {
 		this.col = col;

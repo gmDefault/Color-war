@@ -3,8 +3,8 @@ package machine_a_glace;
 public class Joueur extends Entite {
 
 	
-	public Joueur(int x, int y, Couleur c) {
-		super(x, y, c,100);
+	public Joueur(int x, int y, Couleur c,int pdv) {
+		super(x, y, c,pdv);
 		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
 		Terrain.terrain[getLine()][getCol()].setEntite(this);
 	}
