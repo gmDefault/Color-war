@@ -9,8 +9,8 @@ public class ColorWar {
 
 	public static void main(String[] args) throws SlickException {
 		Terrain.initialiser();
-		Joueur j1 = new Joueur(15, 1, Couleur.Rouge);
-		Joueur j2 = new Joueur(15, 28, Couleur.Bleu);
+		Joueur j1 = new Joueur(1, 15, Couleur.Rouge,50);
+		Joueur j2 = new Joueur(28, 15, Couleur.Bleu,100);
 
 		
 

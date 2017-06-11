@@ -5,7 +5,7 @@ public class Parser {
 	public boolean ExpressionCorrecte(String s, Node n) {
 		Node a = new Node(null);
 		try {
-			a = Reader.read(s);
+			//a = Reader.read(s);
 		} catch (JeuException e) {
 			return false;
 		}

@@ -27,16 +27,16 @@ import org.newdawn.slick.AppGameContainer;
 public class View extends BasicGame {
 	private GameContainer container;
 	private TiledMap map;
-	
-	private float x = 976, y = 32+16;
-	private float xx = 976, yy = 960-32-16;
+
+	private float x = 976, y = 32 + 16;
+	private float xx = 976, yy = 960 - 32 - 16;
 	private int direction = 2;
 	private int direction2 = 0;
 	private boolean moving = false;
 	private long lasttime = System.currentTimeMillis();
 	private long lasttime2 = System.currentTimeMillis();
 	private long lasttime3 = System.currentTimeMillis();
-	
+
 	private ArrayList<Point> pos_color = new ArrayList<Point>();
 	private ArrayList<Point> pos_color_2 = new ArrayList<Point>();
 
@@ -49,25 +49,23 @@ public class View extends BasicGame {
 
 	private boolean canmove = false;
 	private boolean canmove2 = false;
-	
-	
+
 	private Joueur j1, j2;
 
 	private boolean moving2 = false;
 	private Animation[] animations = new Animation[8];
 	private Animation[] animations2 = new Animation[8];
-	
-	private String item[] = {"A","P","K"};
-	private String item2[] = {"Robot1","Robot2","Robot3"};
+
+	private String item[] = { "A", "P", "K" };
+	private String item2[] = { "Robot1", "Robot2", "Robot3" };
 	private JComboBox robot = new JComboBox(item);
 	private JComboBox robot2 = new JComboBox(item2);
+	private ImageIcon ic = new ImageIcon("maps/robot.png");
 	private ImageIcon icr = new ImageIcon("maps/tete_robot_rouge.png");
 	private ImageIcon icb = new ImageIcon("maps/tete_robot_bleu.png");
-	private ImageIcon icP = new ImageIcon("maps/sablier.png");
-	private Dimension d = new Dimension(100,100);
-	private String tab[] = {"Frapper","Explorer", "Kamikaze",";","*",">"};
-	private String tab2[] = {"Manger","Fumer", "Rond-Poing"};
-	
+	private Dimension d = new Dimension(100, 100);
+	private String tab[] = { "Frapper", "Explorer", "Kamikaze", ";", "*", ">" };
+	private String tab2[] = { "Manger", "Fumer", "Rond-Poing" };
 
 	public View(Joueur j1, Joueur j2) {
 
@@ -83,14 +81,15 @@ public class View extends BasicGame {
 			animation.addFrame(spriteSheet.getSprite(x, y), 100);
 		}
 		return animation;
-}
+	}
+
 	@Override
 	public void init(GameContainer arg0) throws SlickException {
 		// TODO Auto-generated method stub
 		this.container = arg0;
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
-		
+
 		SpriteSheet spriteSheet = new SpriteSheet("maps/char_2.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
 		this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
@@ -101,8 +100,7 @@ public class View extends BasicGame {
 		this.animations[5] = loadAnimation(spriteSheet, 1, 9, 1);
 		this.animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
 		this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
-		
-		
+
 		this.animations2[0] = loadAnimation(spriteSheet2, 0, 1, 0);
 		this.animations2[1] = loadAnimation(spriteSheet2, 0, 1, 1);
 		this.animations2[2] = loadAnimation(spriteSheet2, 0, 1, 2);
@@ -111,454 +109,454 @@ public class View extends BasicGame {
 		this.animations2[5] = loadAnimation(spriteSheet2, 1, 9, 1);
 		this.animations2[6] = loadAnimation(spriteSheet2, 1, 9, 2);
 		this.animations2[7] = loadAnimation(spriteSheet2, 1, 9, 3);
-		
+
 		robot.setSize(100, 100);
-	    robot2.setSize(100, 100);
-	    
+		robot2.setSize(100, 100);
+
 		Terrain.initialiser();
-		
-	    int tileW = this.map.getTileWidth();
-	    int tileH = this.map.getTileHeight();
-	    int logicLayer = this.map.getLayerIndex("Collision");
-	    Image tile;
-	    
-	    
-	   // for (int i = 15*32; i < )
-	    for (int i = 16*32; i <= 56*32; i+=32) {
-	    	for (int j = 32; j <= 28*32; j+=32) {
-	    	    tile = this.map.getTileImage((int) i / tileW, (int) j / tileH, logicLayer);
-	    	    if (tile!=null) {
-	    	    	Terrain.terrain[i/tileW-15][j/tileH].setCase(Contenu.Obstacle);
-	    	    }
-	    	}
-	    }
 
-	//	this.e = new Entite(15, 20);
-	//	this.e2 = new Entite(16, 19);
-		
-//		  Music background = new Music("maps/FoxieEpic.OGG");
-//		    background.loop();
+		int tileW = this.map.getTileWidth();
+		int tileH = this.map.getTileHeight();
+		int logicLayer = this.map.getLayerIndex("Collision");
+		Image tile;
 
-		
+		// for (int i = 15*32; i < )
+		for (int i = 16 * 32; i <= 56 * 32; i += 32) {
+			for (int j = 32; j <= 28 * 32; j += 32) {
+				tile = this.map.getTileImage((int) i / tileW, (int) j / tileH, logicLayer);
+				if (tile != null) {
+					Terrain.terrain[j / tileW][i / tileH - 15].setCase(Contenu.Obstacle);
+				}
+			}
+		}
+
+		// Terrain.afficher();
+
+		// System.out.println("get line : "+j1.getLine());
+
+		// this.e = new Entite(15, 20);
+		// this.e2 = new Entite(16, 19);
+
+		// Music background = new Music("maps/FoxieEpic.OGG");
+		// background.loop();
+
 	}
-	
+
 	@Override
 	public void render(GameContainer arg0, Graphics g) throws SlickException {
 		// TODO Auto-generated method stub
 		Image peinture_rouge = new Image("maps/peinture_rouge.png");
 		Image peinture_bleu = new Image("maps/peinture_bleu.png");
-		Image hud_bleu = new Image("maps/hud_bleu.png");		
+		Image hud_bleu = new Image("maps/hud_bleu.png");
 		Image hud_rouge = new Image("maps/hud_rouge.png");
-		
-		Image deb_v_r = new Image("maps/debut_vie_red.png");
-		Image mil_v_r = new Image("maps/milieu_vie_red.png");
-		Image fin_v_r = new Image("maps/fin_vie_red.png");
-		
-		Image deb_v_b = new Image("maps/debut_vie_bleu.png");
-		Image mil_v_b = new Image("maps/milieu_vie_bleu.png");
-		Image fin_v_b = new Image("maps/fin_vie_bleu.png");
 
 		Image inventaire = new Image("maps/inventaire.png");
 		Image robots_inv = new Image("maps/robots_inv.png");
 		Image robots_inv2 = new Image("maps/robots_inv2.png");
 
-
-		
-
 		this.map.render(0, 0);
-		
+
+		afficher_expr();
+
 		hud_bleu.draw(15, 15);
-		hud_rouge.draw(1920-300, 15);
-		
-		deb_v_r.draw(this.DEBUT_VIE_ROUGE_X,this.VIE_Y);
-		for (float i = this.DEBUT_VIE_ROUGE_X+7; i<  this.DEBUT_VIE_ROUGE_X+112; i+=7) {
-			mil_v_r.draw(i, this.VIE_Y);
-		}
-		//fin_v_r.draw(this.FIN_VIE_ROUGE_X,this.VIE_Y);
-		deb_v_b.draw(this.DEBUT_VIE_BLEU_X,this.VIE_Y);
-		
+		hud_rouge.draw(1920 - 300, 15);
+
+		afficher_pdv(j1);
+		afficher_pdv(j2);
+
 		inventaire.draw(0, 175);
 		inventaire.draw(1660, 175);
+		afficher_inventaire(j1);
+		afficher_inventaire(j2);
+		
+		j1.afficher_inventaire();
 		
 		robots_inv.draw(30, 650);
 		robots_inv2.draw(1680, 650);
 
 
-		
-		for (float i = this.DEBUT_VIE_BLEU_X+7; i<  this.DEBUT_VIE_BLEU_X+147; i+=7) {
-			mil_v_b.draw(i, this.VIE_Y);
-		}
-		fin_v_b.draw(this.FIN_VIE_BLEU_X,this.VIE_Y);
-
-		for(int i = 0; i<this.pos_color.size(); i++) {
+		for (int i = 0; i < this.pos_color.size(); i++) {
 			peinture_rouge.drawCentered(this.pos_color.get(i).getX(), this.pos_color.get(i).getY());
 		}
-		
-		for(int i = 0; i<this.pos_color_2.size(); i++) {
+
+		for (int i = 0; i < this.pos_color_2.size(); i++) {
 			peinture_bleu.drawCentered(this.pos_color_2.get(i).getX(), this.pos_color_2.get(i).getY());
 		}
-		
 
-			//peinture_rouge.draw(15*32+e.getLine()*32, e.getCol()*32);
-			
-		
-//				if(e.next_case().isAccessible()){
-//					e.Avancer(1);
-//
-//				}else{
-//					if(Math.random()<0.5){
-//						switch (e.direction()){
-//						case Nord:e.Tourner(Direction.Est);
-//						break;
-//						case Est:e.Tourner(Direction.Sud);
-//						break;
-//						case Sud:e.Tourner(Direction.Ouest);
-//						break;
-//						case Ouest:e.Tourner(Direction.Nord);
-//						break;
-//						}
-//					}else{
-//						switch (e.direction()){
-//						case Nord:e.Tourner(Direction.Ouest);
-//						break;
-//						case Est:e.Tourner(Direction.Nord);
-//						break;
-//						case Sud:e.Tourner(Direction.Est);
-//						break;
-//						case Ouest:e.Tourner(Direction.Sud);
-//						break;
-//						}
-//					}
-//				}
-//				
-//			
-//			
-//			
-//			//peinture_bleu.draw(15*32+e2.getLine()*32, e2.getCol()*32);
-//			
-//			
-//			if(e2.next_case().isAccessible()){
-//				e2.Avancer(1);
-//			}else{
-//				if(Math.random()<0.5){
-//					switch (e2.direction()){
-//					case Nord:e2.Tourner(Direction.Est);
-//					break;
-//					case Est:e2.Tourner(Direction.Sud);
-//					break;
-//					case Sud:e2.Tourner(Direction.Ouest);
-//					break;
-//					case Ouest:e2.Tourner(Direction.Nord);
-//					break;
-//					}
-//				}else{
-//					switch (e2.direction()){
-//					case Nord:e2.Tourner(Direction.Ouest);
-//					break;
-//					case Est:e2.Tourner(Direction.Nord);
-//					break;
-//					case Sud:e2.Tourner(Direction.Est);
-//					break;
-//					case Ouest:e2.Tourner(Direction.Sud);
-//					break;
-//					}
-//				}
-//			}
-//			
-//			try {
-//				Thread.sleep(500);
-//			} catch (InterruptedException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-			//System.out.println(e.toString());
-		
+		// peinture_rouge.draw(15*32+e.getLine()*32, e.getCol()*32);
 
-		g.drawAnimation(animations[direction + (moving ? 4 : 0)], x - 32, y - 60);
-		g.drawAnimation(animations2[direction2 + (moving2 ? 4 : 0)], xx - 32, yy - 60);
+		// if(e.next_case().isAccessible()){
+		// e.Avancer(1);
+		//
+		// }else{
+		// if(Math.random()<0.5){
+		// switch (e.direction()){
+		// case Nord:e.Tourner(Direction.Est);
+		// break;
+		// case Est:e.Tourner(Direction.Sud);
+		// break;
+		// case Sud:e.Tourner(Direction.Ouest);
+		// break;
+		// case Ouest:e.Tourner(Direction.Nord);
+		// break;
+		// }
+		// }else{
+		// switch (e.direction()){
+		// case Nord:e.Tourner(Direction.Ouest);
+		// break;
+		// case Est:e.Tourner(Direction.Nord);
+		// break;
+		// case Sud:e.Tourner(Direction.Est);
+		// break;
+		// case Ouest:e.Tourner(Direction.Sud);
+		// break;
+		// }
+		// }
+		// }
+		//
+		//
+		//
+		//
+		// //peinture_bleu.draw(15*32+e2.getLine()*32, e2.getCol()*32);
+		//
+		//
+		// if(e2.next_case().isAccessible()){
+		// e2.Avancer(1);
+		// }else{
+		// if(Math.random()<0.5){
+		// switch (e2.direction()){
+		// case Nord:e2.Tourner(Direction.Est);
+		// break;
+		// case Est:e2.Tourner(Direction.Sud);
+		// break;
+		// case Sud:e2.Tourner(Direction.Ouest);
+		// break;
+		// case Ouest:e2.Tourner(Direction.Nord);
+		// break;
+		// }
+		// }else{
+		// switch (e2.direction()){
+		// case Nord:e2.Tourner(Direction.Ouest);
+		// break;
+		// case Est:e2.Tourner(Direction.Nord);
+		// break;
+		// case Sud:e2.Tourner(Direction.Est);
+		// break;
+		// case Ouest:e2.Tourner(Direction.Sud);
+		// break;
+		// }
+		// }
+		// }
+		//
+		// try {
+		// Thread.sleep(500);
+		// } catch (InterruptedException e1) {
+		// // TODO Auto-generated catch block
+		// e1.printStackTrace();
+		// }
+		// System.out.println(e.toString());
 
-		//System.out.println("( "+ x + " , " + y + " ) ");
+		g.drawAnimation(animations[direction + (moving ? 4 : 0)], (15 * 32 + this.j1.getCol() * 32 + 16) - 32,
+				(this.j1.getLine() * 32 + 16) - 60);
+		g.drawAnimation(animations2[direction2 + (moving2 ? 4 : 0)], (15 * 32 + this.j2.getCol() * 32 + 16) - 32,
+				(this.j2.getLine() * 32 + 16) - 60);
+
+		// System.out.println("( "+ x + " , " + y + " ) ");
 
 	}
 
-	
-	
-//	@Override
-//	public void render(GameContainer container, Graphics g) throws SlickException {
-//		this.map.render(0, 0);
-//}
-	
+	// @Override
+	// public void render(GameContainer container, Graphics g) throws
+	// SlickException {
+	// this.map.render(0, 0);
+	// }
+
 	private boolean isCollision(float x, float y) {
-	    int tileW = this.map.getTileWidth();
-	    int tileH = this.map.getTileHeight();
-	    int logicLayer = this.map.getLayerIndex("Collision");
-	    Image tile = this.map.getTileImage((int) x / tileW, (int) y / tileH, logicLayer);
-	    boolean collision = tile != null;
-	    if (collision) {
-	        Color color = tile.getColor((int) x % tileW, (int) y % tileH);
-	        collision = color.getAlpha() > 0;
-	    }
-	    return collision;
+		int tileW = this.map.getTileWidth();
+		int tileH = this.map.getTileHeight();
+		int logicLayer = this.map.getLayerIndex("Collision");
+		Image tile = this.map.getTileImage((int) x / tileW, (int) y / tileH, logicLayer);
+		boolean collision = tile != null;
+		if (collision) {
+			Color color = tile.getColor((int) x % tileW, (int) y % tileH);
+			collision = color.getAlpha() > 0;
+		}
+		return collision;
 	}
-
 
 	@Override
 	public void update(GameContainer arg0, int delta) throws SlickException {
 		// TODO Auto-generated method stub
 		if (this.moving) {
-			switch (this.direction) {
-			case 0:
-				if (canmove) {
-					if (!isCollision(this.x, this.y - (1024/32))) {
-						this.y -= (1024/32);
-						
-						Point p = new Point(this.x, this.y);
-						for(int i = 0; i<this.pos_color.size(); i++){
-							if (this.pos_color.get(i).equals(p)) {
-								this.pos_color.remove(this.pos_color.get(i));
-							}
-						}
-						
-						this.pos_color.add(p);
-							
-						for(int i = 0; i<this.pos_color_2.size(); i++){
-							if (this.pos_color_2.get(i).equals(p)) {
-								this.pos_color_2.remove(this.pos_color_2.get(i));
-							}
-						}
-						
-						//this.container.getGraphics().drawImage(grass_b, x, y);
-						//arg0.getGraphics().drawImage(grass_b, x, y);
-						//grass_b.draw(x, y);
+			// switch (this.j1.getD()) {
+			// case Nord:
+			if (canmove) {
+				// if (!isCollision(15*32+this.j1.getCol()*32+16,
+				// this.j1.getLine()*32+16 - (1024/32))) {
+				// this.j1.setD(Direction.Ouest);
+				// this.y -= (1024/32);
+				this.j1.Avancer(1);
+				// System.out.println("passe ici");
+				// Terrain.afficher();
 
-
-					}
-
-				}
-				//System.out.println("pos : " + x + " - " + y);
-				if (System.currentTimeMillis()-lasttime<500) {
-					canmove = false;
-				} else {
-					lasttime = System.currentTimeMillis();
-					canmove = true;
-				}
-				break;
-			case 1:
-				if (canmove) {
-					if (!isCollision(this.x - (1024/32), this.y))
-					this.x -= (1024/32);
-					Point p = new Point(this.x, this.y);
-					
-					for(int i = 0; i<this.pos_color.size(); i++){
-						if (this.pos_color.get(i).equals(p)) {
-							this.pos_color.remove(this.pos_color.get(i));
-						}
-					}
-					
-					this.pos_color.add(p);
-
-						
-					for(int i = 0; i<this.pos_color_2.size(); i++){
-						if (this.pos_color_2.get(i).equals(p)) {
-							this.pos_color_2.remove(this.pos_color_2.get(i));
-						}
-					}
-					
-				}
-				//System.out.println("pos : " + x + " - " + y);
-
-				if (System.currentTimeMillis()-lasttime<500) {
-					canmove = false;
-				} else {
-					lasttime = System.currentTimeMillis();
-					canmove = true;
-				}
-				break;
-			case 2:
-				if (canmove) {
-					if (!isCollision(this.x, this.y + (1024/32)))
-					this.y += (1024/32);
-					Point p = new Point(this.x, this.y);
-					for(int i = 0; i<this.pos_color.size(); i++){
-						if (this.pos_color.get(i).equals(p)) {
-							this.pos_color.remove(this.pos_color.get(i));
-						}
-					}
-					
-					this.pos_color.add(p);
-					
-					for(int i = 0; i<this.pos_color_2.size(); i++){
-						if (this.pos_color_2.get(i).equals(p)) {
-							this.pos_color_2.remove(this.pos_color_2.get(i));
-						}
+				Point p = new Point(15 * 32 + this.j1.getCol() * 32 + 16, this.j1.getLine() * 32 + 16);
+				for (int i = 0; i < this.pos_color.size(); i++) {
+					if (this.pos_color.get(i).equals(p)) {
+						this.pos_color.remove(this.pos_color.get(i));
 					}
 				}
-				//System.out.println("pos : " + x + " - " + y);
 
-				if (System.currentTimeMillis()-lasttime<500) {
-					canmove = false;
-				} else {
-					lasttime = System.currentTimeMillis();
-					canmove = true;
-				}
-				break;
-			case 3:
-				if (canmove) {
-					if (!isCollision(this.x + (1024/32), this.y))
-					this.x += (1024/32);
-					
-					Point p = new Point(this.x, this.y);
-					for(int i = 0; i<this.pos_color.size(); i++){
-						if (this.pos_color.get(i).equals(p)) {
-							this.pos_color.remove(this.pos_color.get(i));
-						}
-					}
-					
-					this.pos_color.add(p);
-					
-					for(int i = 0; i<this.pos_color_2.size(); i++){
-						if (this.pos_color_2.get(i).equals(p)) {
-							this.pos_color_2.remove(this.pos_color_2.get(i));
-						}
+				this.pos_color.add(p);
+
+				for (int i = 0; i < this.pos_color_2.size(); i++) {
+					if (this.pos_color_2.get(i).equals(p)) {
+						this.pos_color_2.remove(this.pos_color_2.get(i));
 					}
 				}
-				//System.out.println("pos : " + x + " - " + y);
 
-				if (System.currentTimeMillis()-lasttime<500) {
-					canmove = false;
-				} else {
-					lasttime = System.currentTimeMillis();
-					canmove = true;
-				}
-				break;
+				// this.container.getGraphics().drawImage(grass_b, x, y);
+				// arg0.getGraphics().drawImage(grass_b, x, y);
+				// grass_b.draw(x, y);
+
+				// }
 
 			}
-}
+			// System.out.println("pos : " + x + " - " + y);
+			if (System.currentTimeMillis() - lasttime < 500) {
+				canmove = false;
+			} else {
+				lasttime = System.currentTimeMillis();
+				canmove = true;
+			}
+		}
+		// break;
+		// case Ouest:
+		// if (canmove) {
+		// if (!isCollision(this.x - (1024/32), this.y))
+		// this.x -= (1024/32);
+		// Point p = new Point(this.x, this.y);
+		//
+		// for(int i = 0; i<this.pos_color.size(); i++){
+		// if (this.pos_color.get(i).equals(p)) {
+		// this.pos_color.remove(this.pos_color.get(i));
+		// }
+		// }
+		//
+		// this.pos_color.add(p);
+		//
+		//
+		// for(int i = 0; i<this.pos_color_2.size(); i++){
+		// if (this.pos_color_2.get(i).equals(p)) {
+		// this.pos_color_2.remove(this.pos_color_2.get(i));
+		// }
+		// }
+		//
+		// }
+		// //System.out.println("pos : " + x + " - " + y);
+		//
+		// if (System.currentTimeMillis()-lasttime<500) {
+		// canmove = false;
+		// } else {
+		// lasttime = System.currentTimeMillis();
+		// canmove = true;
+		// }
+		// break;
+		// case Sud:
+		// if (canmove) {
+		// if (!isCollision(this.x, this.y + (1024/32)))
+		// this.y += (1024/32);
+		// Point p = new Point(this.x, this.y);
+		// for(int i = 0; i<this.pos_color.size(); i++){
+		// if (this.pos_color.get(i).equals(p)) {
+		// this.pos_color.remove(this.pos_color.get(i));
+		// }
+		// }
+		//
+		// this.pos_color.add(p);
+		//
+		// for(int i = 0; i<this.pos_color_2.size(); i++){
+		// if (this.pos_color_2.get(i).equals(p)) {
+		// this.pos_color_2.remove(this.pos_color_2.get(i));
+		// }
+		// }
+		// }
+		// //System.out.println("pos : " + x + " - " + y);
+		//
+		// if (System.currentTimeMillis()-lasttime<500) {
+		// canmove = false;
+		// } else {
+		// lasttime = System.currentTimeMillis();
+		// canmove = true;
+		// }
+		// break;
+		// case Est:
+		// if (canmove) {
+		// if (!isCollision(this.x + (1024/32), this.y))
+		// this.x += (1024/32);
+		//
+		// Point p = new Point(this.x, this.y);
+		// for(int i = 0; i<this.pos_color.size(); i++){
+		// if (this.pos_color.get(i).equals(p)) {
+		// this.pos_color.remove(this.pos_color.get(i));
+		// }
+		// }
+		//
+		// this.pos_color.add(p);
+		//
+		// for(int i = 0; i<this.pos_color_2.size(); i++){
+		// if (this.pos_color_2.get(i).equals(p)) {
+		// this.pos_color_2.remove(this.pos_color_2.get(i));
+		// }
+		// }
+		// }
+		// //System.out.println("pos : " + x + " - " + y);
+		//
+		// if (System.currentTimeMillis()-lasttime<500) {
+		// canmove = false;
+		// } else {
+		// lasttime = System.currentTimeMillis();
+		// canmove = true;
+		// }
+		// break;
+		//
+		// }
+		// }
 		if (this.moving2) {
-			switch (this.direction2) {
-			case 0:
-				if (canmove2) {
-					if (!isCollision(this.xx, this.yy - (1024/32)))
-					this.yy -= (1024/32);
-					Point p = new Point(this.xx, this.yy);
-					
-					for(int i = 0; i<this.pos_color_2.size(); i++){
-						if (this.pos_color_2.get(i).equals(p)) {
-							this.pos_color_2.remove(this.pos_color_2.get(i));
-						}
-					}
-					
-					this.pos_color_2.add(p);
-					
-					for(int i = 0; i<this.pos_color.size(); i++){
-						if (this.pos_color.get(i).equals(p)) {
-							this.pos_color.remove(this.pos_color.get(i));
-						}
-					}
+			// switch (this.j1.getD()) {
+			// case Nord:
+			if (canmove2) {
+				// if (!isCollision(15*32+this.j1.getCol()*32+16,
+				// this.j1.getLine()*32+16 - (1024/32))) {
+				// this.j1.setD(Direction.Ouest);
+				// this.y -= (1024/32);
+				this.j2.Avancer(1);
+				// System.out.println("passe ici");
+				// Terrain.afficher();
 
+				Point p = new Point(15 * 32 + this.j2.getCol() * 32 + 16, this.j2.getLine() * 32 + 16);
+				for (int i = 0; i < this.pos_color_2.size(); i++) {
+					if (this.pos_color_2.get(i).equals(p)) {
+						this.pos_color_2.remove(this.pos_color_2.get(i));
+					}
 				}
-				if (System.currentTimeMillis()-lasttime2<500) {
-					canmove2 = false;
-				} else {
-					lasttime2 = System.currentTimeMillis();
-					canmove2 = true;
-				}				
-				break;
-			case 1:
-				if (canmove2) {
-					if (!isCollision(this.xx - (1024/32), this.yy))
-					this.xx -= (1024/32);
-					Point p = new Point(this.xx, this.yy);
-					for(int i = 0; i<this.pos_color_2.size(); i++){
-						if (this.pos_color_2.get(i).equals(p)) {
-							this.pos_color_2.remove(this.pos_color_2.get(i));
-						}
-					}
-					
-					this.pos_color_2.add(p);
-					
-					for(int i = 0; i<this.pos_color.size(); i++){
-						if (this.pos_color.get(i).equals(p)) {
-							this.pos_color.remove(this.pos_color.get(i));
-						}
-					}
 
-				}
-				if (System.currentTimeMillis()-lasttime2<500) {
-					canmove2 = false;
-				} else {
-					lasttime2 = System.currentTimeMillis();
-					canmove2 = true;
-				}	
-				break;
-			case 2:
-				if (canmove2) {
-					if (!isCollision(this.xx, this.yy + (1024/32)))
-					this.yy += (1024/32);
-					Point p = new Point(this.xx, this.yy);
-					for(int i = 0; i<this.pos_color_2.size(); i++){
-						if (this.pos_color_2.get(i).equals(p)) {
-							this.pos_color_2.remove(this.pos_color_2.get(i));
-						}
-					}
-					
-					this.pos_color_2.add(p);
-					
-					for(int i = 0; i<this.pos_color.size(); i++){
-						if (this.pos_color.get(i).equals(p)) {
-							this.pos_color.remove(this.pos_color.get(i));
-						}
-					}
+				this.pos_color_2.add(p);
 
+				for (int i = 0; i < this.pos_color.size(); i++) {
+					if (this.pos_color.get(i).equals(p)) {
+						this.pos_color.remove(this.pos_color.get(i));
+					}
 				}
-				if (System.currentTimeMillis()-lasttime2<500) {
-					canmove2 = false;
-				} else {
-					lasttime2 = System.currentTimeMillis();
-					canmove2 = true;
-				}	
-				break;
-			case 3:
-				if (canmove2) {
-					if (!isCollision(this.xx + (1024/32), this.yy))
-					this.xx += (1024/32);
-					Point p = new Point(this.xx, this.yy);
-					for(int i = 0; i<this.pos_color_2.size(); i++){
-						if (this.pos_color_2.get(i).equals(p)) {
-							this.pos_color_2.remove(this.pos_color_2.get(i));
-						}
-					}
-					
-					this.pos_color_2.add(p);
-					
-					for(int i = 0; i<this.pos_color.size(); i++){
-						if (this.pos_color.get(i).equals(p)) {
-							this.pos_color.remove(this.pos_color.get(i));
-						}
-					}
-					
 
-				}
-				if (System.currentTimeMillis()-lasttime2<500) {
-					canmove2 = false;
-				} else {
-					lasttime2 = System.currentTimeMillis();
-					canmove2 = true;
-				}	
-				break;
+				// this.container.getGraphics().drawImage(grass_b, x, y);
+				// arg0.getGraphics().drawImage(grass_b, x, y);
+				// grass_b.draw(x, y);
+
+				// }
 
 			}
-}
+			// System.out.println("pos : " + x + " - " + y);
+			if (System.currentTimeMillis() - lasttime2 < 500) {
+				canmove2 = false;
+			} else {
+				lasttime2 = System.currentTimeMillis();
+				canmove2 = true;
+			}
+		}
+		// case 1:
+		// if (canmove2) {
+		// if (!isCollision(this.xx - (1024/32), this.yy))
+		// this.xx -= (1024/32);
+		// Point p = new Point(this.xx, this.yy);
+		// for(int i = 0; i<this.pos_color_2.size(); i++){
+		// if (this.pos_color_2.get(i).equals(p)) {
+		// this.pos_color_2.remove(this.pos_color_2.get(i));
+		// }
+		// }
+		//
+		// this.pos_color_2.add(p);
+		//
+		// for(int i = 0; i<this.pos_color.size(); i++){
+		// if (this.pos_color.get(i).equals(p)) {
+		// this.pos_color.remove(this.pos_color.get(i));
+		// }
+		// }
+		//
+		// }
+		// if (System.currentTimeMillis()-lasttime2<500) {
+		// canmove2 = false;
+		// } else {
+		// lasttime2 = System.currentTimeMillis();
+		// canmove2 = true;
+		// }
+		// break;
+		// case 2:
+		// if (canmove2) {
+		// if (!isCollision(this.xx, this.yy + (1024/32)))
+		// this.yy += (1024/32);
+		// Point p = new Point(this.xx, this.yy);
+		// for(int i = 0; i<this.pos_color_2.size(); i++){
+		// if (this.pos_color_2.get(i).equals(p)) {
+		// this.pos_color_2.remove(this.pos_color_2.get(i));
+		// }
+		// }
+		//
+		// this.pos_color_2.add(p);
+		//
+		// for(int i = 0; i<this.pos_color.size(); i++){
+		// if (this.pos_color.get(i).equals(p)) {
+		// this.pos_color.remove(this.pos_color.get(i));
+		// }
+		// }
+		//
+		// }
+		// if (System.currentTimeMillis()-lasttime2<500) {
+		// canmove2 = false;
+		// } else {
+		// lasttime2 = System.currentTimeMillis();
+		// canmove2 = true;
+		// }
+		// break;
+		// case 3:
+		// if (canmove2) {
+		// if (!isCollision(this.xx + (1024/32), this.yy))
+		// this.xx += (1024/32);
+		// Point p = new Point(this.xx, this.yy);
+		// for(int i = 0; i<this.pos_color_2.size(); i++){
+		// if (this.pos_color_2.get(i).equals(p)) {
+		// this.pos_color_2.remove(this.pos_color_2.get(i));
+		// }
+		// }
+		//
+		// this.pos_color_2.add(p);
+		//
+		// for(int i = 0; i<this.pos_color.size(); i++){
+		// if (this.pos_color.get(i).equals(p)) {
+		// this.pos_color.remove(this.pos_color.get(i));
+		// }
+		// }
+		//
+		//
+		// }
+		// if (System.currentTimeMillis()-lasttime2<500) {
+		// canmove2 = false;
+		// } else {
+		// lasttime2 = System.currentTimeMillis();
+		// canmove2 = true;
+		// }
+		// break;
+		//
+		// }
+		// }
 
 	}
-	
-	
+
 	@Override
 	public void keyReleased(int key, char c) {
-        if (Input.KEY_ESCAPE == key) {
-            container.exit();
-        }
-        //System.out.println(key + "- " + c);
+		if (Input.KEY_ESCAPE == key) {
+			container.exit();
+		}
+		// System.out.println(key + "- " + c);
 		switch (key) {
 		case Input.KEY_UP:
 			this.moving = false;
@@ -592,74 +590,273 @@ public class View extends BasicGame {
 
 			break;
 		}
-    }
-	
-	@Override
-	public void keyPressed(int key, char c) {
-	    switch (key) {
-	        case Input.KEY_UP: this.direction = 0; this.moving = true; break;
-	        case Input.KEY_LEFT: this.direction = 1; this.moving = true; break;
-	        case Input.KEY_DOWN: this.direction = 2; this.moving = true; break;
-	        case Input.KEY_RIGHT: this.direction = 3; this.moving = true; break;
-	        
-	        case Input.KEY_R: 
-	        	JOptionPane r = new JOptionPane(); 
-	        	r.setSize(d);
-	        	String[] bouton ={"Créer","Modifier"};
-	        	int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
-	        	if (retour == 1 ){
-	        		String inputrm = JOptionPane.showInputDialog(robot);
-	        		
-	        	}if (retour == 0){
-	        		JOptionPane p = new JOptionPane();
-	        		String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
-	        		System.out.println(inputrc);
-	        	}
-	        	break;
-	        
-	        case Input.KEY_T: 
-	        	
-	        	JOptionPane r2 = new JOptionPane(); 
-	        	r2.setSize(d);
-	        	String[] bouton2 ={"Créer","Modifier"};
-	        	int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
-	        	if (retour2 == 1 ){
-	        		String inputbm = JOptionPane.showInputDialog(robot2); 
-	        	}if (retour2 == 0){
-	        		String inputbc = JOptionPane.showInputDialog(tab2, "Saisissez votre expression");
-	        	}
-	        	break;
-	        	
-		    case Input.KEY_P:
-	        	
-	        	JOptionPane pause = new JOptionPane();
-	        	String[] boutonP = {"Reprendre"};
-	        	pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icP, boutonP, null);
-	        	break;
-	        	
-	        case Input.KEY_Z:    this.direction2 = 0; this.moving2 = true; break;
-	        case Input.KEY_Q:  this.direction2 = 1; this.moving2 = true; break;
-	        case Input.KEY_S:  this.direction2 = 2; this.moving2 = true; break; 
-	        case Input.KEY_D: this.direction2 = 3; this.moving2 = true; break;
-	    }
 	}
 
+	@Override
+	public void keyPressed(int key, char c) {
+		switch (key) {
+		// case Input.KEY_UP: this.direction = 0; this.moving = true; break;
+		// case Input.KEY_LEFT: this.direction = 1; this.moving = true; break;
+		// case Input.KEY_DOWN: this.direction = 2; this.moving = true; break;
+		// case Input.KEY_RIGHT: this.direction = 3; this.moving = true; break;
+
+		case Input.KEY_UP:
+			j1.setD(Direction.Nord);
+			this.direction = 0;
+			this.moving = true;
+			break;
+		case Input.KEY_LEFT:
+			j1.setD(Direction.Ouest);
+			this.direction = 1;
+			this.moving = true;
+			break;
+		case Input.KEY_DOWN:
+			j1.setD(Direction.Sud);
+			this.direction = 2;
+			this.moving = true;
+			break;
+		case Input.KEY_RIGHT:
+			j1.setD(Direction.Est);
+			this.direction = 3;
+			this.moving = true;
+			break;
+
+		case Input.KEY_R:
+			int t = 0;
+			while (t < 5) {
+				JOptionPane r = new JOptionPane();
+				r.setSize(d);
+				String[] bouton = { "Créer", "Modifier" };
+				int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
+				if (retour == 1) {
+					String inputrm = JOptionPane.showInputDialog(robot);
+
+					if (inputrm == null) {
+						int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+						if (k == 1) {
+							t = 5;
+						}
+					}
+				}
+				if (retour == 0) {
+					JOptionPane p = new JOptionPane();
+					String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
+					// System.out.println(inputrc);
+
+					if (inputrc == null) {
+						int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+						if (k == 1) {
+							t = 5;
+						}
+					}
+				}
+				t++;
+			}
+			break;
+
+		case Input.KEY_T:
+
+			int t2 = 0;
+			while (t2 < 5) {
+				JOptionPane r2 = new JOptionPane();
+				r2.setSize(d);
+				String[] bouton2 = { "Créer", "Modifier" };
+				int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
+				if (retour2 == 1) {
+					String inputbm = JOptionPane.showInputDialog(robot2);
+
+					if (inputbm == null) {
+						int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+						if (k2 == 1) {
+							t2 = 5;
+						}
+					}
+				}
+				if (retour2 == 0) {
+					JOptionPane rbc = new JOptionPane();
+					String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
+
+					if (inputbc == null) {
+						int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+						if (k2 == 1) {
+							t2 = 5;
+						}
+					}
+				}
+				t2++;
+			}
+			break;
+
+		case Input.KEY_P:
+
+			JOptionPane pause = new JOptionPane();
+			String[] boutonP = { "Reprendre" };
+			pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION,
+					JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
+			break;
+
+		case Input.KEY_Z:
+			this.j2.setD(Direction.Nord);
+			this.direction2 = 0;
+			this.moving2 = true;
+			break;
+		case Input.KEY_Q:
+			this.j2.setD(Direction.Ouest);
+			this.direction2 = 1;
+			this.moving2 = true;
+			break;
+		case Input.KEY_S:
+			this.j2.setD(Direction.Sud);
+			this.direction2 = 2;
+			this.moving2 = true;
+			break;
+		case Input.KEY_D:
+			this.j2.setD(Direction.Est);
+			this.direction2 = 3;
+			this.moving2 = true;
+			break;
+		}
+	}
+
+	public void afficher_expr() throws SlickException {
+
+		Image e;
+
+		for (int i = 0; i < Terrain.getTaille(); i++) {
+			for (int j = 0; j < Terrain.getTaille(); j++) {
+				if (Terrain.casexy(i, j).isExpr() && Terrain.casexy(i, j).expr().isOperateur()) {
+					switch ((Operateur) Terrain.casexy(i, j).expr()) {
+					case Deuxpoints:
+						e = new Image("maps/deuxpoints.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
+					case PointVirgule:
+						e = new Image("maps/pointvirgule.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
+					default:
+						break;
+					}
+				} else if (Terrain.casexy(i, j).isExpr() && Terrain.casexy(i, j).expr().isComportement()) {
+					switch ((Comportement) Terrain.casexy(i, j).expr()) {
+					case Attack:
+						e = new Image("maps/A.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
+					case Kamikaze:
+						e = new Image("maps/K.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
+					default:
+						break;
+					}
+				}
+
+			}
+		}
+	}
+
+	public void afficher_pdv(Joueur j) throws SlickException {
+		Image deb_v_r = new Image("maps/debut_vie_red.png");
+		Image mil_v_r = new Image("maps/milieu_vie_red.png");
+		Image fin_v_r = new Image("maps/fin_vie_red.png");
+
+		Image deb_v_b = new Image("maps/debut_vie_bleu.png");
+		Image mil_v_b = new Image("maps/milieu_vie_bleu.png");
+		Image fin_v_b = new Image("maps/fin_vie_bleu.png");
+		
+		float ratio = (float) (j.getPdv()*0.01*21*7);
+
+		if (j.getCouleur()==Couleur.Bleu&&j.getPdv()!=0){
+			deb_v_b.draw(this.DEBUT_VIE_BLEU_X, this.VIE_Y);
+			
+			for (float i = this.DEBUT_VIE_BLEU_X + 7; i < this.DEBUT_VIE_BLEU_X + ratio; i += 7) {
+				mil_v_b.draw(i, this.VIE_Y);
+			}
+			if(j.getPdv()==100)
+		fin_v_b.draw(this.FIN_VIE_BLEU_X, this.VIE_Y);
+		}
+		else if (j.getPdv()!=0) {
+			deb_v_r.draw(this.DEBUT_VIE_ROUGE_X, this.VIE_Y);
+			for (float i = this.DEBUT_VIE_ROUGE_X + 7; i < this.DEBUT_VIE_ROUGE_X + ratio; i += 7) {
+				mil_v_r.draw(i, this.VIE_Y);
+			}
+			if(j.getPdv()==100)
+			 fin_v_r.draw(this.FIN_VIE_ROUGE_X,this.VIE_Y);
+
+		}
+	}
+	
+	
+	public void afficher_inventaire(Joueur j) throws SlickException {
+
+		Image e;
+
+		int colonne = 0, ligne = 0;
+		for (int i = 0; i < j.inventaire().size(); i++) {
+			if (j.inventaire().get(i).isOperateur()) {
+				switch ((Operateur) j.inventaire().get(i)) {
+				case Deuxpoints:
+					e = new Image("maps/deuxpoints.png");
+					break;
+				case PointVirgule:
+					e = new Image("maps/pointvirgule.png");
+					break;
+				default:
+					e = new Image("maps/deuxpoints.png");
+					break;
+				}
+				if (j.getCouleur() == Couleur.Bleu)
+					e.draw(62 + (45 * colonne), 185 + (42 * ligne));
+				else
+					e.draw(1722 + (45 * colonne), 185 + (42 * ligne));
+				
+			} else if (j.inventaire().get(i).isComportement()) {
+				switch ((Comportement) j.inventaire().get(i)) {
+				case Attack:
+					e = new Image("maps/A.png");
+					break;
+				case Kamikaze:
+					e = new Image("maps/K.png");
+					break;
+				default:
+					e = new Image("maps/deuxpoints.png");
+					break;
+				}
+
+				if (j.getCouleur() == Couleur.Bleu)
+					e.draw(62 + (45 * colonne), 185 + (42 * ligne));
+				else
+					e.draw(1722 + (45 * colonne), 185 + (42 * ligne));
+			}
+
+			colonne++;
+			if (colonne > 2) {
+				ligne++;
+				colonne = 0;
+			}
+		}
+
+	}
 
 	public static void launch_game(Joueur j1, Joueur j2) {
-		 AppGameContainer game;
+		AppGameContainer game;
 		try {
-			game = new AppGameContainer(new View(j1,j2), 1920, 960, false);
+			game = new AppGameContainer(new View(j1, j2), 1920, 960, false);
 			game.start();
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		 //game.setFullscreen(true);
-		 //game.setDisplayMode(1920, 1080, true);
+
+		// game.setFullscreen(true);
+		// game.setDisplayMode(1920, 1080, true);
 
 	}
 

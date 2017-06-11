@@ -3,7 +3,7 @@ package machine_a_glace;
 public class Case {
 	private Couleur coul;
 	private Contenu cont;
-	private Operateur op;
+	private Expr expr;
 	private Entite ent;
 
 	public Case() {
@@ -16,8 +16,8 @@ public class Case {
 	}
 
 	
-	public boolean isOperateur() {
-		return (cont == Contenu.Opérateur);
+	public boolean isExpr() {
+		return (cont == Contenu.Expression);
 	}
 
 	public boolean isJoueur() {
@@ -44,20 +44,20 @@ public class Case {
 		return ent;
 	}
 	
-	public Operateur op() {
+	public Expr expr() {
 
-		return op;
+		return expr;
 	}
 
 	public String toString() {
-		if (isOperateur())
-			return op.toString();
+		if (isExpr())
+			return expr.toString();
 		else
 			return cont.toString();
 	}
 
-	public void setOp(Operateur op) {
-		this.op = op;
+	public void setExpr(Expr expr) {
+		this.expr = expr;
 	}
 	
 	public Couleur getCouleur(){
