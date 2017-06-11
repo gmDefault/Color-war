@@ -41,9 +41,16 @@ public class Robot extends Entite {
 		return true;
 	}
 	
-	public void Kill(int line, int col){
-		Terrain.terrain[line ][col].setCase(Contenu.Vide);
-		Terrain.terrain[line ][col].setEntite(null);
+//	public boolean isEnnemi(int line, int col, Entite ent) {
+//		if(ent.getCouleur() != getCol()){
+//			
+//		}
+//		return ;
+//	}
+
+	public void Kill(int line, int col) {
+		Terrain.terrain[line][col].setCase(Contenu.Vide);
+		Terrain.terrain[line][col].setEntite(null);
 	}
 
 	public void Explosion(int line, int col) {
@@ -66,7 +73,7 @@ public class Robot extends Entite {
 
 			for (j = min; j <= max; j++) {
 				if (Terrain.terrain[line + i][col + j].isRobot())
-					Kill(line+i,col+j);
+					Kill(line + i, col + j);
 
 				else if (Terrain.terrain[getLine() + i][getCol() + j].isJoueur()) {
 					Terrain.terrain[line + i][col + j].getEntite().Degat(40);
@@ -88,7 +95,7 @@ public class Robot extends Entite {
 		while (i <= borneLigB) {
 			for (j = min; j <= max; j++) {
 				if (Terrain.terrain[line + i][col + j].isRobot())
-					Kill(line+i,col+j);		
+					Kill(line + i, col + j);
 				else if (Terrain.terrain[getLine() + i][getCol() + j].isJoueur()) {
 					Terrain.terrain[line + i][col + j].getEntite().Degat(40);
 				}
@@ -115,6 +122,52 @@ public class Robot extends Entite {
 		boolean present = EnnemiPresentNCase(line, col, 2, Terrain.terrain[line][col].getCouleurInverse());
 		if (present)
 			Explosion(line, col);
+	}
+
+	
+	// Renvoi True si l'attaque est concluante, false sinon
+	public boolean Attack() {
+		/**
+		 * Possibilité de rajouter un paramètre entité afin de ne pas check à
+		 * chaque fois le tableau. Choix.
+		 */
+		int line, col;
+		line = getLine();
+		col = getCol();
+		int taille_t = Terrain.getTaille();
+		Direction d = direction();
+		switch (d) {
+
+		case Ouest:
+			if (col - 1 > 0) {
+				Terrain.terrain[line][col - 1].getEntite().Degat(30);
+				return true;
+			} else
+				return false;
+		case Nord:
+			if (line - 1 > 0) {
+				Terrain.terrain[line - 1][col].getEntite().Degat(30);
+				return true;
+			} else
+				return false;
+		case Sud:
+			if (line + 1 < taille_t) {
+				Terrain.terrain[line + 1][col].getEntite().Degat(30);
+				return true;
+			} else
+				return false;
+		case Est:
+			if (col + 1 < taille_t) {
+				Terrain.terrain[line][col+1].getEntite().Degat(30);
+				return true;
+			} else
+				return false;
+
+		default:
+
+			return false;
+
+		}
 	}
 
 	public boolean EnnemiPresentNCase(int line, int col, int portee, Couleur ennemi) {
