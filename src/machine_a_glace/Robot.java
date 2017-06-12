@@ -118,17 +118,95 @@ public class Robot extends Entite {
 		line = getLine();
 		col = getCol();
 		boolean present = EnnemiPresentNCase(line, col, 2);
-		if (present){
+		if (present) {
 			Explosion(line, col);
 			return true;
-		}
-		else return false;
+		} else
+			return false;
 	}
 
-	public void Explorer(){
-		
+	public void Avancer(int line1, int col1, int line2, int col2) {
+		Terrain.terrain[line2][col2] = Terrain.terrain[line1][col1];
+		Terrain.terrain[line1][col1].setCase(Contenu.Vide);
+		Terrain.terrain[line1][col1].setEntite(null);
 	}
-	
+
+	public void Explorer() {
+		Direction d;
+		int line, col;
+		line = getLine();
+		col = getCol();
+		// Case case_r = Terrain.terrain[line][col];
+		d = this.direction();
+		double random;
+		switch (d) {
+		case Ouest:
+			if (Terrain.terrain[line][col - 1].isAccessible()) {
+				Avancer(line, col, line, col - 1);
+			} else {
+				random = Math.random();
+				if (random < 0.5 && Terrain.terrain[line + 1][col].isAccessible()) {
+					ChangerDirection(Direction.Sud);
+					Avancer(line, col, line + 1, col);
+				} else if (Terrain.terrain[line - 1][col].isAccessible()) {
+					ChangerDirection(Direction.Nord);
+					Avancer(line, col, line - 1, col);
+				} else {
+					ChangerDirection(Direction.Est);
+				}
+			}
+			break;
+		case Est:
+			if (Terrain.terrain[line][col + 1].isAccessible()) {
+				Avancer(line, col, line, col + 1);
+			} else {
+				random = Math.random();
+				if (random < 0.5 && Terrain.terrain[line + 1][col].isAccessible()) {
+					ChangerDirection(Direction.Sud);
+					Avancer(line, col, line + 1, col);
+				} else if (Terrain.terrain[line - 1][col].isAccessible()) {
+					ChangerDirection(Direction.Nord);
+					Avancer(line, col, line - 1, col);
+				} else {
+					ChangerDirection(Direction.Ouest);
+				}
+			}
+			break;
+		case Nord:
+			if (Terrain.terrain[line - 1][col].isAccessible()) {
+				Avancer(line, col, line - 1, col);
+			} else {
+				random = Math.random();
+				if (random < 0.5 && Terrain.terrain[line][col - 1].isAccessible()) {
+					ChangerDirection(Direction.Ouest);
+					Avancer(line, col, line, col - 1);
+				} else if (Terrain.terrain[line][col + 1].isAccessible()) {
+					ChangerDirection(Direction.Est);
+					Avancer(line, col, line, col + 1);
+				} else {
+					ChangerDirection(Direction.Sud);
+				}
+			}
+			break;
+		case Sud:
+			if (Terrain.terrain[line + 1][col].isAccessible()) {
+				Avancer(line, col, line + 1, col);
+			} else {
+				random = Math.random();
+				if (random < 0.5 && Terrain.terrain[line][col - 1].isAccessible()) {
+					ChangerDirection(Direction.Ouest);
+					Avancer(line, col, line, col - 1);
+				} else if (Terrain.terrain[line][col + 1].isAccessible()) {
+					ChangerDirection(Direction.Est);
+					Avancer(line, col, line, col + 1);
+				} else {
+					ChangerDirection(Direction.Nord);
+				}
+			}
+			break;
+		}
+	}
+
 	// Renvoi True si l'attaque est concluante, false sinon
 	public boolean Attack() {
 		int line, col;
