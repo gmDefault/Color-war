@@ -7,6 +7,8 @@ public class Terrain {
 	public static Case terrain[][] = new Case[taille][taille];
 	public static int Nbr_Cp_Op =30;
 	private static ArrayList<Coordonnees> coordonnees_cp_op=new ArrayList<Coordonnees>(Nbr_Cp_Op);
+	private static Coordonnees CreationRouge = new Coordonnees(3,15);
+	private static Coordonnees CreationBleu = new Coordonnees(26,15);
 
 	private Terrain() {
 
@@ -23,6 +25,7 @@ public class Terrain {
 		}
 		Initialiser_coordonnees_cp_op();
 		Initialiser_comportements_operateurs(coordonnees_cp_op);
+		Initialiser_cases_creer();
 
 	}
 
@@ -142,6 +145,11 @@ public class Terrain {
 			index--;
 		}
 
+	}
+	
+	public static void Initialiser_cases_creer(){
+		Terrain.terrain[CreationBleu.getLigne()][CreationBleu.getCol()].setCase(Contenu.Creer);
+		Terrain.terrain[CreationRouge.getLigne()][CreationRouge.getCol()].setCase(Contenu.Creer);
 	}
 
 	public static void afficher() {
