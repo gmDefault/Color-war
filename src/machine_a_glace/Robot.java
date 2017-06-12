@@ -8,6 +8,7 @@ public class Robot extends Entite {
 	private boolean fonctionne;
 	private boolean isPriorite = false;
 	private boolean protection = false;
+	private Joueur maitre;
 
 	public Robot(int x, int y, Couleur c, Node auto) {
 		super(x, y, c, 20);
@@ -91,7 +92,7 @@ public class Robot extends Entite {
 
 	public void Avancer(int pas) {
 		protection = false;
-		
+
 		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
 		Terrain.terrain[getLine()][getCol()].setEntite(null);
 		switch (getD()) {
@@ -107,10 +108,6 @@ public class Robot extends Entite {
 		case Ouest:
 			setCol(getCol() - pas);
 
-		}
-		if (Terrain.casexy(getLine(), getCol()).isExpr()) {
-			super.inventaire().add(Terrain.casexy(getLine(), getCol()).expr());
-			Terrain.casexy(getLine(), getCol()).setExpr(null);
 		}
 		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Robot);
 		Terrain.terrain[getLine()][getCol()].setEntite(this);
@@ -201,9 +198,9 @@ public class Robot extends Entite {
 		int line, col;
 		line = getLine();
 		col = getCol();
-		
+
 		protection = false;
-		
+
 		boolean present = EnnemiPresentNCase(line, col, 2);
 		if (present) {
 			Explosion(line, col);
@@ -213,10 +210,17 @@ public class Robot extends Entite {
 	}
 
 	public void Avancer(int line1, int col1, int line2, int col2) {
-		Terrain.terrain[line2][col2] = Terrain.terrain[line1][col1];
-		Terrain.terrain[line1][col1].setCase(Contenu.Vide);
-		Terrain.terrain[line1][col1].setEntite(null);
+		if (Terrain.terrain[line2][col2].getCont() == Contenu.Expression)
+			maitre.add_inventaire(Terrain.terrain[line2][col2].expr());
+		if (Terrain.terrain[line2][col2].getCont() != Contenu.Creer)
+			Terrain.terrain[line2][col2].setCase(Contenu.Robot);
 		
+		Terrain.terrain[line2][col2].setEntite(this);
+
+		if (Terrain.terrain[line1][col1].getCont() != Contenu.Creer)
+			Terrain.terrain[line1][col1].setCase(Contenu.Vide);
+		Terrain.terrain[line1][col1].setEntite(null);
+
 		setCol(col2);
 		setLine(line2);
 	}
@@ -529,10 +533,12 @@ public class Robot extends Entite {
 		}
 		return Borne;
 	}
-	
-	
-	public void Protect(){
-		protection=true;
+
+	public void Protect() {
+		protection = true;
 	}
 
+	public void setJoueur(Joueur j) {
+		maitre = j;
+	}
 }

@@ -1,33 +1,41 @@
 package machine_a_glace;
 
+import java.util.ArrayList;
+
 public class Joueur extends Entite {
 	private int nb_cases_coloriees = 0;
 
-	
-	public Joueur(int x, int y, Couleur c,int pdv) {
-		super(x, y, c,pdv);
+	private ArrayList<Expr> inventaire;
+
+	public Joueur(int x, int y, Couleur c, int pdv) {
+		super(x, y, c, pdv);
 		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
 		Terrain.terrain[getLine()][getCol()].setEntite(this);
+		inventaire = new ArrayList<Expr>();
 	}
-	public int getNombre_Case_Coloriees(){
+
+	public int getNombre_Case_Coloriees() {
 		return nb_cases_coloriees;
 	}
+
 	public void Avancer(int pas) {
-		
-		if(next_case().isAccessible()){
+
+		if (next_case().isAccessible()) {
 			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
-			Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
+				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
 			Terrain.terrain[getLine()][getCol()].setEntite(null);
 			switch (getD()) {
 			case Nord:
 				setLine(getLine() - pas);
-				if (this.getCouleur() == Couleur.Bleu && Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
+				if (this.getCouleur() == Couleur.Bleu
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
 						View.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
 					this.nb_cases_coloriees++;
-				} else if (this.getCouleur() == Couleur.Rouge && Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
+				} else if (this.getCouleur() == Couleur.Rouge
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
 						View.recolorie_par_dessus = true;
 					}
@@ -37,13 +45,15 @@ public class Joueur extends Entite {
 				break;
 			case Est:
 				setCol(getCol() + pas);
-				if (this.getCouleur() == Couleur.Bleu && Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
+				if (this.getCouleur() == Couleur.Bleu
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
 						View.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
 					this.nb_cases_coloriees++;
-				} else if (this.getCouleur() == Couleur.Rouge && Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
+				} else if (this.getCouleur() == Couleur.Rouge
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
 						View.recolorie_par_dessus = true;
 					}
@@ -53,13 +63,15 @@ public class Joueur extends Entite {
 				break;
 			case Sud:
 				setLine(getLine() + pas);
-				if (this.getCouleur() == Couleur.Bleu && Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
+				if (this.getCouleur() == Couleur.Bleu
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
 						View.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
 					this.nb_cases_coloriees++;
-				} else if (this.getCouleur() == Couleur.Rouge && Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
+				} else if (this.getCouleur() == Couleur.Rouge
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
 						View.recolorie_par_dessus = true;
 					}
@@ -69,13 +81,15 @@ public class Joueur extends Entite {
 				break;
 			case Ouest:
 				setCol(getCol() - pas);
-				if (this.getCouleur() == Couleur.Bleu && Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
+				if (this.getCouleur() == Couleur.Bleu
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
 						View.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
 					this.nb_cases_coloriees++;
-				} else if (this.getCouleur() == Couleur.Rouge && Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
+				} else if (this.getCouleur() == Couleur.Rouge
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
 						View.recolorie_par_dessus = true;
 					}
@@ -84,18 +98,18 @@ public class Joueur extends Entite {
 				}
 
 			}
-			if (Terrain.casexy(getLine(),getCol()).isExpr()){
-				super.inventaire().add(Terrain.casexy(getLine(),getCol()).expr());
-				Terrain.casexy(getLine(),getCol()).setExpr(null);
+			if (Terrain.casexy(getLine(), getCol()).isExpr()) {
+				inventaire().add(Terrain.casexy(getLine(), getCol()).expr());
+				Terrain.casexy(getLine(), getCol()).setExpr(null);
 			}
-			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
+			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
-			}
+
 		}
-		
+
 	}
-	
-	public boolean isJoueur(){
+
+	public boolean isJoueur() {
 		return true;
 	}
 
@@ -106,5 +120,28 @@ public class Joueur extends Entite {
 	public void setNb_cases_coloriees(int nb_cases_coloriees) {
 		this.nb_cases_coloriees = nb_cases_coloriees;
 	}
+	
 
+	public ArrayList<Expr> inventaire() {
+		return inventaire;
+	}
+	
+	public void add_inventaire(Expr e){
+		inventaire.add(e);
+	}
+	
+	public void afficher_inventaire() {
+		System.out.print("Inventaire ");
+		if (isRobot()) {
+			System.out.print("robot : ");
+		} else {
+			System.out.print("joueur : ");
+		}
+
+		if (!inventaire.isEmpty()) {
+			System.out.print(inventaire.toString());
+		}
+		System.out.println();
+
+	}
 }

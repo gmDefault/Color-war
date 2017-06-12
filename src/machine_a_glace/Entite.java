@@ -6,7 +6,6 @@ public abstract class Entite {
 
 	private Direction d;
 	private int col, line;
-	private ArrayList<Expr> inventaire;
 	private Couleur couleur;
 	int pdv;
 	/**
@@ -25,7 +24,6 @@ public abstract class Entite {
 			setD(Direction.Nord);
 			couleur = c;
 			Terrain.terrain[line][col].setCase(Contenu.Joueur);
-			inventaire = new ArrayList<Expr>();
 			pdv = pointsdv;
 		} else {
 			throw new JeuException("entite non creable sur une case non accessible");
@@ -37,9 +35,6 @@ public abstract class Entite {
 		return getD();
 	}
 
-	public ArrayList<Expr> inventaire() {
-		return inventaire;
-	}
 
 	public abstract void Avancer(int pas);
 
@@ -105,20 +100,7 @@ public abstract class Entite {
 		return false;
 	}
 
-	public void afficher_inventaire() {
-		System.out.print("Inventaire ");
-		if (isRobot()) {
-			System.out.print("robot : ");
-		} else {
-			System.out.print("joueur : ");
-		}
-
-		if (!inventaire.isEmpty()) {
-			System.out.print(inventaire.toString());
-		}
-		System.out.println();
-
-	}
+	
 	
 	public Couleur getCouleur(){
 		return couleur;

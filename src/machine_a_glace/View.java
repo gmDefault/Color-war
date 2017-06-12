@@ -35,7 +35,7 @@ public class View extends BasicGame {
 
 	int seconde = 20000;
 
-	int minute = 2;
+	int minute = 3;
 
 	private float x = 976, y = 32 + 16;
 	private float PourcentRouge = 0;
@@ -52,8 +52,6 @@ public class View extends BasicGame {
 	private int secs2 = 0;
 	private int secsrobot = 0;
 
-	private ArrayList<Point> pos_color = new ArrayList<Point>();
-	private ArrayList<Point> pos_color_2 = new ArrayList<Point>();
 
 	private final float DEBUT_VIE_ROUGE_X = 1631;
 	private final float FIN_VIE_ROUGE_X = 1778;
@@ -89,7 +87,11 @@ public class View extends BasicGame {
 
 	java.awt.Font UIFont1;
 	org.newdawn.slick.UnicodeFont uniFont;
-
+	
+	java.awt.Font UIFont2;
+	org.newdawn.slick.UnicodeFont uniFont2;
+	
+	
 	public View(Joueur j1, Joueur j2) {
 
 		super("ColorWar");
@@ -129,7 +131,26 @@ public class View extends BasicGame {
 			e.printStackTrace();
 		}
 
-		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 12.f);
+		
+		
+		try {
+			UIFont2 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
+					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/Font1.ttf"));
+			UIFont2 = UIFont2.deriveFont(java.awt.Font.PLAIN, 50.f);
+
+			uniFont2 = new org.newdawn.slick.UnicodeFont(UIFont2);
+			uniFont2.addAsciiGlyphs();
+			uniFont2.getEffects().add(new ColorEffect(java.awt.Color.white)); 
+			uniFont2.addAsciiGlyphs();
+			uniFont2.loadGlyphs();
+
+		} catch (FontFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+
 
 		SpriteSheet spriteSheet = new SpriteSheet("maps/char_2.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
@@ -164,10 +185,10 @@ public class View extends BasicGame {
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
 
-		Terrain.initialiser();
 		Node test = Reader.read("{X}");
 		test = new Node(Operateur.Star, null, test);
 		r1 = new Robot(5, 15, Couleur.Rouge, test);
+		r1.setJoueur(j1);
 
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
@@ -223,7 +244,7 @@ public class View extends BasicGame {
 		afficher_inventaire(j1);
 		afficher_inventaire(j2);
 
-		// j1.afficher_inventaire();
+		 j1.afficher_inventaire();
 
 		robots_inv.draw(30, 650);
 		robots_inv2.draw(1680, 650);
@@ -333,12 +354,12 @@ public class View extends BasicGame {
 		// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
 
 		g.setColor(new Color(255, 255, 255));
-		g.drawString((int) (PourcentBleu * 100) + " % ", 200, 75);
+		uniFont2.drawString(290,10,(int)(PourcentBleu * 100) + " % ", Color.blue);
 		g.drawString("" + j2.getPdv(), 190, 120);
 		g.drawString("" + j1.getPdv(), 1700, 120);
 		g.drawString(" Inventaire ", 50, 150);
 		g.drawString(" Inventaire ", 1750, 150);
-		g.drawString((int) (PourcentRouge * 100) + " % ", 1670, 50);
+		uniFont2.drawString(1472,10,(int)(PourcentRouge * 100) + " % ", Color.red);
 		if (minute < 10) {
 			if (seconde / 1000 < 10) {
 				if (minute == 0)
@@ -456,20 +477,7 @@ public class View extends BasicGame {
 				// System.out.println("passe ici");
 				// Terrain.afficher();
 
-				Point p = new Point(15 * 32 + this.j1.getCol() * 32 + 16, this.j1.getLine() * 32 + 16);
-				for (int i = 0; i < this.pos_color.size(); i++) {
-					if (this.pos_color.get(i).equals(p)) {
-						this.pos_color.remove(this.pos_color.get(i));
-					}
-				}
 
-				this.pos_color.add(p);
-
-				for (int i = 0; i < this.pos_color_2.size(); i++) {
-					if (this.pos_color_2.get(i).equals(p)) {
-						this.pos_color_2.remove(this.pos_color_2.get(i));
-					}
-				}
 
 				// this.container.getGraphics().drawImage(grass_b, x, y);
 				// arg0.getGraphics().drawImage(grass_b, x, y);
@@ -635,20 +643,6 @@ public class View extends BasicGame {
 				// System.out.println("passe ici");
 				// Terrain.afficher();
 
-				Point p = new Point(15 * 32 + this.j2.getCol() * 32 + 16, this.j2.getLine() * 32 + 16);
-				for (int i = 0; i < this.pos_color_2.size(); i++) {
-					if (this.pos_color_2.get(i).equals(p)) {
-						this.pos_color_2.remove(this.pos_color_2.get(i));
-					}
-				}
-
-				this.pos_color_2.add(p);
-
-				for (int i = 0; i < this.pos_color.size(); i++) {
-					if (this.pos_color.get(i).equals(p)) {
-						this.pos_color.remove(this.pos_color.get(i));
-					}
-				}
 
 				// this.container.getGraphics().drawImage(grass_b, x, y);
 				// arg0.getGraphics().drawImage(grass_b, x, y);
