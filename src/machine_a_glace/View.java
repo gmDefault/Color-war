@@ -178,9 +178,7 @@ public class View extends BasicGame {
 		afficher_inventaire(j1);
 		afficher_inventaire(j2);
 
-		// j1.afficher_inventaire();
-		System.out.println("cases coloriées j1 : " + j1.getNb_cases_coloriees());
-		System.out.println("cases coloriées j2 : " + j2.getNb_cases_coloriees());
+//		 j1.afficher_inventaire();
 
 		robots_inv.draw(30, 650);
 		robots_inv2.draw(1680, 650);

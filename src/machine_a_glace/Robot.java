@@ -6,7 +6,7 @@ public class Robot extends Entite {
 	private Node etat_courant;
 	private int nb_tour;
 	private boolean fonctionne;
-	private boolean isPriorite=false;
+	private boolean isPriorite = false;
 	private boolean protection = false;
 
 	public Robot(int x, int y, Couleur c, Node auto) {
@@ -16,7 +16,26 @@ public class Robot extends Entite {
 		nb_tour = 0;
 		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Robot);
 		Terrain.terrain[getLine()][getCol()].setEntite(this);
+		next_etat();
+	}
 
+	public void execute() {
+		switch ((Comportement) etat_courant.Gram) {
+		case Attack:
+			Attack();
+			break;
+		case Explore:
+			Explorer();
+			break;
+		case Kamikaze:
+			Kamikaze();
+			break;
+		case Protect:
+			Protect();
+			break;
+		default:
+			break;
+		}
 	}
 
 	public void next_etat() {
@@ -50,13 +69,16 @@ public class Robot extends Entite {
 				else
 					b = next_etat_recur(a.FD, b);
 			} else if (a.Gram.isOperateur() && a.Gram == Operateur.Priorite) {
-				if(b) isPriorite = true;
+				if (b)
+					isPriorite = true;
 				b = next_etat_recur(a.FG, b);
-				if(b) isPriorite = true;
+				if (b)
+					isPriorite = true;
 				if (b && !fonctionne || !b)
 					b = next_etat_recur(a.FD, b);
-				if(b) isPriorite = false;
-				 
+				if (b)
+					isPriorite = false;
+
 			} else {
 				b = next_etat_recur(a.FG, b);
 				b = next_etat_recur(a.FD, b);
@@ -68,7 +90,8 @@ public class Robot extends Entite {
 	}
 
 	public void Avancer(int pas) {
-
+		protection = false;
+		
 		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
 		Terrain.terrain[getLine()][getCol()].setEntite(null);
 		switch (getD()) {
@@ -178,6 +201,9 @@ public class Robot extends Entite {
 		int line, col;
 		line = getLine();
 		col = getCol();
+		
+		protection = false;
+		
 		boolean present = EnnemiPresentNCase(line, col, 2);
 		if (present) {
 			Explosion(line, col);
@@ -192,7 +218,6 @@ public class Robot extends Entite {
 		Terrain.terrain[line1][col1].setEntite(null);
 	}
 
-
 	public void Explorer() {
 		Direction d;
 		int line, col;
@@ -201,6 +226,7 @@ public class Robot extends Entite {
 		// Case case_r = Terrain.terrain[line][col];
 		d = this.direction();
 		double random;
+		protection = false;
 		switch (d) {
 		case Ouest:
 			if (Terrain.terrain[line][col - 1].isAccessible()) {
@@ -499,6 +525,11 @@ public class Robot extends Entite {
 			bound--;
 		}
 		return Borne;
+	}
+	
+	
+	public void Protect(){
+		protection=true;
 	}
 
 }
