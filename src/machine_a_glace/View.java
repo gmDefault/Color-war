@@ -221,15 +221,15 @@ public class View extends BasicGame {
 		afficher_pdv(j1);
 		afficher_pdv(j2);
 
-		inventaire.draw(0, 175);
-		inventaire.draw(1660, 175);
+		inventaire.draw(100, 175);
+		inventaire.draw(1560, 175);
 		afficher_inventaire(j1);
 		afficher_inventaire(j2);
 
 		 j1.afficher_inventaire();
 
-		robots_inv.draw(30, 650);
-		robots_inv2.draw(1680, 650);
+		robots_inv.draw(120, 650);
+		robots_inv2.draw(1580, 650);
 
 		// for (int i = 0; i < this.pos_color.size(); i++) {
 		// peinture_rouge.drawCentered(this.pos_color.get(i).getX(),
@@ -336,8 +336,12 @@ public class View extends BasicGame {
 		uniFont2.drawString(300,10,(int)(PourcentBleu * 100) + " % ", Color.blue);
 		g.drawString("" + j2.getPdv(), 190, 120);
 		g.drawString("" + j1.getPdv(), 1700, 120);
-		g.drawString(" Inventaire ", 50, 150);
-		g.drawString(" Inventaire ", 1750, 150);
+		g.drawString(" Inventaire ", 187, 150);
+		g.drawString(" Inventaire ", 1617, 150);
+		
+		g.drawString(" Etat des robots ", 140, 630);
+		g.drawString(" Etat des robots  ", 1617, 630);
+		
 		uniFont2.drawString(1472,10,(int)(PourcentRouge * 100) + " % ", Color.red);
 		if (minute < 10) {
 			if (seconde / 1000 < 10) {
@@ -1036,9 +1040,9 @@ public class View extends BasicGame {
 					break;
 				}
 				if (j.getCouleur() == Couleur.Bleu)
-					e.draw(62 + (45 * colonne), 185 + (42 * ligne));
+					e.draw(162 + (45 * colonne), 185 + (44 * ligne));
 				else
-					e.draw(1722 + (45 * colonne), 185 + (42 * ligne));
+					e.draw(1622 + (45 * colonne), 185 + (44 * ligne));
 
 			} else if (j.inventaire().get(i).isComportement()) {
 				switch ((Comportement) j.inventaire().get(i)) {
@@ -1063,9 +1067,9 @@ public class View extends BasicGame {
 				}
 
 				if (j.getCouleur() == Couleur.Bleu)
-					e.draw(62 + (45 * colonne), 185 + (42 * ligne));
+					e.draw(162 + (45 * colonne), 185 + (44 * ligne));
 				else
-					e.draw(1722 + (45 * colonne), 185 + (42 * ligne));
+					e.draw(1622 + (45 * colonne), 185 + (44 * ligne));
 			}
 
 			colonne++;
