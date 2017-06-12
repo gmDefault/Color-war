@@ -35,7 +35,7 @@ public class View extends BasicGame {
 
 	int seconde = 20000;
 
-	int minute = 0;
+	int minute = 3;
 
 	private float x = 976, y = 32 + 16;
 	private float PourcentRouge = 0;
@@ -82,7 +82,11 @@ public class View extends BasicGame {
 
 	java.awt.Font UIFont1;
 	org.newdawn.slick.UnicodeFont uniFont;
-
+	
+	java.awt.Font UIFont2;
+	org.newdawn.slick.UnicodeFont uniFont2;
+	
+	
 	public View(Joueur j1, Joueur j2) {
 
 		super("ColorWar");
@@ -121,7 +125,26 @@ public class View extends BasicGame {
 			e.printStackTrace();
 		}
 
-		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 12.f);
+		
+		
+		try {
+			UIFont2 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
+					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/Font1.ttf"));
+			UIFont2 = UIFont2.deriveFont(java.awt.Font.PLAIN, 50.f);
+
+			uniFont2 = new org.newdawn.slick.UnicodeFont(UIFont2);
+			uniFont2.addAsciiGlyphs();
+			uniFont2.getEffects().add(new ColorEffect(java.awt.Color.white)); 
+			uniFont2.addAsciiGlyphs();
+			uniFont2.loadGlyphs();
+
+		} catch (FontFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+
 
 		SpriteSheet spriteSheet = new SpriteSheet("maps/char_2.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
@@ -309,12 +332,12 @@ public class View extends BasicGame {
 		// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
 
 		g.setColor(new Color(255, 255, 255));
-		g.drawString((int) (PourcentBleu * 100) + " % ", 200, 75);
+		uniFont2.drawString(290,10,(int)(PourcentBleu * 100) + " % ", Color.blue);
 		g.drawString("" + j2.getPdv(), 190, 120);
 		g.drawString("" + j1.getPdv(), 1700, 120);
 		g.drawString(" Inventaire ", 50, 150);
 		g.drawString(" Inventaire ", 1750, 150);
-		g.drawString((int) (PourcentRouge * 100) + " % ", 1670, 50);
+		uniFont2.drawString(1472,10,(int)(PourcentRouge * 100) + " % ", Color.red);
 		if (minute < 10) {
 			if (seconde / 1000 < 10) {
 				if (minute == 0)
