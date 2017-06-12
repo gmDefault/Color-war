@@ -185,7 +185,7 @@ public class View extends BasicGame {
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
 
-		Node test = Reader.read("{K}");
+		Node test = Reader.read("{X}");
 		test = new Node(Operateur.Star, null, test);
 		r1 = new Robot(5, 15, Couleur.Rouge, test);
 		r1.setJoueur(j1);
