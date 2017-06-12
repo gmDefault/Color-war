@@ -9,7 +9,9 @@ public class Joueur extends Entite {
 		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
 		Terrain.terrain[getLine()][getCol()].setEntite(this);
 	}
-
+	public int getNombre_Case_Coloriees(){
+		return nb_cases_coloriees;
+	}
 	public void Avancer(int pas) {
 		
 		if(next_case().isAccessible()){

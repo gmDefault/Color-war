@@ -15,7 +15,6 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.tiled.TiledMap;
 
-
 import java.awt.Dimension;
 import java.util.ArrayList;
 
@@ -31,11 +30,13 @@ public class View extends BasicGame {
 	private GameContainer container;
 	private TiledMap map;
 
-	int seconde=7000;
-	
-	int minute=2;
-	
+	int seconde = 7000;
+
+	int minute = 2;
+
 	private float x = 976, y = 32 + 16;
+	private float PourcentRouge=0;
+	private float PourcentBleu=0;
 	private float xx = 976, yy = 960 - 32 - 16;
 	private int direction = 2;
 	private int direction2 = 0;
@@ -58,7 +59,7 @@ public class View extends BasicGame {
 	private boolean canmove2 = false;
 
 	private Joueur j1, j2;
-	
+
 	public static boolean recolorie_par_dessus = false;
 
 	private boolean moving2 = false;
@@ -92,13 +93,11 @@ public class View extends BasicGame {
 		return animation;
 	}
 
-	
 	public void init(GameContainer arg0) throws SlickException {
 		// TODO Auto-generated method stub
 		this.container = arg0;
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
-		
 
 		SpriteSheet spriteSheet = new SpriteSheet("maps/char_2.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
@@ -159,7 +158,7 @@ public class View extends BasicGame {
 		Image peinture_bleu = new Image("maps/peinture_bleu.png");
 		Image hud_bleu = new Image("maps/hud_bleu.png");
 		Image hud_rouge = new Image("maps/hud_rouge.png");
-		
+
 		Image inventaire = new Image("maps/inventaire.png");
 		Image robots_inv = new Image("maps/robots_inv.png");
 		Image robots_inv2 = new Image("maps/robots_inv2.png");
@@ -178,31 +177,31 @@ public class View extends BasicGame {
 		inventaire.draw(1660, 175);
 		afficher_inventaire(j1);
 		afficher_inventaire(j2);
-		
-	//	j1.afficher_inventaire();
+
+		// j1.afficher_inventaire();
 		System.out.println("cases coloriées j1 : " + j1.getNb_cases_coloriees());
 		System.out.println("cases coloriées j2 : " + j2.getNb_cases_coloriees());
 
-		
-		
 		robots_inv.draw(30, 650);
 		robots_inv2.draw(1680, 650);
 
+		// for (int i = 0; i < this.pos_color.size(); i++) {
+		// peinture_rouge.drawCentered(this.pos_color.get(i).getX(),
+		// this.pos_color.get(i).getY());
+		// }
+		//
+		// for (int i = 0; i < this.pos_color_2.size(); i++) {
+		// peinture_bleu.drawCentered(this.pos_color_2.get(i).getX(),
+		// this.pos_color_2.get(i).getY());
+		// }
 
-//		for (int i = 0; i < this.pos_color.size(); i++) {
-//			peinture_rouge.drawCentered(this.pos_color.get(i).getX(), this.pos_color.get(i).getY());
-//		}
-//
-//		for (int i = 0; i < this.pos_color_2.size(); i++) {
-//			peinture_bleu.drawCentered(this.pos_color_2.get(i).getX(), this.pos_color_2.get(i).getY());
-//		}
-		
 		for (int i = 0; i < 30; i++) {
-			for (int j = 0; j<30; j++) {
+			for (int j = 0; j < 30; j++) {
 				if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {
 					peinture_bleu.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
-				} else if (Terrain.terrain[i][j].getCouleur()  == Couleur.Rouge) {
-					peinture_rouge.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));				}
+				} else if (Terrain.terrain[i][j].getCouleur() == Couleur.Rouge) {
+					peinture_rouge.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
+				}
 			}
 		}
 
@@ -285,7 +284,12 @@ public class View extends BasicGame {
 				(this.j2.getLine() * 32 + 16) - 60);
 
 		// System.out.println("( "+ x + " , " + y + " ) ");
-		g.drawString(minute+" m "+seconde/1000+" s",945, 470);
+		g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
+		System.out.println(PourcentBleu+" somme  ="+(j1.getNombre_Case_Coloriees() + j2.getNombre_Case_Coloriees()));
+		g.setColor( new Color( 0, 250, 0 ) );
+		g.drawString((int)(PourcentBleu*100) + " % ", 200, 50);
+		g.drawString((int)(PourcentRouge*100) + " % ", 1670, 50);
+		
 
 	}
 
@@ -295,34 +299,43 @@ public class View extends BasicGame {
 	// this.map.render(0, 0);
 	// }
 
-//	private boolean isCollision(float x, float y) {
-//		int tileW = this.map.getTileWidth();
-//		int tileH = this.map.getTileHeight();
-//		int logicLayer = this.map.getLayerIndex("Collision");
-//		Image tile = this.map.getTileImage((int) x / tileW, (int) y / tileH, logicLayer);
-//		boolean collision = tile != null;
-//		if (collision) {
-//			Color color = tile.getColor((int) x % tileW, (int) y % tileH);
-//			collision = color.getAlpha() > 0;
-//		}
-//		return collision;
-//	}
+	// private boolean isCollision(float x, float y) {
+	// int tileW = this.map.getTileWidth();
+	// int tileH = this.map.getTileHeight();
+	// int logicLayer = this.map.getLayerIndex("Collision");
+	// Image tile = this.map.getTileImage((int) x / tileW, (int) y / tileH,
+	// logicLayer);
+	// boolean collision = tile != null;
+	// if (collision) {
+	// Color color = tile.getColor((int) x % tileW, (int) y % tileH);
+	// collision = color.getAlpha() > 0;
+	// }
+	// return collision;
+	// }
 
 	@Override
 	public void update(GameContainer arg0, int delta) throws SlickException {
-		// TODO Auto-generated method stub
-	
 
-		if (seconde>-delta&&seconde<delta){
-			seconde=60000;
-			if(minute==0){
+		if ((j1.getNombre_Case_Coloriees() + j2.getNombre_Case_Coloriees()) != 0){
+			PourcentBleu =(float) j2.getNombre_Case_Coloriees()/((float)j1.getNombre_Case_Coloriees() + (float)j2.getNombre_Case_Coloriees());
+			PourcentRouge = 1 - PourcentBleu;
+		}
+			
+		else{
+			PourcentBleu = 0;
+			PourcentRouge=0;
+		}
+		
+		
+		if (seconde > -delta && seconde < delta) {
+			seconde = 60000;
+			if (minute == 0) {
 				this.container.exit();
-			}
-			else minute--;
+			} else
+				minute--;
 		}
 		seconde -= delta;
-		
-		
+
 		if (this.moving) {
 			// switch (this.j1.getD()) {
 			// case Nord:
@@ -333,23 +346,25 @@ public class View extends BasicGame {
 				// this.y -= (1024/32);
 				this.j1.Avancer(1);
 				if (this.recolorie_par_dessus == true) {
-					this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees()-1);
+					this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
 					this.recolorie_par_dessus = false;
 				}
-				if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer()){
+				if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer()) {
 					int t = 0;
 					while (t < 5) {
 						JOptionPane r = new JOptionPane();
 						r.setSize(d);
 						String[] bouton = { "Créer", "Modifier" };
 						int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
+								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
+								bouton[0]);
 						if (retour == 1) {
 							String inputrm = JOptionPane.showInputDialog(robot);
 
 							if (inputrm == null) {
-								int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-										null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+								int k = JOptionPane.showOptionDialog(null,
+										"Voulez-vous continuer la création/modification", null,
+										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k == 1) {
 									t = 5;
 								}
@@ -361,8 +376,9 @@ public class View extends BasicGame {
 							// System.out.println(inputrc);
 
 							if (inputrc == null) {
-								int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-										null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+								int k = JOptionPane.showOptionDialog(null,
+										"Voulez-vous continuer la création/modification", null,
+										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k == 1) {
 									t = 5;
 								}
@@ -371,7 +387,7 @@ public class View extends BasicGame {
 						t++;
 					}
 				}
-				
+
 				// System.out.println("passe ici");
 				// Terrain.afficher();
 
@@ -507,7 +523,7 @@ public class View extends BasicGame {
 				// this.y -= (1024/32);
 				this.j2.Avancer(1);
 				if (this.recolorie_par_dessus == true) {
-					this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees()-1);
+					this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
 					this.recolorie_par_dessus = false;
 				}
 				// System.out.println("passe ici");
@@ -850,30 +866,28 @@ public class View extends BasicGame {
 		Image deb_v_b = new Image("maps/debut_vie_bleu.png");
 		Image mil_v_b = new Image("maps/milieu_vie_bleu.png");
 		Image fin_v_b = new Image("maps/fin_vie_bleu.png");
-		
-		float ratio = (float) (j.getPdv()*0.01*21*7);
 
-		if (j.getCouleur()==Couleur.Bleu&&j.getPdv()!=0){
+		float ratio = (float) (j.getPdv() * 0.01 * 21 * 7);
+
+		if (j.getCouleur() == Couleur.Bleu && j.getPdv() != 0) {
 			deb_v_b.draw(this.DEBUT_VIE_BLEU_X, this.VIE_Y);
-			
+
 			for (float i = this.DEBUT_VIE_BLEU_X + 7; i < this.DEBUT_VIE_BLEU_X + ratio; i += 7) {
 				mil_v_b.draw(i, this.VIE_Y);
 			}
-			if(j.getPdv()==100)
-		fin_v_b.draw(this.FIN_VIE_BLEU_X, this.VIE_Y);
-		}
-		else if (j.getPdv()!=0) {
+			if (j.getPdv() == 100)
+				fin_v_b.draw(this.FIN_VIE_BLEU_X, this.VIE_Y);
+		} else if (j.getPdv() != 0) {
 			deb_v_r.draw(this.DEBUT_VIE_ROUGE_X, this.VIE_Y);
 			for (float i = this.DEBUT_VIE_ROUGE_X + 7; i < this.DEBUT_VIE_ROUGE_X + ratio; i += 7) {
 				mil_v_r.draw(i, this.VIE_Y);
 			}
-			if(j.getPdv()==100)
-			 fin_v_r.draw(this.FIN_VIE_ROUGE_X,this.VIE_Y);
+			if (j.getPdv() == 100)
+				fin_v_r.draw(this.FIN_VIE_ROUGE_X, this.VIE_Y);
 
 		}
 	}
-	
-	
+
 	public void afficher_inventaire(Joueur j) throws SlickException {
 
 		Image e;
@@ -896,7 +910,7 @@ public class View extends BasicGame {
 					e.draw(62 + (45 * colonne), 185 + (42 * ligne));
 				else
 					e.draw(1722 + (45 * colonne), 185 + (42 * ligne));
-				
+
 			} else if (j.inventaire().get(i).isComportement()) {
 				switch ((Comportement) j.inventaire().get(i)) {
 				case Attack:
