@@ -3,12 +3,67 @@ package machine_a_glace;
 public class Robot extends Entite {
 
 	private Node automate;
+	private Node etat_courant;
+	private int nb_tour;
+	private boolean fonctionne;
+	private boolean isPriorite=false;
 
 	public Robot(int x, int y, Couleur c, Node auto) {
 		super(x, y, c, 20);
 		automate = auto;
+		etat_courant = automate;
+		nb_tour = 0;
 		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Robot);
 		Terrain.terrain[getLine()][getCol()].setEntite(this);
+
+	}
+
+	public void next_etat() {
+		next_etat_recur(automate, false);
+	}
+
+	private boolean next_etat_recur(Node a, boolean b) {
+		if (a != null) {
+			if (a == etat_courant) {
+				b = true;
+			} else if (a.Gram.isComportement() && b) {
+				etat_courant = a;
+				b = false;
+			}
+
+			if (a.Gram.isOperateur() && a.Gram == Operateur.Star) {
+				b = next_etat_recur(a.FD, b);
+				if (b) {
+					nb_tour++;
+					next_etat_recur(a.FD, b);
+				}
+
+			} else if (a.Gram.isOperateur() && a.Gram == Operateur.Choixequi) {
+				if (nb_tour % 2 == 0)
+					b = next_etat_recur(a.FG, b);
+				else
+					b = next_etat_recur(a.FD, b);
+			} else if (a.Gram.isOperateur() && a.Gram == Operateur.Choix) {
+				if (Math.random() < 0.5)
+					b = next_etat_recur(a.FG, b);
+				else
+					b = next_etat_recur(a.FD, b);
+			} else if (a.Gram.isOperateur() && a.Gram == Operateur.Priorite) {
+				if(b) isPriorite = true;
+				b = next_etat_recur(a.FG, b);
+				if(b) isPriorite = true;
+				if (b && !fonctionne || !b)
+					b = next_etat_recur(a.FD, b);
+				if(b) isPriorite = false;
+				 
+			} else {
+				b = next_etat_recur(a.FG, b);
+				b = next_etat_recur(a.FD, b);
+			}
+
+			return b;
+		}
+		return b;
 	}
 
 	public void Avancer(int pas) {
@@ -40,13 +95,13 @@ public class Robot extends Entite {
 	public boolean isRobot() {
 		return true;
 	}
-	
-//	public boolean isEnnemi(int line, int col, Entite ent) {
-//		if(ent.getCouleur() != getCol()){
-//			
-//		}
-//		return ;
-//	}
+
+	// public boolean isEnnemi(int line, int col, Entite ent) {
+	// if(ent.getCouleur() != getCol()){
+	//
+	// }
+	// return ;
+	// }
 
 	public void Kill(int line, int col) {
 		Terrain.terrain[line][col].setCase(Contenu.Vide);
@@ -124,7 +179,6 @@ public class Robot extends Entite {
 			Explosion(line, col);
 	}
 
-	
 	// Renvoi True si l'attaque est concluante, false sinon
 	public boolean Attack() {
 		/**
@@ -158,7 +212,7 @@ public class Robot extends Entite {
 				return false;
 		case Est:
 			if (col + 1 < taille_t) {
-				Terrain.terrain[line][col+1].getEntite().Degat(30);
+				Terrain.terrain[line][col + 1].getEntite().Degat(30);
 				return true;
 			} else
 				return false;
