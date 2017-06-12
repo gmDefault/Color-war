@@ -81,12 +81,10 @@ public class Case {
 		if (ent == null)
 			return false;
 		else {
-			if (ent.getCouleur() != getCouleur())
+			if (ent.getCouleur() == Couleur.Bleu && this.getEntite().getCouleur() == Couleur.Rouge || ent.getCouleur() == Couleur.Rouge && this.getEntite().getCouleur() == Couleur.Bleu)
 				return true;
-
 			else
 				return false;
-
 		}
 	}
 

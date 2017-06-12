@@ -186,6 +186,7 @@ public class Robot extends Entite {
 			if (max >= 0) {
 				max--;
 			}
+			i++;
 		}
 		/*
 		 * Penser à mettre à jour le tableau de robot dans l'interface lors de
@@ -478,8 +479,9 @@ public class Robot extends Entite {
 				min++;
 			}
 			if (max >= 0) {
-				max++;
+				max--;
 			}
+			i++;
 		}
 		return present;
 	}

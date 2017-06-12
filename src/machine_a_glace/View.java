@@ -358,7 +358,9 @@ public class View extends BasicGame {
 
 		g.drawAnimation(animations4[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
 
-		if (this.popup_test_1 == 5) {
+		
+		if (this.popup_test_1 == 25) {
+
 			this.popup_test_1 = 0;
 			if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer()) {
 				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCase(Contenu.Joueur);
@@ -407,7 +409,7 @@ public class View extends BasicGame {
 			this.popup_test_1++;
 		}
 
-		if (this.popup_test_2 == 5) {
+		if (this.popup_test_2 == 25) {
 			this.popup_test_2 = 0;
 			if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer()) {
 				Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCase(Contenu.Joueur);
@@ -536,6 +538,7 @@ public class View extends BasicGame {
 		secsrobot += delta;
 		this.container.resume();
 
+
 		if (this.moving) {
 			// switch (this.j1.getD()) {
 			// case Nord:
@@ -545,6 +548,8 @@ public class View extends BasicGame {
 				// this.j1.setD(Direction.Ouest);
 				// this.y -= (1024/32);
 				this.j1.Avancer(1);
+				Terrain.Initialiser_cases_creer();
+
 				if (this.recolorie_par_dessus == true) {
 					this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
 					this.recolorie_par_dessus = false;
@@ -677,6 +682,8 @@ public class View extends BasicGame {
 				// this.j1.setD(Direction.Ouest);
 				// this.y -= (1024/32);
 				this.j2.Avancer(1);
+				Terrain.Initialiser_cases_creer();
+
 				if (this.recolorie_par_dessus == true) {
 					this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
 					this.recolorie_par_dessus = false;
@@ -804,6 +811,7 @@ public class View extends BasicGame {
 		// System.out.println(key + "- " + c);
 		switch (key) {
 		case Input.KEY_UP:
+			
 			this.moving = false;
 			break;
 		case Input.KEY_LEFT:
@@ -861,6 +869,7 @@ public class View extends BasicGame {
 			this.moving = true;
 			break;
 		case Input.KEY_RIGHT:
+
 			j1.setD(Direction.Est);
 			this.direction = 3;
 			this.moving = true;
