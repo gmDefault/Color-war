@@ -554,7 +554,7 @@ public class View extends BasicGame {
 			PourcentRouge = 0;
 		}
 		System.out.println(""+seconde);
-		if((int)(seconde)%40==0){
+		if((int)(seconde)%30==0){
 			if(j1.getNrj()<=100)
 			j1.SetNrj(j1.getNrj()+1);
 			if(j2.getNrj()<=100)
