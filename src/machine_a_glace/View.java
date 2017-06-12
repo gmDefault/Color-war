@@ -335,7 +335,7 @@ public class View extends BasicGame {
 		// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
 
 		g.setColor(new Color(255, 255, 255));
-		uniFont2.drawString(290,10,(int)(PourcentBleu * 100) + " % ", Color.blue);
+		uniFont2.drawString(300,10,(int)(PourcentBleu * 100) + " % ", Color.blue);
 		g.drawString("" + j2.getPdv(), 190, 120);
 		g.drawString("" + j1.getPdv(), 1700, 120);
 		g.drawString(" Inventaire ", 50, 150);
