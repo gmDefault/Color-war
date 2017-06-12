@@ -441,7 +441,7 @@ public class View extends BasicGame {
 						if (retour == 0) {
 							JOptionPane p = new JOptionPane();
 							String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
-							// System.out.println(inputrc);
+//							 System.out.println(inputrc);
 
 							if (inputrc == null) {
 								int k = JOptionPane.showOptionDialog(null,
