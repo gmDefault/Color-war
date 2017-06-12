@@ -16,6 +16,9 @@ public class Case {
 	}
 
 	
+	public boolean isCreer(){
+		return (cont == Contenu.Creer);
+	}
 	public boolean isExpr() {
 		return (cont == Contenu.Expression);
 	}
