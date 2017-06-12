@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 public class Joueur extends Entite {
 	private int nb_cases_coloriees = 0;
-
+	private int nrj;
+	
 	private ArrayList<Expr> inventaire;
 
-	public Joueur(int x, int y, Couleur c, int pdv) {
+	public Joueur(int x, int y, Couleur c, int pdv,int nrj) {
 		super(x, y, c, pdv);
+		this.nrj=nrj;
 		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
 		Terrain.terrain[getLine()][getCol()].setEntite(this);
 		inventaire = new ArrayList<Expr>();
@@ -17,6 +19,20 @@ public class Joueur extends Entite {
 	public int getNombre_Case_Coloriees() {
 		return nb_cases_coloriees;
 	}
+	
+	public int getNrj() {
+		return nrj;
+	}
+	
+	public void SetNrj(int n) {
+		 nrj=n;
+	}
+
+	public boolean isNrj(){
+		return nrj>=70;
+		
+	}
+
 
 	public void Avancer(int pas) {
 
