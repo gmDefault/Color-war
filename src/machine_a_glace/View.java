@@ -388,7 +388,7 @@ public class View extends BasicGame {
 								}
 							}
 						}
-						if (retour ==2){
+						if (retour ==2 || retour == -1){
 							t=5;
 						}
 						t++;
@@ -565,8 +565,8 @@ public class View extends BasicGame {
 								}
 							}
 						}
-						if (retour ==2){
-							t=5;
+						if (retour2 ==2 || retour2 == -1){
+							t2=5;
 						}
 						t2++;
 					}
