@@ -90,4 +90,8 @@ public class Case {
 		}
 	}
 
+	public Contenu getCont() {
+		return cont;
+	}
+
 }
