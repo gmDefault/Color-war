@@ -576,6 +576,7 @@ public class View extends BasicGame {
 		//
 		// }
 		// }
+		this.container.resume();
 		if (this.moving2) {
 			// switch (this.j1.getD()) {
 			// case Nord:
@@ -590,6 +591,7 @@ public class View extends BasicGame {
 					this.recolorie_par_dessus = false;
 				}
 				if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer()) {
+					this.container.pause();
 					int t2 = 0;
 					while (t2 < 5) {
 						JOptionPane r2 = new JOptionPane();
