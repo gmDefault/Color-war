@@ -391,7 +391,7 @@ public class View extends BasicGame {
 						t++;
 					}
 				}
-				if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer()) {
+				if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer()) {
 					int t2 = 0;
 					while (t2 < 5) {
 						JOptionPane r2 = new JOptionPane();
