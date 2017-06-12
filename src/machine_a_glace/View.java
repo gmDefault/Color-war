@@ -285,9 +285,13 @@ public class View extends BasicGame {
 
 		// System.out.println("( "+ x + " , " + y + " ) ");
 		g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
-		System.out.println(PourcentBleu+" somme  ="+(j1.getNombre_Case_Coloriees() + j2.getNombre_Case_Coloriees()));
-		g.setColor( new Color( 0, 250, 0 ) );
-		g.drawString((int)(PourcentBleu*100) + " % ", 200, 50);
+
+		g.setColor( new Color( 255, 255, 255 ) );
+		g.drawString((int)(PourcentBleu*100) + " % ", 200, 75);
+		g.drawString(""+j2.getPdv(), 190, 120);
+		g.drawString(""+j1.getPdv(), 1700, 120);
+		g.drawString(" Inventaire ", 50, 150);
+		g.drawString(" Inventaire ",1750, 150);
 		g.drawString((int)(PourcentRouge*100) + " % ", 1670, 50);
 		
 
