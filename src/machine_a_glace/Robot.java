@@ -216,6 +216,9 @@ public class Robot extends Entite {
 		Terrain.terrain[line2][col2] = Terrain.terrain[line1][col1];
 		Terrain.terrain[line1][col1].setCase(Contenu.Vide);
 		Terrain.terrain[line1][col1].setEntite(null);
+		
+		setCol(col2);
+		setLine(line2);
 	}
 
 	public void Explorer() {

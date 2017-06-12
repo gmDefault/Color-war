@@ -47,9 +47,10 @@ public class View extends BasicGame {
 	private long lasttime = System.currentTimeMillis();
 	private long lasttime2 = System.currentTimeMillis();
 	private long lasttime3 = System.currentTimeMillis();
-	
+
 	private int secs1 = 0;
 	private int secs2 = 0;
+	private int secsrobot = 0;
 
 	private ArrayList<Point> pos_color = new ArrayList<Point>();
 	private ArrayList<Point> pos_color_2 = new ArrayList<Point>();
@@ -63,6 +64,7 @@ public class View extends BasicGame {
 
 	private boolean canmove = false;
 	private boolean canmove2 = false;
+	private boolean canmoverobot = false;
 
 	private Joueur j1, j2;
 	private Robot r1;
@@ -324,8 +326,6 @@ public class View extends BasicGame {
 		g.drawAnimation(animations2[j2.getD().entier() + (moving2 ? 4 : 0)],
 				(15 * 32 + this.j2.getCol() * 32 + 16) - 32, (this.j2.getLine() * 32 + 16) - 60);
 
-		r1.execute();
-		
 		g.drawAnimation(animations3[r1.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1.getCol() * 32 + 16) - 32,
 				(this.r1.getLine() * 32 + 16) - 60);
 
@@ -396,6 +396,7 @@ public class View extends BasicGame {
 		seconde -= delta;
 		this.secs1 += delta;
 		this.secs2 += delta;
+		secsrobot += delta;
 
 		if (this.moving) {
 			// switch (this.j1.getD()) {
@@ -750,6 +751,13 @@ public class View extends BasicGame {
 		// }
 		// }
 
+		if (canmoverobot) r1.execute();
+		if (secsrobot < 500) {
+			canmoverobot = false;
+		} else {
+			secsrobot = 0;
+			canmoverobot = true;
+		}
 	}
 
 	@Override
