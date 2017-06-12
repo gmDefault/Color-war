@@ -776,7 +776,6 @@ public class View extends BasicGame {
 			break;
 		}
 	}
-
 	@Override
 	public void keyPressed(int key, char c) {
 		switch (key) {
@@ -879,7 +878,7 @@ public class View extends BasicGame {
 //			break;
 
 		case Input.KEY_P:
-			//this.container.pause();
+//			this.container.pause();
 			JOptionPane pause = new JOptionPane();
 			String[] boutonP = { "Reprendre" };
 			pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION,
@@ -909,7 +908,6 @@ public class View extends BasicGame {
 			break;
 		}
 	}
-
 	public void afficher_expr() throws SlickException {
 
 		Image e;
