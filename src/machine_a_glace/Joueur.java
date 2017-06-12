@@ -15,6 +15,7 @@ public class Joueur extends Entite {
 	public void Avancer(int pas) {
 		
 		if(next_case().isAccessible()){
+			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 			Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
 			Terrain.terrain[getLine()][getCol()].setEntite(null);
 			switch (getD()) {
@@ -87,7 +88,9 @@ public class Joueur extends Entite {
 				super.inventaire().add(Terrain.casexy(getLine(),getCol()).expr());
 				Terrain.casexy(getLine(),getCol()).setExpr(null);
 			}
-			Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
+			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
+				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
+			}
 		}
 		
 	}
