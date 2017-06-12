@@ -36,7 +36,9 @@ public class View extends BasicGame {
 	int seconde = 20000;
 
 	int minute = 3;
-
+	
+	int popup_test_1 = 0;
+	int popup_test_2 = 0;
 	private float x = 976, y = 32 + 16;
 	private float PourcentRouge = 0;
 	private float PourcentBleu = 0;
@@ -51,7 +53,6 @@ public class View extends BasicGame {
 	private int secs1 = 0;
 	private int secs2 = 0;
 	private int secsrobot = 0;
-
 
 	private final float DEBUT_VIE_ROUGE_X = 1631;
 	private final float FIN_VIE_ROUGE_X = 1778;
@@ -73,6 +74,7 @@ public class View extends BasicGame {
 	private Animation[] animations = new Animation[8];
 	private Animation[] animations2 = new Animation[8];
 	private Animation[] animations3 = new Animation[8];
+	private Animation[] animations4 = new Animation[8];
 
 	private String item[] = { "A", "P", "K" };
 	private String item2[] = { "Robot1", "Robot2", "Robot3" };
@@ -87,11 +89,10 @@ public class View extends BasicGame {
 
 	java.awt.Font UIFont1;
 	org.newdawn.slick.UnicodeFont uniFont;
-	
+
 	java.awt.Font UIFont2;
 	org.newdawn.slick.UnicodeFont uniFont2;
-	
-	
+
 	public View(Joueur j1, Joueur j2) {
 
 		super("ColorWar");
@@ -131,8 +132,6 @@ public class View extends BasicGame {
 			e.printStackTrace();
 		}
 
-		
-		
 		try {
 			UIFont2 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
 					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/Font1.ttf"));
@@ -140,7 +139,7 @@ public class View extends BasicGame {
 
 			uniFont2 = new org.newdawn.slick.UnicodeFont(UIFont2);
 			uniFont2.addAsciiGlyphs();
-			uniFont2.getEffects().add(new ColorEffect(java.awt.Color.white)); 
+			uniFont2.getEffects().add(new ColorEffect(java.awt.Color.white));
 			uniFont2.addAsciiGlyphs();
 			uniFont2.loadGlyphs();
 
@@ -149,12 +148,10 @@ public class View extends BasicGame {
 			e.printStackTrace();
 		}
 
-		
-
-
 		SpriteSheet spriteSheet = new SpriteSheet("maps/char_2.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
 		SpriteSheet spriteSheet3 = new SpriteSheet("maps/robot_red.png", 64, 64);
+		SpriteSheet spriteSheet4 = new SpriteSheet("maps/bonus.png", 64, 64);
 		this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
 		this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
 		this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
@@ -181,6 +178,15 @@ public class View extends BasicGame {
 		this.animations3[5] = loadAnimation(spriteSheet3, 1, 9, 1);
 		this.animations3[6] = loadAnimation(spriteSheet3, 1, 9, 2);
 		this.animations3[7] = loadAnimation(spriteSheet3, 1, 9, 3);
+
+		this.animations4[0] = loadAnimation(spriteSheet4, 0, 1, 0);
+		this.animations4[1] = loadAnimation(spriteSheet4, 0, 1, 1);
+		this.animations4[2] = loadAnimation(spriteSheet4, 0, 1, 2);
+		this.animations4[3] = loadAnimation(spriteSheet4, 0, 1, 3);
+		this.animations4[4] = loadAnimation(spriteSheet4, 1, 9, 0);
+		this.animations4[5] = loadAnimation(spriteSheet4, 1, 9, 1);
+		this.animations4[6] = loadAnimation(spriteSheet4, 1, 9, 2);
+		this.animations4[7] = loadAnimation(spriteSheet4, 1, 9, 3);
 
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
@@ -244,7 +250,7 @@ public class View extends BasicGame {
 		afficher_inventaire(j1);
 		afficher_inventaire(j2);
 
-		 j1.afficher_inventaire();
+		j1.afficher_inventaire();
 
 		robots_inv.draw(120, 650);
 		robots_inv2.draw(1580, 650);
@@ -350,32 +356,134 @@ public class View extends BasicGame {
 		g.drawAnimation(animations3[r1.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1.getCol() * 32 + 16) - 32,
 				(this.r1.getLine() * 32 + 16) - 60);
 
+		g.drawAnimation(animations4[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
+		
+		if (this.popup_test_1 == 25) {
+			this.popup_test_1 = 0;
+			if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer()) {
+				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCase(Contenu.Joueur);
+				this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees()-1);
+				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
+				this.container.pause();
+				int t = 0;
+				while (t < 5) {
+					JOptionPane r = new JOptionPane();
+					r.setSize(d);
+					String[] bouton = { "Créer", "Modifier", "Annuler" };
+					int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+							JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
+							bouton[0]);
+					if (retour == 1) {
+						String inputrm = JOptionPane.showInputDialog(robot);
 
+						if (inputrm == null) {
+							int k = JOptionPane.showOptionDialog(null,
+									"Voulez-vous continuer la création/modification", null,
+									JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+							if (k == 1) {
+								t = 5;
+							}
+						}
+					}
+					if (retour == 0) {
+						JOptionPane p = new JOptionPane();
+						String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
+						// System.out.println(inputrc);
+
+						if (inputrc == null) {
+							int k = JOptionPane.showOptionDialog(null,
+									"Voulez-vous continuer la création/modification", null,
+									JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+							if (k == 1) {
+								t = 5;
+							}
+						}
+					}
+					if (retour == 2 || retour == -1) {
+						t = 5;
+					}
+					t++;
+				}
+
+			}
+		} else {
+			this.popup_test_1++;
+		}
+
+		if (this.popup_test_2 == 25) {
+			this.popup_test_2 = 0;
+		if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer()) {
+			Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCase(Contenu.Joueur);
+			this.j1.setNb_cases_coloriees(this.j2.getNb_cases_coloriees()-1);
+			Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
+			this.container.pause();
+			int t2 = 0;
+			while (t2 < 5) {
+				JOptionPane r2 = new JOptionPane();
+				r2.setSize(d);
+				String[] bouton2 = { "Créer", "Modifier", "Annuler" };
+				int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2,
+						bouton2[0]);
+				if (retour2 == 1) {
+					String inputbm = JOptionPane.showInputDialog(robot2);
+
+					if (inputbm == null) {
+						int k2 = JOptionPane.showOptionDialog(null,
+								"Voulez-vous continuer la création/modification", null,
+								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+						if (k2 == 1) {
+							t2 = 5;
+						}
+					}
+				}
+				if (retour2 == 0) {
+					JOptionPane rbc = new JOptionPane();
+					String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
+
+					if (inputbc == null) {
+						int k2 = JOptionPane.showOptionDialog(null,
+								"Voulez-vous continuer la création/modification", null,
+								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+						if (k2 == 1) {
+							t2 = 5;
+						}
+					}
+				}
+
+				if (retour2 == 2 || retour2 == -1) {
+					t2 = 5;
+				}
+				t2++;
+			}
+		}
+		} else {
+			this.popup_test_2++;
+		}
 		// System.out.println("( "+ x + " , " + y + " ) ");
 		// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
 
 		g.setColor(new Color(255, 255, 255));
-		uniFont2.drawString(290,10,(int)(PourcentBleu * 100) + " % ", Color.blue);
+		uniFont2.drawString(290, 10, (int) (PourcentBleu * 100) + " % ", Color.blue);
 		g.drawString("" + j2.getPdv(), 190, 120);
 		g.drawString("" + j1.getPdv(), 1700, 120);
 		g.drawString(" Inventaire ", 187, 150);
 		g.drawString(" Inventaire ", 1617, 150);
-		
+
 		g.drawString(" Etat des robots ", 140, 630);
 		g.drawString(" Etat des robots  ", 1617, 630);
-		
-		
-		uniFont2.drawString(1472,10,(int)(PourcentRouge * 100) + " % ", Color.red);
+
+		uniFont2.drawString(1472, 10, (int) (PourcentRouge * 100) + " % ", Color.red);
 		if (minute < 10) {
 			if (seconde / 1000 < 30) {
-				if (minute == 0){
+				if (minute == 0) {
 					uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.red);
 					if (seconde / 1000 < 10)
-					uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.red);
-				}else  {
+						uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.red);
+				} else {
 					uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
 					if (seconde / 1000 < 10)
-					uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.darkGray);
+						uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.darkGray);
 				}
 			} else
 				uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
@@ -431,6 +539,7 @@ public class View extends BasicGame {
 		secsrobot += delta;
 		this.container.resume();
 
+
 		if (this.moving) {
 			// switch (this.j1.getD()) {
 			// case Nord:
@@ -440,66 +549,24 @@ public class View extends BasicGame {
 				// this.j1.setD(Direction.Ouest);
 				// this.y -= (1024/32);
 				this.j1.Avancer(1);
+				Terrain.Initialiser_cases_creer();
+
 				if (this.recolorie_par_dessus == true) {
 					this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
 					this.recolorie_par_dessus = false;
 				}
-			//	this.container.pause();
-			//	this.container.setPaused(true);
-				//arg0.pause();
-				
-				if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer()) {
-					this.container.pause();
-					int t = 0;
-					while (t < 5) {
-						JOptionPane r = new JOptionPane();
-						r.setSize(d);
-						String[] bouton = { "Créer", "Modifier", "Annuler" };
-						int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
-								bouton[0]);
-						if (retour == 1) {
-							String inputrm = JOptionPane.showInputDialog(robot);
+				// this.container.pause();
+				// this.container.setPaused(true);
+				// arg0.pause();
 
-							if (inputrm == null) {
-								int k = JOptionPane.showOptionDialog(null,
-										"Voulez-vous continuer la création/modification", null,
-										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-								if (k == 1) {
-									t = 5;
-								}
-							}
-						}
-						if (retour == 0) {
-							JOptionPane p = new JOptionPane();
-							String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
-//							 System.out.println(inputrc);
 
-							if (inputrc == null) {
-								int k = JOptionPane.showOptionDialog(null,
-										"Voulez-vous continuer la création/modification", null,
-										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-								if (k == 1) {
-									t = 5;
-								}
-							}
-						}
-						if (retour == 2 || retour == -1) {
-							t = 5;
-						}
-						t++;
-					}
+				// this.container.resume();
 
-				} 
-			//	this.container.resume();
-
-			//	this.container.resume();
-			//	arg0.resume();
+				// this.container.resume();
+				// arg0.resume();
 
 				// System.out.println("passe ici");
 				// Terrain.afficher();
-
-
 
 				// this.container.getGraphics().drawImage(grass_b, x, y);
 				// arg0.getGraphics().drawImage(grass_b, x, y);
@@ -617,55 +684,15 @@ public class View extends BasicGame {
 				// this.j1.setD(Direction.Ouest);
 				// this.y -= (1024/32);
 				this.j2.Avancer(1);
+				Terrain.Initialiser_cases_creer();
+
 				if (this.recolorie_par_dessus == true) {
 					this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
 					this.recolorie_par_dessus = false;
 				}
-				if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer()) {
-					this.container.pause();
-					int t2 = 0;
-					while (t2 < 5) {
-						JOptionPane r2 = new JOptionPane();
-						r2.setSize(d);
-						String[] bouton2 = { "Créer", "Modifier", "Annuler" };
-						int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2,
-								bouton2[0]);
-						if (retour2 == 1) {
-							String inputbm = JOptionPane.showInputDialog(robot2);
 
-							if (inputbm == null) {
-								int k2 = JOptionPane.showOptionDialog(null,
-										"Voulez-vous continuer la création/modification", null,
-										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-								if (k2 == 1) {
-									t2 = 5;
-								}
-							}
-						}
-						if (retour2 == 0) {
-							JOptionPane rbc = new JOptionPane();
-							String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
-
-							if (inputbc == null) {
-								int k2 = JOptionPane.showOptionDialog(null,
-										"Voulez-vous continuer la création/modification", null,
-										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-								if (k2 == 1) {
-									t2 = 5;
-								}
-							}
-						}
-
-						if (retour2 == 2 || retour2 == -1) {
-							t2 = 5;
-						}
-						t2++;
-					}
-				}
 				// System.out.println("passe ici");
 				// Terrain.afficher();
-
 
 				// this.container.getGraphics().drawImage(grass_b, x, y);
 				// arg0.getGraphics().drawImage(grass_b, x, y);
@@ -768,7 +795,8 @@ public class View extends BasicGame {
 		// }
 		// }
 
-		if (canmoverobot) r1.execute();
+		if (canmoverobot)
+			r1.execute();
 		if (secsrobot < 500) {
 			canmoverobot = false;
 		} else {
@@ -785,6 +813,7 @@ public class View extends BasicGame {
 		// System.out.println(key + "- " + c);
 		switch (key) {
 		case Input.KEY_UP:
+			
 			this.moving = false;
 			break;
 		case Input.KEY_LEFT:
@@ -817,6 +846,7 @@ public class View extends BasicGame {
 			break;
 		}
 	}
+
 	@Override
 	public void keyPressed(int key, char c) {
 		switch (key) {
@@ -841,6 +871,7 @@ public class View extends BasicGame {
 			this.moving = true;
 			break;
 		case Input.KEY_RIGHT:
+
 			j1.setD(Direction.Est);
 			this.direction = 3;
 			this.moving = true;
@@ -933,7 +964,7 @@ public class View extends BasicGame {
 		// break;
 
 		case Input.KEY_P:
-//			this.container.pause();
+			// this.container.pause();
 			JOptionPane pause = new JOptionPane();
 			String[] boutonP = { "Reprendre" };
 			pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION,
@@ -941,7 +972,7 @@ public class View extends BasicGame {
 			break;
 
 		case Input.KEY_Z:
-			//this.container.resume();
+			// this.container.resume();
 			this.j2.setD(Direction.Nord);
 			this.direction2 = 0;
 			this.moving2 = true;
@@ -963,6 +994,7 @@ public class View extends BasicGame {
 			break;
 		}
 	}
+
 	public void afficher_expr() throws SlickException {
 
 		Image e;
