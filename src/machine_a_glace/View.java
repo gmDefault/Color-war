@@ -1183,9 +1183,9 @@ public class View extends BasicGame {
 					break;
 				}
 				if (j.getCouleur() == Couleur.Bleu)
-					e.draw(162 + (45 * colonne), 185 + (44 * ligne));
+					e.draw(162 + (45 * colonne), 205 + (44 * ligne));
 				else
-					e.draw(1622 + (45 * colonne), 185 + (44 * ligne));
+					e.draw(1622 + (45 * colonne), 205 + (44 * ligne));
 
 			} else if (j.inventaire().get(i).isComportement()) {
 				switch ((Comportement) j.inventaire().get(i)) {
@@ -1210,9 +1210,9 @@ public class View extends BasicGame {
 				}
 
 				if (j.getCouleur() == Couleur.Bleu)
-					e.draw(162 + (45 * colonne), 185 + (44 * ligne));
+					e.draw(162 + (45 * colonne), 205 + (44 * ligne));
 				else
-					e.draw(1622 + (45 * colonne), 185 + (44 * ligne));
+					e.draw(1622 + (45 * colonne), 205+ (44 * ligne));
 			}
 
 			colonne++;
