@@ -12,10 +12,13 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.awt.Dimension;
+import java.awt.FontFormatException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -30,13 +33,13 @@ public class View extends BasicGame {
 	private GameContainer container;
 	private TiledMap map;
 
-	int seconde = 7000;
+	int seconde = 20000;
 
-	int minute = 2;
+	int minute = 0;
 
 	private float x = 976, y = 32 + 16;
-	private float PourcentRouge=0;
-	private float PourcentBleu=0;
+	private float PourcentRouge = 0;
+	private float PourcentBleu = 0;
 	private float xx = 976, yy = 960 - 32 - 16;
 	private int direction = 2;
 	private int direction2 = 0;
@@ -77,9 +80,12 @@ public class View extends BasicGame {
 	private String tab[] = { "Frapper", "Explorer", "Kamikaze", ";", "*", ">" };
 	private String tab2[] = { "Manger", "Fumer", "Rond-Poing" };
 
+	java.awt.Font UIFont1;
+	org.newdawn.slick.UnicodeFont uniFont;
+
 	public View(Joueur j1, Joueur j2) {
 
-		super("Fenetre");
+		super("ColorWar");
 		this.j1 = j1;
 		this.j2 = j2;
 		// TODO Auto-generated constructor stub
@@ -98,6 +104,24 @@ public class View extends BasicGame {
 		this.container = arg0;
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
+
+		try {
+			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
+					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/reveil.ttf"));
+			UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 60.f);
+
+			uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
+			uniFont.addAsciiGlyphs();
+			uniFont.getEffects().add(new ColorEffect(java.awt.Color.white)); 
+			uniFont.addAsciiGlyphs();
+			uniFont.loadGlyphs();
+
+		} catch (FontFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 12.f);
 
 		SpriteSheet spriteSheet = new SpriteSheet("maps/char_2.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
@@ -284,16 +308,25 @@ public class View extends BasicGame {
 				(this.j2.getLine() * 32 + 16) - 60);
 
 		// System.out.println("( "+ x + " , " + y + " ) ");
-		g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
+		// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
 
-		g.setColor( new Color( 255, 255, 255 ) );
-		g.drawString((int)(PourcentBleu*100) + " % ", 200, 75);
-		g.drawString(""+j2.getPdv(), 190, 120);
-		g.drawString(""+j1.getPdv(), 1700, 120);
+		g.setColor(new Color(255, 255, 255));
+		g.drawString((int) (PourcentBleu * 100) + " % ", 200, 75);
+		g.drawString("" + j2.getPdv(), 190, 120);
+		g.drawString("" + j1.getPdv(), 1700, 120);
 		g.drawString(" Inventaire ", 50, 150);
-		g.drawString(" Inventaire ",1750, 150);
-		g.drawString((int)(PourcentRouge*100) + " % ", 1670, 50);
-		
+		g.drawString(" Inventaire ", 1750, 150);
+		g.drawString((int) (PourcentRouge * 100) + " % ", 1670, 50);
+		if (minute < 10) {
+			if (seconde / 1000 < 10) {
+				if (minute == 0)
+					uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.red);
+				else
+					uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.darkGray);
+			} else
+				uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
+		} else
+			uniFont.drawString(921, 440, minute + ":" + seconde / 1000, Color.darkGray);
 
 	}
 
@@ -320,17 +353,17 @@ public class View extends BasicGame {
 	@Override
 	public void update(GameContainer arg0, int delta) throws SlickException {
 
-		if ((j1.getNombre_Case_Coloriees() + j2.getNombre_Case_Coloriees()) != 0){
-			PourcentBleu =(float) j2.getNombre_Case_Coloriees()/((float)j1.getNombre_Case_Coloriees() + (float)j2.getNombre_Case_Coloriees());
+		if ((j1.getNombre_Case_Coloriees() + j2.getNombre_Case_Coloriees()) != 0) {
+			PourcentBleu = (float) j2.getNombre_Case_Coloriees()
+					/ ((float) j1.getNombre_Case_Coloriees() + (float) j2.getNombre_Case_Coloriees());
 			PourcentRouge = 1 - PourcentBleu;
 		}
-			
-		else{
+
+		else {
 			PourcentBleu = 0;
-			PourcentRouge=0;
+			PourcentRouge = 0;
 		}
-		
-		
+
 		if (seconde > -delta && seconde < delta) {
 			seconde = 60000;
 			if (minute == 0) {
