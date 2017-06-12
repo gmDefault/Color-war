@@ -358,7 +358,7 @@ public class View extends BasicGame {
 					while (t < 5) {
 						JOptionPane r = new JOptionPane();
 						r.setSize(d);
-						String[] bouton = { "Créer", "Modifier" };
+						String[] bouton = { "Créer", "Modifier","Annuler" };
 						int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
 								bouton[0]);
@@ -387,6 +387,9 @@ public class View extends BasicGame {
 									t = 5;
 								}
 							}
+						}
+						if (retour ==2){
+							t=5;
 						}
 						t++;
 					}
@@ -536,7 +539,7 @@ public class View extends BasicGame {
 					while (t2 < 5) {
 						JOptionPane r2 = new JOptionPane();
 						r2.setSize(d);
-						String[] bouton2 = { "Créer", "Modifier" };
+						String[] bouton2 = { "Créer", "Modifier","Annuler" };
 						int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
 						if (retour2 == 1) {
@@ -561,6 +564,9 @@ public class View extends BasicGame {
 									t2 = 5;
 								}
 							}
+						}
+						if (retour ==2){
+							t=5;
 						}
 						t2++;
 					}
