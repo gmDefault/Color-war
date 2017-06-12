@@ -51,8 +51,6 @@ public class View extends BasicGame {
 	private int secs1 = 0;
 	private int secs2 = 0;
 
-	private ArrayList<Point> pos_color = new ArrayList<Point>();
-	private ArrayList<Point> pos_color_2 = new ArrayList<Point>();
 
 	private final float DEBUT_VIE_ROUGE_X = 1631;
 	private final float FIN_VIE_ROUGE_X = 1778;
@@ -458,20 +456,7 @@ public class View extends BasicGame {
 				// System.out.println("passe ici");
 				// Terrain.afficher();
 
-				Point p = new Point(15 * 32 + this.j1.getCol() * 32 + 16, this.j1.getLine() * 32 + 16);
-				for (int i = 0; i < this.pos_color.size(); i++) {
-					if (this.pos_color.get(i).equals(p)) {
-						this.pos_color.remove(this.pos_color.get(i));
-					}
-				}
 
-				this.pos_color.add(p);
-
-				for (int i = 0; i < this.pos_color_2.size(); i++) {
-					if (this.pos_color_2.get(i).equals(p)) {
-						this.pos_color_2.remove(this.pos_color_2.get(i));
-					}
-				}
 
 				// this.container.getGraphics().drawImage(grass_b, x, y);
 				// arg0.getGraphics().drawImage(grass_b, x, y);
@@ -634,20 +619,6 @@ public class View extends BasicGame {
 				// System.out.println("passe ici");
 				// Terrain.afficher();
 
-				Point p = new Point(15 * 32 + this.j2.getCol() * 32 + 16, this.j2.getLine() * 32 + 16);
-				for (int i = 0; i < this.pos_color_2.size(); i++) {
-					if (this.pos_color_2.get(i).equals(p)) {
-						this.pos_color_2.remove(this.pos_color_2.get(i));
-					}
-				}
-
-				this.pos_color_2.add(p);
-
-				for (int i = 0; i < this.pos_color.size(); i++) {
-					if (this.pos_color.get(i).equals(p)) {
-						this.pos_color.remove(this.pos_color.get(i));
-					}
-				}
 
 				// this.container.getGraphics().drawImage(grass_b, x, y);
 				// arg0.getGraphics().drawImage(grass_b, x, y);
