@@ -132,4 +132,8 @@ public abstract class Entite {
 		return (Robot) this;
 	}
 	
+	public void ChangerDirection(Direction d){
+		this.d = d;
+	}
+	
 }
