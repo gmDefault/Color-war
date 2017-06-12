@@ -35,7 +35,7 @@ public class View extends BasicGame {
 
 	int seconde = 20000;
 
-	int minute = 0;
+	int minute = 2;
 
 	private float x = 976, y = 32 + 16;
 	private float PourcentRouge = 0;
@@ -115,7 +115,7 @@ public class View extends BasicGame {
 
 			uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
 			uniFont.addAsciiGlyphs();
-			uniFont.getEffects().add(new ColorEffect(java.awt.Color.white)); 
+			uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
 			uniFont.addAsciiGlyphs();
 			uniFont.loadGlyphs();
 
@@ -128,7 +128,7 @@ public class View extends BasicGame {
 
 		SpriteSheet spriteSheet = new SpriteSheet("maps/char_2.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
-		SpriteSheet spriteSheet3 = new SpriteSheet("maps/robot_red.png",64,64);
+		SpriteSheet spriteSheet3 = new SpriteSheet("maps/robot_red.png", 64, 64);
 		this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
 		this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
 		this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
@@ -146,7 +146,7 @@ public class View extends BasicGame {
 		this.animations2[5] = loadAnimation(spriteSheet2, 1, 9, 1);
 		this.animations2[6] = loadAnimation(spriteSheet2, 1, 9, 2);
 		this.animations2[7] = loadAnimation(spriteSheet2, 1, 9, 3);
-		
+
 		this.animations3[0] = loadAnimation(spriteSheet3, 0, 1, 0);
 		this.animations3[1] = loadAnimation(spriteSheet3, 0, 1, 1);
 		this.animations3[2] = loadAnimation(spriteSheet3, 0, 1, 2);
@@ -160,9 +160,9 @@ public class View extends BasicGame {
 		robot2.setSize(100, 100);
 
 		Terrain.initialiser();
-		Node test=Reader.read("{X}");
-		test = new Node(Operateur.Star,null,test);
-		r1= new Robot(5,15,Couleur.Rouge,test);
+		Node test = Reader.read("{X}");
+		test = new Node(Operateur.Star, null, test);
+		r1 = new Robot(5, 15, Couleur.Rouge, test);
 
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
@@ -218,7 +218,7 @@ public class View extends BasicGame {
 		afficher_inventaire(j1);
 		afficher_inventaire(j2);
 
-//		 j1.afficher_inventaire();
+		// j1.afficher_inventaire();
 
 		robots_inv.draw(30, 650);
 		robots_inv2.draw(1680, 650);
@@ -318,11 +318,14 @@ public class View extends BasicGame {
 
 		g.drawAnimation(animations[j1.getD().entier() + (moving ? 4 : 0)], (15 * 32 + this.j1.getCol() * 32 + 16) - 32,
 				(this.j1.getLine() * 32 + 16) - 60);
-		g.drawAnimation(animations2[j2.getD().entier() + (moving2 ? 4 : 0)], (15 * 32 + this.j2.getCol() * 32 + 16) - 32,
-				(this.j2.getLine() * 32 + 16) - 60);
+		g.drawAnimation(animations2[j2.getD().entier() + (moving2 ? 4 : 0)],
+				(15 * 32 + this.j2.getCol() * 32 + 16) - 32, (this.j2.getLine() * 32 + 16) - 60);
 
-		g.drawAnimation(animations3[r1.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1.getCol() * 32 + 16) - 32, (this.r1.getLine() * 32 + 16) - 60);
+		r1.execute();
 		
+		g.drawAnimation(animations3[r1.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1.getCol() * 32 + 16) - 32,
+				(this.r1.getLine() * 32 + 16) - 60);
+
 		// System.out.println("( "+ x + " , " + y + " ) ");
 		// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
 
@@ -407,7 +410,7 @@ public class View extends BasicGame {
 					while (t < 5) {
 						JOptionPane r = new JOptionPane();
 						r.setSize(d);
-						String[] bouton = { "Créer", "Modifier","Annuler" };
+						String[] bouton = { "Créer", "Modifier", "Annuler" };
 						int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
 								bouton[0]);
@@ -437,13 +440,12 @@ public class View extends BasicGame {
 								}
 							}
 						}
-						if (retour ==2 || retour == -1){
-							t=5;
+						if (retour == 2 || retour == -1) {
+							t = 5;
 						}
 						t++;
 					}
 				}
-				
 
 				// System.out.println("passe ici");
 				// Terrain.afficher();
@@ -588,15 +590,17 @@ public class View extends BasicGame {
 					while (t2 < 5) {
 						JOptionPane r2 = new JOptionPane();
 						r2.setSize(d);
-						String[] bouton2 = { "Créer", "Modifier","Annuler" };
+						String[] bouton2 = { "Créer", "Modifier", "Annuler" };
 						int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
+								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2,
+								bouton2[0]);
 						if (retour2 == 1) {
 							String inputbm = JOptionPane.showInputDialog(robot2);
 
 							if (inputbm == null) {
-								int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-										null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+								int k2 = JOptionPane.showOptionDialog(null,
+										"Voulez-vous continuer la création/modification", null,
+										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k2 == 1) {
 									t2 = 5;
 								}
@@ -607,16 +611,17 @@ public class View extends BasicGame {
 							String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
 
 							if (inputbc == null) {
-								int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-										null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+								int k2 = JOptionPane.showOptionDialog(null,
+										"Voulez-vous continuer la création/modification", null,
+										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k2 == 1) {
 									t2 = 5;
 								}
 							}
 						}
 
-						if (retour2 ==2 || retour2 == -1){
-							t2=5;
+						if (retour2 == 2 || retour2 == -1) {
+							t2 = 5;
 						}
 						t2++;
 					}
@@ -812,77 +817,91 @@ public class View extends BasicGame {
 			this.moving = true;
 			break;
 
-//		case Input.KEY_R:
-//			int t = 0;
-//			while (t < 5) {
-//				JOptionPane r = new JOptionPane();
-//				r.setSize(d);
-//				String[] bouton = { "Créer", "Modifier" };
-//				int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-//						JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
-//				if (retour == 1) {
-//					String inputrm = JOptionPane.showInputDialog(robot);
-//
-//					if (inputrm == null) {
-//						int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-//								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-//						if (k == 1) {
-//							t = 5;
-//						}
-//					}
-//				}
-//				if (retour == 0) {
-//					JOptionPane p = new JOptionPane();
-//					String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
-//					// System.out.println(inputrc);
-//
-//					if (inputrc == null) {
-//						int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-//								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-//						if (k == 1) {
-//							t = 5;
-//						}
-//					}
-//				}
-//				t++;
-//			}
-//			break;
-//
-//		case Input.KEY_T:
-//
-//			int t2 = 0;
-//			while (t2 < 5) {
-//				JOptionPane r2 = new JOptionPane();
-//				r2.setSize(d);
-//				String[] bouton2 = { "Créer", "Modifier" };
-//				int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-//						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
-//				if (retour2 == 1) {
-//					String inputbm = JOptionPane.showInputDialog(robot2);
-//
-//					if (inputbm == null) {
-//						int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-//								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-//						if (k2 == 1) {
-//							t2 = 5;
-//						}
-//					}
-//				}
-//				if (retour2 == 0) {
-//					JOptionPane rbc = new JOptionPane();
-//					String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
-//
-//					if (inputbc == null) {
-//						int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-//								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-//						if (k2 == 1) {
-//							t2 = 5;
-//						}
-//					}
-//				}
-//				t2++;
-//			}
-//			break;
+		// case Input.KEY_R:
+		// int t = 0;
+		// while (t < 5) {
+		// JOptionPane r = new JOptionPane();
+		// r.setSize(d);
+		// String[] bouton = { "Créer", "Modifier" };
+		// int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des
+		// robots",
+		// JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+		// this.icr, bouton, bouton[0]);
+		// if (retour == 1) {
+		// String inputrm = JOptionPane.showInputDialog(robot);
+		//
+		// if (inputrm == null) {
+		// int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la
+		// création/modification",
+		// null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+		// null, null);
+		// if (k == 1) {
+		// t = 5;
+		// }
+		// }
+		// }
+		// if (retour == 0) {
+		// JOptionPane p = new JOptionPane();
+		// String inputrc = p.showInputDialog(tab, "Saisissez votre
+		// expression");
+		// // System.out.println(inputrc);
+		//
+		// if (inputrc == null) {
+		// int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la
+		// création/modification",
+		// null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+		// null, null);
+		// if (k == 1) {
+		// t = 5;
+		// }
+		// }
+		// }
+		// t++;
+		// }
+		// break;
+		//
+		// case Input.KEY_T:
+		//
+		// int t2 = 0;
+		// while (t2 < 5) {
+		// JOptionPane r2 = new JOptionPane();
+		// r2.setSize(d);
+		// String[] bouton2 = { "Créer", "Modifier" };
+		// int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu
+		// des robots",
+		// JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb,
+		// bouton2, bouton2[0]);
+		// if (retour2 == 1) {
+		// String inputbm = JOptionPane.showInputDialog(robot2);
+		//
+		// if (inputbm == null) {
+		// int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la
+		// création/modification",
+		// null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+		// null, null);
+		// if (k2 == 1) {
+		// t2 = 5;
+		// }
+		// }
+		// }
+		// if (retour2 == 0) {
+		// JOptionPane rbc = new JOptionPane();
+		// String inputbc = rbc.showInputDialog(tab2, "Saisissez votre
+		// expression");
+		//
+		// if (inputbc == null) {
+		// int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la
+		// création/modification",
+		// null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+		// null, null);
+		// if (k2 == 1) {
+		// t2 = 5;
+		// }
+		// }
+		// }
+		// t2++;
+		// }
+		// break;
 
 		case Input.KEY_P:
 
