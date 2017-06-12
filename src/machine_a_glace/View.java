@@ -35,7 +35,7 @@ public class View extends BasicGame {
 
 	int seconde = 20000;
 
-	int minute = 0;
+	int minute = 3;
 
 	private float x = 976, y = 32 + 16;
 	private float PourcentRouge = 0;
@@ -82,6 +82,7 @@ public class View extends BasicGame {
 
 	java.awt.Font UIFont1;
 	org.newdawn.slick.UnicodeFont uniFont;
+	
 
 	public View(Joueur j1, Joueur j2) {
 
@@ -370,7 +371,8 @@ public class View extends BasicGame {
 				minute--;
 		}
 		seconde -= delta;
-
+		
+		this.container.resume();
 		if (this.moving) {
 			// switch (this.j1.getD()) {
 			// case Nord:
@@ -395,13 +397,14 @@ public class View extends BasicGame {
 								bouton[0]);
 						if (retour == 1) {
 							String inputrm = JOptionPane.showInputDialog(robot);
-
+							
 							if (inputrm == null) {
 								int k = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
 										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k == 1) {
 									t = 5;
+									
 								}
 							}
 						}
@@ -421,10 +424,12 @@ public class View extends BasicGame {
 						}
 						if (retour ==2 || retour == -1){
 							t=5;
+							
 						}
 						t++;
-					}
+					}	
 				}
+				
 				
 
 				// System.out.println("passe ici");
