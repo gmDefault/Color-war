@@ -33,10 +33,10 @@ public class View extends BasicGame {
 	private GameContainer container;
 	private TiledMap map;
 
-	int seconde = 20000;
+	int seconde = 35000;
 
 	int minute = 3;
-	
+
 	int popup_test_1 = 0;
 	int popup_test_2 = 0;
 	private float x = 976, y = 32 + 16;
@@ -357,12 +357,12 @@ public class View extends BasicGame {
 				(this.r1.getLine() * 32 + 16) - 60);
 
 		g.drawAnimation(animations4[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
-		
+
 		if (this.popup_test_1 == 5) {
 			this.popup_test_1 = 0;
 			if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer()) {
 				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCase(Contenu.Joueur);
-				this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees()-1);
+				this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
 				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
 				this.container.pause();
 				int t = 0;
@@ -371,15 +371,13 @@ public class View extends BasicGame {
 					r.setSize(d);
 					String[] bouton = { "Créer", "Modifier", "Annuler" };
 					int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
-							bouton[0]);
+							JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
 					if (retour == 1) {
 						String inputrm = JOptionPane.showInputDialog(robot);
 
 						if (inputrm == null) {
-							int k = JOptionPane.showOptionDialog(null,
-									"Voulez-vous continuer la création/modification", null,
-									JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+									null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 							if (k == 1) {
 								t = 5;
 							}
@@ -391,9 +389,8 @@ public class View extends BasicGame {
 						// System.out.println(inputrc);
 
 						if (inputrc == null) {
-							int k = JOptionPane.showOptionDialog(null,
-									"Voulez-vous continuer la création/modification", null,
-									JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+									null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 							if (k == 1) {
 								t = 5;
 							}
@@ -412,51 +409,50 @@ public class View extends BasicGame {
 
 		if (this.popup_test_2 == 5) {
 			this.popup_test_2 = 0;
-		if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer()) {
-			Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCase(Contenu.Joueur);
-			this.j1.setNb_cases_coloriees(this.j2.getNb_cases_coloriees()-1);
-			Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
-			this.container.pause();
-			int t2 = 0;
-			while (t2 < 5) {
-				JOptionPane r2 = new JOptionPane();
-				r2.setSize(d);
-				String[] bouton2 = { "Créer", "Modifier", "Annuler" };
-				int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2,
-						bouton2[0]);
-				if (retour2 == 1) {
-					String inputbm = JOptionPane.showInputDialog(robot2);
+			if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer()) {
+				Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCase(Contenu.Joueur);
+				this.j1.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
+				Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
+				this.container.pause();
+				int t2 = 0;
+				while (t2 < 5) {
+					JOptionPane r2 = new JOptionPane();
+					r2.setSize(d);
+					String[] bouton2 = { "Créer", "Modifier", "Annuler" };
+					int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+							JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
+					if (retour2 == 1) {
+						String inputbm = JOptionPane.showInputDialog(robot2);
 
-					if (inputbm == null) {
-						int k2 = JOptionPane.showOptionDialog(null,
-								"Voulez-vous continuer la création/modification", null,
-								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-						if (k2 == 1) {
-							t2 = 5;
+						if (inputbm == null) {
+							int k2 = JOptionPane.showOptionDialog(null,
+									"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
+									JOptionPane.QUESTION_MESSAGE, null, null, null);
+							if (k2 == 1) {
+								t2 = 5;
+							}
 						}
 					}
-				}
-				if (retour2 == 0) {
-					JOptionPane rbc = new JOptionPane();
-					String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
+					if (retour2 == 0) {
+						JOptionPane rbc = new JOptionPane();
+						String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
 
-					if (inputbc == null) {
-						int k2 = JOptionPane.showOptionDialog(null,
-								"Voulez-vous continuer la création/modification", null,
-								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-						if (k2 == 1) {
-							t2 = 5;
+						if (inputbc == null) {
+							int k2 = JOptionPane.showOptionDialog(null,
+									"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
+									JOptionPane.QUESTION_MESSAGE, null, null, null);
+							if (k2 == 1) {
+								t2 = 5;
+							}
 						}
 					}
-				}
 
-				if (retour2 == 2 || retour2 == -1) {
-					t2 = 5;
+					if (retour2 == 2 || retour2 == -1) {
+						t2 = 5;
+					}
+					t2++;
 				}
-				t2++;
 			}
-		}
 		} else {
 			this.popup_test_2++;
 		}
@@ -476,13 +472,14 @@ public class View extends BasicGame {
 		uniFont2.drawString(1472, 10, (int) (PourcentRouge * 100) + " % ", Color.red);
 		if (minute < 10) {
 			if (seconde / 1000 < 30) {
-				if (minute == 0) {
+				if (minute == 0 && seconde / 1000 >= 10) {
 					uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.red);
-					if (seconde / 1000 < 10)
-						uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.red);
-				} else {
-					uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
-					if (seconde / 1000 < 10)
+				} else if (minute == 0 && seconde / 1000 < 10)
+					uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.red);
+				else {
+					if (seconde / 1000 >= 10)
+						uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
+					else
 						uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.darkGray);
 				}
 			} else
@@ -555,7 +552,6 @@ public class View extends BasicGame {
 				// this.container.pause();
 				// this.container.setPaused(true);
 				// arg0.pause();
-
 
 				// this.container.resume();
 
