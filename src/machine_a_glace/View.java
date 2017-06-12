@@ -338,13 +338,23 @@ public class View extends BasicGame {
 		g.drawString("" + j1.getPdv(), 1700, 120);
 		g.drawString(" Inventaire ", 50, 150);
 		g.drawString(" Inventaire ", 1750, 150);
+		
+		g.drawString(" Etat des robots ", 50, 630);
+		g.drawString(" Etat des robots  ", 1700, 630);
+		
+		
 		uniFont2.drawString(1472,10,(int)(PourcentRouge * 100) + " % ", Color.red);
 		if (minute < 10) {
-			if (seconde / 1000 < 10) {
-				if (minute == 0)
+			if (seconde / 1000 < 30) {
+				if (minute == 0){
+					uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.red);
+					if (seconde / 1000 < 10)
 					uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.red);
-				else
+				}else  {
+					uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
+					if (seconde / 1000 < 10)
 					uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.darkGray);
+				}
 			} else
 				uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
 		} else
