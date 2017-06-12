@@ -47,6 +47,9 @@ public class View extends BasicGame {
 	private long lasttime = System.currentTimeMillis();
 	private long lasttime2 = System.currentTimeMillis();
 	private long lasttime3 = System.currentTimeMillis();
+	
+	private int secs1 = 0;
+	private int secs2 = 0;
 
 	private ArrayList<Point> pos_color = new ArrayList<Point>();
 	private ArrayList<Point> pos_color_2 = new ArrayList<Point>();
@@ -370,6 +373,8 @@ public class View extends BasicGame {
 				minute--;
 		}
 		seconde -= delta;
+		this.secs1 += delta;
+		this.secs2 += delta;
 
 		if (this.moving) {
 			// switch (this.j1.getD()) {
@@ -453,10 +458,10 @@ public class View extends BasicGame {
 
 			}
 			// System.out.println("pos : " + x + " - " + y);
-			if (System.currentTimeMillis() - lasttime < 500) {
+			if (this.secs1 < 500) {
 				canmove = false;
 			} else {
-				lasttime = System.currentTimeMillis();
+				this.secs1 = 0;
 				canmove = true;
 			}
 		}
@@ -629,10 +634,10 @@ public class View extends BasicGame {
 
 			}
 			// System.out.println("pos : " + x + " - " + y);
-			if (System.currentTimeMillis() - lasttime2 < 500) {
+			if (this.secs2 < 500) {
 				canmove2 = false;
 			} else {
-				lasttime2 = System.currentTimeMillis();
+				this.secs2 = 0;
 				canmove2 = true;
 			}
 		}
