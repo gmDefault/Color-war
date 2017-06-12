@@ -36,7 +36,9 @@ public class View extends BasicGame {
 	int seconde = 20000;
 
 	int minute = 3;
-
+	
+	int popup_test_1 = 0;
+	int popup_test_2 = 0;
 	private float x = 976, y = 32 + 16;
 	private float PourcentRouge = 0;
 	private float PourcentBleu = 0;
@@ -355,7 +357,109 @@ public class View extends BasicGame {
 				(this.r1.getLine() * 32 + 16) - 60);
 
 		g.drawAnimation(animations4[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
+		
+		if (this.popup_test_1 == 5) {
+			this.popup_test_1 = 0;
+			if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer()) {
+				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCase(Contenu.Joueur);
+				this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees()-1);
+				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
+				this.container.pause();
+				int t = 0;
+				while (t < 5) {
+					JOptionPane r = new JOptionPane();
+					r.setSize(d);
+					String[] bouton = { "Créer", "Modifier", "Annuler" };
+					int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+							JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
+							bouton[0]);
+					if (retour == 1) {
+						String inputrm = JOptionPane.showInputDialog(robot);
 
+						if (inputrm == null) {
+							int k = JOptionPane.showOptionDialog(null,
+									"Voulez-vous continuer la création/modification", null,
+									JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+							if (k == 1) {
+								t = 5;
+							}
+						}
+					}
+					if (retour == 0) {
+						JOptionPane p = new JOptionPane();
+						String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
+						// System.out.println(inputrc);
+
+						if (inputrc == null) {
+							int k = JOptionPane.showOptionDialog(null,
+									"Voulez-vous continuer la création/modification", null,
+									JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+							if (k == 1) {
+								t = 5;
+							}
+						}
+					}
+					if (retour == 2 || retour == -1) {
+						t = 5;
+					}
+					t++;
+				}
+
+			}
+		} else {
+			this.popup_test_1++;
+		}
+
+		if (this.popup_test_2 == 5) {
+			this.popup_test_2 = 0;
+		if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer()) {
+			Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCase(Contenu.Joueur);
+			this.j1.setNb_cases_coloriees(this.j2.getNb_cases_coloriees()-1);
+			Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
+			this.container.pause();
+			int t2 = 0;
+			while (t2 < 5) {
+				JOptionPane r2 = new JOptionPane();
+				r2.setSize(d);
+				String[] bouton2 = { "Créer", "Modifier", "Annuler" };
+				int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2,
+						bouton2[0]);
+				if (retour2 == 1) {
+					String inputbm = JOptionPane.showInputDialog(robot2);
+
+					if (inputbm == null) {
+						int k2 = JOptionPane.showOptionDialog(null,
+								"Voulez-vous continuer la création/modification", null,
+								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+						if (k2 == 1) {
+							t2 = 5;
+						}
+					}
+				}
+				if (retour2 == 0) {
+					JOptionPane rbc = new JOptionPane();
+					String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
+
+					if (inputbc == null) {
+						int k2 = JOptionPane.showOptionDialog(null,
+								"Voulez-vous continuer la création/modification", null,
+								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+						if (k2 == 1) {
+							t2 = 5;
+						}
+					}
+				}
+
+				if (retour2 == 2 || retour2 == -1) {
+					t2 = 5;
+				}
+				t2++;
+			}
+		}
+		} else {
+			this.popup_test_2++;
+		}
 		// System.out.println("( "+ x + " , " + y + " ) ");
 		// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
 
@@ -452,49 +556,7 @@ public class View extends BasicGame {
 				// this.container.setPaused(true);
 				// arg0.pause();
 
-				if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer()) {
-					this.container.pause();
-					int t = 0;
-					while (t < 5) {
-						JOptionPane r = new JOptionPane();
-						r.setSize(d);
-						String[] bouton = { "Créer", "Modifier", "Annuler" };
-						int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
-								bouton[0]);
-						if (retour == 1) {
-							String inputrm = JOptionPane.showInputDialog(robot);
 
-							if (inputrm == null) {
-								int k = JOptionPane.showOptionDialog(null,
-										"Voulez-vous continuer la création/modification", null,
-										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-								if (k == 1) {
-									t = 5;
-								}
-							}
-						}
-						if (retour == 0) {
-							JOptionPane p = new JOptionPane();
-							String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
-							// System.out.println(inputrc);
-
-							if (inputrc == null) {
-								int k = JOptionPane.showOptionDialog(null,
-										"Voulez-vous continuer la création/modification", null,
-										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-								if (k == 1) {
-									t = 5;
-								}
-							}
-						}
-						if (retour == 2 || retour == -1) {
-							t = 5;
-						}
-						t++;
-					}
-
-				}
 				// this.container.resume();
 
 				// this.container.resume();
@@ -623,48 +685,7 @@ public class View extends BasicGame {
 					this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
 					this.recolorie_par_dessus = false;
 				}
-				if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer()) {
-					this.container.pause();
-					int t2 = 0;
-					while (t2 < 5) {
-						JOptionPane r2 = new JOptionPane();
-						r2.setSize(d);
-						String[] bouton2 = { "Créer", "Modifier", "Annuler" };
-						int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2,
-								bouton2[0]);
-						if (retour2 == 1) {
-							String inputbm = JOptionPane.showInputDialog(robot2);
 
-							if (inputbm == null) {
-								int k2 = JOptionPane.showOptionDialog(null,
-										"Voulez-vous continuer la création/modification", null,
-										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-								if (k2 == 1) {
-									t2 = 5;
-								}
-							}
-						}
-						if (retour2 == 0) {
-							JOptionPane rbc = new JOptionPane();
-							String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
-
-							if (inputbc == null) {
-								int k2 = JOptionPane.showOptionDialog(null,
-										"Voulez-vous continuer la création/modification", null,
-										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-								if (k2 == 1) {
-									t2 = 5;
-								}
-							}
-						}
-
-						if (retour2 == 2 || retour2 == -1) {
-							t2 = 5;
-						}
-						t2++;
-					}
-				}
 				// System.out.println("passe ici");
 				// Terrain.afficher();
 
