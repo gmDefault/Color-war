@@ -15,5 +15,8 @@ public class ColorWar {
 		
 
 		View.launch_game(j1, j2);
+		
+		
+		
 	}
 }
