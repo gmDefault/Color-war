@@ -128,4 +128,8 @@ public abstract class Entite {
 			pdv -= x;
 	}
 	
+	public Robot robot(){
+		return (Robot) this;
+	}
+	
 }

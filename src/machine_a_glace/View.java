@@ -58,6 +58,8 @@ public class View extends BasicGame {
 	private boolean canmove2 = false;
 
 	private Joueur j1, j2;
+	
+	public static boolean recolorie_par_dessus = false;
 
 	private boolean moving2 = false;
 	private Animation[] animations = new Animation[8];
@@ -177,18 +179,31 @@ public class View extends BasicGame {
 		afficher_inventaire(j1);
 		afficher_inventaire(j2);
 		
-		j1.afficher_inventaire();
+	//	j1.afficher_inventaire();
+		System.out.println("cases coloriées j1 : " + j1.getNb_cases_coloriees());
+		System.out.println("cases coloriées j2 : " + j2.getNb_cases_coloriees());
+
+		
 		
 		robots_inv.draw(30, 650);
 		robots_inv2.draw(1680, 650);
 
 
-		for (int i = 0; i < this.pos_color.size(); i++) {
-			peinture_rouge.drawCentered(this.pos_color.get(i).getX(), this.pos_color.get(i).getY());
-		}
-
-		for (int i = 0; i < this.pos_color_2.size(); i++) {
-			peinture_bleu.drawCentered(this.pos_color_2.get(i).getX(), this.pos_color_2.get(i).getY());
+//		for (int i = 0; i < this.pos_color.size(); i++) {
+//			peinture_rouge.drawCentered(this.pos_color.get(i).getX(), this.pos_color.get(i).getY());
+//		}
+//
+//		for (int i = 0; i < this.pos_color_2.size(); i++) {
+//			peinture_bleu.drawCentered(this.pos_color_2.get(i).getX(), this.pos_color_2.get(i).getY());
+//		}
+		
+		for (int i = 0; i < 30; i++) {
+			for (int j = 0; j<30; j++) {
+				if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {
+					peinture_bleu.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
+				} else if (Terrain.terrain[i][j].getCouleur()  == Couleur.Rouge) {
+					peinture_rouge.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));				}
+			}
 		}
 
 		// peinture_rouge.draw(15*32+e.getLine()*32, e.getCol()*32);
@@ -280,18 +295,18 @@ public class View extends BasicGame {
 	// this.map.render(0, 0);
 	// }
 
-	private boolean isCollision(float x, float y) {
-		int tileW = this.map.getTileWidth();
-		int tileH = this.map.getTileHeight();
-		int logicLayer = this.map.getLayerIndex("Collision");
-		Image tile = this.map.getTileImage((int) x / tileW, (int) y / tileH, logicLayer);
-		boolean collision = tile != null;
-		if (collision) {
-			Color color = tile.getColor((int) x % tileW, (int) y % tileH);
-			collision = color.getAlpha() > 0;
-		}
-		return collision;
-	}
+//	private boolean isCollision(float x, float y) {
+//		int tileW = this.map.getTileWidth();
+//		int tileH = this.map.getTileHeight();
+//		int logicLayer = this.map.getLayerIndex("Collision");
+//		Image tile = this.map.getTileImage((int) x / tileW, (int) y / tileH, logicLayer);
+//		boolean collision = tile != null;
+//		if (collision) {
+//			Color color = tile.getColor((int) x % tileW, (int) y % tileH);
+//			collision = color.getAlpha() > 0;
+//		}
+//		return collision;
+//	}
 
 	@Override
 	public void update(GameContainer arg0, int delta) throws SlickException {
@@ -317,6 +332,46 @@ public class View extends BasicGame {
 				// this.j1.setD(Direction.Ouest);
 				// this.y -= (1024/32);
 				this.j1.Avancer(1);
+				if (this.recolorie_par_dessus == true) {
+					this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees()-1);
+					this.recolorie_par_dessus = false;
+				}
+				if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer()){
+					int t = 0;
+					while (t < 5) {
+						JOptionPane r = new JOptionPane();
+						r.setSize(d);
+						String[] bouton = { "Créer", "Modifier" };
+						int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
+						if (retour == 1) {
+							String inputrm = JOptionPane.showInputDialog(robot);
+
+							if (inputrm == null) {
+								int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+										null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+								if (k == 1) {
+									t = 5;
+								}
+							}
+						}
+						if (retour == 0) {
+							JOptionPane p = new JOptionPane();
+							String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
+							// System.out.println(inputrc);
+
+							if (inputrc == null) {
+								int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+										null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+								if (k == 1) {
+									t = 5;
+								}
+							}
+						}
+						t++;
+					}
+				}
+				
 				// System.out.println("passe ici");
 				// Terrain.afficher();
 
@@ -451,6 +506,10 @@ public class View extends BasicGame {
 				// this.j1.setD(Direction.Ouest);
 				// this.y -= (1024/32);
 				this.j2.Avancer(1);
+				if (this.recolorie_par_dessus == true) {
+					this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees()-1);
+					this.recolorie_par_dessus = false;
+				}
 				// System.out.println("passe ici");
 				// Terrain.afficher();
 
