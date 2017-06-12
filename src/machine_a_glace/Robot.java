@@ -113,15 +113,22 @@ public class Robot extends Entite {
 
 	}
 
-	public void Kamikaze() {
+	public boolean Kamikaze() {
 		int line, col;
 		line = getLine();
 		col = getCol();
 		boolean present = EnnemiPresentNCase(line, col, 2);
-		if (present)
+		if (present){
 			Explosion(line, col);
+			return true;
+		}
+		else return false;
 	}
 
+	public void Explorer(){
+		
+	}
+	
 	// Renvoi True si l'attaque est concluante, false sinon
 	public boolean Attack() {
 		int line, col;
