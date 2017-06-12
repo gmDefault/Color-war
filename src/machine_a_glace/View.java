@@ -239,15 +239,15 @@ public class View extends BasicGame {
 		afficher_pdv(j1);
 		afficher_pdv(j2);
 
-		inventaire.draw(0, 175);
-		inventaire.draw(1660, 175);
+		inventaire.draw(100, 175);
+		inventaire.draw(1560, 175);
 		afficher_inventaire(j1);
 		afficher_inventaire(j2);
 
 		 j1.afficher_inventaire();
 
-		robots_inv.draw(30, 650);
-		robots_inv2.draw(1680, 650);
+		robots_inv.draw(120, 650);
+		robots_inv2.draw(1580, 650);
 
 		// for (int i = 0; i < this.pos_color.size(); i++) {
 		// peinture_rouge.drawCentered(this.pos_color.get(i).getX(),
@@ -357,15 +357,25 @@ public class View extends BasicGame {
 		uniFont2.drawString(290,10,(int)(PourcentBleu * 100) + " % ", Color.blue);
 		g.drawString("" + j2.getPdv(), 190, 120);
 		g.drawString("" + j1.getPdv(), 1700, 120);
-		g.drawString(" Inventaire ", 50, 150);
-		g.drawString(" Inventaire ", 1750, 150);
+		g.drawString(" Inventaire ", 187, 150);
+		g.drawString(" Inventaire ", 1617, 150);
+		
+		g.drawString(" Etat des robots ", 140, 630);
+		g.drawString(" Etat des robots  ", 1617, 630);
+		
+		
 		uniFont2.drawString(1472,10,(int)(PourcentRouge * 100) + " % ", Color.red);
 		if (minute < 10) {
-			if (seconde / 1000 < 10) {
-				if (minute == 0)
+			if (seconde / 1000 < 30) {
+				if (minute == 0){
+					uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.red);
+					if (seconde / 1000 < 10)
 					uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.red);
-				else
+				}else  {
+					uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
+					if (seconde / 1000 < 10)
 					uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.darkGray);
+				}
 			} else
 				uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
 		} else
@@ -418,6 +428,7 @@ public class View extends BasicGame {
 		this.secs1 += delta;
 		this.secs2 += delta;
 		secsrobot += delta;
+		this.container.resume();
 
 		if (this.moving) {
 			// switch (this.j1.getD()) {
@@ -432,7 +443,12 @@ public class View extends BasicGame {
 					this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
 					this.recolorie_par_dessus = false;
 				}
+			//	this.container.pause();
+			//	this.container.setPaused(true);
+				//arg0.pause();
+				
 				if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer()) {
+					this.container.pause();
 					int t = 0;
 					while (t < 5) {
 						JOptionPane r = new JOptionPane();
@@ -472,7 +488,12 @@ public class View extends BasicGame {
 						}
 						t++;
 					}
-				}
+
+				} 
+			//	this.container.resume();
+
+			//	this.container.resume();
+			//	arg0.resume();
 
 				// System.out.println("passe ici");
 				// Terrain.afficher();
@@ -600,6 +621,7 @@ public class View extends BasicGame {
 					this.recolorie_par_dessus = false;
 				}
 				if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer()) {
+					this.container.pause();
 					int t2 = 0;
 					while (t2 < 5) {
 						JOptionPane r2 = new JOptionPane();
@@ -911,7 +933,7 @@ public class View extends BasicGame {
 		// break;
 
 		case Input.KEY_P:
-
+			//this.container.pause();
 			JOptionPane pause = new JOptionPane();
 			String[] boutonP = { "Reprendre" };
 			pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION,
@@ -919,6 +941,7 @@ public class View extends BasicGame {
 			break;
 
 		case Input.KEY_Z:
+			//this.container.resume();
 			this.j2.setD(Direction.Nord);
 			this.direction2 = 0;
 			this.moving2 = true;
@@ -1068,9 +1091,9 @@ public class View extends BasicGame {
 					break;
 				}
 				if (j.getCouleur() == Couleur.Bleu)
-					e.draw(62 + (45 * colonne), 185 + (42 * ligne));
+					e.draw(162 + (45 * colonne), 185 + (44 * ligne));
 				else
-					e.draw(1722 + (45 * colonne), 185 + (42 * ligne));
+					e.draw(1622 + (45 * colonne), 185 + (44 * ligne));
 
 			} else if (j.inventaire().get(i).isComportement()) {
 				switch ((Comportement) j.inventaire().get(i)) {
@@ -1095,9 +1118,9 @@ public class View extends BasicGame {
 				}
 
 				if (j.getCouleur() == Couleur.Bleu)
-					e.draw(62 + (45 * colonne), 185 + (42 * ligne));
+					e.draw(162 + (45 * colonne), 185 + (44 * ligne));
 				else
-					e.draw(1722 + (45 * colonne), 185 + (42 * ligne));
+					e.draw(1622 + (45 * colonne), 185 + (44 * ligne));
 			}
 
 			colonne++;
