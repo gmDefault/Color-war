@@ -396,6 +396,8 @@ public class View extends BasicGame {
 		seconde -= delta;
 		this.secs1 += delta;
 		this.secs2 += delta;
+		
+		this.container.resume();
 
 		if (this.moving) {
 			// switch (this.j1.getD()) {
@@ -410,7 +412,12 @@ public class View extends BasicGame {
 					this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
 					this.recolorie_par_dessus = false;
 				}
+			//	this.container.pause();
+			//	this.container.setPaused(true);
+				//arg0.pause();
+				
 				if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer()) {
+					this.container.pause();
 					int t = 0;
 					while (t < 5) {
 						JOptionPane r = new JOptionPane();
@@ -450,7 +457,11 @@ public class View extends BasicGame {
 						}
 						t++;
 					}
-				}
+				} 
+			//	this.container.resume();
+
+			//	this.container.resume();
+			//	arg0.resume();
 				
 
 				// System.out.println("passe ici");
@@ -866,7 +877,7 @@ public class View extends BasicGame {
 //			break;
 
 		case Input.KEY_P:
-
+			//this.container.pause();
 			JOptionPane pause = new JOptionPane();
 			String[] boutonP = { "Reprendre" };
 			pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION,
@@ -874,6 +885,7 @@ public class View extends BasicGame {
 			break;
 
 		case Input.KEY_Z:
+			//this.container.resume();
 			this.j2.setD(Direction.Nord);
 			this.direction2 = 0;
 			this.moving2 = true;
