@@ -350,6 +350,7 @@ public class View extends BasicGame {
 		g.drawAnimation(animations3[r1.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1.getCol() * 32 + 16) - 32,
 				(this.r1.getLine() * 32 + 16) - 60);
 
+
 		// System.out.println("( "+ x + " , " + y + " ) ");
 		// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
 
@@ -472,7 +473,7 @@ public class View extends BasicGame {
 						if (retour == 0) {
 							JOptionPane p = new JOptionPane();
 							String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
-							// System.out.println(inputrc);
+//							 System.out.println(inputrc);
 
 							if (inputrc == null) {
 								int k = JOptionPane.showOptionDialog(null,
@@ -816,7 +817,6 @@ public class View extends BasicGame {
 			break;
 		}
 	}
-
 	@Override
 	public void keyPressed(int key, char c) {
 		switch (key) {
@@ -933,7 +933,7 @@ public class View extends BasicGame {
 		// break;
 
 		case Input.KEY_P:
-			//this.container.pause();
+//			this.container.pause();
 			JOptionPane pause = new JOptionPane();
 			String[] boutonP = { "Reprendre" };
 			pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION,
@@ -963,7 +963,6 @@ public class View extends BasicGame {
 			break;
 		}
 	}
-
 	public void afficher_expr() throws SlickException {
 
 		Image e;
