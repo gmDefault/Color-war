@@ -173,9 +173,9 @@ public class Robot extends Entite {
 		i = 1;
 		while (i <= borneLigB) {
 			for (j = min; j <= max; j++) {
-				if (Terrain.terrain[line + i][col + j-1].isRobot())
+				if (Terrain.terrain[line + i][col + j].isRobot())
 					Kill(line + i, col + j);
-				else if (Terrain.terrain[getLine() + i][getCol() + j-1].isJoueur()) {
+				else if (Terrain.terrain[getLine() + i][getCol() + j].isJoueur()) {
 					Terrain.terrain[line + i][col + j].getEntite().Degat(40);
 				}
 
@@ -184,7 +184,7 @@ public class Robot extends Entite {
 				min++;
 			}
 			if (max >= 0) {
-				max++;
+				max--;
 			}
 		}
 		/*
