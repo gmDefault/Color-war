@@ -1,6 +1,7 @@
 package machine_a_glace;
 
 import org.newdawn.slick.BasicGame;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -14,10 +15,12 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.tiled.TiledMap;
 
+
 import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -28,6 +31,10 @@ public class View extends BasicGame {
 	private GameContainer container;
 	private TiledMap map;
 
+	int seconde=7000;
+	
+	int minute=2;
+	
 	private float x = 976, y = 32 + 16;
 	private float xx = 976, yy = 960 - 32 - 16;
 	private int direction = 2;
@@ -83,12 +90,13 @@ public class View extends BasicGame {
 		return animation;
 	}
 
-	@Override
+	
 	public void init(GameContainer arg0) throws SlickException {
 		// TODO Auto-generated method stub
 		this.container = arg0;
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
+		
 
 		SpriteSheet spriteSheet = new SpriteSheet("maps/char_2.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
@@ -149,7 +157,7 @@ public class View extends BasicGame {
 		Image peinture_bleu = new Image("maps/peinture_bleu.png");
 		Image hud_bleu = new Image("maps/hud_bleu.png");
 		Image hud_rouge = new Image("maps/hud_rouge.png");
-
+		
 		Image inventaire = new Image("maps/inventaire.png");
 		Image robots_inv = new Image("maps/robots_inv.png");
 		Image robots_inv2 = new Image("maps/robots_inv2.png");
@@ -262,6 +270,7 @@ public class View extends BasicGame {
 				(this.j2.getLine() * 32 + 16) - 60);
 
 		// System.out.println("( "+ x + " , " + y + " ) ");
+		g.drawString(minute+" m "+seconde/1000+" s",945, 470);
 
 	}
 
@@ -287,6 +296,18 @@ public class View extends BasicGame {
 	@Override
 	public void update(GameContainer arg0, int delta) throws SlickException {
 		// TODO Auto-generated method stub
+	
+
+		if (seconde>-delta&&seconde<delta){
+			seconde=60000;
+			if(minute==0){
+				this.container.exit();
+			}
+			else minute--;
+		}
+		seconde -= delta;
+		
+		
 		if (this.moving) {
 			// switch (this.j1.getD()) {
 			// case Nord:
