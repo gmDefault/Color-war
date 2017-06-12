@@ -178,7 +178,7 @@ public class View extends BasicGame {
 		afficher_inventaire(j1);
 		afficher_inventaire(j2);
 
-//		 j1.afficher_inventaire();
+		 j1.afficher_inventaire();
 
 		robots_inv.draw(30, 650);
 		robots_inv2.draw(1680, 650);
@@ -563,8 +563,8 @@ public class View extends BasicGame {
 								}
 							}
 						}
-						if (retour ==2){
-							t=5;
+						if (retour2 ==2){
+							t2=5;
 						}
 						t2++;
 					}
@@ -879,6 +879,22 @@ public class View extends BasicGame {
 						e = new Image("maps/pointvirgule.png");
 						e.draw(32 * (15 + j), (32 * i));
 						break;
+					case Choix:
+						e = new Image("maps/doublepipe.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
+					case Choixequi:
+						e = new Image("maps/pipe.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
+					case Star:
+						e = new Image("maps/etoile.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
+					case Priorite:
+						e = new Image("maps/sup.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
 					default:
 						break;
 					}
@@ -956,6 +972,18 @@ public class View extends BasicGame {
 					break;
 				case PointVirgule:
 					e = new Image("maps/pointvirgule.png");
+					break;
+				case Choix:
+					e = new Image("maps/doublepipe.png");
+					break;
+				case Choixequi:
+					e = new Image("maps/pipe.png");
+					break;
+				case Star:
+					e = new Image("maps/etoile.png");
+					break;
+				case Priorite:
+					e = new Image("maps/sup.png");
 					break;
 				default:
 					e = new Image("maps/deuxpoints.png");
