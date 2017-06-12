@@ -185,10 +185,10 @@ public class View extends BasicGame {
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
 
-		Node test = Reader.read("{K}");
+		Node test = Reader.read("{X}");
 		test = new Node(Operateur.Star, null, test);
-		r1 = new Robot(2, 15, Couleur.Bleu, test);
-		r1.setJoueur(j2);
+		r1 = new Robot(5, 15, Couleur.Rouge, test);
+		r1.setJoueur(j1);
 
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
@@ -1040,7 +1040,7 @@ public class View extends BasicGame {
 
 		float ratio = (float) (j.getPdv() * 0.01 * 21 * 7);
 
-		if (j.getCouleur() == Couleur.Bleu && j.getPdv() > 0) {
+		if (j.getCouleur() == Couleur.Bleu && j.getPdv() != 0) {
 			deb_v_b.draw(this.DEBUT_VIE_BLEU_X, this.VIE_Y);
 
 			for (float i = this.DEBUT_VIE_BLEU_X + 7; i < this.DEBUT_VIE_BLEU_X + ratio; i += 7) {
@@ -1048,7 +1048,7 @@ public class View extends BasicGame {
 			}
 			if (j.getPdv() == 100)
 				fin_v_b.draw(this.FIN_VIE_BLEU_X, this.VIE_Y);
-		} else if (j.getPdv() > 0) {
+		} else if (j.getPdv() != 0) {
 			deb_v_r.draw(this.DEBUT_VIE_ROUGE_X, this.VIE_Y);
 			for (float i = this.DEBUT_VIE_ROUGE_X + 7; i < this.DEBUT_VIE_ROUGE_X + ratio; i += 7) {
 				mil_v_r.draw(i, this.VIE_Y);
