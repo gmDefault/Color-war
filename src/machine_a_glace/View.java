@@ -576,7 +576,6 @@ public class View extends BasicGame {
 		//
 		// }
 		// }
-		this.container.resume();
 		if (this.moving2) {
 			// switch (this.j1.getD()) {
 			// case Nord:
