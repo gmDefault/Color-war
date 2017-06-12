@@ -150,7 +150,7 @@ public class Robot extends Entite {
 		max = borneColD;
 		i = 0;
 		Terrain.terrain[line][col].setCase(Contenu.Vide); // On tue le robot qui
-															// explose
+		Terrain.terrain[line][col].setEntite(null);		// explose
 		while (i >= borneLigH) {
 
 			for (j = min; j <= max; j++) {
@@ -213,7 +213,9 @@ public class Robot extends Entite {
 	}
 
 	public void Avancer(int line1, int col1, int line2, int col2) {
-		Terrain.terrain[line2][col2] = Terrain.terrain[line1][col1];
+		Terrain.terrain[line2][col2].setCase(Contenu.Robot);
+		Entite ent = Terrain.terrain[line1][col1].getEntite();
+		Terrain.terrain[line2][col2].setEntite(ent);
 		Terrain.terrain[line1][col1].setCase(Contenu.Vide);
 		Terrain.terrain[line1][col1].setEntite(null);
 	}
@@ -223,7 +225,6 @@ public class Robot extends Entite {
 		int line, col;
 		line = getLine();
 		col = getCol();
-		// Case case_r = Terrain.terrain[line][col];
 		d = this.direction();
 		double random;
 		protection = false;
