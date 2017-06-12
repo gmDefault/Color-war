@@ -7,8 +7,8 @@ public class Terrain {
 	public static Case terrain[][] = new Case[taille][taille];
 	public static int Nbr_Cp_Op =30;
 	private static ArrayList<Coordonnees> coordonnees_cp_op=new ArrayList<Coordonnees>(Nbr_Cp_Op);
-	private static Coordonnees CreationBleu = new Coordonnees(3,15);
-	private static Coordonnees CreationRouge = new Coordonnees(26,15);
+	private static Coordonnees CreationRouge = new Coordonnees(3,15);
+	private static Coordonnees CreationBleu = new Coordonnees(26,15);
 
 	private Terrain() {
 
