@@ -22,13 +22,13 @@ public class Node {
 
 	public String toString() {
 		if (FG != null && FD != null)
-			return "(" + FG.toString() + Gram.toString() + FD.toString() + ")";
+			return FG.toString() + Gram.toString() + FD.toString();
 		else if (FG == null && FD == null)
-			return "(" + Gram.toString() + ")";
+			return Gram.toString();
 		else if (FG == null)
-			return "(" + Gram.toString() + FD.toString() + ")";
+			return Gram.toString() + FD.toString();
 		else if (FD == null)
-			return "(" + FG.toString() + Gram.toString() + ")";
+			return FG.toString() + Gram.toString();
 		else
 			return "bug";
 	}

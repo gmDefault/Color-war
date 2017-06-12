@@ -833,6 +833,18 @@ public class View extends BasicGame {
 						e = new Image("maps/K.png");
 						e.draw(32 * (15 + j), (32 * i));
 						break;
+					case Protect:
+						e = new Image("maps/P.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
+					case Explore:
+						e = new Image("maps/X.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
+					case Suivre:
+						e = new Image("maps/F.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
 					default:
 						break;
 					}
@@ -904,6 +916,15 @@ public class View extends BasicGame {
 					break;
 				case Kamikaze:
 					e = new Image("maps/K.png");
+					break;
+				case Protect:
+					e = new Image("maps/P.png");
+					break;
+				case Explore:
+					e = new Image("maps/X.png");
+					break;
+				case Suivre:
+					e = new Image("maps/F.png");
 					break;
 				default:
 					e = new Image("maps/deuxpoints.png");
