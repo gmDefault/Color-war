@@ -202,9 +202,7 @@ public class View extends BasicGame {
 		afficher_inventaire(j1);
 		afficher_inventaire(j2);
 
-		// j1.afficher_inventaire();
-		System.out.println("cases coloriées j1 : " + j1.getNb_cases_coloriees());
-		System.out.println("cases coloriées j2 : " + j2.getNb_cases_coloriees());
+		 j1.afficher_inventaire();
 
 		robots_inv.draw(30, 650);
 		robots_inv2.draw(1680, 650);
@@ -391,7 +389,7 @@ public class View extends BasicGame {
 					while (t < 5) {
 						JOptionPane r = new JOptionPane();
 						r.setSize(d);
-						String[] bouton = { "Créer", "Modifier" };
+						String[] bouton = { "Créer", "Modifier","Annuler" };
 						int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
 								bouton[0]);
@@ -421,9 +419,13 @@ public class View extends BasicGame {
 								}
 							}
 						}
+						if (retour ==2 || retour == -1){
+							t=5;
+						}
 						t++;
 					}
 				}
+				
 
 				// System.out.println("passe ici");
 				// Terrain.afficher();
@@ -562,6 +564,44 @@ public class View extends BasicGame {
 				if (this.recolorie_par_dessus == true) {
 					this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
 					this.recolorie_par_dessus = false;
+				}
+				if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer()) {
+					int t2 = 0;
+					while (t2 < 5) {
+						JOptionPane r2 = new JOptionPane();
+						r2.setSize(d);
+						String[] bouton2 = { "Créer", "Modifier","Annuler" };
+						int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
+						if (retour2 == 1) {
+							String inputbm = JOptionPane.showInputDialog(robot2);
+
+							if (inputbm == null) {
+								int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+										null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+								if (k2 == 1) {
+									t2 = 5;
+								}
+							}
+						}
+						if (retour2 == 0) {
+							JOptionPane rbc = new JOptionPane();
+							String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
+
+							if (inputbc == null) {
+								int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+										null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+								if (k2 == 1) {
+									t2 = 5;
+								}
+							}
+						}
+
+						if (retour2 ==2 || retour2 == -1){
+							t2=5;
+						}
+						t2++;
+					}
 				}
 				// System.out.println("passe ici");
 				// Terrain.afficher();
@@ -754,77 +794,77 @@ public class View extends BasicGame {
 			this.moving = true;
 			break;
 
-		case Input.KEY_R:
-			int t = 0;
-			while (t < 5) {
-				JOptionPane r = new JOptionPane();
-				r.setSize(d);
-				String[] bouton = { "Créer", "Modifier" };
-				int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
-				if (retour == 1) {
-					String inputrm = JOptionPane.showInputDialog(robot);
-
-					if (inputrm == null) {
-						int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-						if (k == 1) {
-							t = 5;
-						}
-					}
-				}
-				if (retour == 0) {
-					JOptionPane p = new JOptionPane();
-					String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
-					// System.out.println(inputrc);
-
-					if (inputrc == null) {
-						int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-						if (k == 1) {
-							t = 5;
-						}
-					}
-				}
-				t++;
-			}
-			break;
-
-		case Input.KEY_T:
-
-			int t2 = 0;
-			while (t2 < 5) {
-				JOptionPane r2 = new JOptionPane();
-				r2.setSize(d);
-				String[] bouton2 = { "Créer", "Modifier" };
-				int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
-				if (retour2 == 1) {
-					String inputbm = JOptionPane.showInputDialog(robot2);
-
-					if (inputbm == null) {
-						int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-						if (k2 == 1) {
-							t2 = 5;
-						}
-					}
-				}
-				if (retour2 == 0) {
-					JOptionPane rbc = new JOptionPane();
-					String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
-
-					if (inputbc == null) {
-						int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-						if (k2 == 1) {
-							t2 = 5;
-						}
-					}
-				}
-				t2++;
-			}
-			break;
+//		case Input.KEY_R:
+//			int t = 0;
+//			while (t < 5) {
+//				JOptionPane r = new JOptionPane();
+//				r.setSize(d);
+//				String[] bouton = { "Créer", "Modifier" };
+//				int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+//						JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
+//				if (retour == 1) {
+//					String inputrm = JOptionPane.showInputDialog(robot);
+//
+//					if (inputrm == null) {
+//						int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+//								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+//						if (k == 1) {
+//							t = 5;
+//						}
+//					}
+//				}
+//				if (retour == 0) {
+//					JOptionPane p = new JOptionPane();
+//					String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
+//					// System.out.println(inputrc);
+//
+//					if (inputrc == null) {
+//						int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+//								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+//						if (k == 1) {
+//							t = 5;
+//						}
+//					}
+//				}
+//				t++;
+//			}
+//			break;
+//
+//		case Input.KEY_T:
+//
+//			int t2 = 0;
+//			while (t2 < 5) {
+//				JOptionPane r2 = new JOptionPane();
+//				r2.setSize(d);
+//				String[] bouton2 = { "Créer", "Modifier" };
+//				int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+//						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
+//				if (retour2 == 1) {
+//					String inputbm = JOptionPane.showInputDialog(robot2);
+//
+//					if (inputbm == null) {
+//						int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+//								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+//						if (k2 == 1) {
+//							t2 = 5;
+//						}
+//					}
+//				}
+//				if (retour2 == 0) {
+//					JOptionPane rbc = new JOptionPane();
+//					String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
+//
+//					if (inputbc == null) {
+//						int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+//								null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+//						if (k2 == 1) {
+//							t2 = 5;
+//						}
+//					}
+//				}
+//				t2++;
+//			}
+//			break;
 
 		case Input.KEY_P:
 
@@ -871,6 +911,22 @@ public class View extends BasicGame {
 						break;
 					case PointVirgule:
 						e = new Image("maps/pointvirgule.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
+					case Choix:
+						e = new Image("maps/doublepipe.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
+					case Choixequi:
+						e = new Image("maps/pipe.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
+					case Star:
+						e = new Image("maps/etoile.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
+					case Priorite:
+						e = new Image("maps/sup.png");
 						e.draw(32 * (15 + j), (32 * i));
 						break;
 					default:
@@ -950,6 +1006,18 @@ public class View extends BasicGame {
 					break;
 				case PointVirgule:
 					e = new Image("maps/pointvirgule.png");
+					break;
+				case Choix:
+					e = new Image("maps/doublepipe.png");
+					break;
+				case Choixequi:
+					e = new Image("maps/pipe.png");
+					break;
+				case Star:
+					e = new Image("maps/etoile.png");
+					break;
+				case Priorite:
+					e = new Image("maps/sup.png");
 					break;
 				default:
 					e = new Image("maps/deuxpoints.png");

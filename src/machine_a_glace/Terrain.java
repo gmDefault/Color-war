@@ -93,22 +93,17 @@ public class Terrain {
 			}
 
 			
-			if (rand < 0.14) {
+			if (rand < 0.2) {
 				cp.add(Comportement.Attack);
-			} else if (rand < 0.28) {
-				cp.add(Comportement.Colorier);
 			}
-			else if (rand < 0.42) {
+			else if (rand < 0.4) {
 				cp.add(Comportement.Explore);
 			}
-			else if (rand < 0.56) {
+			else if (rand < 0.6) {
 				cp.add(Comportement.Kamikaze);
 			}
-			else if (rand < 0.70) {
+			else if (rand < 0.8) {
 				cp.add(Comportement.Protect);
-			}
-			else if (rand < 0.85) {
-				cp.add(Comportement.Rapprocher);
 			}
 			else {
 				cp.add(Comportement.Suivre);
