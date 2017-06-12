@@ -59,12 +59,14 @@ public class View extends BasicGame {
 	private boolean canmove2 = false;
 
 	private Joueur j1, j2;
+	private Robot r1;
 
 	public static boolean recolorie_par_dessus = false;
 
 	private boolean moving2 = false;
 	private Animation[] animations = new Animation[8];
 	private Animation[] animations2 = new Animation[8];
+	private Animation[] animations3 = new Animation[8];
 
 	private String item[] = { "A", "P", "K" };
 	private String item2[] = { "Robot1", "Robot2", "Robot3" };
@@ -81,6 +83,7 @@ public class View extends BasicGame {
 
 		super("Fenetre");
 		this.j1 = j1;
+		j1.setD(Direction.Sud);
 		this.j2 = j2;
 		// TODO Auto-generated constructor stub
 	}
@@ -101,6 +104,7 @@ public class View extends BasicGame {
 
 		SpriteSheet spriteSheet = new SpriteSheet("maps/char_2.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
+		SpriteSheet spriteSheet3 = new SpriteSheet("maps/robot_red.png",64,64);
 		this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
 		this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
 		this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
@@ -118,11 +122,23 @@ public class View extends BasicGame {
 		this.animations2[5] = loadAnimation(spriteSheet2, 1, 9, 1);
 		this.animations2[6] = loadAnimation(spriteSheet2, 1, 9, 2);
 		this.animations2[7] = loadAnimation(spriteSheet2, 1, 9, 3);
+		
+		this.animations3[0] = loadAnimation(spriteSheet3, 0, 1, 0);
+		this.animations3[1] = loadAnimation(spriteSheet3, 0, 1, 1);
+		this.animations3[2] = loadAnimation(spriteSheet3, 0, 1, 2);
+		this.animations3[3] = loadAnimation(spriteSheet3, 0, 1, 3);
+		this.animations3[4] = loadAnimation(spriteSheet3, 1, 9, 0);
+		this.animations3[5] = loadAnimation(spriteSheet3, 1, 9, 1);
+		this.animations3[6] = loadAnimation(spriteSheet3, 1, 9, 2);
+		this.animations3[7] = loadAnimation(spriteSheet3, 1, 9, 3);
 
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
 
 		Terrain.initialiser();
+		Node test=Reader.read("{X}");
+		test = new Node(Operateur.Star,null,test);
+		r1= new Robot(5,15,Couleur.Rouge,test);
 
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
@@ -178,7 +194,7 @@ public class View extends BasicGame {
 		afficher_inventaire(j1);
 		afficher_inventaire(j2);
 
-		 j1.afficher_inventaire();
+//		 j1.afficher_inventaire();
 
 		robots_inv.draw(30, 650);
 		robots_inv2.draw(1680, 650);
@@ -276,11 +292,13 @@ public class View extends BasicGame {
 		// }
 		// System.out.println(e.toString());
 
-		g.drawAnimation(animations[direction + (moving ? 4 : 0)], (15 * 32 + this.j1.getCol() * 32 + 16) - 32,
+		g.drawAnimation(animations[j1.getD().entier() + (moving ? 4 : 0)], (15 * 32 + this.j1.getCol() * 32 + 16) - 32,
 				(this.j1.getLine() * 32 + 16) - 60);
-		g.drawAnimation(animations2[direction2 + (moving2 ? 4 : 0)], (15 * 32 + this.j2.getCol() * 32 + 16) - 32,
+		g.drawAnimation(animations2[j2.getD().entier() + (moving2 ? 4 : 0)], (15 * 32 + this.j2.getCol() * 32 + 16) - 32,
 				(this.j2.getLine() * 32 + 16) - 60);
 
+		g.drawAnimation(animations3[r1.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1.getCol() * 32 + 16) - 32, (this.r1.getLine() * 32 + 16) - 60);
+		
 		// System.out.println("( "+ x + " , " + y + " ) ");
 		g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
 
