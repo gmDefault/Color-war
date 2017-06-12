@@ -73,4 +73,18 @@ public class Case {
 		}
 		else return Couleur.Neutre;
 	}
+	
+	public boolean isEnnemi(int line, int col, Entite ent) {
+		if (ent == null)
+			return false;
+		else {
+			if (ent.getCouleur() != getCouleur())
+				return true;
+
+			else
+				return false;
+
+		}
+	}
+
 }
