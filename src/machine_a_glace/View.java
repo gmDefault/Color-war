@@ -185,10 +185,10 @@ public class View extends BasicGame {
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
 
-		Node test = Reader.read("{X}");
+		Node test = Reader.read("{K}");
 		test = new Node(Operateur.Star, null, test);
-		r1 = new Robot(5, 15, Couleur.Rouge, test);
-		r1.setJoueur(j1);
+		r1 = new Robot(2, 15, Couleur.Bleu, test);
+		r1.setJoueur(j2);
 
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
@@ -350,11 +350,12 @@ public class View extends BasicGame {
 		g.drawAnimation(animations3[r1.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1.getCol() * 32 + 16) - 32,
 				(this.r1.getLine() * 32 + 16) - 60);
 
+
 		// System.out.println("( "+ x + " , " + y + " ) ");
 		// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
 
 		g.setColor(new Color(255, 255, 255));
-		uniFont2.drawString(300,10,(int)(PourcentBleu * 100) + " % ", Color.blue);
+		uniFont2.drawString(290,10,(int)(PourcentBleu * 100) + " % ", Color.blue);
 		g.drawString("" + j2.getPdv(), 190, 120);
 		g.drawString("" + j1.getPdv(), 1700, 120);
 		g.drawString(" Inventaire ", 187, 150);
@@ -363,13 +364,19 @@ public class View extends BasicGame {
 		g.drawString(" Etat des robots ", 140, 630);
 		g.drawString(" Etat des robots  ", 1617, 630);
 		
+		
 		uniFont2.drawString(1472,10,(int)(PourcentRouge * 100) + " % ", Color.red);
 		if (minute < 10) {
-			if (seconde / 1000 < 10) {
-				if (minute == 0)
+			if (seconde / 1000 < 30) {
+				if (minute == 0){
+					uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.red);
+					if (seconde / 1000 < 10)
 					uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.red);
-				else
+				}else  {
+					uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
+					if (seconde / 1000 < 10)
 					uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.darkGray);
+				}
 			} else
 				uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
 		} else
@@ -466,7 +473,7 @@ public class View extends BasicGame {
 						if (retour == 0) {
 							JOptionPane p = new JOptionPane();
 							String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
-							// System.out.println(inputrc);
+//							 System.out.println(inputrc);
 
 							if (inputrc == null) {
 								int k = JOptionPane.showOptionDialog(null,
@@ -810,7 +817,6 @@ public class View extends BasicGame {
 			break;
 		}
 	}
-
 	@Override
 	public void keyPressed(int key, char c) {
 		switch (key) {
@@ -927,7 +933,7 @@ public class View extends BasicGame {
 		// break;
 
 		case Input.KEY_P:
-			//this.container.pause();
+//			this.container.pause();
 			JOptionPane pause = new JOptionPane();
 			String[] boutonP = { "Reprendre" };
 			pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION,
@@ -957,7 +963,6 @@ public class View extends BasicGame {
 			break;
 		}
 	}
-
 	public void afficher_expr() throws SlickException {
 
 		Image e;
@@ -1035,7 +1040,7 @@ public class View extends BasicGame {
 
 		float ratio = (float) (j.getPdv() * 0.01 * 21 * 7);
 
-		if (j.getCouleur() == Couleur.Bleu && j.getPdv() != 0) {
+		if (j.getCouleur() == Couleur.Bleu && j.getPdv() > 0) {
 			deb_v_b.draw(this.DEBUT_VIE_BLEU_X, this.VIE_Y);
 
 			for (float i = this.DEBUT_VIE_BLEU_X + 7; i < this.DEBUT_VIE_BLEU_X + ratio; i += 7) {
@@ -1043,7 +1048,7 @@ public class View extends BasicGame {
 			}
 			if (j.getPdv() == 100)
 				fin_v_b.draw(this.FIN_VIE_BLEU_X, this.VIE_Y);
-		} else if (j.getPdv() != 0) {
+		} else if (j.getPdv() > 0) {
 			deb_v_r.draw(this.DEBUT_VIE_ROUGE_X, this.VIE_Y);
 			for (float i = this.DEBUT_VIE_ROUGE_X + 7; i < this.DEBUT_VIE_ROUGE_X + ratio; i += 7) {
 				mil_v_r.draw(i, this.VIE_Y);
