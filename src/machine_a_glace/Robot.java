@@ -173,7 +173,7 @@ public class Robot extends Entite {
 		i = 1;
 		while (i <= borneLigB) {
 			for (j = min; j <= max; j++) {
-				if (Terrain.terrain[line + i][col + j].isRobot())
+				if (Terrain.terrain[line + i][col + j-1].isRobot())
 					Kill(line + i, col + j);
 				else if (Terrain.terrain[getLine() + i][getCol() + j].isJoueur()) {
 					Terrain.terrain[line + i][col + j].getEntite().Degat(40);
