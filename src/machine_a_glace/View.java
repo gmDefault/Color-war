@@ -206,9 +206,9 @@ public class View extends BasicGame {
 		robot2.setSize(100, 100);
 
 		Node test = Reader.read("{X ; K}");
-		test = new Node(Operateur.Star, null, test);
-		r1 = new Robot(5, 15, Couleur.Rouge, test);
-		r1.setJoueur(j1);
+//		test = new Node(Operateur.Star, null, test);
+//		r1 = new Robot(5, 15, Couleur.Rouge, test);
+//		r1.setJoueur(j1);
 
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
@@ -372,7 +372,7 @@ public class View extends BasicGame {
 		g.drawAnimation(animations2[j2.getD().entier() + (moving2 ? 4 : 0)],
 				(15 * 32 + this.j2.getCol() * 32 + 16) - 32, (this.j2.getLine() * 32 + 16) - 60);
 
-		g.drawAnimation(animations3[r1.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1.getCol() * 32 + 16) - 32,
+		if (j1.getrb()==1)g.drawAnimation(animations3[r1.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1.getCol() * 32 + 16) - 32,
 				(this.r1.getLine() * 32 + 16) - 60);
 
 		g.drawAnimation(animations4[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
@@ -387,7 +387,7 @@ public class View extends BasicGame {
 				this.container.pause();
 
 				int t = 0;
-				while (t < 5) {
+				while (t < 1) {
 					JOptionPane r = new JOptionPane();
 					r.setSize(d);
 					String[] bouton = { "Créer", "Modifier", "Annuler" };
@@ -400,7 +400,7 @@ public class View extends BasicGame {
 							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
 									null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 							if (k == 1) {
-								t = 5;
+								t = 1;
 							}
 						}
 					}
@@ -411,20 +411,24 @@ public class View extends BasicGame {
 						String inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 						// System.out.println(inputrc);
 						Node m = new Node(null);
-						while(!Parser.ExpressionCorrecte(inputrc, m )){
+						while(!Parser.ExpressionCorrecte(inputrc)){
 							inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 						}
+						m = Parser.ExpressionCorrecte1(inputrc);
+						Robot r1 = new Robot(4,15,j1.getCouleur(),m);
+						r1.setJoueur(j1);
+						j1.setRb(j1.getrb()+1);
 						tab5.clear();
 						if (inputrc == null) {
 							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
 									null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 							if (k == 1) {
-								t = 5;
+								t = 1;
 							}
 						}
 					}
 					if (retour == 2 || retour == -1) {
-						t = 5;
+						t = 1;
 					}
 					t++;
 				}
@@ -452,7 +456,7 @@ public class View extends BasicGame {
 				j2.SetNrj(j2.getNrj() - 75);
 				this.container.pause();
 				int t2 = 0;
-				while (t2 < 5) {
+				while (t2 < 1) {
 					JOptionPane r2 = new JOptionPane();
 					r2.setSize(d);
 					String[] bouton2 = { "Créer", "Modifier", "Annuler" };
@@ -466,7 +470,7 @@ public class View extends BasicGame {
 									"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
 									JOptionPane.QUESTION_MESSAGE, null, null, null);
 							if (k2 == 1) {
-								t2 = 5;
+								t2 = 1;
 							}
 						}
 					}
@@ -476,7 +480,7 @@ public class View extends BasicGame {
 						ArrayList<String>tab4 = j2.inventaire_toString();
 						String inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 						Node n = new Node(null);
-						while(!Parser.ExpressionCorrecte(inputbc, n )){
+						while(!Parser.ExpressionCorrecte(inputbc)){
 							inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 						}
 					
@@ -486,13 +490,13 @@ public class View extends BasicGame {
 									"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
 									JOptionPane.QUESTION_MESSAGE, null, null, null);
 							if (k2 == 1) {
-								t2 = 5;
+								t2 = 1;
 							}
 						}
 					}
 
 					if (retour2 == 2 || retour2 == -1) {
-						t2 = 5;
+						t2 = 1;
 					}
 					t2++;
 				}
@@ -857,10 +861,10 @@ public class View extends BasicGame {
 		// }
 		// }
 
-		if (canmoverobot)
+		if (canmoverobot && j1.getrb()==1)
 			r1.execute();
 		
-		if(secsrobot > 5000){
+		if(secsrobot > 5000 && j1.getrb()==1){
 			r1.next_etat();
 			System.out.println("CHANGEMENT " + secsrobot +" " +r1.etat_courant());
 			secsrobot=0;
