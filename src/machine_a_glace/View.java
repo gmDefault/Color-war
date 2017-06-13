@@ -269,7 +269,25 @@ public class View extends BasicGame {
 		Image j1g = new Image("maps/j1g.jpg");
 		Image j2g = new Image("maps/j2g.jpg");
 		
-		if (this.jeufini == false) {
+		if (this.jeufini == true) {
+			if (this.j1.getNombre_Case_Coloriees()> this.j2.getNb_cases_coloriees()) {
+				g.drawImage(j1g, 0, 0);
+
+			} else {
+				g.drawImage(j2g, 0, 0);
+			}
+			
+			
+			
+
+		} else if (this.j1.getPdv() <= 0) {
+			System.out.println("jeu fini");
+			g.drawImage(j2g, 0, 0);
+		} else if (this.j2.getPdv() <= 0) {
+			g.drawImage(j1g, 0, 0);
+
+		} else {
+
 
 			this.map.render(0, 0);
 			
@@ -465,13 +483,7 @@ public class View extends BasicGame {
 			} else
 				uniFont.drawString(921, 440, minute + ":" + seconde / 1000, Color.darkGray);
 
-		} else {
-			if (this.j1.getNombre_Case_Coloriees()> this.j2.getNb_cases_coloriees()) {
-				g.drawImage(j1g, 0, 0);
-
-			} else {
-				g.drawImage(j2g, 0, 0);
-			}
+		
 		}
 
 		// @Override
