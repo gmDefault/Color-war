@@ -88,17 +88,17 @@ public class View extends BasicGame {
 	private Animation[] animations3 = new Animation[8];
 	private Animation[] animations4 = new Animation[8];
 
-	private String item[] = { "A", "P", "K" };
+	private String item[] = { "Robot1", "Robot2", "Robot3" };
 	private String item2[] = { "Robot1", "Robot2", "Robot3" };
 	private JComboBox robot = new JComboBox(item);
 	private JComboBox robot2 = new JComboBox(item2);
-	private ImageIcon ic = new ImageIcon("maps/robot.png");
+//	private ImageIcon ic = new ImageIcon("maps/robot.png");
 	private ImageIcon icr = new ImageIcon("maps/tete_robot_rouge.png");
 	private ImageIcon icb = new ImageIcon("maps/tete_robot_bleu.png");
 	private Dimension d = new Dimension(100, 100);
-	private String tab[] = { "Frapper", "Explorer", "Kamikaze", ";", "*", ">" };
-	private String tab2[] = { "Manger", "Fumer", "Rond-Poing" };
-
+//	private String tab[] = { "Frapper", "Explorer", "Kamikaze", ";", "*", ">" };
+//	private String tab2[] = { "Manger", "Fumer", "Rond-Poing" };
+	
 	java.awt.Font UIFont1;
 	org.newdawn.slick.UnicodeFont uniFont;
 
@@ -403,7 +403,9 @@ public class View extends BasicGame {
 					}
 					if (retour == 0) {
 						JOptionPane p = new JOptionPane();
-						String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
+						ArrayList<String>tab5 = j1.inventaire_toString();
+						
+						String inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 						// System.out.println(inputrc);
 
 						if (inputrc == null) {
@@ -461,8 +463,12 @@ public class View extends BasicGame {
 					}
 					if (retour2 == 0) {
 						JOptionPane rbc = new JOptionPane();
-						String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
-
+						ArrayList<String>tab4 = j2.inventaire_toString();
+						String inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
+						Node n = new Node(null);
+						while(!Parser.ExpressionCorrecte(inputbc, n )){
+							inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
+						}
 						if (inputbc == null) {
 							int k2 = JOptionPane.showOptionDialog(null,
 									"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
