@@ -33,16 +33,18 @@ public class View extends BasicGame {
 	private GameContainer container;
 	private TiledMap map;
 
-	int seconde = 35000;
+	int seconde = 10000;
 
-	int minute = 3;
+	int minute = 1;
+	
+	boolean jeufini = false;
 
 	int cmptr_robot = 1;
 
 	boolean bool1 = false;
 	boolean bool2 = false;
 	boolean bool3 = false;
-	
+
 	public static boolean bonus_malus = false;
 
 	int popup_test_1 = 0;
@@ -92,6 +94,7 @@ public class View extends BasicGame {
 	private Animation[] animations2 = new Animation[8];
 	private Animation[] animations3 = new Animation[8];
 	private Animation[] animations4 = new Animation[8];
+	private Animation[] animations5 = new Animation[8];
 
 	private String item[] = { "A", "P", "K" };
 	private String item2[] = { "Robot1", "Robot2", "Robot3" };
@@ -168,7 +171,8 @@ public class View extends BasicGame {
 		SpriteSheet spriteSheet = new SpriteSheet("maps/char_2.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
 		SpriteSheet spriteSheet3 = new SpriteSheet("maps/robot_red.png", 64, 64);
-		SpriteSheet spriteSheet4 = new SpriteSheet("maps/bonus.png", 64, 64);
+		SpriteSheet spriteSheet4 = new SpriteSheet("maps/robot_blue.png", 64, 64);
+		SpriteSheet spriteSheet5 = new SpriteSheet("maps/bonus.png", 64, 64);
 		this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
 		this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
 		this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
@@ -204,6 +208,15 @@ public class View extends BasicGame {
 		this.animations4[5] = loadAnimation(spriteSheet4, 1, 9, 1);
 		this.animations4[6] = loadAnimation(spriteSheet4, 1, 9, 2);
 		this.animations4[7] = loadAnimation(spriteSheet4, 1, 9, 3);
+
+		this.animations5[0] = loadAnimation(spriteSheet5, 0, 1, 0);
+		this.animations5[1] = loadAnimation(spriteSheet5, 0, 1, 1);
+		this.animations5[2] = loadAnimation(spriteSheet5, 0, 1, 2);
+		this.animations5[3] = loadAnimation(spriteSheet5, 0, 1, 3);
+		this.animations5[4] = loadAnimation(spriteSheet5, 1, 9, 0);
+		this.animations5[5] = loadAnimation(spriteSheet5, 1, 9, 1);
+		this.animations5[6] = loadAnimation(spriteSheet5, 1, 9, 2);
+		this.animations5[7] = loadAnimation(spriteSheet5, 1, 9, 3);
 
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
@@ -252,321 +265,248 @@ public class View extends BasicGame {
 		Image robots_inv = new Image("maps/robots_inv.png");
 		Image robots_inv2 = new Image("maps/robots_inv2.png");
 
-
 		
-		this.map.render(0, 0);
+		Image j1g = new Image("maps/j1g.jpg");
+		Image j2g = new Image("maps/j2g.jpg");
 		
-		for (int i = 0; i < 30; i++) {
-			for (int j = 0; j < 30; j++) {
-				if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {
-					peinture_bleu.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
-				} else if (Terrain.terrain[i][j].getCouleur() == Couleur.Rouge) {
-					peinture_rouge.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
-				}
-			}
-		}
+		if (this.jeufini == false) {
 
-		if (bonus_malus == true) {
-			int nb_temp = j1.getNb_cases_coloriees();
-			j1.setNb_cases_coloriees(j2.getNb_cases_coloriees());
-			j2.setNb_cases_coloriees(nb_temp);
-			bonus_malus = false;
-		}
-		
-		afficher_expr();
-		
-		hud_bleu.draw(15, 15);
-		hud_rouge.draw(1920 - 300, 15);
-
-		afficher_pdv(j1);
-		afficher_pdv(j2);
-
-		afficher_nrj(j1);
-		afficher_nrj(j2);
-
-		inventaire.draw(100, 195);
-		inventaire.draw(1560, 195);
-		afficher_inventaire(j1);
-		afficher_inventaire(j2);
-		
-//		System.out.println(r1.etat_courant());
-
-		robots_inv.draw(120, 670);
-		robots_inv2.draw(1580, 670);
-
-		// for (int i = 0; i < this.pos_color.size(); i++) {
-		// peinture_rouge.drawCentered(this.pos_color.get(i).getX(),
-		// this.pos_color.get(i).getY());
-		// }
-		//
-		// for (int i = 0; i < this.pos_color_2.size(); i++) {
-		// peinture_bleu.drawCentered(this.pos_color_2.get(i).getX(),
-		// this.pos_color_2.get(i).getY());
-		// }
-
-		// peinture_rouge.draw(15*32+e.getLine()*32, e.getCol()*32);
-
-		// if(e.next_case().isAccessible()){
-		// e.Avancer(1);
-		//
-		// }else{
-		// if(Math.random()<0.5){
-		// switch (e.direction()){
-		// case Nord:e.Tourner(Direction.Est);
-		// break;
-		// case Est:e.Tourner(Direction.Sud);
-		// break;
-		// case Sud:e.Tourner(Direction.Ouest);
-		// break;
-		// case Ouest:e.Tourner(Direction.Nord);
-		// break;
-		// }
-		// }else{
-		// switch (e.direction()){
-		// case Nord:e.Tourner(Direction.Ouest);
-		// break;
-		// case Est:e.Tourner(Direction.Nord);
-		// break;
-		// case Sud:e.Tourner(Direction.Est);
-		// break;
-		// case Ouest:e.Tourner(Direction.Sud);
-		// break;
-		// }
-		// }
-		// }
-		//
-		//
-		//
-		//
-		// //peinture_bleu.draw(15*32+e2.getLine()*32, e2.getCol()*32);
-		//
-		//
-		// if(e2.next_case().isAccessible()){
-		// e2.Avancer(1);
-		// }else{
-		// if(Math.random()<0.5){
-		// switch (e2.direction()){
-		// case Nord:e2.Tourner(Direction.Est);
-		// break;
-		// case Est:e2.Tourner(Direction.Sud);
-		// break;
-		// case Sud:e2.Tourner(Direction.Ouest);
-		// break;
-		// case Ouest:e2.Tourner(Direction.Nord);
-		// break;
-		// }
-		// }else{
-		// switch (e2.direction()){
-		// case Nord:e2.Tourner(Direction.Ouest);
-		// break;
-		// case Est:e2.Tourner(Direction.Nord);
-		// break;
-		// case Sud:e2.Tourner(Direction.Est);
-		// break;
-		// case Ouest:e2.Tourner(Direction.Sud);
-		// break;
-		// }
-		// }
-		// }
-		//
-		// try {
-		// Thread.sleep(500);
-		// } catch (InterruptedException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// System.out.println(e.toString());
-
-		g.drawAnimation(animations[j1.getD().entier() + (moving ? 4 : 0)], (15 * 32 + this.j1.getCol() * 32 + 16) - 32,
-				(this.j1.getLine() * 32 + 16) - 60);
-		g.drawAnimation(animations2[j2.getD().entier() + (moving2 ? 4 : 0)],
-				(15 * 32 + this.j2.getCol() * 32 + 16) - 32, (this.j2.getLine() * 32 + 16) - 60);
-
-		g.drawAnimation(animations3[r1.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1.getCol() * 32 + 16) - 32,
-				(this.r1.getLine() * 32 + 16) - 60);
-
-		g.drawAnimation(animations4[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
-
-		if (this.popup_test_1 == 25) {
-
-			this.popup_test_1 = 0;
-			if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer() && j1.isNrj()) {
-				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCase(Contenu.Joueur);
-				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
-				j1.SetNrj(j1.getNrj() - 75);
-				this.container.pause();
-
-				int t = 0;
-				while (t < 5) {
-					JOptionPane r = new JOptionPane();
-					r.setSize(d);
-					String[] bouton = { "Créer", "Modifier", "Annuler" };
-					int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
-					if (retour == 1) {
-						String inputrm = JOptionPane.showInputDialog(robot);
-
-						if (inputrm == null) {
-							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-									null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-							if (k == 1) {
-								t = 5;
-							}
-						}
-					}
-					if (retour == 0) {
-						JOptionPane p = new JOptionPane();
-						String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
-						// System.out.println(inputrc);
-
-						if (inputrc == null) {
-							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-									null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-							if (k == 1) {
-								t = 5;
-							}
-						}
-					}
-					if (retour == 2 || retour == -1) {
-						t = 5;
-					}
-					t++;
-				}
-
-			}
-		} else if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer() && !j1.isNrj()) {
-			Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
-
-			if (bool1) {
-				bool1 = false;
-				this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
-			}
-
-		} else {
-			this.popup_test_1++;
-
-		}
-
-		if (this.popup_test_2 == 25) {
-			this.popup_test_2 = 0;
-			if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer() && j2.isNrj()) {
-				Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCase(Contenu.Joueur);
-				Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
-
-				j2.SetNrj(j2.getNrj() - 75);
-				this.container.pause();
-				int t2 = 0;
-				while (t2 < 5) {
-					JOptionPane r2 = new JOptionPane();
-					r2.setSize(d);
-					String[] bouton2 = { "Créer", "Modifier", "Annuler" };
-					int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
-					if (retour2 == 1) {
-						String inputbm = JOptionPane.showInputDialog(robot2);
-
-						if (inputbm == null) {
-							int k2 = JOptionPane.showOptionDialog(null,
-									"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
-									JOptionPane.QUESTION_MESSAGE, null, null, null);
-							if (k2 == 1) {
-								t2 = 5;
-							}
-						}
-					}
-					if (retour2 == 0) {
-						JOptionPane rbc = new JOptionPane();
-						String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
-
-						if (inputbc == null) {
-							int k2 = JOptionPane.showOptionDialog(null,
-									"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
-									JOptionPane.QUESTION_MESSAGE, null, null, null);
-							if (k2 == 1) {
-								t2 = 5;
-							}
-						}
-					}
-
-					if (retour2 == 2 || retour2 == -1) {
-						t2 = 5;
-					}
-					t2++;
-				}
-			}
-		} else if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer() && !j2.isNrj()) {
-			Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
-			if (bool2) {
-				bool2 = false;
-				this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
-			}
-		
-		} else {
-			this.popup_test_2++;
+			this.map.render(0, 0);
 			
-		}
-		// System.out.println("( "+ x + " , " + y + " ) ");
-		// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
-
-		g.setColor(new Color(255, 255, 255));
-		uniFont2.drawString(290, 10, (int) (PourcentBleu * 100) + " % ", Color.blue);
-		g.drawString("" + j2.getPdv(), 190, 120);
-		g.drawString("" + j1.getPdv(), 1700, 120);
-		g.drawString(" Inventaire ", 187, 170);
-		g.drawString(" Inventaire ", 1617, 170);
-
-		g.drawString(" Etat des robots ", 140, 650);
-		g.drawString(" Etat des robots  ", 1617, 650);
-
-		uniFont2.drawString(1472, 10, (int) (PourcentRouge * 100) + " % ", Color.red);
-		if (minute < 10) {
-			if (seconde / 1000 < 30) {
-				if (minute == 0 && seconde / 1000 >= 10) {
-					uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.red);
-				} else if (minute == 0 && seconde / 1000 < 10)
-					uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.red);
-				else {
-					if (seconde / 1000 >= 10)
-						uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
-					else
-						uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.darkGray);
+			for (int i = 0; i < 30; i++) {
+				for (int j = 0; j < 30; j++) {
+					if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {
+						peinture_bleu.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
+					} else if (Terrain.terrain[i][j].getCouleur() == Couleur.Rouge) {
+						peinture_rouge.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
+					}
 				}
+			}
+
+			if (bonus_malus == true) {
+				int nb_temp = j1.getNb_cases_coloriees();
+				j1.setNb_cases_coloriees(j2.getNb_cases_coloriees());
+				j2.setNb_cases_coloriees(nb_temp);
+				bonus_malus = false;
+			}
+			
+			afficher_expr();
+			
+			hud_bleu.draw(15, 15);
+			hud_rouge.draw(1920 - 300, 15);
+
+			afficher_pdv(j1);
+			afficher_pdv(j2);
+
+			afficher_nrj(j1);
+			afficher_nrj(j2);
+
+			inventaire.draw(100, 195);
+			inventaire.draw(1560, 195);
+			afficher_inventaire(j1);
+			afficher_inventaire(j2);
+			
+//			System.out.println(r1.etat_courant());
+
+			robots_inv.draw(120, 670);
+			robots_inv2.draw(1580, 670);
+
+
+			PrintEntity(g);
+			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
+
+			if (this.popup_test_1 == 25) {
+
+				this.popup_test_1 = 0;
+				if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer() && j1.isNrj()) {
+					Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCase(Contenu.Joueur);
+					Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
+					j1.SetNrj(j1.getNrj() - 75);
+					this.container.pause();
+
+					int t = 0;
+					while (t < 5) {
+						JOptionPane r = new JOptionPane();
+						r.setSize(d);
+						String[] bouton = { "Créer", "Modifier", "Annuler" };
+						int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
+						if (retour == 1) {
+							String inputrm = JOptionPane.showInputDialog(robot);
+
+							if (inputrm == null) {
+								int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+										null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+								if (k == 1) {
+									t = 5;
+								}
+							}
+						}
+						if (retour == 0) {
+							JOptionPane p = new JOptionPane();
+							String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
+							// System.out.println(inputrc);
+
+							if (inputrc == null) {
+								int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+										null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+								if (k == 1) {
+									t = 5;
+								}
+							}
+						}
+						if (retour == 2 || retour == -1) {
+							t = 5;
+						}
+						t++;
+					}
+
+				}
+			} else if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer() && !j1.isNrj()) {
+				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
+
+				if (bool1) {
+					bool1 = false;
+					this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
+				}
+
+			} else {
+				this.popup_test_1++;
+
+			}
+
+			if (this.popup_test_2 == 25) {
+				this.popup_test_2 = 0;
+				if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer() && j2.isNrj()) {
+					Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCase(Contenu.Joueur);
+					Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
+
+					j2.SetNrj(j2.getNrj() - 75);
+					this.container.pause();
+					int t2 = 0;
+					while (t2 < 5) {
+						JOptionPane r2 = new JOptionPane();
+						r2.setSize(d);
+						String[] bouton2 = { "Créer", "Modifier", "Annuler" };
+						int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
+						if (retour2 == 1) {
+							String inputbm = JOptionPane.showInputDialog(robot2);
+
+							if (inputbm == null) {
+								int k2 = JOptionPane.showOptionDialog(null,
+										"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
+										JOptionPane.QUESTION_MESSAGE, null, null, null);
+								if (k2 == 1) {
+									t2 = 5;
+								}
+							}
+						}
+						if (retour2 == 0) {
+							JOptionPane rbc = new JOptionPane();
+							String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
+
+							if (inputbc == null) {
+								int k2 = JOptionPane.showOptionDialog(null,
+										"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
+										JOptionPane.QUESTION_MESSAGE, null, null, null);
+								if (k2 == 1) {
+									t2 = 5;
+								}
+							}
+						}
+
+						if (retour2 == 2 || retour2 == -1) {
+							t2 = 5;
+						}
+						t2++;
+					}
+				}
+			} else if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer() && !j2.isNrj()) {
+				Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
+				if (bool2) {
+					bool2 = false;
+					this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
+				}
+			
+			} else {
+				this.popup_test_2++;
+				
+			}
+
+			// System.out.println("( "+ x + " , " + y + " ) ");
+			// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
+
+			g.setColor(new Color(255, 255, 255));
+			uniFont2.drawString(290, 10, (int) (PourcentBleu * 100) + " % ", Color.blue);
+			g.drawString("" + j2.getPdv(), 190, 120);
+			g.drawString("" + j1.getPdv(), 1700, 120);
+			g.drawString(" Inventaire ", 187, 170);
+			g.drawString(" Inventaire ", 1617, 170);
+
+			g.drawString(" Etat des robots ", 140, 650);
+			g.drawString(" Etat des robots  ", 1617, 650);
+
+			uniFont2.drawString(1472, 10, (int) (PourcentRouge * 100) + " % ", Color.red);
+			if (minute < 10) {
+				if (seconde / 1000 < 30) {
+					if (minute == 0 && seconde / 1000 >= 10) {
+						uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.red);
+					} else if (minute == 0 && seconde / 1000 < 10)
+						uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.red);
+					else {
+						if (seconde / 1000 >= 10)
+							uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
+						else
+							uniFont.drawString(921, 440, "0" + minute + ":0" + seconde / 1000, Color.darkGray);
+					}
+				} else
+					uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
 			} else
-				uniFont.drawString(921, 440, "0" + minute + ":" + seconde / 1000, Color.darkGray);
-		} else
-			uniFont.drawString(921, 440, minute + ":" + seconde / 1000, Color.darkGray);
+				uniFont.drawString(921, 440, minute + ":" + seconde / 1000, Color.darkGray);
 
-	}
+		} else {
+			if (this.j1.getNombre_Case_Coloriees()> this.j2.getNb_cases_coloriees()) {
+				g.drawImage(j1g, 0, 0);
 
-	// @Override
-	// public void render(GameContainer container, Graphics g) throws
-	// SlickException {
-	// this.map.render(0, 0);
-	// }
+			} else {
+				g.drawImage(j2g, 0, 0);
+			}
+		}
 
-	// private boolean isCollision(float x, float y) {
-	// int tileW = this.map.getTileWidth();
-	// int tileH = this.map.getTileHeight();
-	// int logicLayer = this.map.getLayerIndex("Collision");
-	// Image tile = this.map.getTileImage((int) x / tileW, (int) y / tileH,
-	// logicLayer);
-	// boolean collision = tile != null;
-	// if (collision) {
-	// Color color = tile.getColor((int) x % tileW, (int) y % tileH);
-	// collision = color.getAlpha() > 0;
-	// }
-	// return collision;
-	// }
+		// @Override
+		// public void render(GameContainer container, Graphics g) throws
+		// SlickException {
+		// this.map.render(0, 0);
+		// }
 
+		// private boolean isCollision(float x, float y) {
+		// int tileW = this.map.getTileWidth();
+		// int tileH = this.map.getTileHeight();
+		// int logicLayer = this.map.getLayerIndex("Collision");
+		// Image tile = this.map.getTileImage((int) x / tileW, (int) y / tileH,
+		// logicLayer);
+		// boolean collision = tile != null;
+		// if (collision) {
+		// Color color = tile.getColor((int) x % tileW, (int) y % tileH);
+		// collision = color.getAlpha() > 0;
+		// }
+		// return collision;
+		// }
+
+		}
+
+
+		
 	@Override
 	public void update(GameContainer arg0, int delta) throws SlickException {
 
 		if (Terrain.Index > 0)
 			bool3 = Terrain.ReduceTimer();
-			if(bool3){
-				afficher_expr();
+		if (bool3) {
+			afficher_expr();
 		}
-		
+
 		if ((j1.getNombre_Case_Coloriees() + j2.getNombre_Case_Coloriees()) != 0) {
 			PourcentBleu = (float) j2.getNombre_Case_Coloriees()
 					/ ((float) j1.getNombre_Case_Coloriees() + (float) j2.getNombre_Case_Coloriees());
@@ -577,7 +517,6 @@ public class View extends BasicGame {
 			PourcentBleu = 0;
 			PourcentRouge = 0;
 		}
-
 
 		if ((int) (seconde) % 30 == 0) {
 			if (j1.getNrj() < 100)
@@ -590,7 +529,8 @@ public class View extends BasicGame {
 		if (seconde > -delta && seconde < delta) {
 			seconde = 60000;
 			if (minute == 0) {
-				this.container.exit();
+				//this.container.exit();
+				this.jeufini = true;
 			} else
 				minute--;
 		}
@@ -615,23 +555,6 @@ public class View extends BasicGame {
 					this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
 					this.recolorie_par_dessus = false;
 				}
-				// this.container.pause();
-				// this.container.setPaused(true);
-				// arg0.pause();
-
-				// this.container.resume();
-
-				// this.container.resume();
-				// arg0.resume();
-
-				// System.out.println("passe ici");
-				// Terrain.afficher();
-
-				// this.container.getGraphics().drawImage(grass_b, x, y);
-				// arg0.getGraphics().drawImage(grass_b, x, y);
-				// grass_b.draw(x, y);
-
-				// }
 
 			}
 			// System.out.println("pos : " + x + " - " + y);
@@ -642,98 +565,6 @@ public class View extends BasicGame {
 				canmove = true;
 			}
 		}
-		// break;
-		// case Ouest:
-		// if (canmove) {
-		// if (!isCollision(this.x - (1024/32), this.y))
-		// this.x -= (1024/32);
-		// Point p = new Point(this.x, this.y);
-		//
-		// for(int i = 0; i<this.pos_color.size(); i++){
-		// if (this.pos_color.get(i).equals(p)) {
-		// this.pos_color.remove(this.pos_color.get(i));
-		// }
-		// }
-		//
-		// this.pos_color.add(p);
-		//
-		//
-		// for(int i = 0; i<this.pos_color_2.size(); i++){
-		// if (this.pos_color_2.get(i).equals(p)) {
-		// this.pos_color_2.remove(this.pos_color_2.get(i));
-		// }
-		// }
-		//
-		// }
-		// //System.out.println("pos : " + x + " - " + y);
-		//
-		// if (System.currentTimeMillis()-lasttime<500) {
-		// canmove = false;
-		// } else {
-		// lasttime = System.currentTimeMillis();
-		// canmove = true;
-		// }
-		// break;
-		// case Sud:
-		// if (canmove) {
-		// if (!isCollision(this.x, this.y + (1024/32)))
-		// this.y += (1024/32);
-		// Point p = new Point(this.x, this.y);
-		// for(int i = 0; i<this.pos_color.size(); i++){
-		// if (this.pos_color.get(i).equals(p)) {
-		// this.pos_color.remove(this.pos_color.get(i));
-		// }
-		// }
-		//
-		// this.pos_color.add(p);
-		//
-		// for(int i = 0; i<this.pos_color_2.size(); i++){
-		// if (this.pos_color_2.get(i).equals(p)) {
-		// this.pos_color_2.remove(this.pos_color_2.get(i));
-		// }
-		// }
-		// }
-		// //System.out.println("pos : " + x + " - " + y);
-		//
-		// if (System.currentTimeMillis()-lasttime<500) {
-		// canmove = false;
-		// } else {
-		// lasttime = System.currentTimeMillis();
-		// canmove = true;
-		// }
-		// break;
-		// case Est:
-		// if (canmove) {
-		// if (!isCollision(this.x + (1024/32), this.y))
-		// this.x += (1024/32);
-		//
-		// Point p = new Point(this.x, this.y);
-		// for(int i = 0; i<this.pos_color.size(); i++){
-		// if (this.pos_color.get(i).equals(p)) {
-		// this.pos_color.remove(this.pos_color.get(i));
-		// }
-		// }
-		//
-		// this.pos_color.add(p);
-		//
-		// for(int i = 0; i<this.pos_color_2.size(); i++){
-		// if (this.pos_color_2.get(i).equals(p)) {
-		// this.pos_color_2.remove(this.pos_color_2.get(i));
-		// }
-		// }
-		// }
-		// //System.out.println("pos : " + x + " - " + y);
-		//
-		// if (System.currentTimeMillis()-lasttime<500) {
-		// canmove = false;
-		// } else {
-		// lasttime = System.currentTimeMillis();
-		// canmove = true;
-		// }
-		// break;
-		//
-		// }
-		// }
 		if (this.moving2) {
 			// switch (this.j1.getD()) {
 			// case Nord:
@@ -768,109 +599,23 @@ public class View extends BasicGame {
 				canmove2 = true;
 			}
 		}
-		// case 1:
-		// if (canmove2) {
-		// if (!isCollision(this.xx - (1024/32), this.yy))
-		// this.xx -= (1024/32);
-		// Point p = new Point(this.xx, this.yy);
-		// for(int i = 0; i<this.pos_color_2.size(); i++){
-		// if (this.pos_color_2.get(i).equals(p)) {
-		// this.pos_color_2.remove(this.pos_color_2.get(i));
-		// }
-		// }
-		//
-		// this.pos_color_2.add(p);
-		//
-		// for(int i = 0; i<this.pos_color.size(); i++){
-		// if (this.pos_color.get(i).equals(p)) {
-		// this.pos_color.remove(this.pos_color.get(i));
-		// }
-		// }
-		//
-		// }
-		// if (System.currentTimeMillis()-lasttime2<500) {
-		// canmove2 = false;
-		// } else {
-		// lasttime2 = System.currentTimeMillis();
-		// canmove2 = true;
-		// }
-		// break;
-		// case 2:
-		// if (canmove2) {
-		// if (!isCollision(this.xx, this.yy + (1024/32)))
-		// this.yy += (1024/32);
-		// Point p = new Point(this.xx, this.yy);
-		// for(int i = 0; i<this.pos_color_2.size(); i++){
-		// if (this.pos_color_2.get(i).equals(p)) {
-		// this.pos_color_2.remove(this.pos_color_2.get(i));
-		// }
-		// }
-		//
-		// this.pos_color_2.add(p);
-		//
-		// for(int i = 0; i<this.pos_color.size(); i++){
-		// if (this.pos_color.get(i).equals(p)) {
-		// this.pos_color.remove(this.pos_color.get(i));
-		// }
-		// }
-		//
-		// }
-		// if (System.currentTimeMillis()-lasttime2<500) {
-		// canmove2 = false;
-		// } else {
-		// lasttime2 = System.currentTimeMillis();
-		// canmove2 = true;
-		// }
-		// break;
-		// case 3:
-		// if (canmove2) {
-		// if (!isCollision(this.xx + (1024/32), this.yy))
-		// this.xx += (1024/32);
-		// Point p = new Point(this.xx, this.yy);
-		// for(int i = 0; i<this.pos_color_2.size(); i++){
-		// if (this.pos_color_2.get(i).equals(p)) {
-		// this.pos_color_2.remove(this.pos_color_2.get(i));
-		// }
-		// }
-		//
-		// this.pos_color_2.add(p);
-		//
-		// for(int i = 0; i<this.pos_color.size(); i++){
-		// if (this.pos_color.get(i).equals(p)) {
-		// this.pos_color.remove(this.pos_color.get(i));
-		// }
-		// }
-		//
-		//
-		// }
-		// if (System.currentTimeMillis()-lasttime2<500) {
-		// canmove2 = false;
-		// } else {
-		// lasttime2 = System.currentTimeMillis();
-		// canmove2 = true;
-		// }
-		// break;
-		//
-		// }
-		// }
 
 		if (canmoverobot)
 			r1.execute();
-		
-		if(secsrobot > 5000){
+
+		if (secsrobot > 5000) {
 			r1.next_etat();
-			System.out.println("CHANGEMENT " + secsrobot +" " +r1.etat_courant());
-			secsrobot=0;
-			cmptr_robot=1;
-			
-		}else if(secsrobot > 500*cmptr_robot){
-			canmoverobot= true;
+			System.out.println("CHANGEMENT " + secsrobot + " " + r1.etat_courant());
+			secsrobot = 0;
+			cmptr_robot = 1;
+
+		} else if (secsrobot > 500 * cmptr_robot) {
+			canmoverobot = true;
 			cmptr_robot++;
-		}else{
+		} else {
 			canmoverobot = false;
 		}
-		
-	
+
 	}
 
 	@Override
@@ -944,92 +689,6 @@ public class View extends BasicGame {
 			this.direction = 3;
 			this.moving = true;
 			break;
-
-		// case Input.KEY_R:
-		// int t = 0;
-		// while (t < 5) {
-		// JOptionPane r = new JOptionPane();
-		// r.setSize(d);
-		// String[] bouton = { "Créer", "Modifier" };
-		// int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des
-		// robots",
-		// JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
-		// this.icr, bouton, bouton[0]);
-		// if (retour == 1) {
-		// String inputrm = JOptionPane.showInputDialog(robot);
-		//
-		// if (inputrm == null) {
-		// int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la
-		// création/modification",
-		// null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-		// null, null);
-		// if (k == 1) {
-		// t = 5;
-		// }
-		// }
-		// }
-		// if (retour == 0) {
-		// JOptionPane p = new JOptionPane();
-		// String inputrc = p.showInputDialog(tab, "Saisissez votre
-		// expression");
-		// // System.out.println(inputrc);
-		//
-		// if (inputrc == null) {
-		// int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la
-		// création/modification",
-		// null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-		// null, null);
-		// if (k == 1) {
-		// t = 5;
-		// }
-		// }
-		// }
-		// t++;
-		// }
-		// break;
-		//
-		// case Input.KEY_T:
-		//
-		// int t2 = 0;
-		// while (t2 < 5) {
-		// JOptionPane r2 = new JOptionPane();
-		// r2.setSize(d);
-		// String[] bouton2 = { "Créer", "Modifier" };
-		// int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu
-		// des robots",
-		// JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb,
-		// bouton2, bouton2[0]);
-		// if (retour2 == 1) {
-		// String inputbm = JOptionPane.showInputDialog(robot2);
-		//
-		// if (inputbm == null) {
-		// int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la
-		// création/modification",
-		// null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-		// null, null);
-		// if (k2 == 1) {
-		// t2 = 5;
-		// }
-		// }
-		// }
-		// if (retour2 == 0) {
-		// JOptionPane rbc = new JOptionPane();
-		// String inputbc = rbc.showInputDialog(tab2, "Saisissez votre
-		// expression");
-		//
-		// if (inputbc == null) {
-		// int k2 = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la
-		// création/modification",
-		// null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-		// null, null);
-		// if (k2 == 1) {
-		// t2 = 5;
-		// }
-		// }
-		// }
-		// t2++;
-		// }
-		// break;
 
 		case Input.KEY_P:
 			// this.container.pause();
@@ -1272,6 +931,37 @@ public class View extends BasicGame {
 		// game.setFullscreen(true);
 		// game.setDisplayMode(1920, 1080, true);
 
+	}
+
+	public void PrintEntity(Graphics g) {
+		int i, j;
+		int taille = Terrain.getTaille();
+		Entite ent;
+		for (i = 0; i < taille; i++) {
+			for (j = 0; j < taille; j++) {
+				if (Terrain.terrain[i][j].getEntite() != null) {
+					ent = Terrain.terrain[i][j].getEntite();
+					if (Terrain.terrain[i][j].getEntite().isRobot()) {
+						if (ent.getCouleur() == Couleur.Rouge) {
+							g.drawAnimation(animations3[ent.getD().entier() + (true ? 4 : 0)],
+									(15 * 32 + ent.getCol() * 32 + 16) - 32, (ent.getLine() * 32 + 16) - 60);
+						} else {
+							g.drawAnimation(animations4[ent.getD().entier() + (true ? 4 : 0)],
+									(15 * 32 + ent.getCol() * 32 + 16) - 32, (ent.getLine() * 32 + 16) - 60);
+						}
+					} else if (Terrain.terrain[i][j].getEntite().isJoueur()) {
+						if (ent.getCouleur() == Couleur.Rouge) {
+							g.drawAnimation(animations[ent.getD().entier() + (true ? 4 : 0)],
+									(15 * 32 + ent.getCol() * 32 + 16) - 32, (ent.getLine() * 32 + 16) - 60);
+						} else {
+							g.drawAnimation(animations2[ent.getD().entier() + (true ? 4 : 0)],
+									(15 * 32 + ent.getCol() * 32 + 16) - 32, (ent.getLine() * 32 + 16) - 60);
+						}
+					}
+				}
+
+			}
+		}
 	}
 
 }

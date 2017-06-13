@@ -247,8 +247,7 @@ public class Robot extends Entite {
 		min = borneColG;
 		max = borneColD;
 		i = 0;
-		Terrain.terrain[line][col].setCase(Contenu.Vide); // On tue le robot qui
-															// explose
+		this.Kill(line,col); // On tue le robot qui explose
 		while (i >= borneLigH) {
 
 			for (j = min; j <= max; j++) {
