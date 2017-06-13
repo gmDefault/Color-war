@@ -91,26 +91,94 @@ public class Robot extends Entite {
 	}
 
 	public void Avancer(int pas) {
-		protection = false;
+		protection = false;	
+		if (next_case().isAccessible()) {
+			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
+				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
+			Terrain.terrain[getLine()][getCol()].setEntite(null);
+			switch (getD()) {
+			case Nord:
+				setLine(getLine() - pas);
+				if (this.getCouleur() == Couleur.Bleu
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
+					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
+						View.recolorie_par_dessus = true;
+					}
+					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
+					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+				} else if (this.getCouleur() == Couleur.Rouge
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
+					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
+						View.recolorie_par_dessus = true;
+					}
+					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
+					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+				}
+				break;
+			case Est:
+				setCol(getCol() + pas);
+				if (this.getCouleur() == Couleur.Bleu
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
+					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
+						View.recolorie_par_dessus = true;
+					}
+					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
+					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+				} else if (this.getCouleur() == Couleur.Rouge
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
+					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
+						View.recolorie_par_dessus = true;
+					}
+					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
+					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+				}
+				break;
+			case Sud:
+				setLine(getLine() + pas);
+				if (this.getCouleur() == Couleur.Bleu
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
+					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
+						View.recolorie_par_dessus = true;
+					}
+					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
+					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+				} else if (this.getCouleur() == Couleur.Rouge
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
+					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
+						View.recolorie_par_dessus = true;
+					}
+					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
+					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+				}
+				break;
+			case Ouest:
+				setCol(getCol() - pas);
+				if (this.getCouleur() == Couleur.Bleu
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
+					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
+						View.recolorie_par_dessus = true;
+					}
+					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
+					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+				} else if (this.getCouleur() == Couleur.Rouge
+						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
+					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
+						View.recolorie_par_dessus = true;
+					}
+					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
+					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+				}
 
-		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
-		Terrain.terrain[getLine()][getCol()].setEntite(null);
-		switch (getD()) {
-		case Nord:
-			setLine(getLine() - pas);
-			break;
-		case Est:
-			setCol(getCol() + pas);
-			break;
-		case Sud:
-			setLine(getLine() + pas);
-			break;
-		case Ouest:
-			setCol(getCol() - pas);
+			}
+			if (Terrain.casexy(getLine(), getCol()).isExpr()) {
+				maitre.add_inventaire(Terrain.casexy(getLine(), getCol()).expr());
+				Terrain.casexy(getLine(), getCol()).setExpr(null);
+				Terrain.PutTimer(getLine(), getCol());
+			}
+			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
+				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Robot);
 
 		}
-		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Robot);
-		Terrain.terrain[getLine()][getCol()].setEntite(this);
 	}
 
 	public boolean isRobot() {
@@ -210,23 +278,6 @@ public class Robot extends Entite {
 			return false;
 	}
 
-	public void Avancer(int line1, int col1, int line2, int col2) {
-		if (Terrain.terrain[line2][col2].getCont() == Contenu.Expression) {
-			maitre.add_inventaire(Terrain.terrain[line2][col2].expr());
-			Terrain.PutTimer(line2, col2);
-		}
-		if (Terrain.terrain[line2][col2].getCont() != Contenu.Creer)
-			Terrain.terrain[line2][col2].setCase(Contenu.Robot);
-
-		Terrain.terrain[line2][col2].setEntite(this);
-
-		if (Terrain.terrain[line1][col1].getCont() != Contenu.Creer)
-			Terrain.terrain[line1][col1].setCase(Contenu.Vide);
-		Terrain.terrain[line1][col1].setEntite(null);
-
-		setCol(col2);
-		setLine(line2);
-	}
 
 	public void Explorer() {
 		Direction d;
@@ -237,72 +288,25 @@ public class Robot extends Entite {
 		d = this.direction();
 		double random;
 		protection = false;
-		switch (d) {
-		case Ouest:
-			if (Terrain.terrain[line][col - 1].isAccessible()) {
-				Avancer(line, col, line, col - 1);
+
+		if (next_case().isAccessible())
+			Avancer(1);
+		else {
+			random = Math.random();
+			if (random < 0.5) {
+				TournerGauche();
+				if (next_case().isAccessible())
+					Avancer(1);
 			} else {
-				random = Math.random();
-				if (random < 0.5 && Terrain.terrain[line + 1][col].isAccessible()) {
-					ChangerDirection(Direction.Sud);
-					Avancer(line, col, line + 1, col);
-				} else if (Terrain.terrain[line - 1][col].isAccessible()) {
-					ChangerDirection(Direction.Nord);
-					Avancer(line, col, line - 1, col);
-				} else {
-					ChangerDirection(Direction.Est);
-				}
+				TournerDroite();
+				if (next_case().isAccessible())
+					Avancer(1);
+				else
+					TournerDroite();
 			}
-			break;
-		case Est:
-			if (Terrain.terrain[line][col + 1].isAccessible()) {
-				Avancer(line, col, line, col + 1);
-			} else {
-				random = Math.random();
-				if (random < 0.5 && Terrain.terrain[line + 1][col].isAccessible()) {
-					ChangerDirection(Direction.Sud);
-					Avancer(line, col, line + 1, col);
-				} else if (Terrain.terrain[line - 1][col].isAccessible()) {
-					ChangerDirection(Direction.Nord);
-					Avancer(line, col, line - 1, col);
-				} else {
-					ChangerDirection(Direction.Ouest);
-				}
-			}
-			break;
-		case Nord:
-			if (Terrain.terrain[line - 1][col].isAccessible()) {
-				Avancer(line, col, line - 1, col);
-			} else {
-				random = Math.random();
-				if (random < 0.5 && Terrain.terrain[line][col - 1].isAccessible()) {
-					ChangerDirection(Direction.Ouest);
-					Avancer(line, col, line, col - 1);
-				} else if (Terrain.terrain[line][col + 1].isAccessible()) {
-					ChangerDirection(Direction.Est);
-					Avancer(line, col, line, col + 1);
-				} else {
-					ChangerDirection(Direction.Sud);
-				}
-			}
-			break;
-		case Sud:
-			if (Terrain.terrain[line + 1][col].isAccessible()) {
-				Avancer(line, col, line + 1, col);
-			} else {
-				random = Math.random();
-				if (random < 0.5 && Terrain.terrain[line][col - 1].isAccessible()) {
-					ChangerDirection(Direction.Ouest);
-					Avancer(line, col, line, col - 1);
-				} else if (Terrain.terrain[line][col + 1].isAccessible()) {
-					ChangerDirection(Direction.Est);
-					Avancer(line, col, line, col + 1);
-				} else {
-					ChangerDirection(Direction.Nord);
-				}
-			}
-			break;
 		}
+
+		
 	}
 
 	// Renvoi True si l'attaque est concluante, false sinon

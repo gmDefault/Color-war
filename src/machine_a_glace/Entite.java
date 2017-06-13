@@ -8,15 +8,14 @@ public abstract class Entite {
 	private int col, line;
 	private Couleur couleur;
 	int pdv;
+
 	/**
-	 * Si ajout des bonus/malus : 
-	 * 		Ajout des variables Portée et dégâts
+	 * Si ajout des bonus/malus : Ajout des variables Portée et dégâts
 	 * 
-	 * Bonus : +1 Portée d'attaque, +X dégâts, + ... ?
-	 * Malus : -1 Portée (>0), -X dégâts, poison (3/5/7 ticks)
+	 * Bonus : +1 Portée d'attaque, +X dégâts, + ... ? Malus : -1 Portée (>0),
+	 * -X dégâts, poison (3/5/7 ticks)
 	 */
-	
-	
+
 	public Entite(int x, int y, Couleur c, int pointsdv) {
 		if (Terrain.terrain[x][y].isAccessible()) {
 			setLine(x);
@@ -34,7 +33,6 @@ public abstract class Entite {
 	public Direction direction() {
 		return getD();
 	}
-
 
 	public abstract void Avancer(int pas);
 
@@ -72,6 +70,7 @@ public abstract class Entite {
 	public int getCol() {
 		return col;
 	}
+
 	public int getPdv() {
 		return pdv;
 	}
@@ -100,22 +99,55 @@ public abstract class Entite {
 		return false;
 	}
 
-	
-	
-	public Couleur getCouleur(){
+	public Couleur getCouleur() {
 		return couleur;
 	}
-	
-	public void Degat(int x){
-			pdv -= x;
+
+	public void Degat(int x) {
+		pdv -= x;
 	}
-	
-	public Robot robot(){
+
+	public Robot robot() {
 		return (Robot) this;
 	}
-	
-	public void ChangerDirection(Direction d){
+
+	public void ChangerDirection(Direction d) {
 		this.d = d;
 	}
+
+	public void TournerGauche() {
+		switch (d) {
+		case Nord:
+			d = Direction.Ouest;
+			break;
+		case Est:
+			d = Direction.Nord;
+			break;
+		case Sud:
+			d = Direction.Est;
+			break;
+		case Ouest:
+			d = Direction.Sud;
+			break;
+		}
+	}
 	
+	
+	public void TournerDroite() {
+		switch (d) {
+		case Nord:
+			d = Direction.Est;
+			break;
+		case Est:
+			d = Direction.Sud;
+			break;
+		case Sud:
+			d = Direction.Ouest;
+			break;
+		case Ouest:
+			d = Direction.Nord;
+			break;
+		}
+	}
+
 }

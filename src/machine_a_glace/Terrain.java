@@ -69,7 +69,7 @@ public class Terrain {
 	// Fonction qui crée un timer de repop pour une expression qui vient d'être ramassé
 	public static void PutTimer(int line, int col) {
 		Coordonnees c = new Coordonnees(line, col);
-		IntCoor ic = new IntCoor(30000, c);
+		IntCoor ic = new IntCoor(5000, c);
 		Repop.add(ic);
 		Index ++;
 	}
