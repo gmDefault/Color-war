@@ -5,7 +5,7 @@ public class Robot extends Entite {
 	private Node automate;
 	private Node etat_courant;
 	private int nb_tour;
-	private boolean fonctionne;
+	private boolean fonctionne = true;
 	private boolean isPriorite = false;
 	private boolean protection = false;
 	private Joueur maitre;
@@ -23,19 +23,31 @@ public class Robot extends Entite {
 	public void execute() {
 		switch ((Comportement) etat_courant.Gram) {
 		case Attack:
-			Attack();
+			if (isPriorite)
+				fonctionne = Attack();
+			else
+				Attack();
 			break;
 		case Explore:
 			Explorer();
 			break;
 		case Kamikaze:
-			Kamikaze();
+			if (isPriorite)
+				fonctionne = Kamikaze();
+			else
+				Kamikaze();
 			break;
 		case Protect:
 			Protect();
 			break;
 		default:
 			break;
+		}
+
+		if (isPriorite && !fonctionne) {
+			next_etat();
+			execute();
+
 		}
 	}
 
@@ -45,11 +57,11 @@ public class Robot extends Entite {
 
 	private boolean next_etat_recur(Node a, boolean b) {
 		if (a != null) {
-			if (a == etat_courant) {
-				b = true;
-			} else if (a.Gram.isComportement() && b) {
+			if (a.Gram.isComportement() && b) {
 				etat_courant = a;
 				b = false;
+			}else if(a == etat_courant) {
+				b = true;
 			}
 
 			if (a.Gram.isOperateur() && a.Gram == Operateur.Star) {
@@ -65,23 +77,23 @@ public class Robot extends Entite {
 				else
 					b = next_etat_recur(a.FD, b);
 			} else if (a.Gram.isOperateur() && a.Gram == Operateur.Choix) {
-				if(!b){
+				if (!b) {
 					b = next_etat_recur(a.FG, b);
 					if (!b)
 						b = next_etat_recur(a.FD, b);
-				}else{
-					if(Math.random() < 0.5)
+				} else {
+					if (Math.random() < 0.5)
 						b = next_etat_recur(a.FG, b);
 					else
 						b = next_etat_recur(a.FD, b);
 				}
-				
+
 			} else if (a.Gram.isOperateur() && a.Gram == Operateur.Priorite) {
 				if (b)
 					isPriorite = true;
 				b = next_etat_recur(a.FG, b);
 				if (b)
-					isPriorite = true;
+					isPriorite = false;
 				if (b && !fonctionne || !b)
 					b = next_etat_recur(a.FD, b);
 				if (b)
@@ -202,9 +214,9 @@ public class Robot extends Entite {
 			}
 			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Robot);
-			
+
 			Terrain.terrain[getLine()][getCol()].setEntite(this);
-			
+
 		}
 	}
 
@@ -240,11 +252,11 @@ public class Robot extends Entite {
 		while (i >= borneLigH) {
 
 			for (j = min; j <= max; j++) {
-				if (Terrain.terrain[line + i][col + j - 1].isRobot())
+				if (Terrain.terrain[line + i][col + j].isRobot())
 					Kill(line + i, col + j);
 
-				else if (Terrain.terrain[getLine() + i][getCol() + j - 1].isJoueur()) {
-					Terrain.terrain[line + i][col + j-1].getEntite().Degat(40);
+				else if (Terrain.terrain[getLine() + i][getCol() + j].isJoueur()) {
+					Terrain.terrain[line + i][col + j].getEntite().Degat(40);
 				}
 
 			}

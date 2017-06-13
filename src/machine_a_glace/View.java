@@ -205,10 +205,10 @@ public class View extends BasicGame {
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
 
-		Node test = Reader.read("{X;A}");
+		Node test = Reader.read("{K > X}");
 		test = new Node(Operateur.Star, null, test);
 		r1 = new Robot(5, 15, Couleur.Bleu, test);
-		r1.setJoueur(j1);
+		r1.setJoueur(j2);
 
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
@@ -253,7 +253,6 @@ public class View extends BasicGame {
 		
 		this.map.render(0, 0);
 		
-		
 		for (int i = 0; i < 30; i++) {
 			for (int j = 0; j < 30; j++) {
 				if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {
@@ -295,7 +294,6 @@ public class View extends BasicGame {
 		// this.pos_color_2.get(i).getY());
 		// }
 
-	
 		// peinture_rouge.draw(15*32+e.getLine()*32, e.getCol()*32);
 
 		// if(e.next_case().isAccessible()){
@@ -553,16 +551,17 @@ public class View extends BasicGame {
 	@Override
 	public void update(GameContainer arg0, int delta) throws SlickException {
 
-		if ((j1.getNombre_Case_Coloriees() + j2.getNombre_Case_Coloriees()) != 0) {
-			PourcentBleu = (float) j2.getNombre_Case_Coloriees()
-					/ ((float) j1.getNombre_Case_Coloriees() + (float) j2.getNombre_Case_Coloriees());
-			PourcentRouge = 1 - PourcentBleu;
-		}
+
 		if (Terrain.Index > 0)
 			bool3 = Terrain.ReduceTimer();
 			if(bool3){
 				afficher_expr();
 		}
+			if ((j1.getNombre_Case_Coloriees() + j2.getNombre_Case_Coloriees()) != 0) {
+				PourcentBleu = (float) j2.getNombre_Case_Coloriees()
+						/ ((float) j1.getNombre_Case_Coloriees() + (float) j2.getNombre_Case_Coloriees());
+				PourcentRouge = 1 - PourcentBleu;
+			}
 
 		else {
 			PourcentBleu = 0;
