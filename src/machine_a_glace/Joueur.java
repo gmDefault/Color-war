@@ -126,6 +126,7 @@ public class Joueur extends Entite {
 			if (Terrain.casexy(getLine(), getCol()).isExpr()) {
 				inventaire().add(Terrain.casexy(getLine(), getCol()).expr());
 				Terrain.casexy(getLine(), getCol()).setExpr(null);
+				Terrain.PutTimer(getLine(), getCol());
 			}
 			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
