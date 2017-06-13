@@ -36,11 +36,12 @@ public class View extends BasicGame {
 	int seconde = 35000;
 
 	int minute = 3;
+
 	int cmptr_robot = 1;
 
 	boolean bool1 = false;
 	boolean bool2 = false;
-
+	boolean bool3 = false;
 	int popup_test_1 = 0;
 	int popup_test_2 = 0;
 	private int nrj;
@@ -428,7 +429,7 @@ public class View extends BasicGame {
 				bool1 = false;
 				this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
 			}
-		
+
 		} else {
 			this.popup_test_1++;
 
@@ -553,16 +554,23 @@ public class View extends BasicGame {
 					/ ((float) j1.getNombre_Case_Coloriees() + (float) j2.getNombre_Case_Coloriees());
 			PourcentRouge = 1 - PourcentBleu;
 		}
+		if (Terrain.Index > 0)
+			bool3 = Terrain.ReduceTimer();
+			if(bool3){
+				afficher_expr();
+		}
 
 		else {
 			PourcentBleu = 0;
 			PourcentRouge = 0;
 		}
 
+
 		if ((int) (seconde) % 30 == 0) {
 			if (j1.getNrj() < 100)
 				j1.SetNrj(j1.getNrj() + 1);
 			if (j2.getNrj() < 100)
+
 				j2.SetNrj(j2.getNrj() + 1);
 		}
 
