@@ -84,6 +84,8 @@ public class Terrain {
 		if (Repop.get(0).timer <= 0) {
 			Coordonnees c = Repop.get(0).coord;
 			Expr e = New_Cp_Op();
+			while(!e.isOperateur() && !e.isComportement())
+				e = New_Cp_Op();
 			Terrain.terrain[c.getLigne()][c.getCol()].setCase(Contenu.Expression);
 			Terrain.terrain[c.getLigne()][c.getCol()].setExpr(e);
 			Repop.remove(Repop.get(0));

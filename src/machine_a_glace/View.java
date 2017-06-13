@@ -551,17 +551,17 @@ public class View extends BasicGame {
 	@Override
 	public void update(GameContainer arg0, int delta) throws SlickException {
 
-
 		if (Terrain.Index > 0)
 			bool3 = Terrain.ReduceTimer();
 			if(bool3){
 				afficher_expr();
 		}
-			if ((j1.getNombre_Case_Coloriees() + j2.getNombre_Case_Coloriees()) != 0) {
-				PourcentBleu = (float) j2.getNombre_Case_Coloriees()
-						/ ((float) j1.getNombre_Case_Coloriees() + (float) j2.getNombre_Case_Coloriees());
-				PourcentRouge = 1 - PourcentBleu;
-			}
+		
+		if ((j1.getNombre_Case_Coloriees() + j2.getNombre_Case_Coloriees()) != 0) {
+			PourcentBleu = (float) j2.getNombre_Case_Coloriees()
+					/ ((float) j1.getNombre_Case_Coloriees() + (float) j2.getNombre_Case_Coloriees());
+			PourcentRouge = 1 - PourcentBleu;
+		}
 
 		else {
 			PourcentBleu = 0;
