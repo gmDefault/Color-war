@@ -250,6 +250,16 @@ public class View extends BasicGame {
 		Image robots_inv2 = new Image("maps/robots_inv2.png");
 
 		this.map.render(0, 0);
+		
+		for (int i = 0; i < 30; i++) {
+			for (int j = 0; j < 30; j++) {
+				if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {
+					peinture_bleu.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
+				} else if (Terrain.terrain[i][j].getCouleur() == Couleur.Rouge) {
+					peinture_rouge.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
+				}
+			}
+		}
 
 		afficher_expr();
 
@@ -282,15 +292,7 @@ public class View extends BasicGame {
 		// this.pos_color_2.get(i).getY());
 		// }
 
-		for (int i = 0; i < 30; i++) {
-			for (int j = 0; j < 30; j++) {
-				if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {
-					peinture_bleu.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
-				} else if (Terrain.terrain[i][j].getCouleur() == Couleur.Rouge) {
-					peinture_rouge.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
-				}
-			}
-		}
+	
 
 		// peinture_rouge.draw(15*32+e.getLine()*32, e.getCol()*32);
 
@@ -560,7 +562,6 @@ public class View extends BasicGame {
 					/ ((float) j1.getNombre_Case_Coloriees() + (float) j2.getNombre_Case_Coloriees());
 			PourcentRouge = 1 - PourcentBleu;
 		}
-		
 
 		else {
 			PourcentBleu = 0;
