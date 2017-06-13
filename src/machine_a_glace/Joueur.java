@@ -178,7 +178,6 @@ public class Joueur extends Entite {
 		int i = inventaire.size();
 		for (int j = 0; j<i ; j++){
 			tabinv.add(toString(j));
-//			System.out.println("bonjour"+tabinv[j]);
 		}
 		
 		return tabinv;

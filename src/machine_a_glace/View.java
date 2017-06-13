@@ -390,7 +390,7 @@ public class View extends BasicGame {
 					int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 							JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
 					if (retour == 1) {
-						String inputrm = JOptionPane.showInputDialog(robot);
+						String inputrm = JOptionPane.showInputDialog(null,robot,"Coucou");
 
 						if (inputrm == null) {
 							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
@@ -406,7 +406,7 @@ public class View extends BasicGame {
 						
 						String inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 						// System.out.println(inputrc);
-
+						tab5.clear();
 						if (inputrc == null) {
 							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
 									null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
@@ -451,7 +451,7 @@ public class View extends BasicGame {
 					int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 							JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
 					if (retour2 == 1) {
-						String inputbm = JOptionPane.showInputDialog(robot2);
+						String inputbm = JOptionPane.showInputDialog(null, robot2,"ccou");
 
 						if (inputbm == null) {
 							int k2 = JOptionPane.showOptionDialog(null,
@@ -464,12 +464,18 @@ public class View extends BasicGame {
 					}
 					if (retour2 == 0) {
 						JOptionPane rbc = new JOptionPane();
+						
 						ArrayList<String>tab4 = j2.inventaire_toString();
 						String inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 						Node n = new Node(null);
-						while(!Parser.ExpressionCorrecte(inputbc, n )){
-							inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
+						try {
+							while(!Parser.ExpressionCorrecte(inputbc, n )){
+								inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
+							}
+						} catch (JeuException e) {
+
 						}
+						tab4.clear();
 						if (inputbc == null) {
 							int k2 = JOptionPane.showOptionDialog(null,
 									"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
