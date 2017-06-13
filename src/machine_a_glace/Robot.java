@@ -345,7 +345,7 @@ public class Robot extends Entite {
 		case Ouest:
 			// Attaque l'ennemi en face
 			case_r = Terrain.terrain[line][col - 1];
-			if (col - 1 > 0 && case_r.isEnnemi(line, col, case_r.getEntite())) {
+			if (col - 1 > 0 && case_r.isEnnemi(this)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
@@ -354,7 +354,7 @@ public class Robot extends Entite {
 			}
 			// Attaque l'ennemi à sa droite
 			case_r = Terrain.terrain[line - 1][col];
-			if (line - 1 > 0 && case_r.isEnnemi(line, col, case_r.getEntite())) {
+			if (line - 1 > 0 && case_r.isEnnemi(this)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
@@ -363,7 +363,7 @@ public class Robot extends Entite {
 			}
 			// Attaque l'ennemi à sa gauche
 			case_r = Terrain.terrain[line + 1][col];
-			if (line + 1 < taille_t && case_r.isEnnemi(line, col, case_r.getEntite())) {
+			if (line + 1 < taille_t && case_r.isEnnemi(this)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
@@ -373,7 +373,7 @@ public class Robot extends Entite {
 			return false;
 		case Nord:
 			case_r = Terrain.terrain[line - 1][col];
-			if (line - 1 > 0 && case_r.isEnnemi(line, col, case_r.getEntite())) {
+			if (line - 1 > 0 && case_r.isEnnemi(this)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
@@ -381,7 +381,7 @@ public class Robot extends Entite {
 				return true;
 			}
 			case_r = Terrain.terrain[line][col - 1];
-			if (col - 1 > 0 && case_r.isEnnemi(line, col, case_r.getEntite())) {
+			if (col - 1 > 0 && case_r.isEnnemi(this)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
@@ -389,7 +389,7 @@ public class Robot extends Entite {
 				return true;
 			}
 			case_r = Terrain.terrain[line][col + 1];
-			if (col + 1 < taille_t && case_r.isEnnemi(line, col, case_r.getEntite())) {
+			if (col + 1 < taille_t && case_r.isEnnemi(this)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
@@ -399,7 +399,7 @@ public class Robot extends Entite {
 			return false;
 		case Sud:
 			case_r = Terrain.terrain[line + 1][col];
-			if (line + 1 < taille_t && case_r.isEnnemi(line, col, case_r.getEntite())) {
+			if (line + 1 < taille_t && case_r.isEnnemi(this)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
@@ -407,7 +407,7 @@ public class Robot extends Entite {
 				return true;
 			}
 			case_r = Terrain.terrain[line][col - 1];
-			if (col - 1 > 0 && case_r.isEnnemi(line, col, case_r.getEntite())) {
+			if (col - 1 > 0 && case_r.isEnnemi(this)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
@@ -415,7 +415,7 @@ public class Robot extends Entite {
 				return true;
 			}
 			case_r = Terrain.terrain[line][col + 1];
-			if (col + 1 < taille_t && case_r.isEnnemi(line, col, case_r.getEntite())) {
+			if (col + 1 < taille_t && case_r.isEnnemi(this)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
@@ -426,7 +426,7 @@ public class Robot extends Entite {
 		case Est:
 
 			case_r = Terrain.terrain[line][col + 1];
-			if (col + 1 < taille_t && case_r.isEnnemi(line, col, case_r.getEntite())) {
+			if (col + 1 < taille_t && case_r.isEnnemi(this)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
@@ -435,7 +435,7 @@ public class Robot extends Entite {
 			}
 			// Attaque l'ennemi à sa gauche
 			case_r = Terrain.terrain[line - 1][col];
-			if (line - 1 > 0 && case_r.isEnnemi(line, col, case_r.getEntite())) {
+			if (line - 1 > 0 && case_r.isEnnemi(this)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
@@ -444,7 +444,7 @@ public class Robot extends Entite {
 			}
 			// Attaque l'ennemi à sa droite
 			case_r = Terrain.terrain[line + 1][col];
-			if (line + 1 < taille_t && case_r.isEnnemi(line, col, case_r.getEntite())) {
+			if (line + 1 < taille_t && case_r.isEnnemi(this)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
@@ -485,7 +485,7 @@ public class Robot extends Entite {
 		while (i >= borneLigH && present == false) {
 
 			for (j = min; j <= max; j++) {
-				if (case_r.isEnnemi(line, col, Terrain.terrain[line + i][col + j].getEntite()))
+				if (case_r.isEnnemi(Terrain.terrain[line + i][col + j].getEntite()))
 					present = true;
 			}
 			if (min <= 0) {
@@ -501,7 +501,7 @@ public class Robot extends Entite {
 		i = 1;
 		while (i <= borneLigB && present == false) {
 			for (j = min; j <= max; j++) {
-				if (case_r.isEnnemi(line, col, Terrain.terrain[line + i][col + j].getEntite()))
+				if (case_r.isEnnemi(Terrain.terrain[line + i][col + j].getEntite()))
 					present = true;
 			}
 			if (min <= 0) {

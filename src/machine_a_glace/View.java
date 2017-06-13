@@ -205,9 +205,9 @@ public class View extends BasicGame {
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
 
-		Node test = Reader.read("{X ; K}");
+		Node test = Reader.read("{X;A}");
 		test = new Node(Operateur.Star, null, test);
-		r1 = new Robot(5, 15, Couleur.Rouge, test);
+		r1 = new Robot(5, 15, Couleur.Bleu, test);
 		r1.setJoueur(j1);
 
 		int tileW = this.map.getTileWidth();
@@ -249,10 +249,23 @@ public class View extends BasicGame {
 		Image robots_inv = new Image("maps/robots_inv.png");
 		Image robots_inv2 = new Image("maps/robots_inv2.png");
 
+
+		
 		this.map.render(0, 0);
+		
+		
+		for (int i = 0; i < 30; i++) {
+			for (int j = 0; j < 30; j++) {
+				if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {
+					peinture_bleu.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
+				} else if (Terrain.terrain[i][j].getCouleur() == Couleur.Rouge) {
+					peinture_rouge.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
+				}
+			}
+		}
 
 		afficher_expr();
-
+		
 		hud_bleu.draw(15, 15);
 		hud_rouge.draw(1920 - 300, 15);
 
@@ -282,16 +295,7 @@ public class View extends BasicGame {
 		// this.pos_color_2.get(i).getY());
 		// }
 
-		for (int i = 0; i < 30; i++) {
-			for (int j = 0; j < 30; j++) {
-				if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {
-					peinture_bleu.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
-				} else if (Terrain.terrain[i][j].getCouleur() == Couleur.Rouge) {
-					peinture_rouge.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
-				}
-			}
-		}
-
+	
 		// peinture_rouge.draw(15*32+e.getLine()*32, e.getCol()*32);
 
 		// if(e.next_case().isAccessible()){
