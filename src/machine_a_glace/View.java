@@ -42,6 +42,9 @@ public class View extends BasicGame {
 	boolean bool1 = false;
 	boolean bool2 = false;
 	boolean bool3 = false;
+	
+	public static boolean bonus_malus = false;
+
 	int popup_test_1 = 0;
 	int popup_test_2 = 0;
 	private int nrj;
@@ -205,10 +208,10 @@ public class View extends BasicGame {
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
 
-		Node test = Reader.read("{X ; K}");
+		Node test = Reader.read("{K > X}");
 		test = new Node(Operateur.Star, null, test);
-		r1 = new Robot(5, 15, Couleur.Rouge, test);
-		r1.setJoueur(j1);
+		r1 = new Robot(5, 15, Couleur.Bleu, test);
+		r1.setJoueur(j2);
 
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
@@ -249,6 +252,8 @@ public class View extends BasicGame {
 		Image robots_inv = new Image("maps/robots_inv.png");
 		Image robots_inv2 = new Image("maps/robots_inv2.png");
 
+
+		
 		this.map.render(0, 0);
 		
 		for (int i = 0; i < 30; i++) {
@@ -261,8 +266,15 @@ public class View extends BasicGame {
 			}
 		}
 
+		if (bonus_malus == true) {
+			int nb_temp = j1.getNb_cases_coloriees();
+			j1.setNb_cases_coloriees(j2.getNb_cases_coloriees());
+			j2.setNb_cases_coloriees(nb_temp);
+			bonus_malus = false;
+		}
+		
 		afficher_expr();
-
+		
 		hud_bleu.draw(15, 15);
 		hud_rouge.draw(1920 - 300, 15);
 
@@ -291,8 +303,6 @@ public class View extends BasicGame {
 		// peinture_bleu.drawCentered(this.pos_color_2.get(i).getX(),
 		// this.pos_color_2.get(i).getY());
 		// }
-
-	
 
 		// peinture_rouge.draw(15*32+e.getLine()*32, e.getCol()*32);
 
