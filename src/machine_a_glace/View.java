@@ -35,7 +35,7 @@ public class View extends BasicGame {
 
 	int seconde = 10000;
 
-	int minute = 1;
+	int minute = 3	;
 	
 	boolean jeufini = false;
 
