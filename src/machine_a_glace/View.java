@@ -42,6 +42,9 @@ public class View extends BasicGame {
 	boolean bool1 = false;
 	boolean bool2 = false;
 	boolean bool3 = false;
+	
+	public static boolean bonus_malus = false;
+
 	int popup_test_1 = 0;
 	int popup_test_2 = 0;
 	private int nrj;
@@ -263,6 +266,13 @@ public class View extends BasicGame {
 			}
 		}
 
+		if (bonus_malus == true) {
+			int nb_temp = j1.getNb_cases_coloriees();
+			j1.setNb_cases_coloriees(j2.getNb_cases_coloriees());
+			j2.setNb_cases_coloriees(nb_temp);
+			bonus_malus = false;
+		}
+		
 		afficher_expr();
 		
 		hud_bleu.draw(15, 15);
