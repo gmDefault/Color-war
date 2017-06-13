@@ -151,10 +151,10 @@ public class Robot extends Entite {
 		while (i >= borneLigH) {
 
 			for (j = min; j <= max; j++) {
-				if (Terrain.terrain[line + i][col + j-1].isRobot())
+				if (Terrain.terrain[line + i][col + j - 1].isRobot())
 					Kill(line + i, col + j);
 
-				else if (Terrain.terrain[getLine() + i][getCol() + j-1].isJoueur()) {
+				else if (Terrain.terrain[getLine() + i][getCol() + j - 1].isJoueur()) {
 					Terrain.terrain[line + i][col + j].getEntite().Degat(40);
 				}
 
@@ -211,11 +211,13 @@ public class Robot extends Entite {
 	}
 
 	public void Avancer(int line1, int col1, int line2, int col2) {
-		if (Terrain.terrain[line2][col2].getCont() == Contenu.Expression)
+		if (Terrain.terrain[line2][col2].getCont() == Contenu.Expression) {
 			maitre.add_inventaire(Terrain.terrain[line2][col2].expr());
+			Terrain.PutTimer(line2, col2);
+		}
 		if (Terrain.terrain[line2][col2].getCont() != Contenu.Creer)
 			Terrain.terrain[line2][col2].setCase(Contenu.Robot);
-		
+
 		Terrain.terrain[line2][col2].setEntite(this);
 
 		if (Terrain.terrain[line1][col1].getCont() != Contenu.Creer)

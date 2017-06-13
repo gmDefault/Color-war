@@ -36,10 +36,10 @@ public class View extends BasicGame {
 	int seconde = 35000;
 
 	int minute = 3;
-	
-	boolean bool1 = false;
-	boolean bool2=false;
 
+	boolean bool1 = false;
+	boolean bool2 = false;
+	boolean bool3 = false;
 	int popup_test_1 = 0;
 	int popup_test_2 = 0;
 	private int nrj;
@@ -382,7 +382,7 @@ public class View extends BasicGame {
 				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
 				j1.SetNrj(j1.getNrj() - 75);
 				this.container.pause();
-				
+
 				int t = 0;
 				while (t < 5) {
 					JOptionPane r = new JOptionPane();
@@ -423,13 +423,14 @@ public class View extends BasicGame {
 			}
 		} else if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer() && !j1.isNrj()) {
 			Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
-			if(bool1){bool1=false;
-			this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);}
-		} else{
+			if (bool1) {
+				bool1 = false;
+				this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
+			}
+		} else {
 			this.popup_test_1++;
-			bool1=true;
+			bool1 = true;
 		}
-			
 
 		if (this.popup_test_2 == 25) {
 			this.popup_test_2 = 0;
@@ -437,7 +438,7 @@ public class View extends BasicGame {
 				Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCase(Contenu.Joueur);
 				this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
 				Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
-				
+
 				j2.SetNrj(j2.getNrj() - 75);
 				this.container.pause();
 				int t2 = 0;
@@ -481,11 +482,13 @@ public class View extends BasicGame {
 			}
 		} else if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer() && !j2.isNrj()) {
 			Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
-			if(bool2){bool2=false;
-			this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);}
-		} else{
+			if (bool2) {
+				bool2 = false;
+				this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
+			}
+		} else {
 			this.popup_test_2++;
-		bool2=true;
+			bool2 = true;
 		}
 		// System.out.println("( "+ x + " , " + y + " ) ");
 		// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
@@ -548,19 +551,24 @@ public class View extends BasicGame {
 					/ ((float) j1.getNombre_Case_Coloriees() + (float) j2.getNombre_Case_Coloriees());
 			PourcentRouge = 1 - PourcentBleu;
 		}
+		if (Terrain.Index > 0)
+			bool3 = Terrain.ReduceTimer();
+			if(bool3){
+				afficher_expr();
+		}
 
 		else {
 			PourcentBleu = 0;
 			PourcentRouge = 0;
 		}
-		System.out.println(""+seconde);
-		if((int)(seconde)%30==0){
-			if(j1.getNrj()<=100)
-			j1.SetNrj(j1.getNrj()+1);
-			if(j2.getNrj()<=100)
-			j2.SetNrj(j2.getNrj()+1);
+		System.out.println("" + seconde);
+		if ((int) (seconde) % 30 == 0) {
+			if (j1.getNrj() <= 100)
+				j1.SetNrj(j1.getNrj() + 1);
+			if (j2.getNrj() <= 100)
+				j2.SetNrj(j2.getNrj() + 1);
 		}
-		
+
 		if (seconde > -delta && seconde < delta) {
 			seconde = 60000;
 			if (minute == 0) {
@@ -1127,9 +1135,7 @@ public class View extends BasicGame {
 	public void afficher_nrj(Joueur j) throws SlickException {
 		Image deb = new Image("maps/debut_nrj.png");
 		Image mil = new Image("maps/milieu_nrj.png");
-		Image fin= new Image("maps/fin_nrj.png");
-
-
+		Image fin = new Image("maps/fin_nrj.png");
 
 		float ratio = (float) (j.getNrj() * 0.01 * 21 * 7);
 
@@ -1212,7 +1218,7 @@ public class View extends BasicGame {
 				if (j.getCouleur() == Couleur.Bleu)
 					e.draw(162 + (45 * colonne), 205 + (44 * ligne));
 				else
-					e.draw(1622 + (45 * colonne), 205+ (44 * ligne));
+					e.draw(1622 + (45 * colonne), 205 + (44 * ligne));
 			}
 
 			colonne++;
