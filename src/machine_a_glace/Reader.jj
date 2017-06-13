@@ -26,6 +26,9 @@ public class Reader
     {
       throw new JeuException(e);
     }
+    catch (TokenMgrError f) {
+      throw new JeuException(f);
+    }
   }
 
   public static Node read(String s) throws JeuException
@@ -78,7 +81,6 @@ SKIP :
 | "\r"
 | "\n"
   // attention élimine la notion de fin de ligne
-| ""
 | "\u0001"
 | "\u0002"
 | "\u0003"
