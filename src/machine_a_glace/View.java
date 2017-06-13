@@ -36,11 +36,12 @@ public class View extends BasicGame {
 	int seconde = 35000;
 
 	int minute = 3;
+
 	int cmptr_robot = 1;
 
 	boolean bool1 = false;
 	boolean bool2 = false;
-
+	boolean bool3 = false;
 	int popup_test_1 = 0;
 	int popup_test_2 = 0;
 	private int nrj;
@@ -204,7 +205,7 @@ public class View extends BasicGame {
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
 
-		Node test = Reader.read("{X;A}");
+		Node test = Reader.read("{X ; K}");
 		test = new Node(Operateur.Star, null, test);
 		r1 = new Robot(5, 15, Couleur.Rouge, test);
 		r1.setJoueur(j1);
@@ -249,6 +250,16 @@ public class View extends BasicGame {
 		Image robots_inv2 = new Image("maps/robots_inv2.png");
 
 		this.map.render(0, 0);
+		
+		for (int i = 0; i < 30; i++) {
+			for (int j = 0; j < 30; j++) {
+				if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {
+					peinture_bleu.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
+				} else if (Terrain.terrain[i][j].getCouleur() == Couleur.Rouge) {
+					peinture_rouge.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
+				}
+			}
+		}
 
 		afficher_expr();
 
@@ -265,7 +276,8 @@ public class View extends BasicGame {
 		inventaire.draw(1560, 195);
 		afficher_inventaire(j1);
 		afficher_inventaire(j2);
-
+		
+//		System.out.println(r1.etat_courant());
 
 		robots_inv.draw(120, 670);
 		robots_inv2.draw(1580, 670);
@@ -280,15 +292,7 @@ public class View extends BasicGame {
 		// this.pos_color_2.get(i).getY());
 		// }
 
-		for (int i = 0; i < 30; i++) {
-			for (int j = 0; j < 30; j++) {
-				if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {
-					peinture_bleu.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
-				} else if (Terrain.terrain[i][j].getCouleur() == Couleur.Rouge) {
-					peinture_rouge.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
-				}
-			}
-		}
+	
 
 		// peinture_rouge.draw(15*32+e.getLine()*32, e.getCol()*32);
 
@@ -391,7 +395,7 @@ public class View extends BasicGame {
 							JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
 					if (retour == 1) {
 						String inputrm = JOptionPane.showInputDialog(null,robot,"Coucou");
-
+						
 						if (inputrm == null) {
 							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
 									null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
@@ -406,6 +410,10 @@ public class View extends BasicGame {
 						
 						String inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 						// System.out.println(inputrc);
+						Node m = new Node(null);
+						while(!Parser.ExpressionCorrecte(inputrc, m )){
+							inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
+						}
 						tab5.clear();
 						if (inputrc == null) {
 							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
@@ -429,7 +437,7 @@ public class View extends BasicGame {
 				bool1 = false;
 				this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
 			}
-		
+
 		} else {
 			this.popup_test_1++;
 
@@ -468,13 +476,10 @@ public class View extends BasicGame {
 						ArrayList<String>tab4 = j2.inventaire_toString();
 						String inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 						Node n = new Node(null);
-						try {
-							while(!Parser.ExpressionCorrecte(inputbc, n )){
-								inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
-							}
-						} catch (JeuException e) {
-
+						while(!Parser.ExpressionCorrecte(inputbc, n )){
+							inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 						}
+					
 						tab4.clear();
 						if (inputbc == null) {
 							int k2 = JOptionPane.showOptionDialog(null,
@@ -559,21 +564,29 @@ public class View extends BasicGame {
 	@Override
 	public void update(GameContainer arg0, int delta) throws SlickException {
 
-		if ((j1.getNombre_Case_Coloriees() + j2.getNombre_Case_Coloriees()) != 0) {
-			PourcentBleu = (float) j2.getNombre_Case_Coloriees()
-					/ ((float) j1.getNombre_Case_Coloriees() + (float) j2.getNombre_Case_Coloriees());
-			PourcentRouge = 1 - PourcentBleu;
+
+		if (Terrain.Index > 0)
+			bool3 = Terrain.ReduceTimer();
+			if(bool3){
+				afficher_expr();
 		}
+			if ((j1.getNombre_Case_Coloriees() + j2.getNombre_Case_Coloriees()) != 0) {
+				PourcentBleu = (float) j2.getNombre_Case_Coloriees()
+						/ ((float) j1.getNombre_Case_Coloriees() + (float) j2.getNombre_Case_Coloriees());
+				PourcentRouge = 1 - PourcentBleu;
+			}
 
 		else {
 			PourcentBleu = 0;
 			PourcentRouge = 0;
 		}
 
+
 		if ((int) (seconde) % 30 == 0) {
 			if (j1.getNrj() < 100)
 				j1.SetNrj(j1.getNrj() + 1);
 			if (j2.getNrj() < 100)
+
 				j2.SetNrj(j2.getNrj() + 1);
 		}
 
@@ -848,9 +861,11 @@ public class View extends BasicGame {
 			r1.execute();
 		
 		if(secsrobot > 5000){
+			r1.next_etat();
+			System.out.println("CHANGEMENT " + secsrobot +" " +r1.etat_courant());
 			secsrobot=0;
 			cmptr_robot=1;
-			r1.next_etat();
+			
 		}else if(secsrobot > 500*cmptr_robot){
 			canmoverobot= true;
 			cmptr_robot++;

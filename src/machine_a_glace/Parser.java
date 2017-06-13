@@ -4,12 +4,14 @@ public class Parser {
 
 	public static boolean ExpressionCorrecte(String s, Node n) {
 		Node a = new Node(null);
-		try {
-			a = Reader.read(s);
-		} catch (JeuException e) {
-			System.out.println("bonjour");
-			return false;
-		}
+
+			try {
+				a = Reader.read(s);
+			}
+			catch (JeuException e) {
+				return false;
+			
+			}
 		n=a;
 		return true;
 	}
