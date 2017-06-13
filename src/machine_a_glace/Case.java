@@ -78,7 +78,7 @@ public class Case {
 	}
 	
 	public boolean isEnnemi(int line, int col, Entite ent) {
-		if (ent == null)
+		if (ent == null || this.getEntite() == null)
 			return false;
 		else {
 			if (ent.getCouleur() == Couleur.Bleu && this.getEntite().getCouleur() == Couleur.Rouge || ent.getCouleur() == Couleur.Rouge && this.getEntite().getCouleur() == Couleur.Bleu)

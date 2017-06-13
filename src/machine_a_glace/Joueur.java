@@ -129,7 +129,9 @@ public class Joueur extends Entite {
 			}
 			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
-
+			
+			Terrain.terrain[getLine()][getCol()].setEntite(this);
+			
 		}
 
 	}

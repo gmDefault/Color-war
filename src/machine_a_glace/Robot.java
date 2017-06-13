@@ -65,10 +65,17 @@ public class Robot extends Entite {
 				else
 					b = next_etat_recur(a.FD, b);
 			} else if (a.Gram.isOperateur() && a.Gram == Operateur.Choix) {
-				if (Math.random() < 0.5)
+				if(!b){
 					b = next_etat_recur(a.FG, b);
-				else
-					b = next_etat_recur(a.FD, b);
+					if (!b)
+						b = next_etat_recur(a.FD, b);
+				}else{
+					if(Math.random() < 0.5)
+						b = next_etat_recur(a.FG, b);
+					else
+						b = next_etat_recur(a.FD, b);
+				}
+				
 			} else if (a.Gram.isOperateur() && a.Gram == Operateur.Priorite) {
 				if (b)
 					isPriorite = true;
@@ -91,7 +98,7 @@ public class Robot extends Entite {
 	}
 
 	public void Avancer(int pas) {
-		protection = false;	
+		protection = false;
 		if (next_case().isAccessible()) {
 			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
@@ -104,15 +111,21 @@ public class Robot extends Entite {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
 						View.recolorie_par_dessus = true;
 					}
-					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
-					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
+						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
+						maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees() + 1);
+					}
+
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
 						View.recolorie_par_dessus = true;
 					}
-					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
-					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
+						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
+						maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees() + 1);
+					}
+
 				}
 				break;
 			case Est:
@@ -122,15 +135,19 @@ public class Robot extends Entite {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
 						View.recolorie_par_dessus = true;
 					}
-					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
-					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
+						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
+						maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees() + 1);
+					}
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
 						View.recolorie_par_dessus = true;
 					}
-					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
-					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
+						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
+						maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees() + 1);
+					}
 				}
 				break;
 			case Sud:
@@ -140,15 +157,19 @@ public class Robot extends Entite {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
 						View.recolorie_par_dessus = true;
 					}
-					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
-					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
+						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
+						maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees() + 1);
+					}
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
 						View.recolorie_par_dessus = true;
 					}
-					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
-					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
+						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
+						maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees() + 1);
+					}
 				}
 				break;
 			case Ouest:
@@ -158,15 +179,19 @@ public class Robot extends Entite {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
 						View.recolorie_par_dessus = true;
 					}
-					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
-					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
+						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
+						maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees() + 1);
+					}
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
 						View.recolorie_par_dessus = true;
 					}
-					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
-					maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees()+1);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
+						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
+						maitre.setNb_cases_coloriees(maitre.getNb_cases_coloriees() + 1);
+					}
 				}
 
 			}
@@ -176,7 +201,9 @@ public class Robot extends Entite {
 			}
 			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Robot);
-
+			
+			Terrain.terrain[getLine()][getCol()].setEntite(this);
+			
 		}
 	}
 
@@ -184,12 +211,6 @@ public class Robot extends Entite {
 		return true;
 	}
 
-	// public boolean isEnnemi(int line, int col, Entite ent) {
-	// if(ent.getCouleur() != getCol()){
-	//
-	// }
-	// return ;
-	// }
 	public boolean isProtected() {
 		return protection;
 	}
@@ -222,7 +243,7 @@ public class Robot extends Entite {
 					Kill(line + i, col + j);
 
 				else if (Terrain.terrain[getLine() + i][getCol() + j - 1].isJoueur()) {
-					Terrain.terrain[line + i][col + j].getEntite().Degat(40);
+					Terrain.terrain[line + i][col + j-1].getEntite().Degat(40);
 				}
 
 			}
@@ -262,6 +283,10 @@ public class Robot extends Entite {
 
 	}
 
+	public Node etat_courant() {
+		return etat_courant;
+	}
+
 	public boolean Kamikaze() {
 		int line, col;
 		line = getLine();
@@ -276,7 +301,6 @@ public class Robot extends Entite {
 		} else
 			return false;
 	}
-
 
 	public void Explorer() {
 		Direction d;
@@ -305,7 +329,6 @@ public class Robot extends Entite {
 			}
 		}
 
-		
 	}
 
 	// Renvoi True si l'attaque est concluante, false sinon

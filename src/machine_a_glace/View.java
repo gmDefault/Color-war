@@ -204,7 +204,7 @@ public class View extends BasicGame {
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
 
-		Node test = Reader.read("{X;A}");
+		Node test = Reader.read("{X ; K}");
 		test = new Node(Operateur.Star, null, test);
 		r1 = new Robot(5, 15, Couleur.Rouge, test);
 		r1.setJoueur(j1);
@@ -265,7 +265,8 @@ public class View extends BasicGame {
 		inventaire.draw(1560, 195);
 		afficher_inventaire(j1);
 		afficher_inventaire(j2);
-
+		
+//		System.out.println(r1.etat_courant());
 
 		robots_inv.draw(120, 670);
 		robots_inv2.draw(1580, 670);
@@ -836,9 +837,11 @@ public class View extends BasicGame {
 			r1.execute();
 		
 		if(secsrobot > 5000){
+			r1.next_etat();
+			System.out.println("CHANGEMENT " + secsrobot +" " +r1.etat_courant());
 			secsrobot=0;
 			cmptr_robot=1;
-			r1.next_etat();
+			
 		}else if(secsrobot > 500*cmptr_robot){
 			canmoverobot= true;
 			cmptr_robot++;
