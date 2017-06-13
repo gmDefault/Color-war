@@ -45,10 +45,11 @@ public class Joueur extends Entite {
 				setLine(getLine() - pas);
 				if (this.getCouleur() == Couleur.Bleu
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
-					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
+					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge ) {
 						View.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 					this.nb_cases_coloriees++;
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
@@ -56,8 +57,10 @@ public class Joueur extends Entite {
 						View.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 					this.nb_cases_coloriees++;
 				}
+				
 				break;
 			case Est:
 				setCol(getCol() + pas);
@@ -67,6 +70,7 @@ public class Joueur extends Entite {
 						View.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 					this.nb_cases_coloriees++;
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
@@ -74,6 +78,7 @@ public class Joueur extends Entite {
 						View.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 					this.nb_cases_coloriees++;
 				}
 				break;
@@ -85,6 +90,7 @@ public class Joueur extends Entite {
 						View.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 					this.nb_cases_coloriees++;
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
@@ -92,6 +98,7 @@ public class Joueur extends Entite {
 						View.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 					this.nb_cases_coloriees++;
 				}
 				break;
@@ -103,6 +110,7 @@ public class Joueur extends Entite {
 						View.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 					this.nb_cases_coloriees++;
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
@@ -110,6 +118,7 @@ public class Joueur extends Entite {
 						View.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
+					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 					this.nb_cases_coloriees++;
 				}
 

@@ -36,9 +36,8 @@ public class View extends BasicGame {
 	int seconde = 35000;
 
 	int minute = 3;
-	
-	int cmptr_robot=1;
-	
+	int cmptr_robot = 1;
+
 	boolean bool1 = false;
 	boolean bool2 = false;
 
@@ -267,7 +266,6 @@ public class View extends BasicGame {
 		afficher_inventaire(j1);
 		afficher_inventaire(j2);
 
-		j1.afficher_inventaire();
 
 		robots_inv.draw(120, 670);
 		robots_inv2.draw(1580, 670);
@@ -380,7 +378,6 @@ public class View extends BasicGame {
 			this.popup_test_1 = 0;
 			if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer() && j1.isNrj()) {
 				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCase(Contenu.Joueur);
-				this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
 				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
 				j1.SetNrj(j1.getNrj() - 75);
 				this.container.pause();
@@ -425,20 +422,21 @@ public class View extends BasicGame {
 			}
 		} else if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer() && !j1.isNrj()) {
 			Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
+
 			if (bool1) {
 				bool1 = false;
 				this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
 			}
+		
 		} else {
 			this.popup_test_1++;
-			bool1 = true;
+
 		}
 
 		if (this.popup_test_2 == 25) {
 			this.popup_test_2 = 0;
 			if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer() && j2.isNrj()) {
 				Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCase(Contenu.Joueur);
-				this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
 				Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
 
 				j2.SetNrj(j2.getNrj() - 75);
@@ -488,9 +486,10 @@ public class View extends BasicGame {
 				bool2 = false;
 				this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
 			}
+		
 		} else {
 			this.popup_test_2++;
-			bool2 = true;
+			
 		}
 		// System.out.println("( "+ x + " , " + y + " ) ");
 		// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
@@ -558,11 +557,11 @@ public class View extends BasicGame {
 			PourcentBleu = 0;
 			PourcentRouge = 0;
 		}
-		System.out.println("" + seconde);
+
 		if ((int) (seconde) % 30 == 0) {
-			if (j1.getNrj() <= 100)
+			if (j1.getNrj() < 100)
 				j1.SetNrj(j1.getNrj() + 1);
-			if (j2.getNrj() <= 100)
+			if (j2.getNrj() < 100)
 				j2.SetNrj(j2.getNrj() + 1);
 		}
 
@@ -1149,15 +1148,17 @@ public class View extends BasicGame {
 			for (float i = this.DEBUT_VIE_BLEU_X + 7; i < this.DEBUT_VIE_BLEU_X + ratio; i += 7) {
 				mil.draw(i, this.NRJ_Y);
 			}
-			if (j.getNrj() == 100)
+			if (j.getNrj() >= 100)
 				fin.draw(this.FIN_VIE_BLEU_X, this.NRJ_Y);
 		} else if (j.getNrj() > 0) {
 			deb.draw(this.DEBUT_VIE_ROUGE_X, this.NRJ_Y);
 			for (float i = this.DEBUT_VIE_ROUGE_X + 7; i < this.DEBUT_VIE_ROUGE_X + ratio; i += 7) {
 				mil.draw(i, this.NRJ_Y);
 			}
-			if (j.getNrj() == 100)
+
+			if (j.getNrj() >= 100) {
 				fin.draw(this.FIN_VIE_ROUGE_X, this.NRJ_Y);
+			}
 
 		}
 	}

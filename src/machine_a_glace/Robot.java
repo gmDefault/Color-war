@@ -91,28 +91,7 @@ public class Robot extends Entite {
 	}
 
 	public void Avancer(int pas) {
-		protection = false;
-//		
-//		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
-//		Terrain.terrain[getLine()][getCol()].setEntite(null);
-//		switch (getD()) {
-//		case Nord:
-//			setLine(getLine() - pas);
-//			break;
-//		case Est:
-//			setCol(getCol() + pas);
-//			break;
-//		case Sud:
-//			setLine(getLine() + pas);
-//			break;
-//		case Ouest:
-//			setCol(getCol() - pas);
-//
-//		}
-//		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Robot);
-//		Terrain.terrain[getLine()][getCol()].setEntite(this);
-		
-		
+		protection = false;	
 		if (next_case().isAccessible()) {
 			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
@@ -326,72 +305,7 @@ public class Robot extends Entite {
 			}
 		}
 
-		// switch (d) {
-		// case Ouest:
-		// if (Terrain.terrain[line][col - 1].isAccessible()) {
-		// Avancer(line, col, line, col - 1);
-		// } else {
-		// random = Math.random();
-		// if (random < 0.5 && Terrain.terrain[line + 1][col].isAccessible()) {
-		// ChangerDirection(Direction.Sud);
-		// Avancer(line, col, line + 1, col);
-		// } else if (Terrain.terrain[line - 1][col].isAccessible()) {
-		// ChangerDirection(Direction.Nord);
-		// Avancer(line, col, line - 1, col);
-		// } else {
-		// ChangerDirection(Direction.Est);
-		// }
-		// }
-		// break;
-		// case Est:
-		// if (Terrain.terrain[line][col + 1].isAccessible()) {
-		// Avancer(line, col, line, col + 1);
-		// } else {
-		// random = Math.random();
-		// if (random < 0.5 && Terrain.terrain[line + 1][col].isAccessible()) {
-		// ChangerDirection(Direction.Sud);
-		// Avancer(line, col, line + 1, col);
-		// } else if (Terrain.terrain[line - 1][col].isAccessible()) {
-		// ChangerDirection(Direction.Nord);
-		// Avancer(line, col, line - 1, col);
-		// } else {
-		// ChangerDirection(Direction.Ouest);
-		// }
-		// }
-		// break;
-		// case Nord:
-		// if (Terrain.terrain[line - 1][col].isAccessible()) {
-		// Avancer(line, col, line - 1, col);
-		// } else {
-		// random = Math.random();
-		// if (random < 0.5 && Terrain.terrain[line][col - 1].isAccessible()) {
-		// ChangerDirection(Direction.Ouest);
-		// Avancer(line, col, line, col - 1);
-		// } else if (Terrain.terrain[line][col + 1].isAccessible()) {
-		// ChangerDirection(Direction.Est);
-		// Avancer(line, col, line, col + 1);
-		// } else {
-		// ChangerDirection(Direction.Sud);
-		// }
-		// }
-		// break;
-		// case Sud:
-		// if (Terrain.terrain[line + 1][col].isAccessible()) {
-		// Avancer(line, col, line + 1, col);
-		// } else {
-		// random = Math.random();
-		// if (random < 0.5 && Terrain.terrain[line][col - 1].isAccessible()) {
-		// ChangerDirection(Direction.Ouest);
-		// Avancer(line, col, line, col - 1);
-		// } else if (Terrain.terrain[line][col + 1].isAccessible()) {
-		// ChangerDirection(Direction.Est);
-		// Avancer(line, col, line, col + 1);
-		// } else {
-		// ChangerDirection(Direction.Nord);
-		// }
-		// }
-		// break;
-		// }
+		
 	}
 
 	// Renvoi True si l'attaque est concluante, false sinon
