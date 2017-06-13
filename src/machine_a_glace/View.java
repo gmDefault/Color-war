@@ -951,10 +951,10 @@ public class View extends BasicGame {
 						}
 					} else if (Terrain.terrain[i][j].getEntite().isJoueur()) {
 						if (ent.getCouleur() == Couleur.Rouge) {
-							g.drawAnimation(animations[ent.getD().entier() + (true ? 4 : 0)],
+							g.drawAnimation(animations[ent.getD().entier() + (moving ? 4 : 0)],
 									(15 * 32 + ent.getCol() * 32 + 16) - 32, (ent.getLine() * 32 + 16) - 60);
 						} else {
-							g.drawAnimation(animations2[ent.getD().entier() + (true ? 4 : 0)],
+							g.drawAnimation(animations2[ent.getD().entier() + (moving2 ? 4 : 0)],
 									(15 * 32 + ent.getCol() * 32 + 16) - 32, (ent.getLine() * 32 + 16) - 60);
 						}
 					}
