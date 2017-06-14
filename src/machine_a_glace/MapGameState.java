@@ -1,9 +1,16 @@
 package machine_a_glace;
 
-import org.newdawn.slick.BasicGame;
+import java.awt.Dimension;
+import java.awt.FontFormatException;
+import java.io.IOException;
 
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -11,44 +18,31 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.gui.TextField;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
-import java.awt.Dimension;
-import java.awt.FontFormatException;
-import java.io.IOException;
-import java.util.ArrayList;
+/**
+ * Code sous licence GPLv3 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author <b>Shionn</b>, shionn@gmail.com <i>http://shionn.org</i><br>
+ *         GCS d- s+:+ a+ C++ UL/M P L+ E--- W++ N K- w-- M+ t+ 5 X R+ !tv b+ D+ G- e+++ h+ r- y-
+ */
+public class MapGameState extends BasicGameState {
+	public static final int ID = 2;
+	
 
-import javax.swing.ImageIcon;
-
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.AppGameContainer;
-
-public class View extends BasicGame {
 	private GameContainer container;
 	private TiledMap map;
 
 	int seconde = 10000;
 
-
-	int minute = 5	;
+	int minute = 3	;
 	
 	boolean jeufini = false;
 
-
-	int cmptr_robotr1 = 1;
-	int cmptr_robotb1 = 1;
-	int cmptr_robotr2 = 1;
-	int cmptr_robotb2 = 1;
-	int cmptr_robotr3 = 1;
-	int cmptr_robotb3 = 1;
-	int cmptr_robotr4 = 1;
-	int cmptr_robotb4 = 1;
+	int cmptr_robot = 1;
 
 	boolean bool1 = false;
 	boolean bool2 = false;
@@ -72,14 +66,7 @@ public class View extends BasicGame {
 
 	private int secs1 = 0;
 	private int secs2 = 0;
-	private int secsrobotr1 = 0;
-	private int secsrobotb1 = 0;
-	private int secsrobotr2 = 0;
-	private int secsrobotb2 = 0;
-	private int secsrobotr3 = 0;
-	private int secsrobotb3 = 0;
-	private int secsrobotr4 = 0;
-	private int secsrobotb4 = 0;
+	private int secsrobot = 0;
 
 	private final float DEBUT_VIE_ROUGE_X = 1631;
 	private final float FIN_VIE_ROUGE_X = 1778;
@@ -98,24 +85,10 @@ public class View extends BasicGame {
 
 	private boolean canmove = false;
 	private boolean canmove2 = false;
-	private boolean canmoverobotr1 = false;
-	private boolean canmoverobotb1 = false;
-	private boolean canmoverobotr2 = false;
-	private boolean canmoverobotb2 = false;
-	private boolean canmoverobotr3 = false;
-	private boolean canmoverobotb3 = false;
-	private boolean canmoverobotr4 = false;
-	private boolean canmoverobotb4 = false;
+	private boolean canmoverobot = false;
 
 	private Joueur j1, j2;
-	private Robot r1r;
-	private Robot r2r;
-	private Robot r3r;
-	private Robot r4r;
-	private Robot r1b;
-	private Robot r2b;
-	private Robot r3b;
-	private Robot r4b;
+	private Robot r1;
 
 	public static boolean recolorie_par_dessus = false;
 
@@ -126,31 +99,23 @@ public class View extends BasicGame {
 	private Animation[] animations4 = new Animation[8];
 	private Animation[] animations5 = new Animation[8];
 
-	private String item[] = { "Robot1", "Robot2", "Robot3" };
+	private String item[] = { "A", "P", "K" };
 	private String item2[] = { "Robot1", "Robot2", "Robot3" };
 	private JComboBox robot = new JComboBox(item);
 	private JComboBox robot2 = new JComboBox(item2);
-//	private ImageIcon ic = new ImageIcon("maps/robot.png");
+	private ImageIcon ic = new ImageIcon("maps/robot.png");
 	private ImageIcon icr = new ImageIcon("maps/tete_robot_rouge.png");
 	private ImageIcon icb = new ImageIcon("maps/tete_robot_bleu.png");
 	private Dimension d = new Dimension(100, 100);
-//	private String tab[] = { "Frapper", "Explorer", "Kamikaze", ";", "*", ">" };
-//	private String tab2[] = { "Manger", "Fumer", "Rond-Poing" };
-	
+	private String tab[] = { "Frapper", "Explorer", "Kamikaze", ";", "*", ">" };
+	private String tab2[] = { "Manger", "Fumer", "Rond-Poing" };
+
 	java.awt.Font UIFont1;
 	org.newdawn.slick.UnicodeFont uniFont;
 
 	java.awt.Font UIFont2;
 	org.newdawn.slick.UnicodeFont uniFont2;
 
-	public View(Joueur j1, Joueur j2) {
-
-		super("ColorWar");
-		this.j1 = j1;
-		j1.setD(Direction.Sud);
-		this.j2 = j2;
-		// TODO Auto-generated constructor stub
-	}
 
 	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
 		Animation animation = new Animation();
@@ -159,10 +124,19 @@ public class View extends BasicGame {
 		}
 		return animation;
 	}
-
-	public void init(GameContainer arg0) throws SlickException {
+	
+	@Override
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		// TODO Auto-generated method stub
-		this.container = arg0;
+		this.container = container;
+		
+		Terrain.initialiser();
+		this.j1 = new Joueur(1, 15, Couleur.Rouge,50,100);
+		this.j2 = new Joueur(28, 15, Couleur.Bleu,100,100);
+
+		boolean y =Parser.ExpressionCorrecte("ddd");
+		System.out.println(y);
+		
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
 
@@ -201,10 +175,8 @@ public class View extends BasicGame {
 		SpriteSheet spriteSheet = new SpriteSheet("maps/char_2.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
 		SpriteSheet spriteSheet3 = new SpriteSheet("maps/robot_red.png", 64, 64);
-
-		SpriteSheet spriteSheet5 = new SpriteSheet("maps/bonus.png", 64, 64);
 		SpriteSheet spriteSheet4 = new SpriteSheet("maps/robot_blue.png", 64, 64);
-
+		SpriteSheet spriteSheet5 = new SpriteSheet("maps/bonus.png", 64, 64);
 		this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
 		this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
 		this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
@@ -240,7 +212,7 @@ public class View extends BasicGame {
 		this.animations4[5] = loadAnimation(spriteSheet4, 1, 9, 1);
 		this.animations4[6] = loadAnimation(spriteSheet4, 1, 9, 2);
 		this.animations4[7] = loadAnimation(spriteSheet4, 1, 9, 3);
-		
+
 		this.animations5[0] = loadAnimation(spriteSheet5, 0, 1, 0);
 		this.animations5[1] = loadAnimation(spriteSheet5, 0, 1, 1);
 		this.animations5[2] = loadAnimation(spriteSheet5, 0, 1, 2);
@@ -250,16 +222,13 @@ public class View extends BasicGame {
 		this.animations5[6] = loadAnimation(spriteSheet5, 1, 9, 2);
 		this.animations5[7] = loadAnimation(spriteSheet5, 1, 9, 3);
 
-
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
 
-
-		Node test = Reader.read("{X ; K}");
-//		test = new Node(Operateur.Star, null, test);
-//		r1 = new Robot(5, 15, Couleur.Rouge, test);
-//		r1.setJoueur(j1);
-
+		Node test = Reader.read("{K > X}");
+		test = new Node(Operateur.Star, null, test);
+		r1 = new Robot(5, 15, Couleur.Bleu, test);
+		r1.setJoueur(j2);
 
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
@@ -284,13 +253,13 @@ public class View extends BasicGame {
 		// this.e2 = new Entite(16, 19);
 
 		// Music background = new Music("maps/FoxieEpic.OGG");
-		// background.loop();
+		// background.loop(
 
 	}
 
 	@Override
-	public void render(GameContainer arg0, Graphics g) throws SlickException {
-		// TODO Auto-generated method stub
+	public void render(GameContainer container, StateBasedGame game, Graphics g)
+			throws SlickException {
 		Image peinture_rouge = new Image("maps/peinture_rouge.png");
 		Image peinture_bleu = new Image("maps/peinture_bleu.png");
 		Image hud_bleu = new Image("maps/hud_bleu.png");
@@ -336,31 +305,6 @@ public class View extends BasicGame {
 				}
 			}
 
-
-		if (j1.getrb()>=1)g.drawAnimation(animations3[r1r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1r.getCol() * 32 + 16) - 32,
-				(this.r1r.getLine() * 32 + 16) - 60);
-		
-		if (j2.getrb()>=1)g.drawAnimation(animations4[r1b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1b.getCol() * 32 + 16) - 32,
-				(this.r1b.getLine() * 32 + 16) - 60);
-		
-		if (j1.getrb()>=2)g.drawAnimation(animations3[r2r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r2r.getCol() * 32 + 16) - 32,
-				(this.r2r.getLine() * 32 + 16) - 60);
-		
-		if (j2.getrb()>=2)g.drawAnimation(animations4[r2b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r2b.getCol() * 32 + 16) - 32,
-				(this.r2b.getLine() * 32 + 16) - 60);
-		
-		if (j1.getrb()>=3)g.drawAnimation(animations3[r3r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r3r.getCol() * 32 + 16) - 32,
-				(this.r3r.getLine() * 32 + 16) - 60);
-		
-		if (j2.getrb()>=3)g.drawAnimation(animations4[r3b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r3b.getCol() * 32 + 16) - 32,
-				(this.r3b.getLine() * 32 + 16) - 60);
-		
-		if (j1.getrb()>=4)g.drawAnimation(animations3[r4r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r4r.getCol() * 32 + 16) - 32,
-				(this.r4r.getLine() * 32 + 16) - 60);
-		
-		if (j2.getrb()>=4)g.drawAnimation(animations4[r4b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r4b.getCol() * 32 + 16) - 32,
-				(this.r4b.getLine() * 32 + 16) - 60);
-
 			if (bonus_malus == true) {
 				int nb_temp = j1.getNb_cases_coloriees();
 				j1.setNb_cases_coloriees(j2.getNb_cases_coloriees());
@@ -373,12 +317,12 @@ public class View extends BasicGame {
 			hud_bleu.draw(15, 15);
 			hud_rouge.draw(1920 - 300, 15);
 
-
 			afficher_pdv(j1);
 			afficher_pdv(j2);
 
 			afficher_nrj(j1);
 			afficher_nrj(j2);
+
 			inventaire.draw(100, 195);
 			inventaire.draw(1560, 195);
 			afficher_inventaire(j1);
@@ -393,13 +337,6 @@ public class View extends BasicGame {
 			PrintEntity(g);
 			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
 
-//			this.popup_test_1 = 0;
-//			if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer() && j1.isNrj()) {
-//				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCase(Contenu.Joueur);
-//				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
-//				j1.SetNrj(j1.getNrj() - 75);
-//				this.container.pause();
-				
 			if (this.popup_test_1 == 25) {
 
 				this.popup_test_1 = 0;
@@ -409,179 +346,102 @@ public class View extends BasicGame {
 					j1.SetNrj(j1.getNrj() - 75);
 					this.container.pause();
 
-				
-			
-				int t = 0;
-				while (t < 1) {
-					JOptionPane r = new JOptionPane();
-					r.setSize(d);
-					String[] bouton = { "Créer", "Modifier", "Annuler" };
-					int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
-					if (retour == 1) {
-						String inputrm = JOptionPane.showInputDialog(null,robot,"Coucou");
-						
-						if (inputrm == null) {
-							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-									null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-							if (k == 1) {
-								t = 1;
+					int t = 0;
+					while (t < 5) {
+						JOptionPane r = new JOptionPane();
+						r.setSize(d);
+						String[] bouton = { "Créer", "Modifier", "Annuler" };
+						int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
+						if (retour == 1) {
+							String inputrm = JOptionPane.showInputDialog(robot);
+
+							if (inputrm == null) {
+								int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+										null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+								if (k == 1) {
+									t = 5;
+								}
 							}
 						}
-					}
-					if (retour == 0 && j1.getrb()<4) {
-						JOptionPane p = new JOptionPane();
-						ArrayList<String>tab5 = j1.inventaire_toString();
-						
-						String inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
-						// System.out.println(inputrc);
-						Node m = new Node(null);
-						while(!Parser.ExpressionCorrecte(inputrc)){
-							inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
-						}
-						if (j1.getrb()==0){
-							m = Parser.ExpressionCorrecte1(inputrc);
-							m = new Node(Operateur.Star, null, m);
-							Coordonnees c = Terrain.spawnRed();
-							r1r = new Robot(c.getLigne(),c.getCol(),j1.getCouleur(),m);
-							r1r.setD(Direction.Sud);
-							r1r.setJoueur(j1);
-						}
-						if (j1.getrb()==1){
-							m = Parser.ExpressionCorrecte1(inputrc);
-							m = new Node(Operateur.Star, null, m);
-							Coordonnees c = Terrain.spawnRed();
-							r2r = new Robot(c.getLigne(),c.getCol(),j1.getCouleur(),m);
-							r2r.setD(Direction.Sud);
-							r2r.setJoueur(j1);
-						}
-						if (j1.getrb()==2){
-							m = Parser.ExpressionCorrecte1(inputrc);
-							m = new Node(Operateur.Star, null, m);
-							Coordonnees c = Terrain.spawnRed();
-							r3r = new Robot(c.getLigne(),c.getCol(),j1.getCouleur(),m);
-							r3r.setD(Direction.Sud);
-							r3r.setJoueur(j1);
-						}
-						if (j1.getrb()==3){
-							m = Parser.ExpressionCorrecte1(inputrc);
-							m = new Node(Operateur.Star, null, m);
-							Coordonnees c = Terrain.spawnRed();
-							r4r = new Robot(c.getLigne(),c.getCol(),j1.getCouleur(),m);
-							r4r.setD(Direction.Sud);
-							r4r.setJoueur(j1);
-						}
-						j1.setRb(j1.getrb()+1);
-						tab5.clear();
-						if (inputrc == null) {
-							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-									null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-							if (k == 1) {
-								t = 1;
+						if (retour == 0) {
+							JOptionPane p = new JOptionPane();
+							String inputrc = p.showInputDialog(tab, "Saisissez votre expression");
+							// System.out.println(inputrc);
+
+							if (inputrc == null) {
+								int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
+										null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+								if (k == 1) {
+									t = 5;
+								}
 							}
 						}
+						if (retour == 2 || retour == -1) {
+							t = 5;
+						}
+						t++;
 					}
-					if (retour == 2 || retour == -1) {
-						t = 1;
-					}
-					t++;
-				}
-				}
-
-				}else if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer() && !j1.isNrj()) {
-					Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
-
-					if (bool1) {
-						bool1 = false;
-						this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
-					}
-
-				}else {
-					this.popup_test_1++;
 
 				}
-				
+			} else if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer() && !j1.isNrj()) {
+				Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
 
-					
-					
-				if (this.popup_test_2 == 25) {
-					this.popup_test_2 = 0;
-					if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer() && j2.isNrj()) {
-						Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCase(Contenu.Joueur);
-						Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
-						j2.SetNrj(j2.getNrj() - 75);
-						this.container.pause();
-						int t2 = 0;
-						while (t2 < 1) {
-							JOptionPane r2 = new JOptionPane();
-							r2.setSize(d);
-							String[] bouton2 = { "Créer", "Modifier", "Annuler" };
-							int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
-					if (retour2 == 1) {
-						String inputbm = JOptionPane.showInputDialog(null, robot2,"ccou");
+				if (bool1) {
+					bool1 = false;
+					this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
+				}
 
-						if (inputbm == null) {
-							int k2 = JOptionPane.showOptionDialog(null,
-									"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
-									JOptionPane.QUESTION_MESSAGE, null, null, null);
-							if (k2 == 1) {
-								t2 = 1;
+			} else {
+				this.popup_test_1++;
+
+			}
+
+			if (this.popup_test_2 == 25) {
+				this.popup_test_2 = 0;
+				if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer() && j2.isNrj()) {
+					Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCase(Contenu.Joueur);
+					Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
+
+					j2.SetNrj(j2.getNrj() - 75);
+					this.container.pause();
+					int t2 = 0;
+					while (t2 < 5) {
+						JOptionPane r2 = new JOptionPane();
+						r2.setSize(d);
+						String[] bouton2 = { "Créer", "Modifier", "Annuler" };
+						int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
+						if (retour2 == 1) {
+							String inputbm = JOptionPane.showInputDialog(robot2);
+
+							if (inputbm == null) {
+								int k2 = JOptionPane.showOptionDialog(null,
+										"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
+										JOptionPane.QUESTION_MESSAGE, null, null, null);
+								if (k2 == 1) {
+									t2 = 5;
+								}
 							}
 						}
-					}
-					if (retour2 == 0 && j2.getrb()< 4) {
-						JOptionPane rbc = new JOptionPane();
-						
-						ArrayList<String>tab4 = j2.inventaire_toString();
-						String inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
-						Node n = new Node(null);
-						while(!Parser.ExpressionCorrecte(inputbc)){
-							inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
-						}
-						if (j2.getrb()==0){
-							n = Parser.ExpressionCorrecte1(inputbc);
-							n = new Node(Operateur.Star, null, n);
-							Coordonnees c = Terrain.spawnBlue();
-							r1b = new Robot(c.getLigne(),c.getCol(),j2.getCouleur(),n);
-							r1b.setJoueur(j2);
-						}
-						if (j2.getrb()==1){
-							n = Parser.ExpressionCorrecte1(inputbc);
-							n = new Node(Operateur.Star, null, n);
-							Coordonnees c = Terrain.spawnBlue();
-							r2b = new Robot(c.getLigne(),c.getCol(),j2.getCouleur(),n);
-							r2b.setJoueur(j2);
-						}
-						if (j2.getrb()==2){
-							n = Parser.ExpressionCorrecte1(inputbc);
-							n = new Node(Operateur.Star, null, n);
-							Coordonnees c = Terrain.spawnBlue();
-							r3b = new Robot(c.getLigne(),c.getCol(),j2.getCouleur(),n);
-							r3b.setJoueur(j2);
-						}
-						if (j2.getrb()==3){
-							n = Parser.ExpressionCorrecte1(inputbc);
-							n = new Node(Operateur.Star, null, n);
-							Coordonnees c = Terrain.spawnBlue();
-							r4b = new Robot(c.getLigne(),c.getCol(),j2.getCouleur(),n);
-							r4b.setJoueur(j2);
-						}
-						j2.setRb(j2.getrb()+1);
-						tab4.clear();
-						if (inputbc == null) {
-							int k2 = JOptionPane.showOptionDialog(null,
-									"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
-									JOptionPane.QUESTION_MESSAGE, null, null, null);
-							if (k2 == 1) {
-								t2 = 1;
+						if (retour2 == 0) {
+							JOptionPane rbc = new JOptionPane();
+							String inputbc = rbc.showInputDialog(tab2, "Saisissez votre expression");
+
+							if (inputbc == null) {
+								int k2 = JOptionPane.showOptionDialog(null,
+										"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
+										JOptionPane.QUESTION_MESSAGE, null, null, null);
+								if (k2 == 1) {
+									t2 = 5;
+								}
 							}
 						}
-					}
-					if (retour2 == 2 || retour2 == -1) {
-						t2 = 1;
-					}
-					t2++;
+
+						if (retour2 == 2 || retour2 == -1) {
+							t2 = 5;
+						}
+						t2++;
 					}
 				}
 			} else if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer() && !j2.isNrj()) {
@@ -595,7 +455,6 @@ public class View extends BasicGame {
 				this.popup_test_2++;
 				
 			}
-			
 
 			// System.out.println("( "+ x + " , " + y + " ) ");
 			// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
@@ -630,9 +489,6 @@ public class View extends BasicGame {
 
 		
 		}
-		
-		}
-			
 
 		// @Override
 		// public void render(GameContainer container, Graphics g) throws
@@ -654,12 +510,12 @@ public class View extends BasicGame {
 		// return collision;
 		// }
 
+	}
 
-
-		
 	@Override
-	public void update(GameContainer arg0, int delta) throws SlickException {
-
+	public void update(GameContainer container, StateBasedGame game, int delta)
+			throws SlickException {
+		
 		if (Terrain.Index > 0)
 			bool3 = Terrain.ReduceTimer();
 		if (bool3) {
@@ -677,9 +533,7 @@ public class View extends BasicGame {
 			PourcentRouge = 0;
 		}
 
-
-		if ((int) (seconde) % 2 == 0) {
-
+		if ((int) (seconde) % 30 == 0) {
 			if (j1.getNrj() < 100)
 				j1.SetNrj(j1.getNrj() + 1);
 			if (j2.getNrj() < 100)
@@ -698,15 +552,7 @@ public class View extends BasicGame {
 		seconde -= delta;
 		this.secs1 += delta;
 		this.secs2 += delta;
-		secsrobotr1 += delta;
-		secsrobotb1 += delta;
-		secsrobotr2 += delta;
-		secsrobotb2 += delta;
-		secsrobotr3 += delta;
-		secsrobotb3 += delta;
-		secsrobotr4 += delta;
-		secsrobotb4 += delta;
-		
+		secsrobot += delta;
 		this.container.resume();
 
 		if (this.moving) {
@@ -769,127 +615,22 @@ public class View extends BasicGame {
 			}
 		}
 
+		if (canmoverobot)
+			r1.execute();
 
-		if (canmoverobotr1 && j1.getrb()>=1)
-			r1r.execute();
-		if (canmoverobotb1 && j2.getrb()>=1)
-			r1b.execute();
-		if (canmoverobotr2 && j1.getrb()>=2)
-			r2r.execute();
-		if (canmoverobotb2 && j2.getrb()>=2)
-			r2b.execute();
-		if (canmoverobotr3 && j1.getrb()>=3)
-			r3r.execute();
-		if (canmoverobotb3 && j2.getrb()>=3)
-			r3b.execute();
-		if (canmoverobotr4 && j1.getrb()>=4)
-			r4r.execute();
-		if (canmoverobotb4 && j2.getrb()>=4)
-			r4b.execute();
-		
-		if(secsrobotr1 > 5000 && j1.getrb()>=1){
-			r1r.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobotr1 +" " +r1r.etat_courant());
-			secsrobotr1=0;
-			cmptr_robotr1=1;
-			
-		}else if(secsrobotr1 > 500*cmptr_robotr1){
-			canmoverobotr1= true;
-			cmptr_robotr1++;
-		}else{
-			canmoverobotr1 = false;
+		if (secsrobot > 5000) {
+			r1.next_etat();
+			System.out.println("CHANGEMENT " + secsrobot + " " + r1.etat_courant());
+			secsrobot = 0;
+			cmptr_robot = 1;
+
+		} else if (secsrobot > 500 * cmptr_robot) {
+			canmoverobot = true;
+			cmptr_robot++;
+		} else {
+			canmoverobot = false;
 		}
-		
-		if(secsrobotb1 > 5000 && j2.getrb()>=1){
-			r1b.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobot +" " +r2b.etat_courant());
-			secsrobotb1=0;
-			cmptr_robotb1=1;
-			
-		}else if(secsrobotb1 > 500*cmptr_robotb1){
-			canmoverobotb1= true;
-			cmptr_robotb1++;
-		}else{
-			canmoverobotb1 = false;
-		}
-		
-		if(secsrobotr2 > 5000 && j1.getrb()>=2){
-			r2r.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobot +" " +r2r.etat_courant());
-			secsrobotr2=0;
-			 cmptr_robotr2=1;
-			
-		}else if(secsrobotr2 > 500*cmptr_robotr2){
-			canmoverobotr2= true;
-			cmptr_robotr2++;
-		}else{
-			canmoverobotr2 = false;
-		}
-		
-		if(secsrobotb2 > 5000 && j2.getrb()>=2){
-			r2b.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobot +" " +r2b.etat_courant());
-			secsrobotb2=0;
-			 cmptr_robotb2=1;
-			
-		}else if(secsrobotb2 > 500*cmptr_robotb2){
-			canmoverobotb2= true;
-			cmptr_robotb2++;
-		}else{
-			canmoverobotb2 = false;
-		}
-		
-		if(secsrobotr3 > 5000 && j1.getrb()>=3){
-			r3r.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobot +" " +r3r.etat_courant());
-			secsrobotr3=0;
-			 cmptr_robotr3=1;
-			
-		}else if(secsrobotr3 > 500*cmptr_robotr3){
-			canmoverobotr3= true;
-			cmptr_robotr3++;
-		}else{
-			canmoverobotr3 = false;
-		}
-		
-		if(secsrobotb3 > 5000 && j2.getrb()>=3){
-			r3b.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobot +" " +r3b.etat_courant());
-			secsrobotb3=0;
-			 cmptr_robotb3=1;
-			
-		}else if(secsrobotb3 > 500*cmptr_robotb3){
-			canmoverobotb3= true;
-			cmptr_robotb3++;
-		}else{
-			canmoverobotb3 = false;
-		}
-		
-		if(secsrobotr4 > 5000 && j1.getrb()>=4){
-			r4r.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobot +" " +r4r.etat_courant());
-			secsrobotr4=0;
-			 cmptr_robotr4=1;
-			
-		}else if(secsrobotr4 > 500*cmptr_robotr4){
-			canmoverobotr4= true;
-			cmptr_robotr4++;
-		}else{
-			canmoverobotr4 = false;
-		}
-		
-		if(secsrobotb4 > 5000 && j2.getrb()>=4){
-			r4b.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobot +" " +r4b.etat_courant());
-			secsrobotb4=0;
-			 cmptr_robotb4=1;
-			
-		}else if(secsrobotb4 > 500*cmptr_robotb4){
-			canmoverobotb4= true;
-			cmptr_robotb4++;
-		}else{
-			canmoverobotb4 = false;
-		}
+
 
 	}
 
@@ -934,7 +675,7 @@ public class View extends BasicGame {
 			break;
 		}
 	}
-
+	
 	@Override
 	public void keyPressed(int key, char c) {
 		switch (key) {
@@ -1193,20 +934,20 @@ public class View extends BasicGame {
 
 	}
 
-	public static void launch_game(Joueur j1, Joueur j2) {
-		AppGameContainer game;
-		try {
-			game = new AppGameContainer(new View(j1, j2), 1920, 960, false);
-			game.start();
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// game.setFullscreen(true);
-		// game.setDisplayMode(1920, 1080, true);
-
-	}
+//	public static void launch_game(Joueur j1, Joueur j2) {
+//		AppGameContainer game;
+//		try {
+//			game = new AppGameContainer(new View(j1, j2), 1920, 960, false);
+//			game.start();
+//		} catch (SlickException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		// game.setFullscreen(true);
+//		// game.setDisplayMode(1920, 1080, true);
+//
+//	}
 
 	public void PrintEntity(Graphics g) {
 		int i, j;
@@ -1237,6 +978,11 @@ public class View extends BasicGame {
 
 			}
 		}
+	}
+
+	@Override
+	public int getID() {
+		return ID;
 	}
 
 }
