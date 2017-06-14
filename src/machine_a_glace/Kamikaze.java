@@ -1,13 +1,13 @@
 package machine_a_glace;
 
 public class Kamikaze extends Comportement {
-	
+
 	public static Kamikaze KAMIKAZE = new Kamikaze("maps/K.png");
-	
-	private Kamikaze(String s){
-		super.image=s;
+
+	private Kamikaze(String s) {
+		super.image = s;
 	}
-	
+
 	@Override
 	public boolean execute(Robot r) {
 		// TODO Auto-generated method stub
@@ -61,8 +61,8 @@ public class Kamikaze extends Comportement {
 			}
 			i--;
 		}
-		min = borneColG;
-		max = borneColD;
+		min = borneColG + 1;
+		max = borneColD - 1;
 		i = 1;
 		while (i <= borneLigB && present == false) {
 			for (j = min; j <= max; j++) {
@@ -144,14 +144,14 @@ public class Kamikaze extends Comportement {
 		min = borneColG;
 		max = borneColD;
 		i = 0;
-		this.Kill(line, col); // On tue le robot qui explose
+		this.Kill(line, col,r); // On tue le robot qui explose
 		while (i >= borneLigH) {
 
 			for (j = min; j <= max; j++) {
 				if (Terrain.terrain[line + i][col + j].isRobot())
-					Kill(line + i, col + j);
+					Kill(line + i, col + j,(Robot)Terrain.terrain[line + i][col + j].getEntite());
 
-				else if (Terrain.terrain[r.getLine() + i][r.getCol() + j].isJoueur()) {
+				else if (Terrain.terrain[line + i][col + j].isJoueur()) {
 					Terrain.terrain[line + i][col + j].getEntite().Degat(40);
 				}
 
@@ -164,14 +164,13 @@ public class Kamikaze extends Comportement {
 			}
 			i--;
 		}
-		i = 0;
-		min = borneColG;
-		max = borneColD;
+		min = borneColG + 1;
+		max = borneColD - 1;
 		i = 1;
 		while (i <= borneLigB) {
 			for (j = min; j <= max; j++) {
 				if (Terrain.terrain[line + i][col + j].isRobot())
-					Kill(line + i, col + j);
+					Kill(line + i, col + j,(Robot) Terrain.terrain[line + i][col + j].getEntite());
 				else if (Terrain.terrain[r.getLine() + i][r.getCol() + j].isJoueur()) {
 					Terrain.terrain[line + i][col + j].getEntite().Degat(40);
 				}
@@ -192,9 +191,12 @@ public class Kamikaze extends Comportement {
 
 	}
 
-	public void Kill(int line, int col) {
+	public void Kill(int line, int col, Robot r) {
 		Terrain.terrain[line][col].setCase(Contenu.Vide);
 		Terrain.terrain[line][col].setEntite(null);
+		
+		r.getMaitre().remove_robot(r);
+		
 	}
 
 	@Override
