@@ -27,15 +27,16 @@ public class Parser {
 	  {
 	    switch (s)
 	    {
-	      case 'X' : return Comportement.Explore;
-	      case 'A' : return Comportement.Attack;
-	      case 'P' : return Comportement.Protect;
-	      case 'K' : return Comportement.Kamikaze;
+	      case 'X' : return Explore.EXPLORE;
+	      case 'A' : return Attack.ATTACK;
+	      case 'P' : return Protect.PROTECT;
+	      case 'K' : return Kamikaze.KAMIKAZE;
 	      case '>' : return Operateur.Priorite;
 	      case '|' : return Operateur.Choixequi;
 	      case '/' : return Operateur.Choix;
 	      case ':' : return Operateur.Deuxpoints;
 	      case '*' : return Operateur.Star;
+	      case ';' : return Operateur.PointVirgule;
 
 	      default : throw new JeuException("Comportement non declarer");
 	    }
