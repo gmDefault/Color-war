@@ -21,34 +21,6 @@ public class Robot extends Entite {
 	}
 
 	public void execute() {
-		// switch ((Comportement) etat_courant.Gram) {
-		// case Attack:
-		// if (isPriorite)
-		// fonctionne = Attack();
-		// else
-		// Attack();
-		// break;
-		// case Explore:
-		// Explorer();
-		// break;
-		// case Kamikaze:
-		// if (isPriorite)
-		// fonctionne = Kamikaze();
-		// else
-		// Kamikaze();
-		// break;
-		// case Protect:
-		// Protect();
-		// break;
-		// default:
-		// break;
-		// }
-		//
-		// if (isPriorite && !fonctionne) {
-		// next_etat();
-		// execute();
-		//
-		// }
 		if (isPriorite)
 			fonctionne = ((Comportement) etat_courant.Gram).execute(this);
 		else
@@ -217,7 +189,7 @@ public class Robot extends Entite {
 				}
 
 			}
-			if (Terrain.casexy(getLine(), getCol()).isExpr()) {
+			if (Terrain.casexy(getLine(), getCol()).isExpr()&&maitre.inventaire().size()<30) {
 				maitre.add_inventaire(Terrain.casexy(getLine(), getCol()).expr());
 				Terrain.casexy(getLine(), getCol()).setExpr(null);
 				Terrain.PutTimer(getLine(), getCol());
@@ -244,9 +216,15 @@ public class Robot extends Entite {
 
 	public void setJoueur(Joueur j) {
 		maitre = j;
+		maitre.add_robot(this);
 	}
 
 	public void setProtection(boolean b) {
 		protection = b;
 	}
+	
+	public Joueur getMaitre(){
+		return maitre;
+	}
 }
+

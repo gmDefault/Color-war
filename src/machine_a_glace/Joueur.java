@@ -9,6 +9,7 @@ public class Joueur extends Entite {
 	
 	private ArrayList<Expr> inventaire;
 	public ArrayList<String> tabinv = new ArrayList<String>();
+	private ArrayList<Robot> robots = new ArrayList<Robot>();
 
 	public Joueur(int x, int y, Couleur c, int pdv,int nrj) {
 		super(x, y, c, pdv);
@@ -44,8 +45,9 @@ public class Joueur extends Entite {
 	public void Avancer(int pas) {
 //		Terrain.afficher();
 		if (next_case().isAccessible()) {
-			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
+			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer){
 				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
+			}
 			Terrain.terrain[getLine()][getCol()].setEntite(null);
 			switch (getD()) {
 			case Nord:
@@ -135,11 +137,16 @@ public class Joueur extends Entite {
 				
 				
 			}
-			if (Terrain.casexy(getLine(), getCol()).isExpr()) {
+			if (Terrain.casexy(getLine(), getCol()).isExpr()&&inventaire.size()<30) {
+				
 				inventaire().add(Terrain.casexy(getLine(), getCol()).expr());
 				Terrain.casexy(getLine(), getCol()).setExpr(null);
 				Terrain.PutTimer(getLine(), getCol());
+			}else if (Terrain.casexy(getLine(), getCol()).isExpr()){
+				Terrain.PutTimer(getLine(), getCol());
 			}
+			
+			
 			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
 			
@@ -147,6 +154,7 @@ public class Joueur extends Entite {
 			
 
 			
+		
 		}
 
 	}
@@ -169,6 +177,7 @@ public class Joueur extends Entite {
 	}
 	
 	public void add_inventaire(Expr e){
+	
 		inventaire.add(e);
 	}
 	
@@ -197,5 +206,17 @@ public class Joueur extends Entite {
 		}
 		
 		return tabinv;
+	}
+	
+	public void add_robot(Robot r){
+		robots.add(r);
+	}
+	
+	public void remove_robot(Robot r){
+		robots.remove(r);
+	}
+	
+	public ArrayList<Robot> robots(){
+		return robots;
 	}
 }

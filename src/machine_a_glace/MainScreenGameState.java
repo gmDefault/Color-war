@@ -47,7 +47,7 @@ public class MainScreenGameState extends BasicGameState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 80.f);
+		UIFont1 = UIFont1.deriveFont(java.awt.Font.BOLD, 80.f);
 
 		uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
 		uniFont.addAsciiGlyphs();
@@ -55,7 +55,7 @@ public class MainScreenGameState extends BasicGameState {
 		uniFont.addAsciiGlyphs();
 		uniFont.loadGlyphs();
 		
-		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 60.f);
+		UIFont1 = UIFont1.deriveFont(java.awt.Font.BOLD, 60.f);
 
 		
 		uniFont2 = new org.newdawn.slick.UnicodeFont(UIFont1);
@@ -76,22 +76,22 @@ public class MainScreenGameState extends BasicGameState {
 		background.draw(0, 0, container.getWidth(), container.getHeight());
 		if (joueur_1_gagne) {
 			
-			uniFont.drawString(500, 200, "Le joueur rouge gagne la partie !", Color.pink);
+			uniFont.drawString(450-40, 200, "Le joueur rouge gagne la partie !", Color.pink);
 
 		} else if (joueur_2_gagne) {
-			uniFont.drawString(500, 200, "Le joueur bleu gagne la partie !", Color.cyan);
+			uniFont.drawString(450-40, 200, "Le joueur bleu gagne la partie !", Color.cyan);
 		}
 		if (timer<25) {
-			uniFont2.drawString(500, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.white);
-			uniFont2.drawString(515, 550, "Appuyer sur \"C\" pour charger une partie", Color.white);
+			uniFont2.drawString(450-40, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.white);
+			uniFont2.drawString(475-40, 550, "Appuyer sur \"C\" pour charger une partie", Color.white);
 
-			uniFont2.drawString(530, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.white);
+			uniFont2.drawString(480-40, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.white);
 			timer++;
 		} else {
-			uniFont2.drawString(500, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.cyan);
-			uniFont2.drawString(515, 550, "Appuyer sur \"C\" pour charger une partie", Color.cyan);
+			uniFont2.drawString(450-40, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.cyan);
+			uniFont2.drawString(475-40, 550, "Appuyer sur \"C\" pour charger une partie", Color.cyan);
 
-			uniFont2.drawString(530, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.cyan);
+			uniFont2.drawString(480-40, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.cyan);
 			timer++;
 			if (timer == 50) {
 				timer = 0;
