@@ -418,7 +418,7 @@ public class MapGameState extends BasicGameState {
 					String[] bouton = { "Créer", "Modifier", "Annuler" };
 					int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 							JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
-					if (retour == 1) {
+					if (retour == 1 && j1.getrb()>=1) {
 						String inputrm = JOptionPane.showInputDialog(null,robot,"Coucou");
 						
 						if (inputrm == null) {
@@ -428,11 +428,12 @@ public class MapGameState extends BasicGameState {
 								t = 1;
 							}
 						}
+					}else if (retour == 1 && j1.getrb()==0){
+						t--;
 					}
 					if (retour == 0 && j1.getrb()<4) {
 						JOptionPane p = new JOptionPane();
 						ArrayList<String>tab5 = j1.inventaire_toString();
-						
 						String inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 						if(inputrc != null){
 						// System.out.println(inputrc);
@@ -486,6 +487,8 @@ public class MapGameState extends BasicGameState {
 							}
 						}
 						
+					}else if (retour == 0 && j1.getrb()==4){
+						t--;
 					}
 					if (retour == 2 || retour == -1) {
 						t = 1;
@@ -525,7 +528,7 @@ public class MapGameState extends BasicGameState {
 							String[] bouton2 = { "Créer", "Modifier", "Annuler" };
 							int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 							JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
-					if (retour2 == 1) {
+					if (retour2 == 1 && j2.getrb()>=1) {
 						String inputbm = JOptionPane.showInputDialog(null, robot2,"ccou");
 
 						if (inputbm == null) {
@@ -536,6 +539,8 @@ public class MapGameState extends BasicGameState {
 								t2 = 1;
 							}
 						}
+					}else if (retour2 == 1 && j2.getrb()==0){
+						t2--;
 					}
 					if (retour2 == 0 && j2.getrb()< 4) {
 						JOptionPane rbc = new JOptionPane();
@@ -586,6 +591,8 @@ public class MapGameState extends BasicGameState {
 								t2 = 1;
 							}
 						}
+					}else if (retour2 == 0 && j2.getrb()==4){
+						t2--;
 					}
 					if (retour2 == 2 || retour2 == -1) {
 						t2 = 1;
