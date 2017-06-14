@@ -9,6 +9,7 @@ public class Joueur extends Entite {
 	
 	private ArrayList<Expr> inventaire;
 	public ArrayList<String> tabinv = new ArrayList<String>();
+	private ArrayList<Robot> robots = new ArrayList<Robot>();
 
 	public Joueur(int x, int y, Couleur c, int pdv,int nrj) {
 		super(x, y, c, pdv);
@@ -213,5 +214,17 @@ public class Joueur extends Entite {
 		}
 		
 		return tabinv;
+	}
+	
+	public void add_robot(Robot r){
+		robots.add(r);
+	}
+	
+	public void remove_robot(Robot r){
+		robots.remove(r);
+	}
+	
+	public ArrayList<Robot> robots(){
+		return robots;
 	}
 }
