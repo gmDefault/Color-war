@@ -53,7 +53,7 @@ public class Joueur extends Entite {
 				if (this.getCouleur() == Couleur.Bleu
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge ) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
@@ -61,7 +61,7 @@ public class Joueur extends Entite {
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
@@ -74,7 +74,7 @@ public class Joueur extends Entite {
 				if (this.getCouleur() == Couleur.Bleu
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
@@ -82,7 +82,7 @@ public class Joueur extends Entite {
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
@@ -94,7 +94,7 @@ public class Joueur extends Entite {
 				if (this.getCouleur() == Couleur.Bleu
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
@@ -102,7 +102,7 @@ public class Joueur extends Entite {
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
@@ -114,7 +114,7 @@ public class Joueur extends Entite {
 				if (this.getCouleur() == Couleur.Bleu
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
@@ -122,7 +122,7 @@ public class Joueur extends Entite {
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
@@ -131,7 +131,7 @@ public class Joueur extends Entite {
 
 			}
 			if (Terrain.terrain[getLine()][getCol()].getCont() == Contenu.Bonus_Malus) {
-				View.bonus_malus = true;
+				MapGameState.bonus_malus = true;
 				for (int i = 0; i< 30; i++) {
 					for (int j = 0; j < 30; j++) {
 						if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {

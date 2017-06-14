@@ -934,20 +934,20 @@ public class MapGameState extends BasicGameState {
 
 	}
 
-	public static void launch_game(Joueur j1, Joueur j2) {
-		AppGameContainer game;
-		try {
-			game = new AppGameContainer(new View(j1, j2), 1920, 960, false);
-			game.start();
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// game.setFullscreen(true);
-		// game.setDisplayMode(1920, 1080, true);
-
-	}
+//	public static void launch_game(Joueur j1, Joueur j2) {
+//		AppGameContainer game;
+//		try {
+//			game = new AppGameContainer(new View(j1, j2), 1920, 960, false);
+//			game.start();
+//		} catch (SlickException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		// game.setFullscreen(true);
+//		// game.setDisplayMode(1920, 1080, true);
+//
+//	}
 
 	public void PrintEntity(Graphics g) {
 		int i, j;
