@@ -91,14 +91,6 @@ public class MapGameState extends BasicGameState {
 	private ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
 
 	private Joueur j1, j2;
-	private Robot r1r;
-	private Robot r2r;
-	private Robot r3r;
-	private Robot r4r;
-	private Robot r1b;
-	private Robot r2b;
-	private Robot r3b;
-	private Robot r4b;
 
 	public static boolean recolorie_par_dessus = false;
 
