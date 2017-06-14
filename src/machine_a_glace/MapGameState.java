@@ -408,8 +408,8 @@ public class MapGameState extends BasicGameState {
 								while (!Parser.ExpressionCorrecte(inputrc) || !Parser.InventaireOk(inputrc, j1)) {
 									inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 								}
-								char t5[] = inputrc.toCharArray();
-								ArrayList<Expr> inv = (ArrayList<Expr>) j1.inventaire().clone();
+//								char t5[] = inputrc.toCharArray();
+//								ArrayList<Expr> inv = (ArrayList<Expr>) j1.inventaire().clone();
 								// System.out.println(t5);
 
 								m = Parser.ExpressionCorrecte1(inputrc);
@@ -598,9 +598,10 @@ public class MapGameState extends BasicGameState {
 	}
 
 
-
-	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	
+	public void update(GameContainer container, StateBasedGame game, int delta)
+			throws SlickException {
+		
 
 		if (Terrain.Index > 0)
 			bool3 = Terrain.ReduceTimer();
