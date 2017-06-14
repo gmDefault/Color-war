@@ -36,11 +36,11 @@ public class Node {
 	public boolean isFeuille() {
 		return (FD == null && FG == null);
 	}
-	
-	public static void SetLeftChild (Node G, Node NG){
-		
-		G.FG=NG;
-		
+
+	public static void SetLeftChild(Node G, Node NG) {
+
+		G.FG = NG;
+
 	}
 
 

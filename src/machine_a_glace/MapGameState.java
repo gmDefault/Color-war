@@ -40,7 +40,9 @@ public class MapGameState extends BasicGameState {
 	int seconde = 10000;
 
 
+
 	int minute = 7	;
+
 	
 	boolean jeufini = false;
 
@@ -162,6 +164,7 @@ public class MapGameState extends BasicGameState {
 		
 		Terrain.initialiser();
 		this.j1 = new Joueur(1, 15, Couleur.Rouge,50,100);
+		j1.setD(Direction.Sud);
 		this.j2 = new Joueur(28, 15, Couleur.Bleu,100,100);
 
 		boolean y =Parser.ExpressionCorrecte("ddd");
@@ -259,11 +262,6 @@ public class MapGameState extends BasicGameState {
 		robot2.setSize(100, 100);
 
 
-		Node test = Reader.read("{X ; K}");
-//		test = new Node(Operateur.Star, null, test);
-//		r1 = new Robot(5, 15, Couleur.Rouge, test);
-//		r1.setJoueur(j1);
-
 
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
@@ -305,11 +303,11 @@ public class MapGameState extends BasicGameState {
 		Image robots_inv = new Image("maps/robots_inv.png");
 		Image robots_inv2 = new Image("maps/robots_inv2.png");
 
-		
 		Image j1g = new Image("maps/j1g.jpg");
 		Image j2g = new Image("maps/j2g.jpg");
-		
+
 		if (this.jeufini == true) {
+
 			if (this.j1.getNombre_Case_Coloriees()> this.j2.getNb_cases_coloriees()) {
 				MainScreenGameState.joueur_1_gagne = true;
 				game.enterState(MainScreenGameState.ID);
@@ -317,9 +315,6 @@ public class MapGameState extends BasicGameState {
 				MainScreenGameState.joueur_2_gagne = true;
 				game.enterState(MainScreenGameState.ID);
 			}
-			
-			
-			
 
 		} else if (this.j1.getPdv() <= 0) {
 			MainScreenGameState.joueur_2_gagne = true;
@@ -330,9 +325,8 @@ public class MapGameState extends BasicGameState {
 
 		} else {
 
-
 			this.map.render(0, 0);
-			
+
 			for (int i = 0; i < 30; i++) {
 				for (int j = 0; j < 30; j++) {
 					if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {
@@ -343,30 +337,30 @@ public class MapGameState extends BasicGameState {
 				}
 			}
 
-
-		if (j1.getrb()>=1)g.drawAnimation(animations3[r1r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1r.getCol() * 32 + 16) - 32,
-				(this.r1r.getLine() * 32 + 16) - 60);
-		
-		if (j2.getrb()>=1)g.drawAnimation(animations4[r1b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1b.getCol() * 32 + 16) - 32,
-				(this.r1b.getLine() * 32 + 16) - 60);
-		
-		if (j1.getrb()>=2)g.drawAnimation(animations3[r2r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r2r.getCol() * 32 + 16) - 32,
-				(this.r2r.getLine() * 32 + 16) - 60);
-		
-		if (j2.getrb()>=2)g.drawAnimation(animations4[r2b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r2b.getCol() * 32 + 16) - 32,
-				(this.r2b.getLine() * 32 + 16) - 60);
-		
-		if (j1.getrb()>=3)g.drawAnimation(animations3[r3r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r3r.getCol() * 32 + 16) - 32,
-				(this.r3r.getLine() * 32 + 16) - 60);
-		
-		if (j2.getrb()>=3)g.drawAnimation(animations4[r3b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r3b.getCol() * 32 + 16) - 32,
-				(this.r3b.getLine() * 32 + 16) - 60);
-		
-		if (j1.getrb()>=4)g.drawAnimation(animations3[r4r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r4r.getCol() * 32 + 16) - 32,
-				(this.r4r.getLine() * 32 + 16) - 60);
-		
-		if (j2.getrb()>=4)g.drawAnimation(animations4[r4b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r4b.getCol() * 32 + 16) - 32,
-				(this.r4b.getLine() * 32 + 16) - 60);
+//
+//		if (j1.getrb()>=1)g.drawAnimation(animations3[r1r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1r.getCol() * 32 + 16) - 32,
+//				(this.r1r.getLine() * 32 + 16) - 60);
+//		
+//		if (j2.getrb()>=1)g.drawAnimation(animations4[r1b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1b.getCol() * 32 + 16) - 32,
+//				(this.r1b.getLine() * 32 + 16) - 60);
+//		
+//		if (j1.getrb()>=2)g.drawAnimation(animations3[r2r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r2r.getCol() * 32 + 16) - 32,
+//				(this.r2r.getLine() * 32 + 16) - 60);
+//		
+//		if (j2.getrb()>=2)g.drawAnimation(animations4[r2b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r2b.getCol() * 32 + 16) - 32,
+//				(this.r2b.getLine() * 32 + 16) - 60);
+//		
+//		if (j1.getrb()>=3)g.drawAnimation(animations3[r3r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r3r.getCol() * 32 + 16) - 32,
+//				(this.r3r.getLine() * 32 + 16) - 60);
+//		
+//		if (j2.getrb()>=3)g.drawAnimation(animations4[r3b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r3b.getCol() * 32 + 16) - 32,
+//				(this.r3b.getLine() * 32 + 16) - 60);
+//		
+//		if (j1.getrb()>=4)g.drawAnimation(animations3[r4r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r4r.getCol() * 32 + 16) - 32,
+//				(this.r4r.getLine() * 32 + 16) - 60);
+//		
+//		if (j2.getrb()>=4)g.drawAnimation(animations4[r4b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r4b.getCol() * 32 + 16) - 32,
+//				(this.r4b.getLine() * 32 + 16) - 60);
 
 			if (bonus_malus == true) {
 				int nb_temp = j1.getNb_cases_coloriees();
@@ -374,9 +368,9 @@ public class MapGameState extends BasicGameState {
 				j2.setNb_cases_coloriees(nb_temp);
 				bonus_malus = false;
 			}
-			
+
 			afficher_expr();
-			
+
 			hud_bleu.draw(15, 15);
 			hud_rouge.draw(1920 - 300, 15);
 
@@ -390,12 +384,11 @@ public class MapGameState extends BasicGameState {
 			inventaire.draw(1560, 195);
 			afficher_inventaire(j1);
 			afficher_inventaire(j2);
-			
-//			System.out.println(r1.etat_courant());
+
+			// System.out.println(r1.etat_courant());
 
 			robots_inv.draw(120, 670);
 			robots_inv2.draw(1580, 670);
-
 
 			PrintEntity(g);
 			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
@@ -598,10 +591,10 @@ public class MapGameState extends BasicGameState {
 					bool2 = false;
 					this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
 				}
-			
+
 			} else {
 				this.popup_test_2++;
-				
+
 			}
 			
 
@@ -636,11 +629,10 @@ public class MapGameState extends BasicGameState {
 			} else
 				uniFont.drawString(921, 440, minute + ":" + seconde / 1000, Color.darkGray);
 
-		
 		}
 		
 
-	}
+}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
@@ -676,7 +668,7 @@ public class MapGameState extends BasicGameState {
 		if (seconde > -delta && seconde < delta) {
 			seconde = 60000;
 			if (minute == 0) {
-				//this.container.exit();
+				// this.container.exit();
 				this.jeufini = true;
 			} else
 				minute--;
@@ -756,8 +748,25 @@ public class MapGameState extends BasicGameState {
 		}
 
 
-		if (canmoverobotr1 && j1.getrb()>=1)
-			r1r.execute();
+		if (r1r != null && Terrain.casexy(r1r.getLine(), r1r.getCol()).getEntite() != null
+				&& Terrain.casexy(r1r.getLine(), r1r.getCol()).getEntite().isRobot()){
+			if (canmoverobotr1 && j1.getrb()>=1)
+				r1r.execute();
+			
+			if(secsrobotr1 > 5000 && j1.getrb()>=1){
+				r1r.next_etat();
+//				System.out.println("CHANGEMENT " + secsrobotr1 +" " +r1r.etat_courant());
+				secsrobotr1=0;
+				cmptr_robotr1=1;
+				
+			}else if(secsrobotr1 > 500*cmptr_robotr1){
+				canmoverobotr1= true;
+				cmptr_robotr1++;
+			}else{
+				canmoverobotr1 = false;
+			}
+		}
+		
 		if (canmoverobotb1 && j2.getrb()>=1)
 			r1b.execute();
 		if (canmoverobotr2 && j1.getrb()>=2)
@@ -773,18 +782,7 @@ public class MapGameState extends BasicGameState {
 		if (canmoverobotb4 && j2.getrb()>=4)
 			r4b.execute();
 		
-		if(secsrobotr1 > 5000 && j1.getrb()>=1){
-			r1r.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobotr1 +" " +r1r.etat_courant());
-			secsrobotr1=0;
-			cmptr_robotr1=1;
-			
-		}else if(secsrobotr1 > 500*cmptr_robotr1){
-			canmoverobotr1= true;
-			cmptr_robotr1++;
-		}else{
-			canmoverobotr1 = false;
-		}
+		
 		
 		if(secsrobotb1 > 5000 && j2.getrb()>=1){
 			r1b.next_etat();
@@ -1021,30 +1019,9 @@ public class MapGameState extends BasicGameState {
 						break;
 					}
 				} else if (Terrain.casexy(i, j).isExpr() && Terrain.casexy(i, j).expr().isComportement()) {
-					switch ((Comportement) Terrain.casexy(i, j).expr()) {
-					case Attack:
-						e = new Image("maps/A.png");
+						e = new Image(((Comportement)Terrain.casexy(i, j).expr()).image);
 						e.draw(32 * (15 + j), (32 * i));
-						break;
-					case Kamikaze:
-						e = new Image("maps/K.png");
-						e.draw(32 * (15 + j), (32 * i));
-						break;
-					case Protect:
-						e = new Image("maps/P.png");
-						e.draw(32 * (15 + j), (32 * i));
-						break;
-					case Explore:
-						e = new Image("maps/X.png");
-						e.draw(32 * (15 + j), (32 * i));
-						break;
-					case Suivre:
-						e = new Image("maps/F.png");
-						e.draw(32 * (15 + j), (32 * i));
-						break;
-					default:
-						break;
-					}
+					
 				}
 
 			}
@@ -1145,26 +1122,9 @@ public class MapGameState extends BasicGameState {
 					e.draw(1622 + (45 * colonne), 205 + (44 * ligne));
 
 			} else if (j.inventaire().get(i).isComportement()) {
-				switch ((Comportement) j.inventaire().get(i)) {
-				case Attack:
-					e = new Image("maps/A.png");
-					break;
-				case Kamikaze:
-					e = new Image("maps/K.png");
-					break;
-				case Protect:
-					e = new Image("maps/P.png");
-					break;
-				case Explore:
-					e = new Image("maps/X.png");
-					break;
-				case Suivre:
-					e = new Image("maps/F.png");
-					break;
-				default:
-					e = new Image("maps/deuxpoints.png");
-					break;
-				}
+				
+					e = new Image(((Comportement) j.inventaire().get(i)).image);
+				
 
 				if (j.getCouleur() == Couleur.Bleu)
 					e.draw(162 + (45 * colonne), 205 + (44 * ligne));
@@ -1181,20 +1141,7 @@ public class MapGameState extends BasicGameState {
 
 	}
 
-//	public static void launch_game(Joueur j1, Joueur j2) {
-//		AppGameContainer game;
-//		try {
-//			game = new AppGameContainer(new View(j1, j2), 1920, 960, false);
-//			game.start();
-//		} catch (SlickException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		// game.setFullscreen(true);
-//		// game.setDisplayMode(1920, 1080, true);
-//
-//	}
+
 
 	public void PrintEntity(Graphics g) {
 		int i, j;
