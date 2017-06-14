@@ -27,7 +27,7 @@ public class MainScreenGameState extends BasicGameState {
 	private GameContainer container;
 	public static boolean joueur_1_gagne = false;
 	public static boolean joueur_2_gagne = false;
-	
+	private int timer = 0;
 	java.awt.Font UIFont1;
 	org.newdawn.slick.UnicodeFont uniFont, uniFont2;
 	
@@ -81,11 +81,23 @@ public class MainScreenGameState extends BasicGameState {
 		} else if (joueur_2_gagne) {
 			uniFont.drawString(500, 200, "Le joueur bleu gagne la partie !", Color.cyan);
 		}
-		
-		uniFont2.drawString(500, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.white);
-		uniFont2.drawString(515, 550, "Appuyer sur \"C\" pour charger une partie", Color.white);
+		if (timer<25) {
+			uniFont2.drawString(500, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.white);
+			uniFont2.drawString(515, 550, "Appuyer sur \"C\" pour charger une partie", Color.white);
 
-		uniFont2.drawString(530, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.white);
+			uniFont2.drawString(530, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.white);
+			timer++;
+		} else {
+			uniFont2.drawString(500, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.cyan);
+			uniFont2.drawString(515, 550, "Appuyer sur \"C\" pour charger une partie", Color.cyan);
+
+			uniFont2.drawString(530, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.cyan);
+			timer++;
+			if (timer == 50) {
+				timer = 0;
+			}
+		}
+
 
 //		g.drawString("Appuyer sur Entrée pour lancer la partie", 800, 300);
 //		g.drawString("Appuyer sur C pour charger une partie", 815, 400);
