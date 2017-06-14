@@ -39,7 +39,7 @@ public class MapGameState extends BasicGameState {
 
 	int seconde = 10000;
 
-	int minute = 5;
+	int minute = 5 ;
 
 	boolean jeufini = false;
 
@@ -303,9 +303,16 @@ public class MapGameState extends BasicGameState {
 			}
 
 			if (bonus_malus == true) {
-				int nb_temp = j1.getNb_cases_coloriees();
-				j1.setNb_cases_coloriees(j2.getNb_cases_coloriees());
-				j2.setNb_cases_coloriees(nb_temp);
+				double a = Math.random();
+				if (a<0.25){
+					BonusMalus.inversionCouleur(j1,j2);
+				}else if (a<0.5){
+					BonusMalus.inversionInventaire(j1, j2);
+				}else if (a<0.75){
+					BonusMalus.pvAdd(j1,j2);
+				}else{
+					BonusMalus.pvLost(j1,j2);
+				}
 				bonus_malus = false;
 			}
 
