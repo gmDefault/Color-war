@@ -40,7 +40,7 @@ public class MapGameState extends BasicGameState {
 	int seconde = 10000;
 
 
-	int minute = 5	;
+	int minute = 0	;
 	
 	boolean jeufini = false;
 
@@ -311,20 +311,22 @@ public class MapGameState extends BasicGameState {
 		
 		if (this.jeufini == true) {
 			if (this.j1.getNombre_Case_Coloriees()> this.j2.getNb_cases_coloriees()) {
-				g.drawImage(j1g, 0, 0);
-
+				MainScreenGameState.joueur_1_gagne = true;
+				game.enterState(MainScreenGameState.ID);
 			} else {
-				g.drawImage(j2g, 0, 0);
+				MainScreenGameState.joueur_2_gagne = true;
+				game.enterState(MainScreenGameState.ID);
 			}
 			
 			
 			
 
 		} else if (this.j1.getPdv() <= 0) {
-			System.out.println("jeu fini");
-			g.drawImage(j2g, 0, 0);
+			MainScreenGameState.joueur_2_gagne = true;
+			game.enterState(MainScreenGameState.ID);
 		} else if (this.j2.getPdv() <= 0) {
-			g.drawImage(j1g, 0, 0);
+			MainScreenGameState.joueur_1_gagne = true;
+			game.enterState(MainScreenGameState.ID);
 
 		} else {
 

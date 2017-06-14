@@ -1,10 +1,15 @@
 package machine_a_glace;
 
+import java.awt.FontFormatException;
+import java.io.IOException;
+
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -20,6 +25,11 @@ public class MainScreenGameState extends BasicGameState {
 	private Image background;
 	private StateBasedGame game;
 	private GameContainer container;
+	public static boolean joueur_1_gagne = false;
+	public static boolean joueur_2_gagne = false;
+	
+	java.awt.Font UIFont1;
+	org.newdawn.slick.UnicodeFont uniFont;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -27,6 +37,22 @@ public class MainScreenGameState extends BasicGameState {
 		this.game = game;
 		this.container = container;
 		this.background = new Image("maps/forest.png");
+		
+		try {
+			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
+					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/reveil.ttf"));
+		} catch (FontFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 60.f);
+
+		uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
+		uniFont.addAsciiGlyphs();
+		uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
+		uniFont.addAsciiGlyphs();
+		uniFont.loadGlyphs();
+		
 
 	}
 
@@ -37,6 +63,13 @@ public class MainScreenGameState extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		background.draw(0, 0, container.getWidth(), container.getHeight());
+		if (joueur_1_gagne) {
+			
+			uniFont.drawString(580, 200, "Le joueur rouge GAGNE la partie !", Color.red);
+
+		} else if (joueur_2_gagne) {
+			uniFont.drawString(580, 200, "Le joueur bleu GAGNE la partie !", Color.cyan);
+		}
 		g.drawString("Appuyer sur Entrée pour lancer la partie", 800, 300);
 		g.drawString("Appuyer sur C pour charger une partie", 815, 400);
 		g.drawString("Appuyer sur Q pour quitter le jeu", 830, 500);
@@ -57,6 +90,14 @@ public class MainScreenGameState extends BasicGameState {
 	public void keyReleased(int key, char c) {
 		switch(key){
 		case Input.KEY_ENTER :
+			try {
+				this.joueur_1_gagne = false;
+				this.joueur_2_gagne = false;
+				container.reinit();
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			game.enterState(MapGameState.ID);
 			break;
 		default : 
