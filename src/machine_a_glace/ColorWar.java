@@ -14,8 +14,10 @@ import org.newdawn.slick.state.StateBasedGame;
  *         GCS d- s+:+ a C++ UL/M P L+ E--- W++ N K- w-- M+ t+ 5 X R+ !tv b+ D+ G- e+++ h+ r- y+
  */
 public class ColorWar extends StateBasedGame {
-
+	public static Musique m;
 	public static void main(String[] args) throws SlickException {
+		m = new Musique();
+		m.start();
 		new AppGameContainer(new ColorWar(), 1920, 960, false).start();
 	}
 
