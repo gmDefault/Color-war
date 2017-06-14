@@ -20,7 +20,7 @@ public class ColorWar extends StateBasedGame {
 	}
 
 	public ColorWar() {
-		super("main");
+		super("ColorWar");
 	}
 
 	/**
