@@ -558,17 +558,11 @@ public class MapGameState extends BasicGameState {
 	}
 
 
-
-<<<<<<< HEAD
 	
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		
-=======
-	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 
->>>>>>> 5c7ee1804e4cd5f1873c0b5d57a5833b10e4a513
 		if (Terrain.Index > 0)
 			bool3 = Terrain.ReduceTimer();
 		if (bool3) {
