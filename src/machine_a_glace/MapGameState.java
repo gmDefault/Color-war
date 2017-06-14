@@ -39,7 +39,7 @@ public class MapGameState extends BasicGameState {
 
 	int seconde = 10000;
 
-	int minute = 7;
+	int minute = 5;
 
 	boolean jeufini = false;
 
@@ -393,11 +393,11 @@ public class MapGameState extends BasicGameState {
 								char t5[] = inputrc.toCharArray();
 								ArrayList<Expr> inv = (ArrayList<Expr>) j1.inventaire().clone();
 								// System.out.println(t5);
-								
+
 								m = Parser.ExpressionCorrecte1(inputrc);
 								m = new Node(Operateur.Star, null, m);
 								Coordonnees c = Terrain.spawnRed();
-								Robot rob=new Robot(c.getLigne(), c.getCol(), j1.getCouleur(), m);
+								Robot rob = new Robot(c.getLigne(), c.getCol(), j1.getCouleur(), m);
 
 								rob.setD(Direction.Sud);
 								rob.setJoueur(j1);
@@ -405,7 +405,7 @@ public class MapGameState extends BasicGameState {
 								canmoverobots.add(false);
 								cmptr_robots.add(1);
 								secsrobots.add(0);
-								
+
 								tab5.clear();
 							}
 							if (inputrc == null) {
@@ -415,13 +415,17 @@ public class MapGameState extends BasicGameState {
 								if (k == 1) {
 									t = 1;
 								}
+
 							}
 
+						}
+
+						else if (retour == 0 && j1.robots().size() == 4) {
+							t--;
 						}
 						if (retour == 2 || retour == -1) {
 							t = 1;
 						}
-						t++;
 					}
 				}
 
@@ -476,11 +480,11 @@ public class MapGameState extends BasicGameState {
 								while (!Parser.ExpressionCorrecte(inputbc)) {
 									inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 								}
-								
+
 								n = Parser.ExpressionCorrecte1(inputbc);
 								n = new Node(Operateur.Star, null, n);
 								Coordonnees c = Terrain.spawnBlue();
-								Robot rob=new Robot(c.getLigne(), c.getCol(), j2.getCouleur(), n);
+								Robot rob = new Robot(c.getLigne(), c.getCol(), j2.getCouleur(), n);
 
 								rob.setD(Direction.Nord);
 								rob.setJoueur(j2);
@@ -503,6 +507,7 @@ public class MapGameState extends BasicGameState {
 							t2 = 1;
 						}
 						t2++;
+
 					}
 				}
 			} else if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer() && !j2.isNrj()) {
@@ -518,7 +523,8 @@ public class MapGameState extends BasicGameState {
 			}
 
 			// System.out.println("( "+ x + " , " + y + " ) ");
-			// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
+			// g.drawString(minute + " m " + seconde / 1000 + " s", 945,
+			// 470);
 
 			g.setColor(new Color(255, 255, 255));
 			uniFont2.drawString(290, 10, (int) (PourcentBleu * 100) + " % ", Color.blue);
@@ -549,8 +555,9 @@ public class MapGameState extends BasicGameState {
 				uniFont.drawString(921, 440, minute + ":" + seconde / 1000, Color.darkGray);
 
 		}
-
 	}
+
+
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -670,10 +677,10 @@ public class MapGameState extends BasicGameState {
 			if (secsrobots.get(i) > 5000) {
 				r.next_etat();
 				secsrobots.set(i, 0);
-				cmptr_robots.set(i,1);
+				cmptr_robots.set(i, 1);
 			} else if (secsrobots.get(i) > 500 * cmptr_robots.get(i)) {
 				canmoverobots.set(i, true);
-				cmptr_robots.set(i,cmptr_robots.get(i)+1);
+				cmptr_robots.set(i, cmptr_robots.get(i) + 1);
 			} else {
 				canmoverobots.set(i, false);
 			}
