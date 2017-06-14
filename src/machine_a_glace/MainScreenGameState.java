@@ -36,7 +36,7 @@ public class MainScreenGameState extends BasicGameState {
 		
 		this.game = game;
 		this.container = container;
-		this.background = new Image("maps/forest.png");
+		this.background = new Image("maps/2107.jpg");
 		
 		try {
 			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,

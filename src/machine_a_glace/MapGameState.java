@@ -40,7 +40,7 @@ public class MapGameState extends BasicGameState {
 	int seconde = 10000;
 
 
-	int minute = 0	;
+	int minute = 7	;
 	
 	boolean jeufini = false;
 
@@ -443,7 +443,7 @@ public class MapGameState extends BasicGameState {
 						String inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 						// System.out.println(inputrc);
 						Node m = new Node(null);
-						while(!Parser.ExpressionCorrecte(inputrc)){
+						while(!Parser.ExpressionCorrecte(inputrc)||!Parser.InventaireOk(inputrc, j1)){
 							inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 						}
 						if (j1.getrb()==0){
