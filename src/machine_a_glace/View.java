@@ -35,7 +35,7 @@ public class View extends BasicGame {
 
 	int seconde = 10000;
 
-	int minute = 1;
+	int minute = 3	;
 	
 	boolean jeufini = false;
 
@@ -270,7 +270,25 @@ public class View extends BasicGame {
 		Image j1g = new Image("maps/j1g.jpg");
 		Image j2g = new Image("maps/j2g.jpg");
 		
-		if (this.jeufini == false) {
+		if (this.jeufini == true) {
+			if (this.j1.getNombre_Case_Coloriees()> this.j2.getNb_cases_coloriees()) {
+				g.drawImage(j1g, 0, 0);
+
+			} else {
+				g.drawImage(j2g, 0, 0);
+			}
+			
+			
+			
+
+		} else if (this.j1.getPdv() <= 0) {
+			System.out.println("jeu fini");
+			g.drawImage(j2g, 0, 0);
+		} else if (this.j2.getPdv() <= 0) {
+			g.drawImage(j1g, 0, 0);
+
+		} else {
+
 
 			this.map.render(0, 0);
 			
@@ -466,13 +484,7 @@ public class View extends BasicGame {
 			} else
 				uniFont.drawString(921, 440, minute + ":" + seconde / 1000, Color.darkGray);
 
-		} else {
-			if (this.j1.getNombre_Case_Coloriees()> this.j2.getNb_cases_coloriees()) {
-				g.drawImage(j1g, 0, 0);
-
-			} else {
-				g.drawImage(j2g, 0, 0);
-			}
+		
 		}
 
 		// @Override
@@ -952,10 +964,10 @@ public class View extends BasicGame {
 						}
 					} else if (Terrain.terrain[i][j].getEntite().isJoueur()) {
 						if (ent.getCouleur() == Couleur.Rouge) {
-							g.drawAnimation(animations[ent.getD().entier() + (true ? 4 : 0)],
+							g.drawAnimation(animations[ent.getD().entier() + (moving ? 4 : 0)],
 									(15 * 32 + ent.getCol() * 32 + 16) - 32, (ent.getLine() * 32 + 16) - 60);
 						} else {
-							g.drawAnimation(animations2[ent.getD().entier() + (true ? 4 : 0)],
+							g.drawAnimation(animations2[ent.getD().entier() + (moving2 ? 4 : 0)],
 									(15 * 32 + ent.getCol() * 32 + 16) - 32, (ent.getLine() * 32 + 16) - 60);
 						}
 					}
