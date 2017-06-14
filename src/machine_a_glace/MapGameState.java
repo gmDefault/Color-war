@@ -90,7 +90,7 @@ public class MapGameState extends BasicGameState {
 	private boolean canmove2 = false;
 	private ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
 
-	private Joueur j1, j2;
+	public static Joueur j1, j2;
 
 	public static boolean recolorie_par_dessus = false;
 
@@ -132,10 +132,7 @@ public class MapGameState extends BasicGameState {
 		// TODO Auto-generated method stub
 		this.container = container;
 
-		Terrain.initialiser();
-		this.j1 = new Joueur(1, 15, Couleur.Rouge, 50, 100);
-		j1.setD(Direction.Sud);
-		this.j2 = new Joueur(28, 15, Couleur.Bleu, 100, 100);
+
 
 		boolean y = Parser.ExpressionCorrecte("ddd");
 		System.out.println(y);
