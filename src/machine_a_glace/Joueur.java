@@ -42,7 +42,7 @@ public class Joueur extends Entite {
 
 
 	public void Avancer(int pas) {
-		Terrain.afficher();
+//		Terrain.afficher();
 		if (next_case().isAccessible()) {
 			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);

@@ -442,25 +442,33 @@ public class View extends BasicGame {
 						if (j1.getrb()==0){
 							m = Parser.ExpressionCorrecte1(inputrc);
 							m = new Node(Operateur.Star, null, m);
-							r1r = new Robot(4,15,j1.getCouleur(),m);
+							Coordonnees c = Terrain.spawnRed();
+							r1r = new Robot(c.getLigne(),c.getCol(),j1.getCouleur(),m);
+							r1r.setD(Direction.Sud);
 							r1r.setJoueur(j1);
 						}
 						if (j1.getrb()==1){
 							m = Parser.ExpressionCorrecte1(inputrc);
 							m = new Node(Operateur.Star, null, m);
-							r2r = new Robot(4,15,j1.getCouleur(),m);
+							Coordonnees c = Terrain.spawnRed();
+							r2r = new Robot(c.getLigne(),c.getCol(),j1.getCouleur(),m);
+							r2r.setD(Direction.Sud);
 							r2r.setJoueur(j1);
 						}
 						if (j1.getrb()==2){
 							m = Parser.ExpressionCorrecte1(inputrc);
 							m = new Node(Operateur.Star, null, m);
-							r3r = new Robot(4,15,j1.getCouleur(),m);
+							Coordonnees c = Terrain.spawnRed();
+							r3r = new Robot(c.getLigne(),c.getCol(),j1.getCouleur(),m);
+							r3r.setD(Direction.Sud);
 							r3r.setJoueur(j1);
 						}
 						if (j1.getrb()==3){
 							m = Parser.ExpressionCorrecte1(inputrc);
 							m = new Node(Operateur.Star, null, m);
-							r4r = new Robot(4,15,j1.getCouleur(),m);
+							Coordonnees c = Terrain.spawnRed();
+							r4r = new Robot(c.getLigne(),c.getCol(),j1.getCouleur(),m);
+							r4r.setD(Direction.Sud);
 							r4r.setJoueur(j1);
 						}
 						j1.setRb(j1.getrb()+1);
@@ -535,25 +543,29 @@ public class View extends BasicGame {
 						if (j2.getrb()==0){
 							n = Parser.ExpressionCorrecte1(inputbc);
 							n = new Node(Operateur.Star, null, n);
-							r1b = new Robot(25,15,j2.getCouleur(),n);
+							Coordonnees c = Terrain.spawnBlue();
+							r1b = new Robot(c.getLigne(),c.getCol(),j2.getCouleur(),n);
 							r1b.setJoueur(j2);
 						}
 						if (j2.getrb()==1){
 							n = Parser.ExpressionCorrecte1(inputbc);
 							n = new Node(Operateur.Star, null, n);
-							r2b = new Robot(25,15,j2.getCouleur(),n);
+							Coordonnees c = Terrain.spawnBlue();
+							r2b = new Robot(c.getLigne(),c.getCol(),j2.getCouleur(),n);
 							r2b.setJoueur(j2);
 						}
 						if (j2.getrb()==2){
 							n = Parser.ExpressionCorrecte1(inputbc);
 							n = new Node(Operateur.Star, null, n);
-							r3b = new Robot(25,15,j2.getCouleur(),n);
+							Coordonnees c = Terrain.spawnBlue();
+							r3b = new Robot(c.getLigne(),c.getCol(),j2.getCouleur(),n);
 							r3b.setJoueur(j2);
 						}
 						if (j2.getrb()==3){
 							n = Parser.ExpressionCorrecte1(inputbc);
 							n = new Node(Operateur.Star, null, n);
-							r4b = new Robot(25,15,j2.getCouleur(),n);
+							Coordonnees c = Terrain.spawnBlue();
+							r4b = new Robot(c.getLigne(),c.getCol(),j2.getCouleur(),n);
 							r4b.setJoueur(j2);
 						}
 						j2.setRb(j2.getrb()+1);
