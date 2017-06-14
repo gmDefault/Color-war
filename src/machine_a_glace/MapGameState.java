@@ -419,13 +419,21 @@ public class MapGameState extends BasicGameState {
 					int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 							JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
 					if (retour == 1 && j1.getrb()>=1) {
-						String inputrm = JOptionPane.showInputDialog(null,robot,"Coucou");
-						
+						JOptionPane rrm = new JOptionPane();
+						String inputrm = rrm.showInputDialog(null, robot,"Saisissez votre expression");
 						if (inputrm == null) {
 							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
 									null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 							if (k == 1) {
 								t = 1;
+							}else{
+								t--;
+							}
+						}
+						if(inputrm != null){
+							Node n = new Node(null);
+							while(!Parser.ExpressionCorrecte(inputrm)){
+								inputrm = rrm.showInputDialog(null,robot, "Saisissez votre expression");
 							}
 						}
 					}else if (retour == 1 && j1.getrb()==0){
@@ -529,14 +537,22 @@ public class MapGameState extends BasicGameState {
 							int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 							JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
 					if (retour2 == 1 && j2.getrb()>=1) {
-						String inputbm = JOptionPane.showInputDialog(null, robot2,"ccou");
-
+						JOptionPane rbm = new JOptionPane();
+						String inputbm = rbm.showInputDialog(null, robot2,"Saisissez votre expression");
+						if(inputbm != null){
+							Node n = new Node(null);
+							while(!Parser.ExpressionCorrecte(inputbm)){
+								inputbm = rbm.showInputDialog(null,robot2, "Saisissez votre expression");
+							}
+						}
 						if (inputbm == null) {
 							int k2 = JOptionPane.showOptionDialog(null,
 									"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
 									JOptionPane.QUESTION_MESSAGE, null, null, null);
 							if (k2 == 1) {
 								t2 = 1;
+							}else{
+								t2--;
 							}
 						}
 					}else if (retour2 == 1 && j2.getrb()==0){
