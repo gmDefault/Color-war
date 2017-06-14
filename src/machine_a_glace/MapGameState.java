@@ -441,9 +441,12 @@ public class MapGameState extends BasicGameState {
 						String inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 						// System.out.println(inputrc);
 						Node m = new Node(null);
-						while(!Parser.ExpressionCorrecte(inputrc)){
+						while(!Parser.ExpressionCorrecte(inputrc) ){
 							inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 						}
+						char t5[] = inputrc.toCharArray();
+						ArrayList<Expr> inv = (ArrayList<Expr>) j1.inventaire().clone();
+						//System.out.println(t5);
 						if (j1.getrb()==0){
 							m = Parser.ExpressionCorrecte1(inputrc);
 							m = new Node(Operateur.Star, null, m);
@@ -478,7 +481,7 @@ public class MapGameState extends BasicGameState {
 						}
 						j1.setRb(j1.getrb()+1);
 						tab5.clear();
-						if (inputrc == null) {
+						if (inputrc == null ) {
 							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
 									null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 							if (k == 1) {
@@ -503,7 +506,7 @@ public class MapGameState extends BasicGameState {
 
 				}else {
 					this.popup_test_1++;
-					System.out.println(popup_test_1);
+//					System.out.println(popup_test_1);
 
 				}
 				
