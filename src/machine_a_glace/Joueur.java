@@ -42,7 +42,7 @@ public class Joueur extends Entite {
 
 
 	public void Avancer(int pas) {
-
+		Terrain.afficher();
 		if (next_case().isAccessible()) {
 			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
@@ -130,6 +130,19 @@ public class Joueur extends Entite {
 				}
 
 			}
+			if (Terrain.terrain[getLine()][getCol()].getCont() == Contenu.Bonus_Malus) {
+				View.bonus_malus = true;
+				for (int i = 0; i< 30; i++) {
+					for (int j = 0; j < 30; j++) {
+						if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {
+							Terrain.terrain[i][j].setCouleur(Couleur.Rouge);
+						} else if (Terrain.terrain[i][j].getCouleur() == Couleur.Rouge) {
+							Terrain.terrain[i][j].setCouleur(Couleur.Bleu);
+						}
+					}
+				}
+				
+			}
 			if (Terrain.casexy(getLine(), getCol()).isExpr()) {
 				inventaire().add(Terrain.casexy(getLine(), getCol()).expr());
 				Terrain.casexy(getLine(), getCol()).setExpr(null);
@@ -139,6 +152,8 @@ public class Joueur extends Entite {
 				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
 			
 			Terrain.terrain[getLine()][getCol()].setEntite(this);
+			
+
 			
 		}
 

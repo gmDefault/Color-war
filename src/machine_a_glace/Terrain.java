@@ -2,6 +2,9 @@ package machine_a_glace;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+
+
 import java.util.LinkedHashMap;
 
 public class Terrain {
@@ -11,6 +14,7 @@ public class Terrain {
 	private static ArrayList<Coordonnees> coordonnees_cp_op = new ArrayList<Coordonnees>(Nbr_Cp_Op);
 	private static Coordonnees CreationRouge = new Coordonnees(3, 15);
 	private static Coordonnees CreationBleu = new Coordonnees(26, 15);
+	private static Coordonnees BonusMalus = new Coordonnees(5,15);
 	private static ArrayList<IntCoor> Repop = new ArrayList<IntCoor>(Nbr_Cp_Op);
 	public static int Index = 0;
 	private Terrain() {
@@ -69,7 +73,7 @@ public class Terrain {
 	// Fonction qui crée un timer de repop pour une expression qui vient d'être ramassé
 	public static void PutTimer(int line, int col) {
 		Coordonnees c = new Coordonnees(line, col);
-		IntCoor ic = new IntCoor(5000, c);
+		IntCoor ic = new IntCoor(30000, c);
 		Repop.add(ic);
 		Index ++;
 	}
@@ -187,6 +191,7 @@ public class Terrain {
 	}
 
 	public static void Initialiser_cases_creer() {
+		Terrain.terrain[BonusMalus.getLigne()][BonusMalus.getCol()].setCase(Contenu.Bonus_Malus);
 		Terrain.terrain[CreationBleu.getLigne()][CreationBleu.getCol()].setCase(Contenu.Creer);
 		Terrain.terrain[CreationRouge.getLigne()][CreationRouge.getCol()].setCase(Contenu.Creer);
 	}
