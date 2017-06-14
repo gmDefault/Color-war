@@ -35,9 +35,16 @@ public class View extends BasicGame {
 
 	int seconde = 35000;
 
-	int minute = 3;
+	int minute = 5;
 
-	int cmptr_robot = 1;
+	int cmptr_robotr1 = 1;
+	int cmptr_robotb1 = 1;
+	int cmptr_robotr2 = 1;
+	int cmptr_robotb2 = 1;
+	int cmptr_robotr3 = 1;
+	int cmptr_robotb3 = 1;
+	int cmptr_robotr4 = 1;
+	int cmptr_robotb4 = 1;
 
 	boolean bool1 = false;
 	boolean bool2 = false;
@@ -58,7 +65,14 @@ public class View extends BasicGame {
 
 	private int secs1 = 0;
 	private int secs2 = 0;
-	private int secsrobot = 0;
+	private int secsrobotr1 = 0;
+	private int secsrobotb1 = 0;
+	private int secsrobotr2 = 0;
+	private int secsrobotb2 = 0;
+	private int secsrobotr3 = 0;
+	private int secsrobotb3 = 0;
+	private int secsrobotr4 = 0;
+	private int secsrobotb4 = 0;
 
 	private final float DEBUT_VIE_ROUGE_X = 1631;
 	private final float FIN_VIE_ROUGE_X = 1778;
@@ -77,10 +91,24 @@ public class View extends BasicGame {
 
 	private boolean canmove = false;
 	private boolean canmove2 = false;
-	private boolean canmoverobot = false;
+	private boolean canmoverobotr1 = false;
+	private boolean canmoverobotb1 = false;
+	private boolean canmoverobotr2 = false;
+	private boolean canmoverobotb2 = false;
+	private boolean canmoverobotr3 = false;
+	private boolean canmoverobotb3 = false;
+	private boolean canmoverobotr4 = false;
+	private boolean canmoverobotb4 = false;
 
 	private Joueur j1, j2;
-	private Robot r1;
+	private Robot r1r;
+	private Robot r2r;
+	private Robot r3r;
+	private Robot r4r;
+	private Robot r1b;
+	private Robot r2b;
+	private Robot r3b;
+	private Robot r4b;
 
 	public static boolean recolorie_par_dessus = false;
 
@@ -89,6 +117,7 @@ public class View extends BasicGame {
 	private Animation[] animations2 = new Animation[8];
 	private Animation[] animations3 = new Animation[8];
 	private Animation[] animations4 = new Animation[8];
+	private Animation[] animations5 = new Animation[8];
 
 	private String item[] = { "Robot1", "Robot2", "Robot3" };
 	private String item2[] = { "Robot1", "Robot2", "Robot3" };
@@ -166,6 +195,7 @@ public class View extends BasicGame {
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
 		SpriteSheet spriteSheet3 = new SpriteSheet("maps/robot_red.png", 64, 64);
 		SpriteSheet spriteSheet4 = new SpriteSheet("maps/bonus.png", 64, 64);
+		SpriteSheet spriteSheet5 = new SpriteSheet("maps/robot_blue.png", 64, 64);
 		this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
 		this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
 		this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
@@ -201,6 +231,15 @@ public class View extends BasicGame {
 		this.animations4[5] = loadAnimation(spriteSheet4, 1, 9, 1);
 		this.animations4[6] = loadAnimation(spriteSheet4, 1, 9, 2);
 		this.animations4[7] = loadAnimation(spriteSheet4, 1, 9, 3);
+		
+		this.animations5[0] = loadAnimation(spriteSheet5, 0, 1, 0);
+		this.animations5[1] = loadAnimation(spriteSheet5, 0, 1, 1);
+		this.animations5[2] = loadAnimation(spriteSheet5, 0, 1, 2);
+		this.animations5[3] = loadAnimation(spriteSheet5, 0, 1, 3);
+		this.animations5[4] = loadAnimation(spriteSheet5, 1, 9, 0);
+		this.animations5[5] = loadAnimation(spriteSheet5, 1, 9, 1);
+		this.animations5[6] = loadAnimation(spriteSheet5, 1, 9, 2);
+		this.animations5[7] = loadAnimation(spriteSheet5, 1, 9, 3);
 
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
@@ -374,8 +413,29 @@ public class View extends BasicGame {
 		g.drawAnimation(animations2[j2.getD().entier() + (moving2 ? 4 : 0)],
 				(15 * 32 + this.j2.getCol() * 32 + 16) - 32, (this.j2.getLine() * 32 + 16) - 60);
 
-		if (j1.getrb()==1)g.drawAnimation(animations3[r1.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1.getCol() * 32 + 16) - 32,
-				(this.r1.getLine() * 32 + 16) - 60);
+		if (j1.getrb()>=1)g.drawAnimation(animations3[r1r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1r.getCol() * 32 + 16) - 32,
+				(this.r1r.getLine() * 32 + 16) - 60);
+		
+		if (j2.getrb()>=1)g.drawAnimation(animations5[r1b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r1b.getCol() * 32 + 16) - 32,
+				(this.r1b.getLine() * 32 + 16) - 60);
+		
+		if (j1.getrb()>=2)g.drawAnimation(animations3[r2r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r2r.getCol() * 32 + 16) - 32,
+				(this.r2r.getLine() * 32 + 16) - 60);
+		
+		if (j2.getrb()>=2)g.drawAnimation(animations5[r2b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r2b.getCol() * 32 + 16) - 32,
+				(this.r2b.getLine() * 32 + 16) - 60);
+		
+		if (j1.getrb()>=3)g.drawAnimation(animations3[r3r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r3r.getCol() * 32 + 16) - 32,
+				(this.r3r.getLine() * 32 + 16) - 60);
+		
+		if (j2.getrb()>=3)g.drawAnimation(animations5[r3b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r3b.getCol() * 32 + 16) - 32,
+				(this.r3b.getLine() * 32 + 16) - 60);
+		
+		if (j1.getrb()>=4)g.drawAnimation(animations3[r4r.getD().entier() + (true ? 4 : 0)], (15 * 32 + r4r.getCol() * 32 + 16) - 32,
+				(this.r4r.getLine() * 32 + 16) - 60);
+		
+		if (j2.getrb()>=4)g.drawAnimation(animations5[r4b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r4b.getCol() * 32 + 16) - 32,
+				(this.r4b.getLine() * 32 + 16) - 60);
 
 		g.drawAnimation(animations4[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
 
@@ -406,7 +466,7 @@ public class View extends BasicGame {
 							}
 						}
 					}
-					if (retour == 0) {
+					if (retour == 0 && j1.getrb()<4) {
 						JOptionPane p = new JOptionPane();
 						ArrayList<String>tab5 = j1.inventaire_toString();
 						
@@ -416,9 +476,30 @@ public class View extends BasicGame {
 						while(!Parser.ExpressionCorrecte(inputrc)){
 							inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 						}
-						m = Parser.ExpressionCorrecte1(inputrc);
-						Robot r1 = new Robot(4,15,j1.getCouleur(),m);
-						r1.setJoueur(j1);
+						if (j1.getrb()==0){
+							m = Parser.ExpressionCorrecte1(inputrc);
+							m = new Node(Operateur.Star, null, m);
+							r1r = new Robot(4,15,j1.getCouleur(),m);
+							r1r.setJoueur(j1);
+						}
+						if (j1.getrb()==1){
+							m = Parser.ExpressionCorrecte1(inputrc);
+							m = new Node(Operateur.Star, null, m);
+							r2r = new Robot(4,15,j1.getCouleur(),m);
+							r2r.setJoueur(j1);
+						}
+						if (j1.getrb()==2){
+							m = Parser.ExpressionCorrecte1(inputrc);
+							m = new Node(Operateur.Star, null, m);
+							r3r = new Robot(4,15,j1.getCouleur(),m);
+							r3r.setJoueur(j1);
+						}
+						if (j1.getrb()==3){
+							m = Parser.ExpressionCorrecte1(inputrc);
+							m = new Node(Operateur.Star, null, m);
+							r4r = new Robot(4,15,j1.getCouleur(),m);
+							r4r.setJoueur(j1);
+						}
 						j1.setRb(j1.getrb()+1);
 						tab5.clear();
 						if (inputrc == null) {
@@ -476,7 +557,7 @@ public class View extends BasicGame {
 							}
 						}
 					}
-					if (retour2 == 0) {
+					if (retour2 == 0 && j2.getrb()< 4) {
 						JOptionPane rbc = new JOptionPane();
 						
 						ArrayList<String>tab4 = j2.inventaire_toString();
@@ -485,7 +566,31 @@ public class View extends BasicGame {
 						while(!Parser.ExpressionCorrecte(inputbc)){
 							inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 						}
-					
+						if (j2.getrb()==0){
+							n = Parser.ExpressionCorrecte1(inputbc);
+							n = new Node(Operateur.Star, null, n);
+							r1b = new Robot(25,15,j2.getCouleur(),n);
+							r1b.setJoueur(j2);
+						}
+						if (j2.getrb()==1){
+							n = Parser.ExpressionCorrecte1(inputbc);
+							n = new Node(Operateur.Star, null, n);
+							r2b = new Robot(25,15,j2.getCouleur(),n);
+							r2b.setJoueur(j2);
+						}
+						if (j2.getrb()==2){
+							n = Parser.ExpressionCorrecte1(inputbc);
+							n = new Node(Operateur.Star, null, n);
+							r3b = new Robot(25,15,j2.getCouleur(),n);
+							r3b.setJoueur(j2);
+						}
+						if (j2.getrb()==3){
+							n = Parser.ExpressionCorrecte1(inputbc);
+							n = new Node(Operateur.Star, null, n);
+							r4b = new Robot(25,15,j2.getCouleur(),n);
+							r4b.setJoueur(j2);
+						}
+						j2.setRb(j2.getrb()+1);
 						tab4.clear();
 						if (inputbc == null) {
 							int k2 = JOptionPane.showOptionDialog(null,
@@ -588,7 +693,7 @@ public class View extends BasicGame {
 		}
 
 
-		if ((int) (seconde) % 30 == 0) {
+		if ((int) (seconde) % 20 == 0) {
 			if (j1.getNrj() < 100)
 				j1.SetNrj(j1.getNrj() + 1);
 			if (j2.getNrj() < 100)
@@ -606,7 +711,15 @@ public class View extends BasicGame {
 		seconde -= delta;
 		this.secs1 += delta;
 		this.secs2 += delta;
-		secsrobot += delta;
+		secsrobotr1 += delta;
+		secsrobotb1 += delta;
+		secsrobotr2 += delta;
+		secsrobotb2 += delta;
+		secsrobotr3 += delta;
+		secsrobotb3 += delta;
+		secsrobotr4 += delta;
+		secsrobotb4 += delta;
+		
 		this.container.resume();
 
 		if (this.moving) {
@@ -863,20 +976,125 @@ public class View extends BasicGame {
 		// }
 		// }
 
-		if (canmoverobot && j1.getrb()==1)
-			r1.execute();
+		if (canmoverobotr1 && j1.getrb()>=1)
+			r1r.execute();
+		if (canmoverobotb1 && j2.getrb()>=1)
+			r1b.execute();
+		if (canmoverobotr2 && j1.getrb()>=2)
+			r2r.execute();
+		if (canmoverobotb2 && j2.getrb()>=2)
+			r2b.execute();
+		if (canmoverobotr3 && j1.getrb()>=3)
+			r3r.execute();
+		if (canmoverobotb3 && j2.getrb()>=3)
+			r3b.execute();
+		if (canmoverobotr4 && j1.getrb()>=4)
+			r4r.execute();
+		if (canmoverobotb4 && j2.getrb()>=4)
+			r4b.execute();
 		
-		if(secsrobot > 5000 && j1.getrb()==1){
-			r1.next_etat();
-			System.out.println("CHANGEMENT " + secsrobot +" " +r1.etat_courant());
-			secsrobot=0;
-			cmptr_robot=1;
+		if(secsrobotr1 > 5000 && j1.getrb()>=1){
+			r1r.next_etat();
+//			System.out.println("CHANGEMENT " + secsrobotr1 +" " +r1r.etat_courant());
+			secsrobotr1=0;
+			cmptr_robotr1=1;
 			
-		}else if(secsrobot > 500*cmptr_robot){
-			canmoverobot= true;
-			cmptr_robot++;
+		}else if(secsrobotr1 > 500*cmptr_robotr1){
+			canmoverobotr1= true;
+			cmptr_robotr1++;
 		}else{
-			canmoverobot = false;
+			canmoverobotr1 = false;
+		}
+		
+		if(secsrobotb1 > 5000 && j2.getrb()>=1){
+			r1b.next_etat();
+//			System.out.println("CHANGEMENT " + secsrobot +" " +r2b.etat_courant());
+			secsrobotb1=0;
+			cmptr_robotb1=1;
+			
+		}else if(secsrobotb1 > 500*cmptr_robotb1){
+			canmoverobotb1= true;
+			cmptr_robotb1++;
+		}else{
+			canmoverobotb1 = false;
+		}
+		
+		if(secsrobotr2 > 5000 && j1.getrb()>=2){
+			r2r.next_etat();
+//			System.out.println("CHANGEMENT " + secsrobot +" " +r2r.etat_courant());
+			secsrobotr2=0;
+			 cmptr_robotr2=1;
+			
+		}else if(secsrobotr2 > 500*cmptr_robotr2){
+			canmoverobotr2= true;
+			cmptr_robotr2++;
+		}else{
+			canmoverobotr2 = false;
+		}
+		
+		if(secsrobotb2 > 5000 && j2.getrb()>=2){
+			r2b.next_etat();
+//			System.out.println("CHANGEMENT " + secsrobot +" " +r2b.etat_courant());
+			secsrobotb2=0;
+			 cmptr_robotb2=1;
+			
+		}else if(secsrobotb2 > 500*cmptr_robotb2){
+			canmoverobotb2= true;
+			cmptr_robotb2++;
+		}else{
+			canmoverobotb2 = false;
+		}
+		
+		if(secsrobotr3 > 5000 && j1.getrb()>=3){
+			r3r.next_etat();
+//			System.out.println("CHANGEMENT " + secsrobot +" " +r3r.etat_courant());
+			secsrobotr3=0;
+			 cmptr_robotr3=1;
+			
+		}else if(secsrobotr3 > 500*cmptr_robotr3){
+			canmoverobotr3= true;
+			cmptr_robotr3++;
+		}else{
+			canmoverobotr3 = false;
+		}
+		
+		if(secsrobotb3 > 5000 && j2.getrb()>=3){
+			r3b.next_etat();
+//			System.out.println("CHANGEMENT " + secsrobot +" " +r3b.etat_courant());
+			secsrobotb3=0;
+			 cmptr_robotb3=1;
+			
+		}else if(secsrobotb3 > 500*cmptr_robotb3){
+			canmoverobotb3= true;
+			cmptr_robotb3++;
+		}else{
+			canmoverobotb3 = false;
+		}
+		
+		if(secsrobotr4 > 5000 && j1.getrb()>=4){
+			r4r.next_etat();
+//			System.out.println("CHANGEMENT " + secsrobot +" " +r4r.etat_courant());
+			secsrobotr4=0;
+			 cmptr_robotr4=1;
+			
+		}else if(secsrobotr4 > 500*cmptr_robotr4){
+			canmoverobotr4= true;
+			cmptr_robotr4++;
+		}else{
+			canmoverobotr4 = false;
+		}
+		
+		if(secsrobotb4 > 5000 && j2.getrb()>=4){
+			r4b.next_etat();
+//			System.out.println("CHANGEMENT " + secsrobot +" " +r4b.etat_courant());
+			secsrobotb4=0;
+			 cmptr_robotb4=1;
+			
+		}else if(secsrobotb4 > 500*cmptr_robotb4){
+			canmoverobotb4= true;
+			cmptr_robotb4++;
+		}else{
+			canmoverobotb4 = false;
 		}
 		
 	

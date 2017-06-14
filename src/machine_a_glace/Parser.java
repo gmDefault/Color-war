@@ -2,7 +2,7 @@ package machine_a_glace;
 
 public class Parser {
 
-	public static boolean ExpressionCorrecte(String s, Node n) {
+	public static boolean ExpressionCorrecte(String s) {
 		Node a = new Node(null);
 
 			try {
@@ -12,8 +12,12 @@ public class Parser {
 				return false;
 			
 			}
-		n=a;
 		return true;
+	}
+	public static Node ExpressionCorrecte1(String s) {
+		Node a = new Node(null);
+		a = Reader.read(s);	
+		return a;
 	}
 
 }

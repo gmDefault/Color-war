@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Joueur extends Entite {
 	private int nb_cases_coloriees = 0;
 	private int nrj;
+	private int nb_robot = 0;
 	
 	private ArrayList<Expr> inventaire;
 	public ArrayList<String> tabinv = new ArrayList<String>();
@@ -24,7 +25,12 @@ public class Joueur extends Entite {
 	public int getNrj() {
 		return nrj;
 	}
-	
+	public int getrb(){
+		return nb_robot;
+	}
+	public void setRb(int n){
+		nb_robot = n;
+	}
 	public void SetNrj(int n) {
 		 nrj=n;
 	}
