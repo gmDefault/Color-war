@@ -1,25 +1,39 @@
 package machine_a_glace;
 
-import java.util.concurrent.TimeUnit;
-
 import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
 
-public class ColorWar {
+/**
+ * Code sous licence GPLv3 (http://www.gnu.org/licenses/gpl.html)
+ * 
+ * -Djava.library.path=target/natives
+ * 
+ * @author <b>Shionn</b>, shionn@gmail.com <i>http://shionn.org</i><br>
+ *         GCS d- s+:+ a C++ UL/M P L+ E--- W++ N K- w-- M+ t+ 5 X R+ !tv b+ D+ G- e+++ h+ r- y+
+ */
+public class ColorWar extends StateBasedGame {
 
 	public static void main(String[] args) throws SlickException {
-		Terrain.initialiser();
-		Joueur j1 = new Joueur(1, 15, Couleur.Rouge,50,100);
-		Joueur j2 = new Joueur(28, 15, Couleur.Bleu,100,100);
+		new AppGameContainer(new ColorWar(), 1920, 960, false).start();
+	}
+
+	public ColorWar() {
+		super("ColorWar");
+	}
+
+	/**
+	 * Ici il suffit d'ajouter nos deux boucles de jeux. La première ajoutèe sera celle qui sera
+	 * utilisée au début
+	 */
+	@Override
+	public void initStatesList(GameContainer container) throws SlickException {
 
 		
-		boolean y =Parser.ExpressionCorrecte("ddd");
-//		System.out.println(y);
-//		Terrain.afficher();
-		Sauvegarde.Writer();
-		View.launch_game(j1, j2);
-		
-		
-		
+
+		addState(new MainScreenGameState());
+		addState(new MapGameState());
 	}
+
 }

@@ -115,13 +115,13 @@ public class Terrain {
 		else if (rand < 0.6)
 			return Operateur.Star;
 		else if (rand < 0.7)
-			return Comportement.Attack;
+			return Attack.ATTACK;
 		else if (rand < 0.8)
-			return Comportement.Explore;
+			return Explore.EXPLORE;
 		else if (rand < 0.9)
-			return Comportement.Kamikaze;
+			return Kamikaze.KAMIKAZE;
 		else
-			return Comportement.Protect;
+			return Protect.PROTECT;
 	}
 
 	public static void Initialiser_comportements_operateurs(ArrayList<Coordonnees> coord) {
@@ -150,13 +150,13 @@ public class Terrain {
 			}
 
 			if (rand < 0.25) {
-				cp.add(Comportement.Attack);
+				cp.add(Attack.ATTACK);
 			} else if (rand < 0.5) {
-				cp.add(Comportement.Explore);
+				cp.add(Explore.EXPLORE);
 			} else if (rand < 0.75) {
-				cp.add(Comportement.Kamikaze);
+				cp.add(Kamikaze.KAMIKAZE);
 			} else {
-				cp.add(Comportement.Protect);
+				cp.add(Protect.PROTECT);
 			}
 			taille--;
 		}
@@ -221,5 +221,44 @@ public class Terrain {
 	public static int getTaille() {
 		return taille;
 	}
-
+	public static Coordonnees spawnRed(){
+		if (casexy(4,15).isAccessible()){
+			return new Coordonnees (4,15);
+		}else if(casexy(3,16).isAccessible()){
+			return new Coordonnees (3,16);
+		}else if(casexy(3,14).isAccessible()){
+			return new Coordonnees (3,14);
+		}else{
+			int line = 5;
+			int col = 14;
+			while(!casexy(line,col).isAccessible()){
+				col++;
+				if (col == 17){
+					col=14;
+					line++;
+				}
+			}
+			return new Coordonnees (line,col);
+		}
+	}
+	public static Coordonnees spawnBlue(){
+		if (casexy(25,15).isAccessible()){
+			return new Coordonnees (25,15);
+		}else if(casexy(26,16).isAccessible()){
+			return new Coordonnees (26,16);
+		}else if(casexy(26,14).isAccessible()){
+			return new Coordonnees (26,14);
+		}else{
+			int line = 25;
+			int col = 14;
+			while(!casexy(line,col).isAccessible()){
+				col++;
+				if (col == 17){
+					col=14;
+					line--;
+				}
+			}
+			return new Coordonnees (line,col);
+		}
+	}
 }

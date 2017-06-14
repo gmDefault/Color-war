@@ -1,7 +1,7 @@
 package machine_a_glace;
 
 public enum Couleur {
-	Bleu("Bleu"), Rouge("Rouge"), Neutre("Neutre");
+	Bleu("B"), Rouge("R"), Neutre("N");
 	
 	String affichage;
 	
