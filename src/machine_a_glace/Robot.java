@@ -60,7 +60,7 @@ public class Robot extends Entite {
 			if (a.Gram.isComportement() && b) {
 				etat_courant = a;
 				b = false;
-			}else if(a == etat_courant) {
+			} else if (a == etat_courant) {
 				b = true;
 			}
 
@@ -99,6 +99,13 @@ public class Robot extends Entite {
 				if (b)
 					isPriorite = false;
 
+			} else if (a.Gram.isOperateur() && a.Gram == Operateur.Deuxpoints) {
+				b = next_etat_recur(a.FG, b);
+				if(b && a.FD.Gram != Comportement.Zero){
+					a.FD.decremente_comp();
+					b=false;
+				}
+				
 			} else {
 				b = next_etat_recur(a.FG, b);
 				b = next_etat_recur(a.FD, b);
@@ -247,7 +254,7 @@ public class Robot extends Entite {
 		min = borneColG;
 		max = borneColD;
 		i = 0;
-		this.Kill(line,col); // On tue le robot qui explose
+		this.Kill(line, col); // On tue le robot qui explose
 		while (i >= borneLigH) {
 
 			for (j = min; j <= max; j++) {
