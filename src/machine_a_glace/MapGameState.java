@@ -434,9 +434,10 @@ public class MapGameState extends BasicGameState {
 						ArrayList<String>tab5 = j1.inventaire_toString();
 						
 						String inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
+						if(inputrc != null){
 						// System.out.println(inputrc);
 						Node m = new Node(null);
-				while(!Parser.ExpressionCorrecte(inputrc)||!Parser.InventaireOk(inputrc, j1)){
+						while(!Parser.ExpressionCorrecte(inputrc)||!Parser.InventaireOk(inputrc, j1)){
 							inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 						}
 						char t5[] = inputrc.toCharArray();
@@ -476,6 +477,7 @@ public class MapGameState extends BasicGameState {
 						}
 						j1.setRb(j1.getrb()+1);
 						tab5.clear();
+						}
 						if (inputrc == null ) {
 							int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
 									null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
@@ -483,6 +485,7 @@ public class MapGameState extends BasicGameState {
 								t = 1;
 							}
 						}
+						
 					}
 					if (retour == 2 || retour == -1) {
 						t = 1;
@@ -539,6 +542,7 @@ public class MapGameState extends BasicGameState {
 						
 						ArrayList<String>tab4 = j2.inventaire_toString();
 						String inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
+						if(inputbc != null){
 						Node n = new Node(null);
 						while(!Parser.ExpressionCorrecte(inputbc)){
 							inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
@@ -573,6 +577,7 @@ public class MapGameState extends BasicGameState {
 						}
 						j2.setRb(j2.getrb()+1);
 						tab4.clear();
+						}
 						if (inputbc == null) {
 							int k2 = JOptionPane.showOptionDialog(null,
 									"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
