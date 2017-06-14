@@ -88,9 +88,29 @@ public class MapGameState extends BasicGameState {
 
 	private boolean canmove = false;
 	private boolean canmove2 = false;
+
+	private boolean canmoverobotr1 = false;
+	private boolean canmoverobotb1 = false;
+	private boolean canmoverobotr2 = false;
+	private boolean canmoverobotb2 = false;
+	private boolean canmoverobotr3 = false;
+	private boolean canmoverobotb3 = false;
+	private boolean canmoverobotr4 = false;
+	private boolean canmoverobotb4 = false;
+
+	public static Joueur j1, j2;
+	private Robot r1r;
+	private Robot r2r;
+	private Robot r3r;
+	private Robot r4r;
+	private Robot r1b;
+	private Robot r2b;
+	private Robot r3b;
+	private Robot r4b;
+
 	private ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
 
-	private Joueur j1, j2;
+
 
 	public static boolean recolorie_par_dessus = false;
 
@@ -131,11 +151,6 @@ public class MapGameState extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		// TODO Auto-generated method stub
 		this.container = container;
-
-		Terrain.initialiser();
-		this.j1 = new Joueur(1, 15, Couleur.Rouge, 50, 100);
-		j1.setD(Direction.Sud);
-		this.j2 = new Joueur(28, 15, Couleur.Bleu, 100, 100);
 
 		boolean y = Parser.ExpressionCorrecte("ddd");
 		System.out.println(y);
@@ -442,6 +457,7 @@ public class MapGameState extends BasicGameState {
 					bool1 = false;
 					this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
 				}
+
 
 			} else {
 				this.popup_test_1++;
@@ -934,7 +950,15 @@ public class MapGameState extends BasicGameState {
 			break;
 		case Input.KEY_D:
 			this.moving2 = false;
-
+		case Input.KEY_N:
+			Sauvegarde.Writer(minute,seconde);
+			break;
+		case Input.KEY_B:
+			String s;
+			s = Sauvegarde.Reader();
+			String[] mots = s.split(" ");
+			minute = Integer.parseInt(mots[0]);
+			seconde = Integer.parseInt(mots[1]);
 			break;
 		}
 	}

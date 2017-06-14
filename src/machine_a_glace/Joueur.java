@@ -18,6 +18,15 @@ public class Joueur extends Entite {
 		Terrain.terrain[getLine()][getCol()].setEntite(this);
 		inventaire = new ArrayList<Expr>();
 	}
+	
+	public Joueur(int x, int y, Couleur c, Direction d, int pdv,int nrj) {
+		super(x, y, c, pdv);
+		this.nrj=nrj;
+		this.setD(d);
+		Terrain.terrain[getLine()][getCol()].setCase(Contenu.Joueur);
+		Terrain.terrain[getLine()][getCol()].setEntite(this);
+		inventaire = new ArrayList<Expr>();
+	}
 
 	public int getNombre_Case_Coloriees() {
 		return nb_cases_coloriees;
