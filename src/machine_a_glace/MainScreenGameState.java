@@ -8,6 +8,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
@@ -64,6 +65,8 @@ public class MainScreenGameState extends BasicGameState {
 		uniFont2.addAsciiGlyphs();
 		uniFont2.loadGlyphs();
 		
+		
+		
 
 	}
 
@@ -97,13 +100,13 @@ public class MainScreenGameState extends BasicGameState {
 				timer = 0;
 			}
 		}
-
+		
 
 //		g.drawString("Appuyer sur Entrée pour lancer la partie", 800, 300);
 //		g.drawString("Appuyer sur C pour charger une partie", 815, 400);
 //		g.drawString("Appuyer sur Q pour quitter le jeu", 830, 500);
 
-
+		//musique.loop();
 
 	}
 

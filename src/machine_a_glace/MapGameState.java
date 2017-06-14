@@ -39,7 +39,7 @@ public class MapGameState extends BasicGameState {
 
 	int seconde = 10000;
 
-	int minute = 5;
+	int minute = 5 ;
 
 	boolean jeufini = false;
 
@@ -303,9 +303,16 @@ public class MapGameState extends BasicGameState {
 			}
 
 			if (bonus_malus == true) {
-				int nb_temp = j1.getNb_cases_coloriees();
-				j1.setNb_cases_coloriees(j2.getNb_cases_coloriees());
-				j2.setNb_cases_coloriees(nb_temp);
+				double a = Math.random();
+				if (a<0.25){
+					BonusMalus.inversionCouleur(j1,j2);
+				}else if (a<0.5){
+					BonusMalus.inversionInventaire(j1, j2);
+				}else if (a<0.75){
+					BonusMalus.pvAdd(j1,j2);
+				}else{
+					BonusMalus.pvLost(j1,j2);
+				}
 				bonus_malus = false;
 			}
 
@@ -359,7 +366,7 @@ public class MapGameState extends BasicGameState {
 						int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
 								bouton[0]);
-						if (retour == 1) {
+						if (retour == 1 && j1.robots().size() >0) {
 							String inputrm = JOptionPane.showInputDialog(null, robot, "Coucou");
 
 							if (inputrm == null) {
@@ -368,6 +375,8 @@ public class MapGameState extends BasicGameState {
 										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k == 1) {
 									t = 1;
+								}else{
+									t--;
 								}
 							}
 						}
@@ -398,14 +407,16 @@ public class MapGameState extends BasicGameState {
 								cmptr_robots.add(1);
 								secsrobots.add(0);
 
-								tab5.clear();
 							}
+							tab5.clear();
 							if (inputrc == null) {
 								int k = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
 										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k == 1) {
 									t = 1;
+								}else{
+									t--;
 								}
 
 							}
@@ -418,6 +429,7 @@ public class MapGameState extends BasicGameState {
 						if (retour == 2 || retour == -1) {
 							t = 1;
 						}
+						t++;
 					}
 				}
 
@@ -450,7 +462,7 @@ public class MapGameState extends BasicGameState {
 						int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2,
 								bouton2[0]);
-						if (retour2 == 1) {
+						if (retour2 == 1 && j2.robots().size()>0) {
 							String inputbm = JOptionPane.showInputDialog(null, robot2, "ccou");
 
 							if (inputbm == null) {
@@ -459,6 +471,8 @@ public class MapGameState extends BasicGameState {
 										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k2 == 1) {
 									t2 = 1;
+								}else{
+									t2--;
 								}
 							}
 						}
@@ -484,14 +498,16 @@ public class MapGameState extends BasicGameState {
 								canmoverobots.add(false);
 								cmptr_robots.add(1);
 								secsrobots.add(0);
-								tab4.clear();
 							}
+							tab4.clear();
 							if (inputbc == null) {
 								int k2 = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
 										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k2 == 1) {
 									t2 = 1;
+								}else{
+									t2--;
 								}
 							}
 						}
