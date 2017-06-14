@@ -27,31 +27,42 @@ public class MainScreenGameState extends BasicGameState {
 	private GameContainer container;
 	public static boolean joueur_1_gagne = false;
 	public static boolean joueur_2_gagne = false;
-	
+	private int timer = 0;
 	java.awt.Font UIFont1;
-	org.newdawn.slick.UnicodeFont uniFont;
+	org.newdawn.slick.UnicodeFont uniFont, uniFont2;
+	
+	
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		
 		this.game = game;
 		this.container = container;
-		this.background = new Image("maps/2107.jpg");
+		this.background = new Image("maps/colorwar.png");
 		
 		try {
 			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
-					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/reveil.ttf"));
+					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/cartoon.ttf"));
 		} catch (FontFormatException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 60.f);
+		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 80.f);
 
 		uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
 		uniFont.addAsciiGlyphs();
 		uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
 		uniFont.addAsciiGlyphs();
 		uniFont.loadGlyphs();
+		
+		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 60.f);
+
+		
+		uniFont2 = new org.newdawn.slick.UnicodeFont(UIFont1);
+		uniFont2.addAsciiGlyphs();
+		uniFont2.getEffects().add(new ColorEffect(java.awt.Color.white));
+		uniFont2.addAsciiGlyphs();
+		uniFont2.loadGlyphs();
 		
 
 	}
@@ -65,14 +76,32 @@ public class MainScreenGameState extends BasicGameState {
 		background.draw(0, 0, container.getWidth(), container.getHeight());
 		if (joueur_1_gagne) {
 			
-			uniFont.drawString(580, 200, "Le joueur rouge GAGNE la partie !", Color.red);
+			uniFont.drawString(500, 200, "Le joueur rouge gagne la partie !", Color.pink);
 
 		} else if (joueur_2_gagne) {
-			uniFont.drawString(580, 200, "Le joueur bleu GAGNE la partie !", Color.cyan);
+			uniFont.drawString(500, 200, "Le joueur bleu gagne la partie !", Color.cyan);
 		}
-		g.drawString("Appuyer sur Entrée pour lancer la partie", 800, 300);
-		g.drawString("Appuyer sur C pour charger une partie", 815, 400);
-		g.drawString("Appuyer sur Q pour quitter le jeu", 830, 500);
+		if (timer<25) {
+			uniFont2.drawString(500, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.white);
+			uniFont2.drawString(515, 550, "Appuyer sur \"C\" pour charger une partie", Color.white);
+
+			uniFont2.drawString(530, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.white);
+			timer++;
+		} else {
+			uniFont2.drawString(500, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.cyan);
+			uniFont2.drawString(515, 550, "Appuyer sur \"C\" pour charger une partie", Color.cyan);
+
+			uniFont2.drawString(530, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.cyan);
+			timer++;
+			if (timer == 50) {
+				timer = 0;
+			}
+		}
+
+
+//		g.drawString("Appuyer sur Entrée pour lancer la partie", 800, 300);
+//		g.drawString("Appuyer sur C pour charger une partie", 815, 400);
+//		g.drawString("Appuyer sur Q pour quitter le jeu", 830, 500);
 
 
 
@@ -100,8 +129,9 @@ public class MainScreenGameState extends BasicGameState {
 			}
 			game.enterState(MapGameState.ID);
 			break;
-		default : 
+		case Input.KEY_Q: 
 			this.container.exit();
+			break;
 
 		}
 			
