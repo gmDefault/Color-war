@@ -221,5 +221,44 @@ public class Terrain {
 	public static int getTaille() {
 		return taille;
 	}
-
+	public static Coordonnees spawnRed(){
+		if (casexy(4,15).isAccessible()){
+			return new Coordonnees (4,15);
+		}else if(casexy(3,16).isAccessible()){
+			return new Coordonnees (3,16);
+		}else if(casexy(3,14).isAccessible()){
+			return new Coordonnees (3,14);
+		}else{
+			int line = 5;
+			int col = 14;
+			while(!casexy(line,col).isAccessible()){
+				col++;
+				if (col == 17){
+					col=14;
+					line++;
+				}
+			}
+			return new Coordonnees (line,col);
+		}
+	}
+	public static Coordonnees spawnBlue(){
+		if (casexy(25,15).isAccessible()){
+			return new Coordonnees (25,15);
+		}else if(casexy(26,16).isAccessible()){
+			return new Coordonnees (26,16);
+		}else if(casexy(26,14).isAccessible()){
+			return new Coordonnees (26,14);
+		}else{
+			int line = 25;
+			int col = 14;
+			while(!casexy(line,col).isAccessible()){
+				col++;
+				if (col == 17){
+					col=14;
+					line--;
+				}
+			}
+			return new Coordonnees (line,col);
+		}
+	}
 }

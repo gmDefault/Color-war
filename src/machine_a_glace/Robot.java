@@ -131,7 +131,7 @@ public class Robot extends Entite {
 				if (this.getCouleur() == Couleur.Bleu
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
 						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
@@ -141,7 +141,7 @@ public class Robot extends Entite {
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
 						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
@@ -155,7 +155,7 @@ public class Robot extends Entite {
 				if (this.getCouleur() == Couleur.Bleu
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
 						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
@@ -164,7 +164,7 @@ public class Robot extends Entite {
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
 						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
@@ -177,7 +177,7 @@ public class Robot extends Entite {
 				if (this.getCouleur() == Couleur.Bleu
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
 						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
@@ -186,7 +186,7 @@ public class Robot extends Entite {
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
 						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);
@@ -199,7 +199,7 @@ public class Robot extends Entite {
 				if (this.getCouleur() == Couleur.Bleu
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Bleu) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Rouge) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
 						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Bleu);
@@ -208,7 +208,7 @@ public class Robot extends Entite {
 				} else if (this.getCouleur() == Couleur.Rouge
 						&& Terrain.terrain[getLine()][getCol()].getCouleur() != Couleur.Rouge) {
 					if (Terrain.terrain[getLine()][getCol()].getCouleur() == Couleur.Bleu) {
-						View.recolorie_par_dessus = true;
+						MapGameState.recolorie_par_dessus = true;
 					}
 					if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer) {
 						Terrain.terrain[getLine()][getCol()].setCouleur(Couleur.Rouge);

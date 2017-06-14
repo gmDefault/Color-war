@@ -15,4 +15,10 @@ public class Protect extends Comportement {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "P";
+	}
+
 }

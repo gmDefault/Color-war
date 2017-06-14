@@ -197,4 +197,10 @@ public class Kamikaze extends Comportement {
 		Terrain.terrain[line][col].setEntite(null);
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "K";
+	}
+
 }

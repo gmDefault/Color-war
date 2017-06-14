@@ -18,5 +18,6 @@ public abstract class Comportement implements Expr {
 	
 	public abstract boolean execute(Robot r);
 	
+	public abstract String toString();
 
 }

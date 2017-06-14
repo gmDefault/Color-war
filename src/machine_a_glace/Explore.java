@@ -39,4 +39,10 @@ public class Explore extends Comportement {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "X";
+	}
+
 }
