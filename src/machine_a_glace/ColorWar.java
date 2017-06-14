@@ -11,7 +11,7 @@ public class ColorWar {
 		Terrain.initialiser();
 		Joueur j1 = new Joueur(1, 15, Couleur.Rouge,50,100);
 		Joueur j2 = new Joueur(28, 15, Couleur.Bleu,100,100);
-
+//		Sauvegarde.Writer();
 		boolean y =Parser.ExpressionCorrecte("ddd",null);
 		System.out.println(y);
 		View.launch_game(j1, j2);
