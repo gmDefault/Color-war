@@ -484,7 +484,19 @@ public class MapGameState extends BasicGameState {
 							String[] robot = j2.arrayRobottoString();
 							JComboBox robots = new JComboBox(robot);
 							String inputbm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
-							
+							if (inputbm != null){
+								Node n = new Node(null);
+								while (!Parser.ExpressionCorrecte(inputbm) || !(Parser.InventaireOk(inputbm, j2))) {
+									inputbm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
+								}
+								String k = (String)robots.getSelectedItem();
+								System.out.println(k);
+								n = Parser.ExpressionCorrecte1(inputbm);
+								n = new Node(Operateur.Star, null, n);
+								int i = k.charAt(6)-'0';
+								System.out.println(i);
+								j2.robots().get(i-1).modificationRobot(n);
+							}
 							if (inputbm == null) {
 								int k2 = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
