@@ -217,7 +217,7 @@ public class Robot extends Entite {
 				}
 
 			}
-			if (Terrain.casexy(getLine(), getCol()).isExpr()) {
+			if (Terrain.casexy(getLine(), getCol()).isExpr()&&maitre.inventaire().size()<30) {
 				maitre.add_inventaire(Terrain.casexy(getLine(), getCol()).expr());
 				Terrain.casexy(getLine(), getCol()).setExpr(null);
 				Terrain.PutTimer(getLine(), getCol());

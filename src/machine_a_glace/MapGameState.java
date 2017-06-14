@@ -41,7 +41,7 @@ public class MapGameState extends BasicGameState {
 
 
 
-	int minute = 0	;
+	int minute = 5	;
 
 	
 	boolean jeufini = false;
