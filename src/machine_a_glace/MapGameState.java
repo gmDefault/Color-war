@@ -358,7 +358,9 @@ public class MapGameState extends BasicGameState {
 //		
 //		if (j2.getrb()>=4)g.drawAnimation(animations4[r4b.getD().entier() + (true ? 4 : 0)], (15 * 32 + r4b.getCol() * 32 + 16) - 32,
 //				(this.r4b.getLine() * 32 + 16) - 60);
-
+			
+			
+			
 			if (bonus_malus == true) {
 				int nb_temp = j1.getNb_cases_coloriees();
 				j1.setNb_cases_coloriees(j2.getNb_cases_coloriees());
@@ -367,7 +369,9 @@ public class MapGameState extends BasicGameState {
 			}
 
 			afficher_expr();
-
+			
+			PrintEntity(g);
+			
 			hud_bleu.draw(15, 15);
 			hud_rouge.draw(1920 - 300, 15);
 
@@ -387,7 +391,7 @@ public class MapGameState extends BasicGameState {
 			robots_inv.draw(120, 670);
 			robots_inv2.draw(1580, 670);
 
-			PrintEntity(g);
+			
 			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
 
 //			this.popup_test_1 = 0;
