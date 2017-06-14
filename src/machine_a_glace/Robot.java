@@ -11,7 +11,7 @@ public class Robot extends Entite {
 	private Joueur maitre;
 
 	public Robot(int x, int y, Couleur c, Node auto) {
-		super(x, y, c, 20);
+		super(x, y, c, 30);
 		automate = auto;
 		etat_courant = automate;
 		nb_tour = 0;

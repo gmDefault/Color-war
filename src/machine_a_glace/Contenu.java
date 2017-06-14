@@ -1,7 +1,7 @@
 package machine_a_glace;
 
 public enum Contenu {
-	Vide(" "), Obstacle("O"), Expression("X"), Robot("R"), Joueur("J"),Creer("c"), Bonus_Malus("B");
+	Vide("."), Obstacle("O"), Expression("X"), Robot("R"), Joueur("J"),Creer("c"), Bonus_Malus("B");
 
 	private String affichage;
 
