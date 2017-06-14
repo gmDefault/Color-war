@@ -35,8 +35,8 @@ public class View extends BasicGame {
 
 	int seconde = 10000;
 
-	int minute = 3	;
-	
+	int minute = 3;
+
 	boolean jeufini = false;
 
 	int cmptr_robot = 1;
@@ -221,7 +221,7 @@ public class View extends BasicGame {
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
 
-		Node test = Reader.read("{X ; A : 2}");
+		Node test = Reader.read("{K >X}");
 		System.out.println(test);
 		test = new Node(Operateur.Star, null, test);
 		r1 = new Robot(5, 15, Couleur.Bleu, test);
@@ -266,20 +266,16 @@ public class View extends BasicGame {
 		Image robots_inv = new Image("maps/robots_inv.png");
 		Image robots_inv2 = new Image("maps/robots_inv2.png");
 
-		
 		Image j1g = new Image("maps/j1g.jpg");
 		Image j2g = new Image("maps/j2g.jpg");
-		
+
 		if (this.jeufini == true) {
-			if (this.j1.getNombre_Case_Coloriees()> this.j2.getNb_cases_coloriees()) {
+			if (this.j1.getNombre_Case_Coloriees() > this.j2.getNb_cases_coloriees()) {
 				g.drawImage(j1g, 0, 0);
 
 			} else {
 				g.drawImage(j2g, 0, 0);
 			}
-			
-			
-			
 
 		} else if (this.j1.getPdv() <= 0) {
 			System.out.println("jeu fini");
@@ -289,9 +285,8 @@ public class View extends BasicGame {
 
 		} else {
 
-
 			this.map.render(0, 0);
-			
+
 			for (int i = 0; i < 30; i++) {
 				for (int j = 0; j < 30; j++) {
 					if (Terrain.terrain[i][j].getCouleur() == Couleur.Bleu) {
@@ -308,9 +303,9 @@ public class View extends BasicGame {
 				j2.setNb_cases_coloriees(nb_temp);
 				bonus_malus = false;
 			}
-			
+
 			afficher_expr();
-			
+
 			hud_bleu.draw(15, 15);
 			hud_rouge.draw(1920 - 300, 15);
 
@@ -324,12 +319,11 @@ public class View extends BasicGame {
 			inventaire.draw(1560, 195);
 			afficher_inventaire(j1);
 			afficher_inventaire(j2);
-			
-//			System.out.println(r1.etat_courant());
+
+			// System.out.println(r1.etat_courant());
 
 			robots_inv.draw(120, 670);
 			robots_inv2.draw(1580, 670);
-
 
 			PrintEntity(g);
 			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
@@ -349,13 +343,15 @@ public class View extends BasicGame {
 						r.setSize(d);
 						String[] bouton = { "Créer", "Modifier", "Annuler" };
 						int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton, bouton[0]);
+								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
+								bouton[0]);
 						if (retour == 1) {
 							String inputrm = JOptionPane.showInputDialog(robot);
 
 							if (inputrm == null) {
-								int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-										null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+								int k = JOptionPane.showOptionDialog(null,
+										"Voulez-vous continuer la création/modification", null,
+										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k == 1) {
 									t = 5;
 								}
@@ -367,8 +363,9 @@ public class View extends BasicGame {
 							// System.out.println(inputrc);
 
 							if (inputrc == null) {
-								int k = JOptionPane.showOptionDialog(null, "Voulez-vous continuer la création/modification",
-										null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+								int k = JOptionPane.showOptionDialog(null,
+										"Voulez-vous continuer la création/modification", null,
+										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k == 1) {
 									t = 5;
 								}
@@ -408,14 +405,15 @@ public class View extends BasicGame {
 						r2.setSize(d);
 						String[] bouton2 = { "Créer", "Modifier", "Annuler" };
 						int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2, bouton2[0]);
+								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2,
+								bouton2[0]);
 						if (retour2 == 1) {
 							String inputbm = JOptionPane.showInputDialog(robot2);
 
 							if (inputbm == null) {
 								int k2 = JOptionPane.showOptionDialog(null,
-										"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
-										JOptionPane.QUESTION_MESSAGE, null, null, null);
+										"Voulez-vous continuer la création/modification", null,
+										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k2 == 1) {
 									t2 = 5;
 								}
@@ -427,8 +425,8 @@ public class View extends BasicGame {
 
 							if (inputbc == null) {
 								int k2 = JOptionPane.showOptionDialog(null,
-										"Voulez-vous continuer la création/modification", null, JOptionPane.YES_NO_OPTION,
-										JOptionPane.QUESTION_MESSAGE, null, null, null);
+										"Voulez-vous continuer la création/modification", null,
+										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k2 == 1) {
 									t2 = 5;
 								}
@@ -447,10 +445,10 @@ public class View extends BasicGame {
 					bool2 = false;
 					this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
 				}
-			
+
 			} else {
 				this.popup_test_2++;
-				
+
 			}
 
 			// System.out.println("( "+ x + " , " + y + " ) ");
@@ -484,7 +482,6 @@ public class View extends BasicGame {
 			} else
 				uniFont.drawString(921, 440, minute + ":" + seconde / 1000, Color.darkGray);
 
-		
 		}
 
 		// @Override
@@ -507,10 +504,8 @@ public class View extends BasicGame {
 		// return collision;
 		// }
 
-		}
+	}
 
-
-		
 	@Override
 	public void update(GameContainer arg0, int delta) throws SlickException {
 
@@ -542,7 +537,7 @@ public class View extends BasicGame {
 		if (seconde > -delta && seconde < delta) {
 			seconde = 60000;
 			if (minute == 0) {
-				//this.container.exit();
+				// this.container.exit();
 				this.jeufini = true;
 			} else
 				minute--;
@@ -613,20 +608,23 @@ public class View extends BasicGame {
 			}
 		}
 
-		if (canmoverobot)
-			r1.execute();
+		if (Terrain.casexy(r1.getLine(), r1.getCol()).getEntite() != null
+				&& Terrain.casexy(r1.getLine(), r1.getCol()).getEntite().isRobot()) {
+			if (canmoverobot)
+				r1.execute();
 
-		if (secsrobot > 5000) {
-			r1.next_etat();
-			System.out.println("CHANGEMENT " + secsrobot + " " + r1.etat_courant());
-			secsrobot = 0;
-			cmptr_robot = 1;
+			if (secsrobot > 5000) {
+				r1.next_etat();
+				System.out.println("CHANGEMENT " + secsrobot + " " + r1.etat_courant());
+				secsrobot = 0;
+				cmptr_robot = 1;
 
-		} else if (secsrobot > 500 * cmptr_robot) {
-			canmoverobot = true;
-			cmptr_robot++;
-		} else {
-			canmoverobot = false;
+			} else if (secsrobot > 500 * cmptr_robot) {
+				canmoverobot = true;
+				cmptr_robot++;
+			} else {
+				canmoverobot = false;
+			}
 		}
 
 	}
@@ -771,30 +769,9 @@ public class View extends BasicGame {
 						break;
 					}
 				} else if (Terrain.casexy(i, j).isExpr() && Terrain.casexy(i, j).expr().isComportement()) {
-					switch ((Comportement) Terrain.casexy(i, j).expr()) {
-					case Attack:
-						e = new Image("maps/A.png");
+						e = new Image(((Comportement)Terrain.casexy(i, j).expr()).image);
 						e.draw(32 * (15 + j), (32 * i));
-						break;
-					case Kamikaze:
-						e = new Image("maps/K.png");
-						e.draw(32 * (15 + j), (32 * i));
-						break;
-					case Protect:
-						e = new Image("maps/P.png");
-						e.draw(32 * (15 + j), (32 * i));
-						break;
-					case Explore:
-						e = new Image("maps/X.png");
-						e.draw(32 * (15 + j), (32 * i));
-						break;
-					case Suivre:
-						e = new Image("maps/F.png");
-						e.draw(32 * (15 + j), (32 * i));
-						break;
-					default:
-						break;
-					}
+					
 				}
 
 			}
@@ -895,26 +872,9 @@ public class View extends BasicGame {
 					e.draw(1622 + (45 * colonne), 205 + (44 * ligne));
 
 			} else if (j.inventaire().get(i).isComportement()) {
-				switch ((Comportement) j.inventaire().get(i)) {
-				case Attack:
-					e = new Image("maps/A.png");
-					break;
-				case Kamikaze:
-					e = new Image("maps/K.png");
-					break;
-				case Protect:
-					e = new Image("maps/P.png");
-					break;
-				case Explore:
-					e = new Image("maps/X.png");
-					break;
-				case Suivre:
-					e = new Image("maps/F.png");
-					break;
-				default:
-					e = new Image("maps/deuxpoints.png");
-					break;
-				}
+				
+					e = new Image(((Comportement) j.inventaire().get(i)).image);
+				
 
 				if (j.getCouleur() == Couleur.Bleu)
 					e.draw(162 + (45 * colonne), 205 + (44 * ligne));

@@ -43,38 +43,5 @@ public class Node {
 
 	}
 
-	public void decremente_comp() {
-		switch ((Comportement) Gram) {
-		case Un:
-			Gram = Comportement.Zero;
-			break;
-		case Deux:
-			Gram = Comportement.Un;
-			break;
-		case Trois:
-			Gram = Comportement.Deux;
-			break;
-		case Quatre:
-			Gram = Comportement.Trois;
-			break;
-		case Cinq:
-			Gram = Comportement.Quatre;
-			break;
-		case Six:
-			Gram = Comportement.Cinq;
-			break;
-		case Sept:
-			Gram = Comportement.Six;
-			break;
-		case Huit:
-			Gram = Comportement.Sept;
-			break;
-		case Neuf:
-			Gram = Comportement.Huit;
-			break;
-		default:
-			break;
-		}
-	}
 
 }

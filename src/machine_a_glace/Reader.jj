@@ -26,7 +26,8 @@ public class Reader
     {
       throw new JeuException(e);
     }
-    catch (TokenMgrError f) {
+    catch (TokenMgrError f)
+    {
       throw new JeuException(f);
     }
   }
@@ -41,19 +42,10 @@ public class Reader
   {
     switch (s)
     {
-      case "X" : return Comportement.Explore;
-      case "A" : return Comportement.Attack;
-      case "P" : return Comportement.Protect;
-      case "K" : return Comportement.Kamikaze;
-      case "1" : return Comportement.Un;
-      case "2" : return Comportement.Deux;
-      case "3" : return Comportement.Trois;
-      case "4" : return Comportement.Quatre;
-      case "5" : return Comportement.Cinq;
-      case "6" : return Comportement.Six;
-      case "7" : return Comportement.Sept;
-      case "8" : return Comportement.Huit;
-      case "9" : return Comportement.Neuf;
+      case "X" : return Explore.EXPLORE;
+      case "A" : return Attack.ATTACK;
+      case "P" : return Protect.PROTECT;
+      case "K" : return Kamikaze.KAMIKAZE;
       default : throw new JeuException("Comportement non declarer");
     }
   }
@@ -67,6 +59,23 @@ public class Reader
       case "|" : return Operateur.Choixequi;
       case "||" : return Operateur.Choix;
       default : throw new JeuException("Operateur non declarer");
+    }
+  }
+  Chiffre StringtoChiffre(String s)
+  {
+
+    switch(s) {
+		
+      case "1" : return Chiffre.Un;
+      case "2" : return Chiffre.Deux;
+      case "3" : return Chiffre.Trois;
+      case "4" : return Chiffre.Quatre;
+      case "5" : return Chiffre.Cinq;
+      case "6" : return Chiffre.Six;
+      case "7" : return Chiffre.Sept;
+      case "8" : return Chiffre.Huit;
+      case "9" : return Chiffre.Neuf;
+      default : throw new JeuException("Chiffre non declarer");
     }
   }
 }
@@ -209,7 +218,7 @@ Node L() :
   {
     if (Arbre1 != null)
     {
-      return new Node(Arbre1.Gram, new Node(StringtoOp(exp.image), null, new Node(StringtoComp(exp2.image))), Arbre1.FD);
+      return new Node(Arbre1.Gram, new Node(StringtoOp(exp.image), null, new Node(StringtoChiffre(exp2.image))), Arbre1.FD);
     }
     else return new Node(StringtoOp(exp.image), null, new Node(StringtoComp(exp2.image)));
   }

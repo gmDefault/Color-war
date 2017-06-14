@@ -4,5 +4,7 @@ public interface Expr {
 	public boolean isComportement();
 
 	public boolean isOperateur();
+	
+	public boolean isChiffre();
 
 }

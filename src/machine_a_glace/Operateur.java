@@ -22,4 +22,9 @@ public enum Operateur implements Expr {
 	public boolean isOperateur() {
 		return true;
 	}
+
+	@Override
+	public boolean isChiffre() {
+		return false;
+	}
 }
