@@ -202,8 +202,8 @@ public class View extends BasicGame {
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
 		SpriteSheet spriteSheet3 = new SpriteSheet("maps/robot_red.png", 64, 64);
 
-		SpriteSheet spriteSheet4 = new SpriteSheet("maps/bonus.png", 64, 64);
-		SpriteSheet spriteSheet5 = new SpriteSheet("maps/robot_blue.png", 64, 64);
+		SpriteSheet spriteSheet5 = new SpriteSheet("maps/bonus.png", 64, 64);
+		SpriteSheet spriteSheet4 = new SpriteSheet("maps/robot_blue.png", 64, 64);
 
 		this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
 		this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
@@ -409,8 +409,8 @@ public class View extends BasicGame {
 					j1.SetNrj(j1.getNrj() - 75);
 					this.container.pause();
 
-				}
-			}
+				
+			
 				int t = 0;
 				while (t < 1) {
 					JOptionPane r = new JOptionPane();
@@ -471,11 +471,14 @@ public class View extends BasicGame {
 							if (k == 1) {
 								t = 1;
 							}
-						if (retour == 2 || retour == -1) {
-							t = 1;
 						}
-						t++;
 					}
+					if (retour == 2 || retour == -1) {
+						t = 1;
+					}
+					t++;
+				}
+				}
 
 				}else if (Terrain.terrain[this.j1.getLine()][this.j1.getCol()].isCreer() && !j1.isNrj()) {
 					Terrain.terrain[this.j1.getLine()][this.j1.getCol()].setCouleur(Couleur.Neutre);
@@ -485,11 +488,12 @@ public class View extends BasicGame {
 						this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
 					}
 
-				 else {
+				}else {
 					this.popup_test_1++;
+					System.out.println(popup_test_1);
 
 				}
-				}
+				
 
 					
 					
@@ -562,6 +566,7 @@ public class View extends BasicGame {
 								t2 = 1;
 							}
 						}
+					}
 					if (retour2 == 2 || retour2 == -1) {
 						t2 = 1;
 					}
@@ -579,7 +584,7 @@ public class View extends BasicGame {
 				this.popup_test_2++;
 				
 			}
-			}
+			
 
 			// System.out.println("( "+ x + " , " + y + " ) ");
 			// g.drawString(minute + " m " + seconde / 1000 + " s", 945, 470);
@@ -613,7 +618,9 @@ public class View extends BasicGame {
 				uniFont.drawString(921, 440, minute + ":" + seconde / 1000, Color.darkGray);
 
 		
-		}}
+		}
+		
+		}
 			
 
 		// @Override
@@ -636,7 +643,6 @@ public class View extends BasicGame {
 		// return collision;
 		// }
 
-		}
 
 
 		
@@ -661,7 +667,7 @@ public class View extends BasicGame {
 		}
 
 
-		if ((int) (seconde) % 30 == 0) {
+		if ((int) (seconde) % 2 == 0) {
 
 			if (j1.getNrj() < 100)
 				j1.SetNrj(j1.getNrj() + 1);
