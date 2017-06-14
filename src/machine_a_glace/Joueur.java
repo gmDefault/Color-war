@@ -219,4 +219,12 @@ public class Joueur extends Entite {
 	public ArrayList<Robot> robots(){
 		return robots;
 	}
+	
+	public String[] arrayRobottoString(){
+		String[] robot = new String[robots.size()];
+		for (int i = 0;i<robots.size();i++){
+			robot[i] = "robot "+ (i+1);
+		}
+		return robot;
+	}
 }

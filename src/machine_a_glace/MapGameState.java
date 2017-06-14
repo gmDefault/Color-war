@@ -367,7 +367,9 @@ public class MapGameState extends BasicGameState {
 								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
 								bouton[0]);
 						if (retour == 1 && j1.robots().size() >0) {
-							String inputrm = JOptionPane.showInputDialog(null, robot, "Coucou");
+							String[] robot = j1.arrayRobottoString();
+							JComboBox robots = new JComboBox(robot);
+							String inputrm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
 
 							if (inputrm == null) {
 								int k = JOptionPane.showOptionDialog(null,
@@ -463,8 +465,10 @@ public class MapGameState extends BasicGameState {
 								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2,
 								bouton2[0]);
 						if (retour2 == 1 && j2.robots().size()>0) {
-							String inputbm = JOptionPane.showInputDialog(null, robot2, "ccou");
-
+							String[] robot = j2.arrayRobottoString();
+							JComboBox robots = new JComboBox(robot);
+							String inputbm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
+							
 							if (inputbm == null) {
 								int k2 = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
@@ -483,7 +487,7 @@ public class MapGameState extends BasicGameState {
 							String inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 							if (inputbc != null) {
 								Node n = new Node(null);
-								while (!Parser.ExpressionCorrecte(inputbc)) {
+								while (!Parser.ExpressionCorrecte(inputbc) || !(Parser.InventaireOk(inputbc, j2))) {
 									inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 								}
 
