@@ -58,6 +58,10 @@ public class Case {
 		else
 			return cont.toString();
 	}
+	
+	public String ContenuToString(){
+		return cont.toString();
+	}
 
 	public void setExpr(Expr expr) {
 		this.expr = expr;

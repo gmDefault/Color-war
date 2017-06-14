@@ -88,9 +88,29 @@ public class MapGameState extends BasicGameState {
 
 	private boolean canmove = false;
 	private boolean canmove2 = false;
+
+	private boolean canmoverobotr1 = false;
+	private boolean canmoverobotb1 = false;
+	private boolean canmoverobotr2 = false;
+	private boolean canmoverobotb2 = false;
+	private boolean canmoverobotr3 = false;
+	private boolean canmoverobotb3 = false;
+	private boolean canmoverobotr4 = false;
+	private boolean canmoverobotb4 = false;
+
+	public static Joueur j1, j2;
+	private Robot r1r;
+	private Robot r2r;
+	private Robot r3r;
+	private Robot r4r;
+	private Robot r1b;
+	private Robot r2b;
+	private Robot r3b;
+	private Robot r4b;
+
 	private ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
 
-	private Joueur j1, j2;
+
 
 	public static boolean recolorie_par_dessus = false;
 
@@ -131,11 +151,6 @@ public class MapGameState extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		// TODO Auto-generated method stub
 		this.container = container;
-
-		Terrain.initialiser();
-		this.j1 = new Joueur(1, 15, Couleur.Rouge, 50, 100);
-		j1.setD(Direction.Sud);
-		this.j2 = new Joueur(28, 15, Couleur.Bleu, 100, 100);
 
 		boolean y = Parser.ExpressionCorrecte("ddd");
 		System.out.println(y);
@@ -367,7 +382,9 @@ public class MapGameState extends BasicGameState {
 								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
 								bouton[0]);
 						if (retour == 1 && j1.robots().size() >0) {
-							String inputrm = JOptionPane.showInputDialog(null, robot, "Coucou");
+							String[] robot = j1.arrayRobottoString();
+							JComboBox robots = new JComboBox(robot);
+							String inputrm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
 
 							if (inputrm == null) {
 								int k = JOptionPane.showOptionDialog(null,
@@ -441,6 +458,7 @@ public class MapGameState extends BasicGameState {
 					this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
 				}
 
+
 			} else {
 				this.popup_test_1++;
 				// System.out.println(popup_test_1);
@@ -463,8 +481,10 @@ public class MapGameState extends BasicGameState {
 								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2,
 								bouton2[0]);
 						if (retour2 == 1 && j2.robots().size()>0) {
-							String inputbm = JOptionPane.showInputDialog(null, robot2, "ccou");
-
+							String[] robot = j2.arrayRobottoString();
+							JComboBox robots = new JComboBox(robot);
+							String inputbm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
+							
 							if (inputbm == null) {
 								int k2 = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
@@ -483,7 +503,7 @@ public class MapGameState extends BasicGameState {
 							String inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 							if (inputbc != null) {
 								Node n = new Node(null);
-								while (!Parser.ExpressionCorrecte(inputbc)) {
+								while (!Parser.ExpressionCorrecte(inputbc) || !(Parser.InventaireOk(inputbc, j2))) {
 									inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 								}
 
@@ -931,7 +951,15 @@ public class MapGameState extends BasicGameState {
 			break;
 		case Input.KEY_D:
 			this.moving2 = false;
-
+		case Input.KEY_N:
+			Sauvegarde.Writer(minute,seconde);
+			break;
+		case Input.KEY_B:
+			String s;
+			s = Sauvegarde.Reader();
+			String[] mots = s.split(" ");
+			minute = Integer.parseInt(mots[0]);
+			seconde = Integer.parseInt(mots[1]);
 			break;
 		}
 	}
