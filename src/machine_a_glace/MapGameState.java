@@ -771,113 +771,177 @@ public class MapGameState extends BasicGameState {
 			}
 		}
 		
-		if (canmoverobotb1 && j2.getrb()>=1)
-			r1b.execute();
-		if (canmoverobotr2 && j1.getrb()>=2)
-			r2r.execute();
-		if (canmoverobotb2 && j2.getrb()>=2)
-			r2b.execute();
-		if (canmoverobotr3 && j1.getrb()>=3)
-			r3r.execute();
-		if (canmoverobotb3 && j2.getrb()>=3)
-			r3b.execute();
-		if (canmoverobotr4 && j1.getrb()>=4)
-			r4r.execute();
-		if (canmoverobotb4 && j2.getrb()>=4)
-			r4b.execute();
 		
-		
-		
-		if(secsrobotb1 > 5000 && j2.getrb()>=1){
-			r1b.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobot +" " +r2b.etat_courant());
-			secsrobotb1=0;
-			cmptr_robotb1=1;
+		if (r1b != null && Terrain.casexy(r1b.getLine(), r1b.getCol()).getEntite() != null
+				&& Terrain.casexy(r1b.getLine(), r1b.getCol()).getEntite().isRobot()){
+			if (canmoverobotb1 && j2.getrb()>=1)
+				r1b.execute();
 			
-		}else if(secsrobotb1 > 500*cmptr_robotb1){
-			canmoverobotb1= true;
-			cmptr_robotb1++;
-		}else{
-			canmoverobotb1 = false;
+			if(secsrobotb1 > 5000 && j2.getrb()>=1){
+				r1b.next_etat();
+//				System.out.println("CHANGEMENT " + secsrobot +" " +r2b.etat_courant());
+				secsrobotb1=0;
+				cmptr_robotb1=1;
+				
+			}else if(secsrobotb1 > 500*cmptr_robotb1){
+				canmoverobotb1= true;
+				cmptr_robotb1++;
+			}else{
+				canmoverobotb1 = false;
+			}
+			
 		}
 		
-		if(secsrobotr2 > 5000 && j1.getrb()>=2){
-			r2r.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobot +" " +r2r.etat_courant());
-			secsrobotr2=0;
-			 cmptr_robotr2=1;
+		
+		if (r2r != null && Terrain.casexy(r2r.getLine(), r2r.getCol()).getEntite() != null
+				&& Terrain.casexy(r2r.getLine(), r2r.getCol()).getEntite().isRobot()){
 			
-		}else if(secsrobotr2 > 500*cmptr_robotr2){
-			canmoverobotr2= true;
-			cmptr_robotr2++;
-		}else{
-			canmoverobotr2 = false;
+			if (canmoverobotr2 && j1.getrb()>=2)
+				r2r.execute();
+			
+			
+			if(secsrobotr2 > 5000 && j1.getrb()>=2){
+				r2r.next_etat();
+//				System.out.println("CHANGEMENT " + secsrobot +" " +r2r.etat_courant());
+				secsrobotr2=0;
+				 cmptr_robotr2=1;
+				
+			}else if(secsrobotr2 > 500*cmptr_robotr2){
+				canmoverobotr2= true;
+				cmptr_robotr2++;
+			}else{
+				canmoverobotr2 = false;
+			}
+		
 		}
 		
-		if(secsrobotb2 > 5000 && j2.getrb()>=2){
-			r2b.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobot +" " +r2b.etat_courant());
-			secsrobotb2=0;
-			 cmptr_robotb2=1;
+		if (r2b != null && Terrain.casexy(r2b.getLine(), r2b.getCol()).getEntite() != null
+				&& Terrain.casexy(r2b.getLine(), r2b.getCol()).getEntite().isRobot()){
+		
+			if (canmoverobotb2 && j2.getrb()>=2)
+				r2b.execute();
+		
+			if(secsrobotb2 > 5000 && j2.getrb()>=2){
+				r2b.next_etat();
+//				System.out.println("CHANGEMENT " + secsrobot +" " +r2r.etat_courant());
+				secsrobotb2=0;
+				 cmptr_robotb2=1;
+				
+			}else if(secsrobotb2 > 500*cmptr_robotb2){
+				canmoverobotb2= true;
+				cmptr_robotb2++;
+			}else{
+				canmoverobotb2 = false;
+			}
 			
-		}else if(secsrobotb2 > 500*cmptr_robotb2){
-			canmoverobotb2= true;
-			cmptr_robotb2++;
-		}else{
-			canmoverobotb2 = false;
 		}
 		
-		if(secsrobotr3 > 5000 && j1.getrb()>=3){
-			r3r.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobot +" " +r3r.etat_courant());
-			secsrobotr3=0;
-			 cmptr_robotr3=1;
+		if (r3r != null && Terrain.casexy(r3r.getLine(), r3r.getCol()).getEntite() != null
+				&& Terrain.casexy(r3r.getLine(), r3r.getCol()).getEntite().isRobot()){
+		
+			if (canmoverobotr3 && j1.getrb()>=3)
+				r3r.execute();
 			
-		}else if(secsrobotr3 > 500*cmptr_robotr3){
-			canmoverobotr3= true;
-			cmptr_robotr3++;
-		}else{
-			canmoverobotr3 = false;
+			
+			if(secsrobotr3 > 5000 && j1.getrb()>=3){
+				r3r.next_etat();
+//				System.out.println("CHANGEMENT " + secsrobot +" " +r3r.etat_courant());
+				secsrobotr3=0;
+				 cmptr_robotr3=1;
+				
+			}else if(secsrobotr3 > 500*cmptr_robotr3){
+				canmoverobotr3= true;
+				cmptr_robotr3++;
+			}else{
+				canmoverobotr3 = false;
+			}
 		}
 		
-		if(secsrobotb3 > 5000 && j2.getrb()>=3){
-			r3b.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobot +" " +r3b.etat_courant());
-			secsrobotb3=0;
-			 cmptr_robotb3=1;
+		if (r3b != null && Terrain.casexy(r3b.getLine(), r3b.getCol()).getEntite() != null
+				&& Terrain.casexy(r3b.getLine(), r3b.getCol()).getEntite().isRobot()){
+		
+			if (canmoverobotb3 && j2.getrb()>=3)
+				r3b.execute();
 			
-		}else if(secsrobotb3 > 500*cmptr_robotb3){
-			canmoverobotb3= true;
-			cmptr_robotb3++;
-		}else{
-			canmoverobotb3 = false;
+			
+			if(secsrobotb3 > 5000 && j2.getrb()>=3){
+				r3b.next_etat();
+//				System.out.println("CHANGEMENT " + secsrobot +" " +r3b.etat_courant());
+				secsrobotb3=0;
+				 cmptr_robotb3=1;
+				
+			}else if(secsrobotb3 > 500*cmptr_robotb3){
+				canmoverobotb3= true;
+				cmptr_robotb3++;
+			}else{
+				canmoverobotb3 = false;
+			}
+			
 		}
 		
-		if(secsrobotr4 > 5000 && j1.getrb()>=4){
-			r4r.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobot +" " +r4r.etat_courant());
-			secsrobotr4=0;
-			 cmptr_robotr4=1;
+		
+		if (r4r != null && Terrain.casexy(r4r.getLine(), r4r.getCol()).getEntite() != null
+				&& Terrain.casexy(r4r.getLine(), r4r.getCol()).getEntite().isRobot()){
 			
-		}else if(secsrobotr4 > 500*cmptr_robotr4){
-			canmoverobotr4= true;
-			cmptr_robotr4++;
-		}else{
-			canmoverobotr4 = false;
+			if (canmoverobotr4 && j1.getrb()>=4)
+				r4r.execute();
+			
+			
+			if(secsrobotr4 > 5000 && j1.getrb()>=4){
+				r4r.next_etat();
+//				System.out.println("CHANGEMENT " + secsrobot +" " +r4r.etat_courant());
+				secsrobotr4=0;
+				 cmptr_robotr4=1;
+				
+			}else if(secsrobotr4 > 500*cmptr_robotr4){
+				canmoverobotr4= true;
+				cmptr_robotr4++;
+			}else{
+				canmoverobotr4 = false;
+			}
+			
 		}
 		
-		if(secsrobotb4 > 5000 && j2.getrb()>=4){
-			r4b.next_etat();
-//			System.out.println("CHANGEMENT " + secsrobot +" " +r4b.etat_courant());
-			secsrobotb4=0;
-			 cmptr_robotb4=1;
+		
+		if (r4b != null && Terrain.casexy(r4b.getLine(), r4b.getCol()).getEntite() != null
+				&& Terrain.casexy(r4b.getLine(), r4b.getCol()).getEntite().isRobot()){
 			
-		}else if(secsrobotb4 > 500*cmptr_robotb4){
-			canmoverobotb4= true;
-			cmptr_robotb4++;
-		}else{
-			canmoverobotb4 = false;
+			if (canmoverobotb4 && j2.getrb()>=4)
+				r4b.execute();
+			
+			if(secsrobotb4 > 5000 && j2.getrb()>=4){
+				r4b.next_etat();
+//				System.out.println("CHANGEMENT " + secsrobot +" " +r4b.etat_courant());
+				secsrobotb4=0;
+				 cmptr_robotb4=1;
+				
+			}else if(secsrobotb4 > 500*cmptr_robotb4){
+				canmoverobotb4= true;
+				cmptr_robotb4++;
+			}else{
+				canmoverobotb4 = false;
+			}
+			
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 
 	}
