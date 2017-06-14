@@ -379,7 +379,6 @@ public class MapGameState extends BasicGameState {
 									t--;
 								}
 							}
-							t++;
 						}
 						if (retour == 0 && j1.robots().size() < 4) {
 							JOptionPane p = new JOptionPane();
@@ -463,7 +462,7 @@ public class MapGameState extends BasicGameState {
 						int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2,
 								bouton2[0]);
-						if (retour2 == 1) {
+						if (retour2 == 1 && j2.robots().size()>0) {
 							String inputbm = JOptionPane.showInputDialog(null, robot2, "ccou");
 
 							if (inputbm == null) {
