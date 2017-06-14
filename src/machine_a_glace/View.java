@@ -498,7 +498,6 @@ public class View extends BasicGame {
 
 				}else {
 					this.popup_test_1++;
-					System.out.println(popup_test_1);
 
 				}
 				
