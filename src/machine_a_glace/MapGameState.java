@@ -48,9 +48,9 @@ public class MapGameState extends BasicGameState {
 	boolean bool1 = false;
 	boolean bool2 = false;
 	boolean bool3 = false;
-	
+
 	boolean sauve = false;
-	
+
 	boolean menu = false;
 
 	boolean pause = false;
@@ -95,8 +95,6 @@ public class MapGameState extends BasicGameState {
 	private boolean canmove2 = false;
 
 	public static Joueur j1, j2;
-
-
 
 	public static ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
 	public static ArrayList<String> automaterobot = new ArrayList<String>();
@@ -269,7 +267,7 @@ public class MapGameState extends BasicGameState {
 		Image j2g = new Image("maps/j2g.jpg");
 
 		Image pauseimg = new Image("maps/pause.png");
-		Image menuimg = new Image ("maps/menuaide.png");
+		Image menuimg = new Image("maps/menuaide.png");
 
 		if (this.jeufini == true) {
 
@@ -295,11 +293,11 @@ public class MapGameState extends BasicGameState {
 			if (menu == true) {
 				menuimg.draw(0, 0, container.getWidth(), container.getHeight());
 
-
-			} else if (sauve == true){
+			} else if (sauve == true) {
 				pauseimg.draw(0, 0, container.getWidth(), container.getHeight());
 				uniFont3.drawString(500, 350, "Vous venez de sauvegarder la partie,", Color.cyan);
-				uniFont3.drawString(100, 400, "Appuyez sur \"C\" pour la charger au prochain lancement du jeu", Color.cyan);
+				uniFont3.drawString(100, 400, "Appuyez sur \"C\" pour la charger au prochain lancement du jeu",
+						Color.cyan);
 
 				uniFont3.drawString(450 - 40, 650, "Appuyer sur \"P\" pour relancer la partie", Color.cyan);
 			} else {
@@ -358,8 +356,6 @@ public class MapGameState extends BasicGameState {
 			robots_inv2.draw(1580, 670);
 
 			afficher_robots(g);
-
-			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
 
 			// this.popup_test_1 = 0;
 			// if
@@ -667,7 +663,9 @@ public class MapGameState extends BasicGameState {
 			// System.out.println("( "+ x + " , " + y + " ) ");
 			// g.drawString(minute + " m " + seconde / 1000 + " s", 945,
 			// 470);
-
+			
+			afficher_bonus(g);
+			
 			g.setColor(new Color(255, 255, 255));
 			uniFont2.drawString(290, 10, (int) (PourcentBleu * 100) + " % ", Color.blue);
 			g.drawString("" + j2.getPdv(), 190, 120);
@@ -871,7 +869,6 @@ public class MapGameState extends BasicGameState {
 			this.moving2 = false;
 			break;
 
-
 		}
 	}
 
@@ -929,7 +926,7 @@ public class MapGameState extends BasicGameState {
 			// pause", JOptionPane.DEFAULT_OPTION,
 			// JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
 			break;
-			
+
 		case Input.KEY_H:
 			if (pause == false) {
 				this.container.pause();
@@ -977,15 +974,14 @@ public class MapGameState extends BasicGameState {
 				this.moving2 = true;
 			}
 			break;
-			
+
 		case Input.KEY_N:
 			this.pause = true;
 			this.sauve = true;
 			Sauvegarde.Writer(minute, seconde);
 			break;
 		}
-		
-		
+
 	}
 
 	public void afficher_expr() throws SlickException {
@@ -1221,6 +1217,19 @@ public class MapGameState extends BasicGameState {
 
 			}
 
+		}
+	}
+
+	public void afficher_bonus(Graphics g) {
+		if (Terrain.terrain[Terrain.BonusMalus.getLigne()][Terrain.BonusMalus.getCol()]
+				.getCont() == Contenu.Bonus_Malus) {
+			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (Terrain.BonusMalus.getCol() * 32 + 15 * 32 + 16) - 32,
+					(Terrain.BonusMalus.getLigne() * 32 + 16) - 60);
+		}
+		if (Terrain.terrain[Terrain.BonusMalu.getLigne()][Terrain.BonusMalu.getCol()]
+				.getCont() == Contenu.Bonus_Malus) {
+			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (Terrain.BonusMalu.getCol() * 32 + 15 * 32 + 16) - 32,
+					(Terrain.BonusMalu.getLigne() * 32 + 16) - 60);
 		}
 	}
 
