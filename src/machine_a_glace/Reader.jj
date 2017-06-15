@@ -164,33 +164,78 @@ TOKEN :
 | < RACC : "}" >
 | < NUM : [ "1"-"9" ] >
 | < PP : ":" >
+| < ETOILE : "*" >
+}
+
+Node STAR() :
+{
+}
+{
+  < ETOILE >
+  {
+    return new Node(Operateur.Star);
+  }
+|
+  {
+    return null;
+  }
 }
 
 Node EXPRbis() :
 {
   Node arbre, arbre2;
   Token c;
-  Node d;
+  Node d, exp;
 }
 {
-  < LACC > arbre = EXPRbis() < RACC > arbre2 = Lbis()
+  exp = STAR() < LACC > arbre = EXPRbis() < RACC > arbre2 = Lbis()
   {
-    if (arbre2 != null)
+    if (exp == null)
     {
-      if (arbre2.Gram() == Operateur.PointVirgule && arbre2.FG() != null)
+      if (arbre2 != null)
       {
-        Node.SetLeftChild(arbre2.FG(), arbre);
-        return arbre2;
+        if (arbre2.Gram() == Operateur.PointVirgule && arbre2.FG() != null)
+        {
+          Node.SetLeftChild(arbre2.FG(), arbre);
+          return arbre2;
+        }
+        else if (arbre2.Gram() == Operateur.PointVirgule && arbre2.FG() == null)
+        {
+          return new Node(arbre2.Gram(), arbre, arbre2.FD());
+        }
+        else return new Node(arbre2.Gram(), arbre, arbre2.FD());
       }
-      else if (arbre2.Gram() == Operateur.PointVirgule && arbre2.FG() == null)
+      else
       {
-        return new Node(arbre2.Gram(), arbre, arbre2.FD());
+        return arbre;
       }
-      else return new Node(arbre2.Gram(), arbre, arbre2.FD());
     }
     else
     {
-      return arbre;
+      if (arbre2 != null)
+      {
+        if (arbre2.Gram() == Operateur.PointVirgule && arbre2.FG() != null)
+        {
+          Node.SetLeftChild(arbre2.FG(), arbre);
+          exp.setFD(arbre2);
+          return exp;
+        }
+        else if (arbre2.Gram() == Operateur.PointVirgule && arbre2.FG() == null)
+        {
+          exp.setFD(new Node(arbre2.Gram(), arbre, arbre2.FD()));
+          return exp;
+        }
+        else
+        {
+          exp.setFD(new Node(arbre2.Gram(), arbre, arbre2.FD()));
+          return exp;
+        }
+      }
+      else
+      {
+        exp.setFD( arbre);
+        return exp;
+      }
     }
   }
 | c = < COMP > arbre = L()
@@ -200,9 +245,10 @@ Node EXPRbis() :
     else if (arbre != null && arbre.FG() != null)
     {
       d = new Node(StringtoComp(c.image));
-      Node inter=arbre;
-      while(inter.FG() != null) {
-		inter=inter.FG();
+      Node inter = arbre;
+      while (inter.FG() != null)
+      {
+        inter = inter.FG();
       }
       Node.SetLeftChild(inter, d);
       return arbre;
