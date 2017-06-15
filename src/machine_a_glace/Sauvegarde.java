@@ -92,14 +92,14 @@ public class Sauvegarde {
 			}
 			n = Parser.ExpressionCorrecte1(inter[5]);
 			r = new Robot(line, col, c, n);
-			switch(c){
-			case Rouge : 
+			switch (c) {
+			case Rouge:
 				r.setJoueur(MapGameState.j2);
 				break;
-			case Bleu : 
+			case Bleu:
 				r.setJoueur(MapGameState.j1);
 				break;
-			default : 
+			default:
 				throw new JeuException();
 			}
 			r.setD(d);
@@ -109,9 +109,8 @@ public class Sauvegarde {
 			MapGameState.canmoverobots.add(true);
 			MapGameState.automaterobot.add(inter[5]);
 			MapGameState.allrobots.add(r);
-//			r.modificationRobot(n);
-			
-			
+			// r.modificationRobot(n);
+
 		}
 	}
 
@@ -190,7 +189,8 @@ public class Sauvegarde {
 				lineact = MapGameState.j1.getLine();
 				colact = MapGameState.j1.getCol();
 				Terrain.terrain[lineact][colact].setCase(Contenu.Vide);
-				MapGameState.j1.setPdv(pdv);;
+				MapGameState.j1.setPdv(pdv);
+				;
 				MapGameState.j1.SetNrj(nrj);
 				MapGameState.j1.setD(d);
 				MapGameState.j1.setLine(line);
@@ -242,7 +242,8 @@ public class Sauvegarde {
 				lineact = MapGameState.j2.getLine();
 				colact = MapGameState.j2.getCol();
 				Terrain.terrain[lineact][colact].setCase(Contenu.Vide);
-				MapGameState.j2.setPdv(pdv);;
+				MapGameState.j2.setPdv(pdv);
+				;
 				MapGameState.j2.SetNrj(nrj);
 				MapGameState.j2.setD(d);
 				MapGameState.j2.setLine(line);
@@ -365,7 +366,7 @@ public class Sauvegarde {
 	}
 
 	public static void WrtMap(BufferedWriter wrt, int min, int sec) throws IOException {
-		int i, j, k, l,m;
+		int i, j, k, l, m;
 		int countExpr = 0;
 		int taille;
 		String s;
@@ -389,9 +390,11 @@ public class Sauvegarde {
 		for (k = 0; k < 2; k++) {
 			wrt.write(player[k].getLine() + " " + player[k].getCol() + " " + player[k].getD().toString() + " "
 					+ player[k].getCouleur().toString() + " " + player[k].getPdv() + " " + player[k].getNrj() + " "
-					+ player[k].getNombre_Case_Coloriees() + " " + player[k].inventaire().size() + " ");
+					+ player[k].getNombre_Case_Coloriees() + " " + player[k].inventaire().size());
 
-
+			if (player[k].inventaire().size() != 0) {
+				wrt.write("\n");
+			}
 			for (Expr inv : player[k].inventaire()) {
 				wrt.write(inv.toString() + " ");
 			}
@@ -409,7 +412,6 @@ public class Sauvegarde {
 					+ rob.getCouleur().toString() + " " + auto[m++]);
 		}
 
-		
 		wrt.write("\n");
 		for (i = 0; i < taille; i++) {
 			for (j = 0; j < taille; j++) {
