@@ -104,5 +104,9 @@ public class Node {
 	public void setGram(Expr e){
 		Gram=e;
 	}
+	
+	public void setFD(Node a){
+		FD=a;
+	}
 
 }
