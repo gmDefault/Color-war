@@ -153,7 +153,7 @@ public class MapGameState extends BasicGameState {
 		// TODO Auto-generated method stub
 		this.container = container;
 
-		boolean y = Parser.ExpressionCorrecte("ddd");
+		boolean y = Parser.ExpressionCorrecte("{X:4}");
 		System.out.println(y);
 
 		this.map = new TiledMap("maps/map/map1.tmx");
