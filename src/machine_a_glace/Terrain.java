@@ -20,7 +20,6 @@ public class Terrain {
 	private Terrain() {
 
 	}
-
 	public static void initialiser() {
 		for (int i = 0; i < taille; i++) {
 			for (int j = 0; j < taille; j++) {
@@ -168,6 +167,7 @@ public class Terrain {
 			taille--;
 		}
 
+
 		taille = Nbr_Cp_Op;
 		while (taille != 0) {
 
@@ -228,8 +228,7 @@ public class Terrain {
 			System.out.println();
 		}
 	}
-
-	public static Case casexy(int ligne, int colonne) {
+	public static Case casexy(int ligne, int colonne){
 		return terrain[ligne][colonne];
 	}
 
