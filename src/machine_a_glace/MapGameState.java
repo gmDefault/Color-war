@@ -48,7 +48,9 @@ public class MapGameState extends BasicGameState {
 	boolean bool1 = false;
 	boolean bool2 = false;
 	boolean bool3 = false;
-
+	
+	boolean sauve = false;
+	
 	boolean menu = false;
 
 	boolean pause = false;
@@ -94,6 +96,8 @@ public class MapGameState extends BasicGameState {
 
 	public static Joueur j1, j2;
 
+
+
 	public static ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
 	public static ArrayList<String> automaterobot = new ArrayList<String>();
 
@@ -114,9 +118,7 @@ public class MapGameState extends BasicGameState {
 	org.newdawn.slick.UnicodeFont uniFont;
 
 	java.awt.Font UIFont2;
-	java.awt.Font UIFont4;
 	org.newdawn.slick.UnicodeFont uniFont2;
-	org.newdawn.slick.UnicodeFont uniFont4;
 
 	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
 		Animation animation = new Animation();
@@ -131,6 +133,7 @@ public class MapGameState extends BasicGameState {
 		// TODO Auto-generated method stub
 		this.container = container;
 
+		Node n = Reader.read("{A:2>X;K}");
 
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
@@ -138,7 +141,6 @@ public class MapGameState extends BasicGameState {
 		this.secsrobots = new ArrayList<Integer>();
 		this.allrobots = new ArrayList<Robot>();
 		this.cmptr_robots = new ArrayList<Integer>();
-
 
 		try {
 			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
@@ -183,22 +185,6 @@ public class MapGameState extends BasicGameState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		try {
-			UIFont4 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
-					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/cartoon.ttf"));
-			UIFont4 = UIFont4.deriveFont(java.awt.Font.PLAIN, 40.f);
-
-			uniFont4 = new org.newdawn.slick.UnicodeFont(UIFont4);
-			uniFont4.addAsciiGlyphs();
-			uniFont4.getEffects().add(new ColorEffect(java.awt.Color.white));
-			uniFont4.addAsciiGlyphs();
-			uniFont4.loadGlyphs();
-
-		} catch (FontFormatException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 
 		SpriteSheet spriteSheet = new SpriteSheet("maps/char_2.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
@@ -283,7 +269,7 @@ public class MapGameState extends BasicGameState {
 		Image j2g = new Image("maps/j2g.jpg");
 
 		Image pauseimg = new Image("maps/pause.png");
-		Image menuimg = new Image("maps/menuaide.png");
+		Image menuimg = new Image ("maps/menuaide.png");
 
 		if (this.jeufini == true) {
 
@@ -306,11 +292,19 @@ public class MapGameState extends BasicGameState {
 			game.enterState(MainScreenGameState.ID);
 
 		} else if (pause == true) {
-			if (menu == false) {
+			if (menu == true) {
+				menuimg.draw(0, 0, container.getWidth(), container.getHeight());
+
+
+			} else if (sauve == true){
+				pauseimg.draw(0, 0, container.getWidth(), container.getHeight());
+				uniFont3.drawString(500, 350, "Vous venez de sauvegarder la partie,", Color.cyan);
+				uniFont3.drawString(100, 400, "Appuyez sur \"C\" pour la charger au prochain lancement du jeu", Color.cyan);
+
+				uniFont3.drawString(450 - 40, 650, "Appuyer sur \"P\" pour relancer la partie", Color.cyan);
+			} else {
 				pauseimg.draw(0, 0, container.getWidth(), container.getHeight());
 				uniFont3.drawString(450 - 40, 450, "Appuyer sur \"P\" pour relancer la partie", Color.cyan);
-			} else {
-				menuimg.draw(0, 0, container.getWidth(), container.getHeight());
 			}
 
 		} else {
@@ -365,7 +359,7 @@ public class MapGameState extends BasicGameState {
 
 			afficher_robots(g);
 
-			afficher_bonus(g);
+			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
 
 			// this.popup_test_1 = 0;
 			// if
@@ -703,8 +697,6 @@ public class MapGameState extends BasicGameState {
 				uniFont.drawString(921, 440, minute + ":" + seconde / 1000, Color.darkGray);
 
 		}
-		if (allrobots.size() > 1)
-			System.out.println(allrobots.get(1).getPdv());
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -878,16 +870,8 @@ public class MapGameState extends BasicGameState {
 		case Input.KEY_D:
 			this.moving2 = false;
 			break;
-		case Input.KEY_N:
-			Sauvegarde.Writer(minute, seconde);
-			break;
-		case Input.KEY_B:
-			String s;
-			s = Sauvegarde.Reader();
-			String[] mots = s.split(" ");
-			minute = Integer.parseInt(mots[0]);
-			seconde = Integer.parseInt(mots[1]);
-			break;
+
+
 		}
 	}
 
@@ -936,6 +920,7 @@ public class MapGameState extends BasicGameState {
 
 			} else {
 				this.pause = false;
+				this.sauve = false;
 			}
 
 			// JOptionPane pause = new JOptionPane();
@@ -944,7 +929,7 @@ public class MapGameState extends BasicGameState {
 			// pause", JOptionPane.DEFAULT_OPTION,
 			// JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
 			break;
-
+			
 		case Input.KEY_H:
 			if (pause == false) {
 				this.container.pause();
@@ -992,7 +977,15 @@ public class MapGameState extends BasicGameState {
 				this.moving2 = true;
 			}
 			break;
+			
+		case Input.KEY_N:
+			this.pause = true;
+			this.sauve = true;
+			Sauvegarde.Writer(minute, seconde);
+			break;
 		}
+		
+		
 	}
 
 	public void afficher_expr() throws SlickException {
@@ -1007,13 +1000,10 @@ public class MapGameState extends BasicGameState {
 						e = new Image("maps/deuxpoints.png");
 						e.draw(32 * (15 + j), (32 * i));
 						break;
-//					case Bonus:
-//						e =new Image("maps/bonus.png");
-//						e.draw(32 * (15 + j), (32 * i));
-//					//	e.drawAnimation(animations5[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
-////						e.drawAnimation(animations5[0],
-////								(32 * (15 + j),  (32 * i));
-//						break;
+					case PointVirgule:
+						e = new Image("maps/pointvirgule.png");
+						e.draw(32 * (15 + j), (32 * i));
+						break;
 					case Choix:
 						e = new Image("maps/doublepipe.png");
 						e.draw(32 * (15 + j), (32 * i));
@@ -1038,7 +1028,6 @@ public class MapGameState extends BasicGameState {
 					e.draw(32 * (15 + j), (32 * i));
 
 				}
-			
 
 			}
 		}
@@ -1113,9 +1102,9 @@ public class MapGameState extends BasicGameState {
 				case Deuxpoints:
 					e = new Image("maps/deuxpoints.png");
 					break;
-//				case PointVirgule:
-//					e = new Image("maps/pointvirgule.png");
-//					break;
+				case PointVirgule:
+					e = new Image("maps/pointvirgule.png");
+					break;
 				case Choix:
 					e = new Image("maps/doublepipe.png");
 					break;
@@ -1216,7 +1205,6 @@ public class MapGameState extends BasicGameState {
 
 	public void afficher_robots(Graphics g) throws SlickException {
 		Image e;
-
 		int nb_robot_rouge = 0;
 		int nb_robot_bleu = 0;
 		for (int i = 0; i < allrobots.size(); i++) {
@@ -1235,14 +1223,5 @@ public class MapGameState extends BasicGameState {
 
 		}
 	}
-	
-	public void afficher_bonus(Graphics g) {
-		if (Terrain.terrain[Terrain.BonusMalus.getLigne() ][Terrain.BonusMalus.getCol() ].getCont() == Contenu.Bonus_Malus){
-			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (Terrain.BonusMalus.getCol() * 32 + 15 * 32 + 16) - 32, (Terrain.BonusMalus.getLigne() * 32 + 16) - 60);
-		}
-		if (Terrain.terrain[Terrain.BonusMalu.getLigne() ][Terrain.BonusMalu.getCol() ].getCont() == Contenu.Bonus_Malus){
-	g.drawAnimation(animations5[0 + (true ? 4 : 0)], (Terrain.BonusMalu.getCol() * 32 + 15 * 32 + 16) - 32, (Terrain.BonusMalu.getLigne() * 32 + 16) - 60);
 
-		
-	}}
 }
