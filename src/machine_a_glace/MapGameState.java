@@ -89,24 +89,7 @@ public class MapGameState extends BasicGameState {
 	private boolean canmove = false;
 	private boolean canmove2 = false;
 
-	private boolean canmoverobotr1 = false;
-	private boolean canmoverobotb1 = false;
-	private boolean canmoverobotr2 = false;
-	private boolean canmoverobotb2 = false;
-	private boolean canmoverobotr3 = false;
-	private boolean canmoverobotb3 = false;
-	private boolean canmoverobotr4 = false;
-	private boolean canmoverobotb4 = false;
-
 	public static Joueur j1, j2;
-	private Robot r1r;
-	private Robot r2r;
-	private Robot r3r;
-	private Robot r4r;
-	private Robot r1b;
-	private Robot r2b;
-	private Robot r3b;
-	private Robot r4b;
 
 	private ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
 	private ArrayList<String> automaterobot = new ArrayList<String>();

@@ -16,6 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class ColorWar extends StateBasedGame {
 	public static Musique m;
 	public static void main(String[] args) throws SlickException {
+		
 //		m = new Musique();
 //		m.start();
 		Terrain.initialiser();
