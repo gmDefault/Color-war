@@ -39,7 +39,7 @@ public class MapGameState extends BasicGameState {
 
 	int seconde = 10000;
 
-	int minute = 5 ;
+	int minute =5;
 
 	boolean jeufini = false;
 
@@ -157,7 +157,7 @@ public class MapGameState extends BasicGameState {
 		// TODO Auto-generated method stub
 		this.container = container;
 
-		boolean y = Parser.ExpressionCorrecte("{X:4}");
+		boolean y = Parser.ExpressionCorrecte("{{X:2};{X:2}}");
 		System.out.println(y);
 
 		this.map = new TiledMap("maps/map/map1.tmx");
