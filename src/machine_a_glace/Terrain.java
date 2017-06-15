@@ -14,7 +14,7 @@ public class Terrain {
 	private static Coordonnees CreationBleu = new Coordonnees(26, 15);
 	public static Coordonnees BonusMalus = new Coordonnees(5, 15);
 	public static Coordonnees BonusMalu = new Coordonnees(24, 15);
-	public static ArrayList<IntCoor> Repop = new ArrayList<IntCoor>(Nbr_Cp_Op);
+	public static ArrayList<IntCoor> Repop = new ArrayList<IntCoor>(Nbr_Cp_Op+2);
 	public static int Index = 0;
 
 	private Terrain() {
