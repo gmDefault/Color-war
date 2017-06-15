@@ -175,7 +175,6 @@ Node EXPRbis() :
 {
   < LACC > arbre = EXPRbis() < RACC > arbre2 = Lbis()
   {
-
     if (arbre2 != null)
     {
       if (arbre2.Gram() == Operateur.PointVirgule && arbre2.FG() != null)
@@ -188,8 +187,10 @@ Node EXPRbis() :
         return new Node(arbre2.Gram(), arbre, arbre2.FD());
       }
       else return new Node(arbre2.Gram(), arbre, arbre2.FD());
-    }else {
-		return arbre;
+    }
+    else
+    {
+      return arbre;
     }
   }
 | c = < COMP > arbre = L()
@@ -199,7 +200,11 @@ Node EXPRbis() :
     else if (arbre != null && arbre.FG() != null)
     {
       d = new Node(StringtoComp(c.image));
-      Node.SetLeftChild(arbre.FG(), d);
+      Node inter=arbre;
+      while(inter.FG() != null) {
+		inter=inter.FG();
+      }
+      Node.SetLeftChild(inter, d);
       return arbre;
     }
     else return new Node(StringtoComp(c.image));
@@ -223,7 +228,13 @@ Node L() :
   {
     if (Arbre1 != null)
     {
-      return new Node(Arbre1.Gram(), new Node(StringtoOp(exp.image), null, new Node(StringtoChiffre(exp2.image))), Arbre1.FD());
+      Node inter = Arbre1;
+      while (inter.FG() != null)
+      {
+        inter = inter.FG();
+      }
+      Node.SetLeftChild(inter, new Node(StringtoOp(exp.image), null, new Node(StringtoChiffre(exp2.image))));
+      return Arbre1;
     }
     else return new Node(StringtoOp(exp.image), null, new Node(StringtoChiffre(exp2.image)));
   }

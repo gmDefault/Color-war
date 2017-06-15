@@ -139,7 +139,10 @@ public class MapGameState extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		// TODO Auto-generated method stub
 		this.container = container;
-
+		
+		
+		Node n=Reader.read("{A:2>X;K}");
+		
 
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
