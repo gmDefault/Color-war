@@ -115,7 +115,7 @@ public class Sauvegarde {
 				lineact = MapGameState.j1.getLine();
 				colact = MapGameState.j1.getCol();
 				Terrain.terrain[lineact][colact].setCase(Contenu.Vide);
-				MapGameState.j1.pdv = pdv;
+				MapGameState.j1.setPdv(pdv);
 				MapGameState.j1.SetNrj(nrj);
 				MapGameState.j1.setD(d);
 				MapGameState.j1.setLine(line);
@@ -167,7 +167,7 @@ public class Sauvegarde {
 				lineact = MapGameState.j2.getLine();
 				colact = MapGameState.j2.getCol();
 				Terrain.terrain[lineact][colact].setCase(Contenu.Vide);
-				MapGameState.j2.pdv = pdv;
+				MapGameState.j2.setPdv(pdv); 
 				MapGameState.j2.SetNrj(nrj);
 				MapGameState.j2.setD(d);
 				MapGameState.j2.setLine(line);
