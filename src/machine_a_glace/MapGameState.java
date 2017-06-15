@@ -382,10 +382,23 @@ public class MapGameState extends BasicGameState {
 								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
 								bouton[0]);
 						if (retour == 1 && j1.robots().size() >0) {
+							
 							String[] robot = j1.arrayRobottoString();
 							JComboBox robots = new JComboBox(robot);
 							String inputrm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
-
+							if (inputrm != null){
+								Node n = new Node(null);
+								while (!Parser.ExpressionCorrecte(inputrm) || !(Parser.InventaireOk(inputrm, j1))) {
+									inputrm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
+								}
+								String p = (String)robots.getSelectedItem();
+								System.out.println(p);
+								n = Parser.ExpressionCorrecte1(inputrm);
+								n = new Node(Operateur.Star, null, n);
+								int i = p.charAt(6)-'0';
+//								System.out.println(i);
+								j1.robots().get(i-1).modificationRobot(n);
+							}
 							if (inputrm == null) {
 								int k = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
@@ -443,6 +456,9 @@ public class MapGameState extends BasicGameState {
 						else if (retour == 0 && j1.robots().size() == 4) {
 							t--;
 						}
+						else if (retour == 1 && j1.robots().size() == 0) {
+							t--;
+						}
 						if (retour == 2 || retour == -1) {
 							t = 1;
 						}
@@ -494,7 +510,7 @@ public class MapGameState extends BasicGameState {
 								n = Parser.ExpressionCorrecte1(inputbm);
 								n = new Node(Operateur.Star, null, n);
 								int i = k.charAt(6)-'0';
-								System.out.println(i);
+//								System.out.println(i);
 								j2.robots().get(i-1).modificationRobot(n);
 							}
 							if (inputbm == null) {
@@ -542,6 +558,10 @@ public class MapGameState extends BasicGameState {
 									t2--;
 								}
 							}
+						}else if (retour2 == 0 && j1.robots().size() == 4) {
+							t2--;
+						}else if (retour2 == 1 && j1.robots().size() == 0) {
+							t2--;
 						}
 						if (retour2 == 2 || retour2 == -1) {
 							t2 = 1;
