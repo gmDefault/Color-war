@@ -62,9 +62,7 @@ public class MapGameState extends BasicGameState {
 	private int direction = 2;
 	private int direction2 = 0;
 	private boolean moving = false;
-	private long lasttime = System.currentTimeMillis();
-	private long lasttime2 = System.currentTimeMillis();
-	private long lasttime3 = System.currentTimeMillis();
+
 
 	private int secs1 = 0;
 	private int secs2 = 0;
@@ -93,24 +91,9 @@ public class MapGameState extends BasicGameState {
 	private boolean canmove = false;
 	private boolean canmove2 = false;
 
-	private boolean canmoverobotr1 = false;
-	private boolean canmoverobotb1 = false;
-	private boolean canmoverobotr2 = false;
-	private boolean canmoverobotb2 = false;
-	private boolean canmoverobotr3 = false;
-	private boolean canmoverobotb3 = false;
-	private boolean canmoverobotr4 = false;
-	private boolean canmoverobotb4 = false;
 
 	public static Joueur j1, j2;
-	private Robot r1r;
-	private Robot r2r;
-	private Robot r3r;
-	private Robot r4r;
-	private Robot r1b;
-	private Robot r2b;
-	private Robot r3b;
-	private Robot r4b;
+
 
 	private ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
 	private ArrayList<String> automaterobot = new ArrayList<String>();
@@ -127,13 +110,10 @@ public class MapGameState extends BasicGameState {
 	private Animation[] animations5 = new Animation[8];
 
 
-	// private ImageIcon ic = new ImageIcon("maps/robot.png");
 	private ImageIcon icr = new ImageIcon("maps/tete_robot_rouge.png");
 	private ImageIcon icb = new ImageIcon("maps/tete_robot_bleu.png");
 	private Dimension d = new Dimension(100, 100);
-	// private String tab[] = { "Frapper", "Explorer", "Kamikaze", ";", "*", ">"
-	// };
-	// private String tab2[] = { "Manger", "Fumer", "Rond-Poing" };
+
 
 	java.awt.Font UIFont1;
 	org.newdawn.slick.UnicodeFont uniFont;
