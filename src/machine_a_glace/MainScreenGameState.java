@@ -95,15 +95,15 @@ public class MainScreenGameState extends BasicGameState {
 				uniFont2.drawString(450-40, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.white);
 				uniFont2.drawString(475-40, 550, "Appuyer sur \"C\" pour charger une partie", Color.white);
 
-				uniFont2.drawString(480-40, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.white);
-				uniFont2.drawString(440-40, 750, "Appuyer sur \"M\" pour lancer le menu d'aide", Color.white);
+				uniFont2.drawString(480-40, 750, "Appuyer sur \"Q\" pour quitter le jeu", Color.white);
+				uniFont2.drawString(440-40, 650, "Appuyer sur \"M\" pour lancer le menu d'aide", Color.white);
 				timer++;
 			} else {
 				uniFont2.drawString(450-40, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.cyan);
 				uniFont2.drawString(475-40, 550, "Appuyer sur \"C\" pour charger une partie", Color.cyan);
 
-				uniFont2.drawString(480-40, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.cyan);
-				uniFont2.drawString(440-40, 750, "Appuyer sur \"M\" pour lancer le menu d'aide", Color.cyan);
+				uniFont2.drawString(480-40, 750, "Appuyer sur \"Q\" pour quitter le jeu", Color.cyan);
+				uniFont2.drawString(440-40, 650, "Appuyer sur \"M\" pour lancer le menu d'aide", Color.cyan);
 				timer++;
 				if (timer == 50) {
 					timer = 0;
