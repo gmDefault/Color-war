@@ -37,9 +37,9 @@ public class MapGameState extends BasicGameState {
 	private GameContainer container;
 	private TiledMap map;
 
-	int seconde = 10000;
+	static int seconde = 10000;
 
-	int minute = 5;
+	static int minute = 5;
 
 	boolean jeufini = false;
 

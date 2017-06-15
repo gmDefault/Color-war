@@ -147,6 +147,34 @@ public class MainScreenGameState extends BasicGameState {
 		case Input.KEY_Q: 
 			this.container.exit();
 			break;
+		case Input.KEY_C:
+			
+			try {
+				if (this.joueur_1_gagne || this.joueur_2_gagne || this.egalite) {
+					Terrain.initialiser();
+					this.container.reinit();
+					MapGameState.j1 = new Joueur(1, 15, Couleur.Rouge, 100, 100);
+					MapGameState.j1.setD(Direction.Sud);
+					MapGameState.j2 = new Joueur(28, 15, Couleur.Bleu, 100, 100);
+				}
+				this.joueur_1_gagne = false;
+				this.joueur_2_gagne = false;
+				this.egalite = false;
+		
+
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			game.enterState(MapGameState.ID);
+			
+			
+			String s;
+			s = Sauvegarde.Reader();
+			String[] mots = s.split(" ");
+			MapGameState.minute = Integer.parseInt(mots[0]);
+			MapGameState.seconde = Integer.parseInt(mots[1]);
+			break;
 
 		}
 			
