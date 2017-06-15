@@ -43,7 +43,7 @@ public class MapGameState extends BasicGameState {
 
 	boolean jeufini = false;
 
-	private ArrayList<Integer> cmptr_robots;
+	public static ArrayList<Integer> cmptr_robots;
 
 	boolean bool1 = false;
 	boolean bool2 = false;
@@ -66,7 +66,7 @@ public class MapGameState extends BasicGameState {
 
 	private int secs1 = 0;
 	private int secs2 = 0;
-	private ArrayList<Integer> secsrobots;
+	public static ArrayList<Integer> secsrobots;
 
 	public static ArrayList<Robot> allrobots;
 
@@ -135,7 +135,10 @@ public class MapGameState extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		// TODO Auto-generated method stub
 		this.container = container;
-
+		
+		
+		Node n=Reader.read("{A:2>X;K}");
+		
 
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);

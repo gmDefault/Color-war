@@ -3,6 +3,8 @@ package machine_a_glace;
 public class Robot extends Entite {
 
 	private Node automate;
+
+
 	private Node etat_courant;
 	private int nb_tour;
 	private boolean fonctionne = true;
@@ -19,7 +21,10 @@ public class Robot extends Entite {
 		Terrain.terrain[getLine()][getCol()].setEntite(this);
 		next_etat();
 	}
-
+	
+	public Node getAutomate() {
+		return automate;
+	}
 	public void execute() {
 		if (isPriorite)
 			fonctionne = ((Comportement) etat_courant.Gram()).execute(this);

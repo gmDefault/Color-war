@@ -26,8 +26,6 @@ public class Sauvegarde {
 		String str = "";
 		String str_1, str_2 = "";
 		try {
-			MapGameState.allrobots.clear();
-			MapGameState.canmoverobots.clear();
 			BufferedReader reader = new BufferedReader(new FileReader(new File("w4jr1krkd1042kd42.txt")));
 			ReplacePlayer(reader);
 			str = reader.readLine();
@@ -58,6 +56,11 @@ public class Sauvegarde {
 		Robot r;
 		str = rdr.readLine();
 		nbr = Integer.parseInt(str);
+		MapGameState.allrobots.clear();
+		MapGameState.canmoverobots.clear();
+		MapGameState.cmptr_robots.clear();
+		MapGameState.secsrobots.clear();
+		MapGameState.automaterobot.clear();
 		for (i = 0; i < nbr; i++) {
 			str = rdr.readLine();
 			inter = str.split(" ");
@@ -94,21 +97,24 @@ public class Sauvegarde {
 			r = new Robot(line, col, c, n);
 			switch (c) {
 			case Rouge:
-				r.setJoueur(MapGameState.j2);
+				r.setJoueur(MapGameState.j1);
 				break;
 			case Bleu:
-				r.setJoueur(MapGameState.j1);
+				r.setJoueur(MapGameState.j2);
 				break;
 			default:
 				throw new JeuException();
 			}
 			r.setD(d);
 			r.setPdv(pdv);
+			case_r.setCase(Contenu.Vide);
 			case_r.setEntite(r);
 			case_r.setCase(Contenu.Robot);
-			MapGameState.canmoverobots.add(true);
+			MapGameState.canmoverobots.add(false);
 			MapGameState.automaterobot.add(inter[5]);
 			MapGameState.allrobots.add(r);
+			MapGameState.cmptr_robots.add(1);
+			MapGameState.secsrobots.add(0);
 			// r.modificationRobot(n);
 
 		}
@@ -190,7 +196,6 @@ public class Sauvegarde {
 				colact = MapGameState.j1.getCol();
 				Terrain.terrain[lineact][colact].setCase(Contenu.Vide);
 				MapGameState.j1.setPdv(pdv);
-				;
 				MapGameState.j1.SetNrj(nrj);
 				MapGameState.j1.setD(d);
 				MapGameState.j1.setLine(line);
@@ -242,8 +247,7 @@ public class Sauvegarde {
 				lineact = MapGameState.j2.getLine();
 				colact = MapGameState.j2.getCol();
 				Terrain.terrain[lineact][colact].setCase(Contenu.Vide);
-				MapGameState.j2.setPdv(pdv);
-				;
+				MapGameState.j2.setPdv(pdv); 
 				MapGameState.j2.SetNrj(nrj);
 				MapGameState.j2.setD(d);
 				MapGameState.j2.setLine(line);
