@@ -17,7 +17,7 @@ public class Kamikaze extends Comportement {
 
 		r.setProtection(false);
 
-		boolean present = EnnemiPresentNCase(line, col, 2);
+ 		boolean present = EnnemiPresentNCase(line, col, 2);
 		if (present) {
 			Explosion(line, col, r);
 			return true;

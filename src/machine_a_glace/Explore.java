@@ -18,7 +18,8 @@ public class Explore extends Comportement {
 		d = r.direction();
 		double random;
 		r.setProtection(false);
-
+		random = Math.random();
+		r.RandomChangeDirection();
 		if (r.next_case().isAccessible())
 			r.Avancer(1);
 		else {

@@ -12,7 +12,8 @@ public class Terrain {
 	private static ArrayList<Coordonnees> coordonnees_cp_op = new ArrayList<Coordonnees>(Nbr_Cp_Op);
 	private static Coordonnees CreationRouge = new Coordonnees(3, 15);
 	private static Coordonnees CreationBleu = new Coordonnees(26, 15);
-	private static Coordonnees BonusMalus = new Coordonnees(5, 15);
+	public static Coordonnees BonusMalus = new Coordonnees(5, 15);
+	public static Coordonnees BonusMalu = new Coordonnees(24, 15);
 	public static ArrayList<IntCoor> Repop = new ArrayList<IntCoor>(Nbr_Cp_Op);
 	public static int Index = 0;
 
@@ -32,6 +33,7 @@ public class Terrain {
 		Initialiser_coordonnees_cp_op();
 		Initialiser_comportements_operateurs(coordonnees_cp_op);
 		Initialiser_cases_creer();
+		Initialiser_bonus();
 
 	}
 
@@ -71,9 +73,9 @@ public class Terrain {
 
 	// Fonction qui crée un timer de repop pour une expression qui vient d'être
 	// ramassé
-	public static void PutTimer(int line, int col) {
+	public static void PutTimer(int line, int col,int time) {
 		Coordonnees c = new Coordonnees(line, col);
-		IntCoor ic = new IntCoor(30000, c);
+		IntCoor ic = new IntCoor(time, c);
 		Repop.add(ic);
 		Index++;
 	}
@@ -88,6 +90,10 @@ public class Terrain {
 		if (Repop.size() > 0) {
 			if (Repop.get(0).timer <= 0) {
 				Coordonnees c = Repop.get(0).coord;
+				if(( c.getCol()==Terrain.BonusMalu.getCol()&&c.getLigne()==Terrain.BonusMalu.getLigne() )||(c.getCol()==Terrain.BonusMalus.getCol()&&c.getLigne()==Terrain.BonusMalus.getLigne() ) ){
+					Terrain.terrain[c.getLigne()][c.getCol()].setCase(Contenu.Bonus_Malus);
+					Repop.remove(Repop.get(0));
+				}else {
 				Expr e = New_Cp_Op();
 				while (!e.isOperateur() && !e.isComportement())
 					e = New_Cp_Op();
@@ -96,6 +102,7 @@ public class Terrain {
 				Repop.remove(Repop.get(0));
 				Index--;
 				b = true;
+			}
 			}
 		}
 		return b;
@@ -137,25 +144,23 @@ public class Terrain {
 		int taille = (Nbr_Cp_Op / 2) + 1;
 		while (taille != 0) {
 			rand = Math.random();
-			if (rand < 0.16) {
+			if (rand < 0.2) {
 				op.add(Operateur.Choix);
-			} else if (rand < 0.32) {
+			} else if (rand < 0.4) {
 				op.add(Operateur.Choixequi);
-			} else if (rand < 0.49) {
+			} else if (rand < 0.6) {
 				op.add(Operateur.Deuxpoints);
-			} else if (rand < 0.66) {
-				op.add(Operateur.PointVirgule);
-			} else if (rand < 0.83) {
+			} else if (rand < 0.8) {
 				op.add(Operateur.Priorite);
 			} else {
 				op.add(Operateur.Star);
 			}
 
-			if (rand < 0.25) {
-				cp.add(Attack.ATTACK);
-			} else if (rand < 0.5) {
+			if (rand < 0.3) {
 				cp.add(Explore.EXPLORE);
-			} else if (rand < 0.75) {
+			} else if (rand < 0.53) {
+				cp.add(Attack.ATTACK);
+			} else if (rand < 0.76) {
 				cp.add(Kamikaze.KAMIKAZE);
 			} else {
 				cp.add(Protect.PROTECT);
@@ -184,6 +189,7 @@ public class Terrain {
 
 		int index = coord.size() - 1;
 		while (!coord.isEmpty()) {
+			
 			Terrain.terrain[coord.get(index).getLigne()][coord.get(index).getCol()].setCase(Contenu.Expression);
 			Terrain.terrain[coord.get(index).getLigne()][coord.get(index).getCol()].setExpr(OpCp.get(index));
 			coord.remove(index);
@@ -192,8 +198,15 @@ public class Terrain {
 
 	}
 
+	public static void Initialiser_bonus(){
+		int nombreAleatoire = 45000 + (int)(Math.random() * ((115000 - 45000) + 1));
+
+		Terrain.PutTimer(BonusMalus.getLigne(), BonusMalus.getCol(),nombreAleatoire);
+		nombreAleatoire = 45000 + (int)(Math.random() * ((115000 - 45000) + 1));
+		Terrain.PutTimer(BonusMalu.getLigne(), BonusMalu.getCol(),nombreAleatoire);
+	
+	}
 	public static void Initialiser_cases_creer() {
-		Terrain.terrain[BonusMalus.getLigne()][BonusMalus.getCol()].setCase(Contenu.Bonus_Malus);
 		Terrain.terrain[CreationBleu.getLigne()][CreationBleu.getCol()].setCase(Contenu.Creer);
 		Terrain.terrain[CreationRouge.getLigne()][CreationRouge.getCol()].setCase(Contenu.Creer);
 	}

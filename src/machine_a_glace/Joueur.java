@@ -142,7 +142,10 @@ public class Joueur extends Entite {
 
 			}
 			if (Terrain.terrain[getLine()][getCol()].getCont() == Contenu.Bonus_Malus) {
+				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
 				MapGameState.bonus_malus = true;
+				double rand = 45000 + (int)(Math.random() * (115000 - 45000 -1));
+				Terrain.PutTimer(getLine(), getCol(),(int)rand);
 				
 				
 			}
@@ -150,9 +153,9 @@ public class Joueur extends Entite {
 				
 				inventaire().add(Terrain.casexy(getLine(), getCol()).expr());
 				Terrain.casexy(getLine(), getCol()).setExpr(null);
-				Terrain.PutTimer(getLine(), getCol());
+				Terrain.PutTimer(getLine(), getCol(),30000);
 			}else if (Terrain.casexy(getLine(), getCol()).isExpr()){
-				Terrain.PutTimer(getLine(), getCol());
+				Terrain.PutTimer(getLine(), getCol(),30000);
 			}
 			
 			
