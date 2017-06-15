@@ -109,6 +109,7 @@ public class MapGameState extends BasicGameState {
 	private Robot r4b;
 
 	private ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
+	private ArrayList<String> automaterobot = new ArrayList<String>();
 
 
 
@@ -398,6 +399,7 @@ public class MapGameState extends BasicGameState {
 								int i = p.charAt(6)-'0';
 //								System.out.println(i);
 								j1.robots().get(i-1).modificationRobot(n);
+								automaterobot.set(i-1, inputrm);
 							}
 							if (inputrm == null) {
 								int k = JOptionPane.showOptionDialog(null,
@@ -414,7 +416,7 @@ public class MapGameState extends BasicGameState {
 							JOptionPane p = new JOptionPane();
 							ArrayList<String> tab5 = j1.inventaire_toString();
 
-							String inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
+							String inputrc = p.showInputDialog(tab5,"Saisissez votre expression");
 							if (inputrc != null) {
 								// System.out.println(inputrc);
 								Node m = new Node(null);
@@ -436,6 +438,7 @@ public class MapGameState extends BasicGameState {
 								canmoverobots.add(false);
 								cmptr_robots.add(1);
 								secsrobots.add(0);
+								automaterobot.add(inputrc);
 
 							}
 							tab5.clear();
@@ -512,6 +515,7 @@ public class MapGameState extends BasicGameState {
 								int i = k.charAt(6)-'0';
 //								System.out.println(i);
 								j2.robots().get(i-1).modificationRobot(n);
+								automaterobot.set(i-1, inputbm);
 							}
 							if (inputbm == null) {
 								int k2 = JOptionPane.showOptionDialog(null,
@@ -546,6 +550,7 @@ public class MapGameState extends BasicGameState {
 								canmoverobots.add(false);
 								cmptr_robots.add(1);
 								secsrobots.add(0);
+								automaterobot.add(inputbc);
 							}
 							tab4.clear();
 							if (inputbc == null) {
