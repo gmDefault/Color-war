@@ -62,9 +62,7 @@ public class MapGameState extends BasicGameState {
 	private int direction = 2;
 	private int direction2 = 0;
 	private boolean moving = false;
-	private long lasttime = System.currentTimeMillis();
-	private long lasttime2 = System.currentTimeMillis();
-	private long lasttime3 = System.currentTimeMillis();
+
 
 	private int secs1 = 0;
 	private int secs2 = 0;
@@ -93,7 +91,11 @@ public class MapGameState extends BasicGameState {
 	private boolean canmove = false;
 	private boolean canmove2 = false;
 
+
+
 	public static Joueur j1, j2;
+
+
 
 	private ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
 	private ArrayList<String> automaterobot = new ArrayList<String>();
@@ -109,17 +111,11 @@ public class MapGameState extends BasicGameState {
 	private Animation[] animations4 = new Animation[8];
 	private Animation[] animations5 = new Animation[8];
 
-	private String item[] = { "Robot1", "Robot2", "Robot3" };
-	private String item2[] = { "Robot1", "Robot2", "Robot3" };
-	private JComboBox robot = new JComboBox(item);
-	private JComboBox robot2 = new JComboBox(item2);
-	// private ImageIcon ic = new ImageIcon("maps/robot.png");
+
 	private ImageIcon icr = new ImageIcon("maps/tete_robot_rouge.png");
 	private ImageIcon icb = new ImageIcon("maps/tete_robot_bleu.png");
 	private Dimension d = new Dimension(100, 100);
-	// private String tab[] = { "Frapper", "Explorer", "Kamikaze", ";", "*", ">"
-	// };
-	// private String tab2[] = { "Manger", "Fumer", "Rond-Poing" };
+
 
 	java.awt.Font UIFont1;
 	org.newdawn.slick.UnicodeFont uniFont;
@@ -248,10 +244,7 @@ public class MapGameState extends BasicGameState {
 		this.animations5[6] = loadAnimation(spriteSheet5, 1, 9, 2);
 		this.animations5[7] = loadAnimation(spriteSheet5, 1, 9, 3);
 
-		robot.setSize(100, 100);
-		robot2.setSize(100, 100);
-		
-		
+
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
 		int logicLayer = this.map.getLayerIndex("Collision");
