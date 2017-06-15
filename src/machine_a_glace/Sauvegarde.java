@@ -12,7 +12,7 @@ public class Sauvegarde {
 
 	public static void Writer(int min, int sec) {
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("w4jr1krkd1042kd42.txt")));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("sauvegarde.save")));
 			WrtMap(writer, min, sec);
 
 			writer.close();
@@ -26,7 +26,7 @@ public class Sauvegarde {
 		String str = "";
 		String str_1, str_2 = "";
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(new File("w4jr1krkd1042kd42.txt")));
+			BufferedReader reader = new BufferedReader(new FileReader(new File("sauvegarde.save")));
 			ReplacePlayer(reader);
 			str = reader.readLine();
 			ReplaceRobots(reader);
@@ -94,7 +94,7 @@ public class Sauvegarde {
 				throw new JeuException("Couleur du robot non initialisé");
 			}
 			n = Parser.ExpressionCorrecte1(inter[5]);
-			r = new Robot(line, col, c, n);
+			r = new Robot(line, col, c, new Node (Operateur.Star,null,n));
 			switch (c) {
 			case Rouge:
 				r.setJoueur(MapGameState.j1);
