@@ -37,17 +37,19 @@ public class MapGameState extends BasicGameState {
 	private GameContainer container;
 	private TiledMap map;
 
-	int seconde = 10000;
+	static int seconde = 10000;
 
-	int minute =5;
+	static int minute = 5;
 
 	boolean jeufini = false;
 
-	private ArrayList<Integer> cmptr_robots = new ArrayList<Integer>();
+	public static ArrayList<Integer> cmptr_robots;
 
 	boolean bool1 = false;
 	boolean bool2 = false;
 	boolean bool3 = false;
+	
+	boolean menu = false;
 
 	boolean pause = false;
 	public static boolean bonus_malus = false;
@@ -62,15 +64,12 @@ public class MapGameState extends BasicGameState {
 	private int direction = 2;
 	private int direction2 = 0;
 	private boolean moving = false;
-	private long lasttime = System.currentTimeMillis();
-	private long lasttime2 = System.currentTimeMillis();
-	private long lasttime3 = System.currentTimeMillis();
 
 	private int secs1 = 0;
 	private int secs2 = 0;
-	private ArrayList<Integer> secsrobots = new ArrayList<Integer>();
+	public static ArrayList<Integer> secsrobots;
 
-	public static ArrayList<Robot> allrobots = new ArrayList<Robot>();
+	public static ArrayList<Robot> allrobots;
 
 	private final float DEBUT_VIE_ROUGE_X = 1631;
 	private final float FIN_VIE_ROUGE_X = 1778;
@@ -79,7 +78,7 @@ public class MapGameState extends BasicGameState {
 	private final float NRJ_Y = 145;
 	private final float DEBUT_VIE_BLEU_X = 130;
 	private final float FIN_VIE_BLEU_X = 277;
-	
+
 	java.awt.Font UIFont3;
 	org.newdawn.slick.UnicodeFont uniFont3;
 
@@ -93,29 +92,12 @@ public class MapGameState extends BasicGameState {
 	private boolean canmove = false;
 	private boolean canmove2 = false;
 
-	private boolean canmoverobotr1 = false;
-	private boolean canmoverobotb1 = false;
-	private boolean canmoverobotr2 = false;
-	private boolean canmoverobotb2 = false;
-	private boolean canmoverobotr3 = false;
-	private boolean canmoverobotb3 = false;
-	private boolean canmoverobotr4 = false;
-	private boolean canmoverobotb4 = false;
-
 	public static Joueur j1, j2;
-	private Robot r1r;
-	private Robot r2r;
-	private Robot r3r;
-	private Robot r4r;
-	private Robot r1b;
-	private Robot r2b;
-	private Robot r3b;
-	private Robot r4b;
-
-	private ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
-	private ArrayList<String> automaterobot = new ArrayList<String>();
 
 
+
+	public static ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
+	public static ArrayList<String> automaterobot = new ArrayList<String>();
 
 	public static boolean recolorie_par_dessus = false;
 
@@ -126,17 +108,9 @@ public class MapGameState extends BasicGameState {
 	private Animation[] animations4 = new Animation[8];
 	private Animation[] animations5 = new Animation[8];
 
-	private String item[] = { "Robot1", "Robot2", "Robot3" };
-	private String item2[] = { "Robot1", "Robot2", "Robot3" };
-	private JComboBox robot = new JComboBox(item);
-	private JComboBox robot2 = new JComboBox(item2);
-	// private ImageIcon ic = new ImageIcon("maps/robot.png");
 	private ImageIcon icr = new ImageIcon("maps/tete_robot_rouge.png");
 	private ImageIcon icb = new ImageIcon("maps/tete_robot_bleu.png");
 	private Dimension d = new Dimension(100, 100);
-	// private String tab[] = { "Frapper", "Explorer", "Kamikaze", ";", "*", ">"
-	// };
-	// private String tab2[] = { "Manger", "Fumer", "Rond-Poing" };
 
 	java.awt.Font UIFont1;
 	org.newdawn.slick.UnicodeFont uniFont;
@@ -159,19 +133,27 @@ public class MapGameState extends BasicGameState {
 		// TODO Auto-generated method stub
 		this.container = container;
 
+<<<<<<< HEAD
 		boolean y = Parser.ExpressionCorrecte("{{X:4};{X:2}}");
 		System.out.println(y);
+=======
+		Node n = Reader.read("{A:2>X;K}");
+>>>>>>> ae5831fddb678e9d809887839a1442240859fb70
 
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
 
+		this.secsrobots = new ArrayList<Integer>();
+		this.allrobots = new ArrayList<Robot>();
+		this.cmptr_robots = new ArrayList<Integer>();
+
 		try {
 			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
 					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/reveil.ttf"));
-			
+
 			UIFont3 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
 					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/cartoon.ttf"));
-			
+
 			UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 60.f);
 
 			uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
@@ -179,10 +161,9 @@ public class MapGameState extends BasicGameState {
 			uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
 			uniFont.addAsciiGlyphs();
 			uniFont.loadGlyphs();
-			
+
 			UIFont3 = UIFont3.deriveFont(java.awt.Font.BOLD, 60.f);
 
-			
 			uniFont3 = new org.newdawn.slick.UnicodeFont(UIFont3);
 			uniFont3.addAsciiGlyphs();
 			uniFont3.getEffects().add(new ColorEffect(java.awt.Color.cyan));
@@ -278,9 +259,6 @@ public class MapGameState extends BasicGameState {
 		this.animations5[6] = loadAnimation(spriteSheet5, 1, 9, 2);
 		this.animations5[7] = loadAnimation(spriteSheet5, 1, 9, 3);
 
-		robot.setSize(100, 100);
-		robot2.setSize(100, 100);
-
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
 		int logicLayer = this.map.getLayerIndex("Collision");
@@ -310,17 +288,20 @@ public class MapGameState extends BasicGameState {
 
 		Image j1g = new Image("maps/j1g.jpg");
 		Image j2g = new Image("maps/j2g.jpg");
-		
-		Image pauseimg = new Image("maps/pause.png");
 
+		Image pauseimg = new Image("maps/pause.png");
+		Image menuimg = new Image ("maps/menuaide.png");
 
 		if (this.jeufini == true) {
 
 			if (this.j1.getNombre_Case_Coloriees() > this.j2.getNb_cases_coloriees()) {
 				MainScreenGameState.joueur_1_gagne = true;
 				game.enterState(MainScreenGameState.ID);
-			} else {
+			} else if (this.j1.getNombre_Case_Coloriees() < this.j2.getNb_cases_coloriees()) {
 				MainScreenGameState.joueur_2_gagne = true;
+				game.enterState(MainScreenGameState.ID);
+			} else {
+				MainScreenGameState.egalite = true;
 				game.enterState(MainScreenGameState.ID);
 			}
 
@@ -332,8 +313,13 @@ public class MapGameState extends BasicGameState {
 			game.enterState(MainScreenGameState.ID);
 
 		} else if (pause == true) {
-			pauseimg.draw(0, 0, container.getWidth(), container.getHeight());
-			uniFont3.drawString(450-40, 450, "Appuyer sur \"P\" pour relancer la partie", Color.cyan);
+			if (menu == false) {
+				pauseimg.draw(0, 0, container.getWidth(), container.getHeight());
+				uniFont3.drawString(450 - 40, 450, "Appuyer sur \"P\" pour relancer la partie", Color.cyan);
+			} else {
+				menuimg.draw(0, 0, container.getWidth(), container.getHeight());
+			}
+
 		} else {
 
 			this.map.render(0, 0);
@@ -350,14 +336,14 @@ public class MapGameState extends BasicGameState {
 
 			if (bonus_malus == true) {
 				double a = Math.random();
-				if (a<0.25){
-					BonusMalus.inversionCouleur(j1,j2);
-				}else if (a<0.5){
+				if (a < 0.25) {
+					BonusMalus.inversionCouleur(j1, j2);
+				} else if (a < 0.5) {
 					BonusMalus.inversionInventaire(j1, j2);
-				}else if (a<0.75){
-					BonusMalus.pvAdd(j1,j2);
-				}else{
-					BonusMalus.pvLost(j1,j2);
+				} else if (a < 0.75) {
+					BonusMalus.pvAdd(j1, j2);
+				} else {
+					BonusMalus.pvLost(j1, j2);
 				}
 				bonus_malus = false;
 			}
@@ -383,7 +369,7 @@ public class MapGameState extends BasicGameState {
 
 			robots_inv.draw(120, 670);
 			robots_inv2.draw(1580, 670);
-			
+
 			afficher_robots(g);
 
 			afficher_bonus(g);
@@ -414,48 +400,51 @@ public class MapGameState extends BasicGameState {
 						int retour = r.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
 								bouton[0]);
-						if (retour == 1 && j1.robots().size() >0) {
-							
+						if (retour == 1 && j1.robots().size() > 0) {
+
 							String[] robot = j1.arrayRobottoString();
 							JComboBox robots = new JComboBox(robot);
 							String inputrm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
-							if (inputrm != null){
+							if (inputrm != null) {
 								Node n = new Node(null);
 								boolean annuler = true;
-								while (annuler && (!Parser.ExpressionCorrecte(inputrm) || !Parser.InventaireOk(inputrm, j1))) {
-									if ( inputrm != null){
-										inputrm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
+								while (annuler
+										&& (!Parser.ExpressionCorrecte(inputrm) || !Parser.InventaireOk(inputrm, j1))) {
+									if (inputrm != null) {
+										inputrm = JOptionPane.showInputDialog(null, robots,
+												"Saisissez votre expression");
 									}
-									if (inputrm == null){
+									if (inputrm == null) {
 										int z = JOptionPane.showOptionDialog(null,
 												"Voulez-vous continuer la création/modification", null,
-												JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+												JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null,
+												null);
 										if (z == 1 || z == -1) {
 											t = 1;
 											annuler = false;
-										}else{
-											inputrm = "ddg";						
+										} else {
+											inputrm = "ddg";
 										}
 									}
 								}
-								if (annuler){
-								String p = (String)robots.getSelectedItem();
-								System.out.println(p);
-								n = Parser.ExpressionCorrecte1(inputrm);
-								n = new Node(Operateur.Star, null, n);
-								int i = p.charAt(6)-'0';
-//								System.out.println(i);
-								j1.robots().get(i-1).modificationRobot(n);
-								automaterobot.set(i-1, inputrm);
+								if (annuler) {
+									String p = (String) robots.getSelectedItem();
+									// System.out.println(p);
+									n = Parser.ExpressionCorrecte1(inputrm);
+									n = new Node(Operateur.Star, null, n);
+									int i = p.charAt(6) - '0';
+									// System.out.println(i);
+									j1.robots().get(i - 1).modificationRobot(n);
+									automaterobot.set(i - 1, inputrm);
 								}
 							}
-							if (inputrm == null && t!=1) {
+							if (inputrm == null && t != 1) {
 								int k = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
 										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k == 1) {
 									t = 1;
-								}else{
+								} else {
 									t--;
 								}
 							}
@@ -464,54 +453,57 @@ public class MapGameState extends BasicGameState {
 							JOptionPane p = new JOptionPane();
 							ArrayList<String> tab5 = j1.inventaire_toString();
 
-							String inputrc = p.showInputDialog(tab5,"Saisissez votre expression");
+							String inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 							if (inputrc != null) {
 								// System.out.println(inputrc);
 								Node m = new Node(null);
 								boolean annuler = true;
-								while (annuler && (!Parser.ExpressionCorrecte(inputrc) || !Parser.InventaireOk(inputrc, j1))) {
-									if ( inputrc != null){
+								while (annuler
+										&& (!Parser.ExpressionCorrecte(inputrc) || !Parser.InventaireOk(inputrc, j1))) {
+									if (inputrc != null) {
 										inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 									}
-									if (inputrc == null){
+									if (inputrc == null) {
 										int z = JOptionPane.showOptionDialog(null,
 												"Voulez-vous continuer la création/modification", null,
-												JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+												JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null,
+												null);
 										if (z == 1 || z == -1) {
 											t = 1;
 											annuler = false;
-										}else{
-											inputrc = "ddg";						
+										} else {
+											inputrc = "ddg";
 										}
 									}
 								}
-//								char t5[] = inputrc.toCharArray();
-//								ArrayList<Expr> inv = (ArrayList<Expr>) j1.inventaire().clone();
+								// char t5[] = inputrc.toCharArray();
+								// ArrayList<Expr> inv = (ArrayList<Expr>)
+								// j1.inventaire().clone();
 								// System.out.println(t5);
-							if (annuler){
-								m = Parser.ExpressionCorrecte1(inputrc);
-								m = new Node(Operateur.Star, null, m);
-								Coordonnees c = Terrain.spawnRed();
-								Robot rob = new Robot(c.getLigne(), c.getCol(), j1.getCouleur(), m);
+								if (annuler) {
+									m = Parser.ExpressionCorrecte1(inputrc);
+									m = new Node(Operateur.Star, null, m);
+									Coordonnees c = Terrain.spawnRed();
+									Robot rob = new Robot(c.getLigne(), c.getCol(), j1.getCouleur(), m);
 
-								rob.setD(Direction.Sud);
-								rob.setJoueur(j1);
-								allrobots.add(rob);
-								canmoverobots.add(false);
-								cmptr_robots.add(1);
-								secsrobots.add(0);
-								automaterobot.add(inputrc);
+									rob.setD(Direction.Sud);
+									rob.setJoueur(j1);
+									allrobots.add(rob);
+									canmoverobots.add(false);
+									cmptr_robots.add(1);
+									secsrobots.add(0);
+									automaterobot.add(inputrc);
 								}
 
 							}
 							tab5.clear();
-							if (inputrc == null && t!=1) {
+							if (inputrc == null && t != 1) {
 								int k = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
 										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-								if (k == 1 || k== -1) {
+								if (k == 1 || k == -1) {
 									t = 1;
-								}else{
+								} else {
 									t--;
 								}
 
@@ -521,8 +513,7 @@ public class MapGameState extends BasicGameState {
 
 						else if (retour == 0 && j1.robots().size() == 4) {
 							t--;
-						}
-						else if (retour == 1 && j1.robots().size() == 0) {
+						} else if (retour == 1 && j1.robots().size() == 0) {
 							t--;
 						}
 						if (retour == 2 || retour == -1) {
@@ -539,7 +530,6 @@ public class MapGameState extends BasicGameState {
 					bool1 = false;
 					this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
 				}
-
 
 			} else {
 				this.popup_test_1++;
@@ -562,48 +552,51 @@ public class MapGameState extends BasicGameState {
 						int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
 								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2,
 								bouton2[0]);
-						if (retour2 == 1 && j2.robots().size()>0) {
+						if (retour2 == 1 && j2.robots().size() > 0) {
 							String[] robot = j2.arrayRobottoString();
 							JComboBox robots = new JComboBox(robot);
 							String inputbm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
-							if (inputbm != null){
+							if (inputbm != null) {
 								Node n = new Node(null);
 								boolean annuler = true;
-								while (annuler && (!Parser.ExpressionCorrecte(inputbm) || !Parser.InventaireOk(inputbm, j2))) {
-									if ( inputbm != null){
-										inputbm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
+								while (annuler
+										&& (!Parser.ExpressionCorrecte(inputbm) || !Parser.InventaireOk(inputbm, j2))) {
+									if (inputbm != null) {
+										inputbm = JOptionPane.showInputDialog(null, robots,
+												"Saisissez votre expression");
 									}
-									if (inputbm == null){
+									if (inputbm == null) {
 										int z = JOptionPane.showOptionDialog(null,
 												"Voulez-vous continuer la création/modification", null,
-												JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+												JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null,
+												null);
 										if (z == 1 || z == -1) {
 											t2 = 1;
 											annuler = false;
-										}else{
-											inputbm = "ddg";						
+										} else {
+											inputbm = "ddg";
 										}
 									}
 								}
-								if (annuler){
-								String k = (String)robots.getSelectedItem();
-								System.out.println(k);
-								n = Parser.ExpressionCorrecte1(inputbm);
-								n = new Node(Operateur.Star, null, n);
-								int i = k.charAt(6)-'0';
-//								System.out.println(i);
-								j2.robots().get(i-1).modificationRobot(n);
+								if (annuler) {
+									String k = (String) robots.getSelectedItem();
+									System.out.println(k);
+									n = Parser.ExpressionCorrecte1(inputbm);
+									n = new Node(Operateur.Star, null, n);
+									int i = k.charAt(6) - '0';
+									// System.out.println(i);
+									j2.robots().get(i - 1).modificationRobot(n);
 
-								automaterobot.set(i-1, inputbm);
+									automaterobot.set(i - 1, inputbm);
 								}
 							}
-							if (inputbm == null && t2!=1) {
+							if (inputbm == null && t2 != 1) {
 								int k2 = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
 										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k2 == 1 || k2 == -1) {
 									t2 = 1;
-								}else{
+								} else {
 									t2--;
 								}
 							}
@@ -616,51 +609,53 @@ public class MapGameState extends BasicGameState {
 							if (inputbc != null) {
 								Node n = new Node(null);
 								boolean annuler = true;
-								while (annuler && (!Parser.ExpressionCorrecte(inputbc) || !Parser.InventaireOk(inputbc, j2))) {
-									if ( inputbc != null){
+								while (annuler
+										&& (!Parser.ExpressionCorrecte(inputbc) || !Parser.InventaireOk(inputbc, j2))) {
+									if (inputbc != null) {
 										inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 									}
-									if (inputbc == null){
+									if (inputbc == null) {
 										int z = JOptionPane.showOptionDialog(null,
 												"Voulez-vous continuer la création/modification", null,
-												JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+												JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null,
+												null);
 										if (z == 1 || z == -1) {
 											t2 = 1;
 											annuler = false;
-										}else{
-											inputbc = "ddg";						
+										} else {
+											inputbc = "ddg";
 										}
 									}
 								}
-								if (annuler){
-								n = Parser.ExpressionCorrecte1(inputbc);
-								n = new Node(Operateur.Star, null, n);
-								Coordonnees c = Terrain.spawnBlue();
-								Robot rob = new Robot(c.getLigne(), c.getCol(), j2.getCouleur(), n);
+								if (annuler) {
+									n = Parser.ExpressionCorrecte1(inputbc);
+									n = new Node(Operateur.Star, null, n);
+									Coordonnees c = Terrain.spawnBlue();
+									Robot rob = new Robot(c.getLigne(), c.getCol(), j2.getCouleur(), n);
 
-								rob.setD(Direction.Nord);
-								rob.setJoueur(j2);
-								allrobots.add(rob);
-								canmoverobots.add(false);
-								cmptr_robots.add(1);
-								secsrobots.add(0);
-								automaterobot.add(inputbc);
+									rob.setD(Direction.Nord);
+									rob.setJoueur(j2);
+									allrobots.add(rob);
+									canmoverobots.add(false);
+									cmptr_robots.add(1);
+									secsrobots.add(0);
+									automaterobot.add(inputbc);
 								}
 							}
 							tab4.clear();
-							if (inputbc == null && t2!=1) {
+							if (inputbc == null && t2 != 1) {
 								int k2 = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
 										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 								if (k2 == 1 || k2 == -1) {
 									t2 = 1;
-								}else{
+								} else {
 									t2--;
 								}
 							}
-						}else if (retour2 == 0 && j1.robots().size() == 4) {
+						} else if (retour2 == 0 && j1.robots().size() == 4) {
 							t2--;
-						}else if (retour2 == 1 && j1.robots().size() == 0) {
+						} else if (retour2 == 1 && j1.robots().size() == 0) {
 							t2--;
 						}
 						if (retour2 == 2 || retour2 == -1) {
@@ -717,10 +712,8 @@ public class MapGameState extends BasicGameState {
 		}
 	}
 
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 
-	public void update(GameContainer container, StateBasedGame game, int delta)
-			throws SlickException {
-		
 		if (Terrain.Index > 0)
 			bool3 = Terrain.ReduceTimer();
 		if (bool3) {
@@ -766,7 +759,6 @@ public class MapGameState extends BasicGameState {
 		if (pause == false) {
 			this.container.resume();
 		}
-
 
 		if (this.moving) {
 			// switch (this.j1.getD()) {
@@ -849,7 +841,7 @@ public class MapGameState extends BasicGameState {
 
 		}
 
-	update_arrays();
+		update_arrays();
 
 	}
 
@@ -892,7 +884,7 @@ public class MapGameState extends BasicGameState {
 			this.moving2 = false;
 			break;
 		case Input.KEY_N:
-			Sauvegarde.Writer(minute,seconde);
+			Sauvegarde.Writer(minute, seconde);
 			break;
 		case Input.KEY_B:
 			String s;
@@ -914,16 +906,16 @@ public class MapGameState extends BasicGameState {
 
 		case Input.KEY_UP:
 			if (pause == false) {
-			j1.setD(Direction.Nord);
-			this.direction = 0;
-			this.moving = true;
+				j1.setD(Direction.Nord);
+				this.direction = 0;
+				this.moving = true;
 			}
 			break;
 		case Input.KEY_LEFT:
 			if (pause == false) {
-			j1.setD(Direction.Ouest);
-			this.direction = 1;
-			this.moving = true;
+				j1.setD(Direction.Ouest);
+				this.direction = 1;
+				this.moving = true;
 			}
 			break;
 		case Input.KEY_DOWN:
@@ -932,14 +924,13 @@ public class MapGameState extends BasicGameState {
 				this.direction = 2;
 				this.moving = true;
 			}
-				break;
-			
+			break;
 
 		case Input.KEY_RIGHT:
 			if (pause == false) {
-			j1.setD(Direction.Est);
-			this.direction = 3;
-			this.moving = true;
+				j1.setD(Direction.Est);
+				this.direction = 3;
+				this.moving = true;
 			}
 			break;
 
@@ -952,39 +943,58 @@ public class MapGameState extends BasicGameState {
 				this.pause = false;
 			}
 
-//			JOptionPane pause = new JOptionPane();
-//			String[] boutonP = { "Reprendre" };
-//			pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION,
-//					JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
+			// JOptionPane pause = new JOptionPane();
+			// String[] boutonP = { "Reprendre" };
+			// pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en
+			// pause", JOptionPane.DEFAULT_OPTION,
+			// JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
+			break;
+			
+		case Input.KEY_H:
+			if (pause == false) {
+				this.container.pause();
+				this.pause = true;
+				this.menu = true;
+
+			} else {
+				this.pause = false;
+				this.menu = false;
+			}
+
+			// JOptionPane pause = new JOptionPane();
+			// String[] boutonP = { "Reprendre" };
+			// pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en
+			// pause", JOptionPane.DEFAULT_OPTION,
+			// JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
 			break;
 
 		case Input.KEY_Z:
 			// this.container.resume();
 			if (pause == false) {
-			this.j2.setD(Direction.Nord);
-			this.direction2 = 0;
-			this.moving2 = true;
+				this.j2.setD(Direction.Nord);
+				this.direction2 = 0;
+				this.moving2 = true;
 			}
 			break;
 		case Input.KEY_Q:
 			if (pause == false) {
-			this.j2.setD(Direction.Ouest);
-			this.direction2 = 1;
-			this.moving2 = true;
+				this.j2.setD(Direction.Ouest);
+				this.direction2 = 1;
+				this.moving2 = true;
 			}
 			break;
 		case Input.KEY_S:
 			if (pause == false) {
-			this.j2.setD(Direction.Sud);
-			this.direction2 = 2;
-			this.moving2 = true;
+				this.j2.setD(Direction.Sud);
+				this.direction2 = 2;
+				this.moving2 = true;
 			}
 			break;
 		case Input.KEY_D:
 			if (pause == false) {
-			this.j2.setD(Direction.Est);
-			this.direction2 = 3;
-			this.moving2 = true;
+				this.j2.setD(Direction.Est);
+				this.direction2 = 3;
+				this.moving2 = true;
 			}
 			break;
 		}
@@ -1187,29 +1197,47 @@ public class MapGameState extends BasicGameState {
 		return ID;
 	}
 
-	public void update_arrays(){
-		for(int i=0; i<allrobots.size();i++){
-			if(allrobots.get(i).getCouleur() == Couleur.Rouge && (! j1.robots().contains(allrobots.get(i))) )
+	public void update_arrays() {
+		for (int i = 0; i < allrobots.size(); i++) {
+			if (allrobots.get(i).getCouleur() == Couleur.Rouge && (!j1.robots().contains(allrobots.get(i)))) {
 				allrobots.remove(i);
-		else if(allrobots.get(i).getCouleur() == Couleur.Bleu && (! j2.robots().contains(allrobots.get(i))) )
+				automaterobot.remove(i);
+				canmoverobots.remove(i);
+				cmptr_robots.remove(i);
+				secsrobots.remove(i);
+			}
+
+			else if (allrobots.get(i).getCouleur() == Couleur.Bleu && (!j2.robots().contains(allrobots.get(i)))) {
 				allrobots.remove(i);
-		}	
-	}
-	
-	
-	public void afficher_robots(Graphics g) throws SlickException{
-		Image e;
-		for(int i=0; i<j1.robots().size();i++){
-			e=new Image("maps/tete_robot_rouge.png");
-			e.draw(1729, 690 + (i*42), 32, 32);
-			//uniFont4.drawString(1605, 698 + (i*42), j1.robots().get(i).automate().toString(), Color.white);
-			g.drawString(j1.robots().get(i).automate().toString(),1605,698 + (i*42));
+				automaterobot.remove(i);
+				canmoverobots.remove(i);
+				cmptr_robots.remove(i);
+				secsrobots.remove(i);
+			}
+
 		}
-		for(int i=0; i<j2.robots().size();i++){
-			e=new Image("maps/tete_robot_bleu.png");
-			e.draw(140, 690 + (i*42), 32, 32);
-		//	uniFont4.drawString(180, 698 + (i*42), j2.robots().get(i).automate().toString(), Color.white);
-		g.drawString(j2.robots().get(i).automate().toString(),180,698 + (i*42));
+
+	}
+
+	public void afficher_robots(Graphics g) throws SlickException {
+		Image e;
+
+		int nb_robot_rouge = 0;
+		int nb_robot_bleu = 0;
+		for (int i = 0; i < allrobots.size(); i++) {
+			if (allrobots.get(i).getCouleur() == Couleur.Rouge) {
+				e = new Image("maps/tete_robot_rouge.png");
+				e.draw(1729, 690 + (nb_robot_rouge * 42), 32, 32);
+				g.drawString("*" + automaterobot.get(i), 1605, 698 + (nb_robot_rouge * 42));
+				nb_robot_rouge++;
+			} else {
+				e = new Image("maps/tete_robot_bleu.png");
+				e.draw(140, 690 + (nb_robot_bleu * 42), 32, 32);
+				g.drawString("*" + automaterobot.get(i), 180, 698 + (nb_robot_bleu * 42));
+				nb_robot_bleu++;
+
+			}
+
 		}
 	}
 	

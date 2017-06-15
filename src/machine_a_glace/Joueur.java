@@ -232,11 +232,20 @@ public class Joueur extends Entite {
 		return robots;
 	}
 	
-	public String[] arrayRobottoString(){
+	public String[] arrayRobotExptoString(){
 		String[] robot = new String[robots.size()];
 		for (int i = 0;i<robots.size();i++){
-			robot[i] = "robot "+ (i+1);
+			robot[i] = robots.get(i).getAutomate().toString();
 		}
 		return robot;
 	}
+	
+	public String[] arrayRobottoString(){
+		String[] robot = new String[robots.size()];
+		for (int i = 0;i<robots.size();i++){
+			robot[i] = "robot "+ (i+1) + " => " + robots.get(i).getAutomate().toString() ;
+		}
+		return robot;
+	}
+
 }

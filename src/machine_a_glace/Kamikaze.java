@@ -17,7 +17,7 @@ public class Kamikaze extends Comportement {
 
 		r.setProtection(false);
 
-		boolean present = EnnemiPresentNCase(line, col, 2);
+ 		boolean present = EnnemiPresentNCase(line, col, 2);
 		if (present) {
 			Explosion(line, col, r);
 			return true;
@@ -191,13 +191,6 @@ public class Kamikaze extends Comportement {
 
 	}
 
-	public void Kill(int line, int col, Robot r) {
-		Terrain.terrain[line][col].setCase(Contenu.Vide);
-		Terrain.terrain[line][col].setEntite(null);
-		
-		r.getMaitre().remove_robot(r);
-		
-	}
 
 	@Override
 	public String toString() {

@@ -3,6 +3,7 @@ package machine_a_glace;
 public class Robot extends Entite {
 
 	private Node automate;
+
 	private Node etat_courant;
 	private int nb_tour;
 	private boolean fonctionne = true;
@@ -20,11 +21,15 @@ public class Robot extends Entite {
 		next_etat();
 	}
 
+	public Node getAutomate() {
+		return automate;
+	}
+
 	public void execute() {
 		if (isPriorite)
-			fonctionne = ((Comportement) etat_courant.Gram).execute(this);
+			fonctionne = ((Comportement) etat_courant.Gram()).execute(this);
 		else
-			((Comportement) etat_courant.Gram).execute(this);
+			((Comportement) etat_courant.Gram()).execute(this);
 
 		if (isPriorite && !fonctionne) {
 			next_etat();
@@ -39,51 +44,62 @@ public class Robot extends Entite {
 
 	private boolean next_etat_recur(Node a, boolean b) {
 		if (a != null) {
-			if (a.Gram.isComportement() && b) {
+			if (a.Gram().isComportement() && b) {
 				etat_courant = a;
 				b = false;
 			} else if (a == etat_courant) {
 				b = true;
 			}
 
-			if (a.Gram.isOperateur() && a.Gram == Operateur.Star) {
-				b = next_etat_recur(a.FD, b);
+			if (a.Gram().isOperateur() && a.Gram() == Operateur.Star) {
+				b = next_etat_recur(a.FD(), b);
 				if (b) {
 					nb_tour++;
-					next_etat_recur(a.FD, b);
+					next_etat_recur(a.FD(), b);
 				}
 
-			} else if (a.Gram.isOperateur() && a.Gram == Operateur.Choixequi) {
+			} else if (a.Gram().isOperateur() && a.Gram() == Operateur.Choixequi) {
 				if (nb_tour % 2 == 0)
-					b = next_etat_recur(a.FG, b);
+					b = next_etat_recur(a.FG(), b);
 				else
-					b = next_etat_recur(a.FD, b);
-			} else if (a.Gram.isOperateur() && a.Gram == Operateur.Choix) {
+					b = next_etat_recur(a.FD(), b);
+			} else if (a.Gram().isOperateur() && a.Gram() == Operateur.Choix) {
 				if (!b) {
-					b = next_etat_recur(a.FG, b);
+					b = next_etat_recur(a.FG(), b);
 					if (!b)
-						b = next_etat_recur(a.FD, b);
+						b = next_etat_recur(a.FD(), b);
 				} else {
 					if (Math.random() < 0.5)
-						b = next_etat_recur(a.FG, b);
+						b = next_etat_recur(a.FG(), b);
 					else
-						b = next_etat_recur(a.FD, b);
+						b = next_etat_recur(a.FD(), b);
 				}
 
-			} else if (a.Gram.isOperateur() && a.Gram == Operateur.Priorite) {
+			} else if (a.Gram().isOperateur() && a.Gram() == Operateur.Priorite) {
 				if (b)
 					isPriorite = true;
-				b = next_etat_recur(a.FG, b);
+				b = next_etat_recur(a.FG(), b);
 				if (b)
 					isPriorite = false;
 				if (b && !fonctionne || !b)
-					b = next_etat_recur(a.FD, b);
+					b = next_etat_recur(a.FD(), b);
 				if (b)
 					isPriorite = false;
 
+			} else if (a.Gram().isOperateur() && a.Gram() == Operateur.Deuxpoints) {
+				if (b)
+					a.setSave((Chiffre) a.FD().Gram());
+				b = next_etat_recur(a.FG(), b);
+				if (b && a.FD().Gram() != Chiffre.Un) {
+					a.FD().decrementer_chiffre();
+					b = false;
+				} else {
+					a.FD().setGram(a.getSave());
+				}
+
 			} else {
-				b = next_etat_recur(a.FG, b);
-				b = next_etat_recur(a.FD, b);
+				b = next_etat_recur(a.FG(), b);
+				b = next_etat_recur(a.FD(), b);
 			}
 
 			return b;
@@ -189,7 +205,7 @@ public class Robot extends Entite {
 				}
 
 			}
-			if (Terrain.casexy(getLine(), getCol()).isExpr()&&maitre.inventaire().size()<30) {
+			if (Terrain.casexy(getLine(), getCol()).isExpr() && maitre.inventaire().size() < 30) {
 				maitre.add_inventaire(Terrain.casexy(getLine(), getCol()).expr());
 				Terrain.casexy(getLine(), getCol()).setExpr(null);
 				Terrain.PutTimer(getLine(), getCol(),30000);
@@ -222,19 +238,55 @@ public class Robot extends Entite {
 	public void setProtection(boolean b) {
 		protection = b;
 	}
-	
-	public Joueur getMaitre(){
+
+	public Joueur getMaitre() {
 		return maitre;
 	}
-	
-	public Node automate(){
+
+	public Node automate() {
 		return automate;
 	}
 
-	public void modificationRobot(Node automate){
+	public void modificationRobot(Node automate) {
 		this.automate = automate;
 		etat_courant = this.automate;
 		next_etat();
 	}
-}
 
+	public void RandomChangeDirection() {
+		double random;
+		random = Math.random();
+		if (random > 0.75) {
+			random = Math.random();
+			switch (getD()) {
+			case Nord:
+				if (random < 0.5)
+					setD(Direction.Est);
+
+				else
+					setD(Direction.Ouest);
+				break;
+			case Sud:
+				if (random < 0.5)
+					setD(Direction.Est);
+
+				else
+					setD(Direction.Ouest);
+				break;
+			case Ouest:
+				if (random < 0.5)
+					setD(Direction.Sud);
+
+				else
+					setD(Direction.Nord);
+				break;
+			case Est:
+				if (random < 0.5)
+					setD(Direction.Sud);
+				else
+					setD(Direction.Nord);
+				break;
+			}
+		}
+	}
+}
