@@ -226,6 +226,11 @@ public class Robot extends Entite {
 	public Joueur getMaitre(){
 		return maitre;
 	}
+	
+	public Node automate(){
+		return automate;
+	}
+
 	public void modificationRobot(Node automate){
 		this.automate = automate;
 		etat_courant = this.automate;
