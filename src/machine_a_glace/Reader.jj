@@ -175,30 +175,31 @@ Node EXPRbis() :
 {
   < LACC > arbre = EXPRbis() < RACC > arbre2 = Lbis()
   {
+
     if (arbre2 != null)
     {
-      if (arbre2.Gram == Operateur.PointVirgule && arbre2.FG != null)
+      if (arbre2.Gram() == Operateur.PointVirgule && arbre2.FG() != null)
       {
-        Node.SetLeftChild(arbre2.FG, arbre);
+        Node.SetLeftChild(arbre2.FG(), arbre);
         return arbre2;
       }
-      else if (arbre2.Gram == Operateur.PointVirgule && arbre2.FG == null)
+      else if (arbre2.Gram() == Operateur.PointVirgule && arbre2.FG() == null)
       {
-        return new Node(arbre2.Gram, arbre, arbre2.FD);
+        return new Node(arbre2.Gram(), arbre, arbre2.FD());
       }
-      else return new Node(arbre2.Gram, arbre, arbre2.FD);
+      else return new Node(arbre2.Gram(), arbre, arbre2.FD());
     }else {
 		return arbre;
     }
   }
 | c = < COMP > arbre = L()
   {
-    if (arbre != null && arbre.FG == null) 
-    return new Node(arbre.Gram, new Node(StringtoComp(c.image)), arbre.FD);
-    else if (arbre != null && arbre.FG != null)
+    if (arbre != null && arbre.FG() == null) 
+    return new Node(arbre.Gram(), new Node(StringtoComp(c.image)), arbre.FD());
+    else if (arbre != null && arbre.FG() != null)
     {
       d = new Node(StringtoComp(c.image));
-      Node.SetLeftChild(arbre.FG, d);
+      Node.SetLeftChild(arbre.FG(), d);
       return arbre;
     }
     else return new Node(StringtoComp(c.image));
@@ -213,8 +214,8 @@ Node L() :
 {
   exp = < OP > Arbre1 = EXPRbis()
   {
-    if (StringtoOp(exp.image) != Operateur.PointVirgule && Arbre1.Gram == Operateur.PointVirgule) 
-    return new Node(Arbre1.Gram, new Node(StringtoOp(exp.image), null, Arbre1.FG), Arbre1.FD);
+    if (StringtoOp(exp.image) != Operateur.PointVirgule && Arbre1.Gram() == Operateur.PointVirgule) 
+    return new Node(Arbre1.Gram(), new Node(StringtoOp(exp.image), null, Arbre1.FG()), Arbre1.FD());
     else 
     return new Node(StringtoOp(exp.image), null, Arbre1);
   }
@@ -222,7 +223,7 @@ Node L() :
   {
     if (Arbre1 != null)
     {
-      return new Node(Arbre1.Gram, new Node(StringtoOp(exp.image), null, new Node(StringtoChiffre(exp2.image))), Arbre1.FD);
+      return new Node(Arbre1.Gram(), new Node(StringtoOp(exp.image), null, new Node(StringtoChiffre(exp2.image))), Arbre1.FD());
     }
     else return new Node(StringtoOp(exp.image), null, new Node(StringtoChiffre(exp2.image)));
   }
@@ -240,8 +241,8 @@ Node Lbis() :
 {
   exp = < OP > Arbre1 = EXPRbis()
   {
-    if (StringtoOp(exp.image) != Operateur.PointVirgule && Arbre1.Gram == Operateur.PointVirgule) 
-    return new Node(Arbre1.Gram, new Node(StringtoOp(exp.image), null, Arbre1.FG), Arbre1.FD);
+    if (StringtoOp(exp.image) != Operateur.PointVirgule && Arbre1.Gram() == Operateur.PointVirgule) 
+    return new Node(Arbre1.Gram(), new Node(StringtoOp(exp.image), null, Arbre1.FG()), Arbre1.FD());
     else 
     return new Node(StringtoOp(exp.image), null, Arbre1);
   }

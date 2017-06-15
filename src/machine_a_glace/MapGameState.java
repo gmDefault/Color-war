@@ -43,7 +43,7 @@ public class MapGameState extends BasicGameState {
 
 	boolean jeufini = false;
 
-	private ArrayList<Integer> cmptr_robots = new ArrayList<Integer>();
+	private ArrayList<Integer> cmptr_robots;
 
 	boolean bool1 = false;
 	boolean bool2 = false;
@@ -62,15 +62,13 @@ public class MapGameState extends BasicGameState {
 	private int direction = 2;
 	private int direction2 = 0;
 	private boolean moving = false;
-	private long lasttime = System.currentTimeMillis();
-	private long lasttime2 = System.currentTimeMillis();
-	private long lasttime3 = System.currentTimeMillis();
+
 
 	private int secs1 = 0;
 	private int secs2 = 0;
-	private ArrayList<Integer> secsrobots = new ArrayList<Integer>();
+	private ArrayList<Integer> secsrobots;
 
-	public static ArrayList<Robot> allrobots = new ArrayList<Robot>();
+	public static ArrayList<Robot> allrobots;
 
 	private final float DEBUT_VIE_ROUGE_X = 1631;
 	private final float FIN_VIE_ROUGE_X = 1778;
@@ -93,24 +91,11 @@ public class MapGameState extends BasicGameState {
 	private boolean canmove = false;
 	private boolean canmove2 = false;
 
-	private boolean canmoverobotr1 = false;
-	private boolean canmoverobotb1 = false;
-	private boolean canmoverobotr2 = false;
-	private boolean canmoverobotb2 = false;
-	private boolean canmoverobotr3 = false;
-	private boolean canmoverobotb3 = false;
-	private boolean canmoverobotr4 = false;
-	private boolean canmoverobotb4 = false;
+
 
 	public static Joueur j1, j2;
-	private Robot r1r;
-	private Robot r2r;
-	private Robot r3r;
-	private Robot r4r;
-	private Robot r1b;
-	private Robot r2b;
-	private Robot r3b;
-	private Robot r4b;
+
+
 
 	public static ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
 	public static ArrayList<String> automaterobot = new ArrayList<String>();
@@ -126,17 +111,11 @@ public class MapGameState extends BasicGameState {
 	private Animation[] animations4 = new Animation[8];
 	private Animation[] animations5 = new Animation[8];
 
-	private String item[] = { "Robot1", "Robot2", "Robot3" };
-	private String item2[] = { "Robot1", "Robot2", "Robot3" };
-	private JComboBox robot = new JComboBox(item);
-	private JComboBox robot2 = new JComboBox(item2);
-	// private ImageIcon ic = new ImageIcon("maps/robot.png");
+
 	private ImageIcon icr = new ImageIcon("maps/tete_robot_rouge.png");
 	private ImageIcon icb = new ImageIcon("maps/tete_robot_bleu.png");
 	private Dimension d = new Dimension(100, 100);
-	// private String tab[] = { "Frapper", "Explorer", "Kamikaze", ";", "*", ">"
-	// };
-	// private String tab2[] = { "Manger", "Fumer", "Rond-Poing" };
+
 
 	java.awt.Font UIFont1;
 	org.newdawn.slick.UnicodeFont uniFont;
@@ -157,11 +136,13 @@ public class MapGameState extends BasicGameState {
 		// TODO Auto-generated method stub
 		this.container = container;
 
-		boolean y = Parser.ExpressionCorrecte("{{X:2};{X:2}}");
-		System.out.println(y);
 
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
+		
+		 this.secsrobots = new ArrayList<Integer>();
+		 this.allrobots = new ArrayList<Robot>();
+		 this.cmptr_robots = new ArrayList<Integer>();
 
 		try {
 			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
@@ -260,8 +241,6 @@ public class MapGameState extends BasicGameState {
 		this.animations5[6] = loadAnimation(spriteSheet5, 1, 9, 2);
 		this.animations5[7] = loadAnimation(spriteSheet5, 1, 9, 3);
 
-		robot.setSize(100, 100);
-		robot2.setSize(100, 100);
 
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
@@ -301,8 +280,11 @@ public class MapGameState extends BasicGameState {
 			if (this.j1.getNombre_Case_Coloriees() > this.j2.getNb_cases_coloriees()) {
 				MainScreenGameState.joueur_1_gagne = true;
 				game.enterState(MainScreenGameState.ID);
-			} else {
+			} else if (this.j1.getNombre_Case_Coloriees() < this.j2.getNb_cases_coloriees()){
 				MainScreenGameState.joueur_2_gagne = true;
+				game.enterState(MainScreenGameState.ID);
+			} else {
+				MainScreenGameState.egalite = true;
 				game.enterState(MainScreenGameState.ID);
 			}
 
@@ -422,7 +404,7 @@ public class MapGameState extends BasicGameState {
 								}
 								if (annuler){
 								String p = (String)robots.getSelectedItem();
-								System.out.println(p);
+//								System.out.println(p);
 								n = Parser.ExpressionCorrecte1(inputrm);
 								n = new Node(Operateur.Star, null, n);
 								int i = p.charAt(6)-'0';
@@ -1177,15 +1159,22 @@ public class MapGameState extends BasicGameState {
 	
 	public void afficher_robots(Graphics g) throws SlickException{
 		Image e;
-		for(int i=0; i<j1.robots().size();i++){
-			e=new Image("maps/tete_robot_rouge.png");
-			e.draw(1729, 690 + (i*42), 32, 32);
-			g.drawString(j1.robots().get(i).automate().toString(),1605,698 + (i*42));
-		}
-		for(int i=0; i<j2.robots().size();i++){
-			e=new Image("maps/tete_robot_bleu.png");
-			e.draw(140, 690 + (i*42), 32, 32);
-			g.drawString(j2.robots().get(i).automate().toString(),180,698 + (i*42));
+		int nb_robot_rouge=0;
+		int nb_robot_bleu=0;
+		for(int i=0; i<allrobots.size();i++){
+			if(allrobots.get(i).getCouleur() == Couleur.Rouge){
+				e=new Image("maps/tete_robot_rouge.png");
+				e.draw(1729, 690 + (nb_robot_rouge*42), 32, 32);
+				g.drawString("*" + automaterobot.get(i),1605,698 + (nb_robot_rouge*42));
+				nb_robot_rouge++;
+			}else{
+				e=new Image("maps/tete_robot_bleu.png");
+				e.draw(140, 690 + (nb_robot_bleu*42), 32, 32);
+				g.drawString("*" + automaterobot.get(i),180,698 + (nb_robot_bleu*42));
+				nb_robot_bleu++;
+
+			}
+			
 		}
 	}
 

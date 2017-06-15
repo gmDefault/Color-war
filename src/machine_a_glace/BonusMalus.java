@@ -33,10 +33,14 @@ public class BonusMalus {
 		if (a<=0.5){
 			if (j1.getPdv()<=85) {
 				j1.setPdv(j1.getPdv()+15);
+			}else{
+				j1.setPdv(100);
 			}
 		}else{
 			if (j2.getPdv()<=85) {
 				j2.setPdv(j2.getPdv()+15);
+			}else{
+				j1.setPdv(100);
 			}
 		}
 		
