@@ -73,10 +73,10 @@ public class Parser {
 		  
 		  while(i<t.length-1){
 			  if (!(t[i]=='{'||t[i]=='}')){
-				  if(t[i]==t[i+1]&&t[i]=='|'){
-					  t[i]='/';
-					  t[i+1]='{';
-				  }
+//				  if(t[i]==t[i+1]&&t[i]=='|'){
+//					  t[i]='/';
+//					  t[i+1]='{';
+//				  }
 				  if(!inv_copy.contains(CharToExpr(t[i]))){
 					  return false;
 				  }

@@ -21,12 +21,17 @@ public class Node {
 	}
 
 	public String toString() {
+
 		if (FG != null && FD != null)
 			return FG.toString() + Gram.toString() + FD.toString();
 		else if (FG == null && FD == null)
 			return Gram.toString();
-		else if (FG == null)
+		else if (FG == null) {
+			if (Gram == Operateur.Star)
+				return Gram.toString() + "{" + FD.toString() + "}";
 			return Gram.toString() + FD.toString();
+		}
+
 		else if (FD == null)
 			return FG.toString() + Gram.toString();
 		else
@@ -42,6 +47,5 @@ public class Node {
 		G.FG = NG;
 
 	}
-
 
 }

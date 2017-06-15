@@ -57,7 +57,7 @@ public class Reader
       case ":" : return Operateur.Deuxpoints;
       case ">" : return Operateur.Priorite;
       case "|" : return Operateur.Choixequi;
-      case "||" : return Operateur.Choix;
+      case "/" : return Operateur.Choix;
       default : throw new JeuException("Operateur non declarer");
     }
   }
@@ -155,7 +155,7 @@ TOKEN :
   | "<"
   | ">"
   | "|"
-  | "||" >
+  | "/" >
 | < COMP :
     "X"
   | "A"
