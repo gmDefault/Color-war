@@ -39,11 +39,11 @@ public class MapGameState extends BasicGameState {
 
 	int seconde = 10000;
 
-	int minute = 5 ;
+	int minute =5;
 
 	boolean jeufini = false;
 
-	private ArrayList<Integer> cmptr_robots = new ArrayList<Integer>();
+	private ArrayList<Integer> cmptr_robots;
 
 	boolean bool1 = false;
 	boolean bool2 = false;
@@ -68,9 +68,9 @@ public class MapGameState extends BasicGameState {
 
 	private int secs1 = 0;
 	private int secs2 = 0;
-	private ArrayList<Integer> secsrobots = new ArrayList<Integer>();
+	private ArrayList<Integer> secsrobots;
 
-	public static ArrayList<Robot> allrobots = new ArrayList<Robot>();
+	public static ArrayList<Robot> allrobots;
 
 	private final float DEBUT_VIE_ROUGE_X = 1631;
 	private final float FIN_VIE_ROUGE_X = 1778;
@@ -143,6 +143,10 @@ public class MapGameState extends BasicGameState {
 
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
+		
+		 this.secsrobots = new ArrayList<Integer>();
+		 this.allrobots = new ArrayList<Robot>();
+		 this.cmptr_robots = new ArrayList<Integer>();
 
 		try {
 			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
@@ -296,8 +300,11 @@ public class MapGameState extends BasicGameState {
 			if (this.j1.getNombre_Case_Coloriees() > this.j2.getNb_cases_coloriees()) {
 				MainScreenGameState.joueur_1_gagne = true;
 				game.enterState(MainScreenGameState.ID);
-			} else {
+			} else if (this.j1.getNombre_Case_Coloriees() < this.j2.getNb_cases_coloriees()){
 				MainScreenGameState.joueur_2_gagne = true;
+				game.enterState(MainScreenGameState.ID);
+			} else {
+				MainScreenGameState.egalite = true;
 				game.enterState(MainScreenGameState.ID);
 			}
 
@@ -398,9 +405,24 @@ public class MapGameState extends BasicGameState {
 							String inputrm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
 							if (inputrm != null){
 								Node n = new Node(null);
-								while (!Parser.ExpressionCorrecte(inputrm) || !(Parser.InventaireOk(inputrm, j1))) {
-									inputrm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
+								boolean annuler = true;
+								while (annuler && (!Parser.ExpressionCorrecte(inputrm) || !Parser.InventaireOk(inputrm, j1))) {
+									if ( inputrm != null){
+										inputrm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
+									}
+									if (inputrm == null){
+										int z = JOptionPane.showOptionDialog(null,
+												"Voulez-vous continuer la création/modification", null,
+												JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+										if (z == 1 || z == -1) {
+											t = 1;
+											annuler = false;
+										}else{
+											inputrm = "ddg";						
+										}
+									}
 								}
+								if (annuler){
 								String p = (String)robots.getSelectedItem();
 //								System.out.println(p);
 								n = Parser.ExpressionCorrecte1(inputrm);
@@ -409,8 +431,9 @@ public class MapGameState extends BasicGameState {
 //								System.out.println(i);
 								j1.robots().get(i-1).modificationRobot(n);
 								automaterobot.set(i-1, inputrm);
+								}
 							}
-							if (inputrm == null) {
+							if (inputrm == null && t!=1) {
 								int k = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
 										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
@@ -429,13 +452,27 @@ public class MapGameState extends BasicGameState {
 							if (inputrc != null) {
 								// System.out.println(inputrc);
 								Node m = new Node(null);
-								while (!Parser.ExpressionCorrecte(inputrc) || !Parser.InventaireOk(inputrc, j1)) {
-									inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
+								boolean annuler = true;
+								while (annuler && (!Parser.ExpressionCorrecte(inputrc) || !Parser.InventaireOk(inputrc, j1))) {
+									if ( inputrc != null){
+										inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
+									}
+									if (inputrc == null){
+										int z = JOptionPane.showOptionDialog(null,
+												"Voulez-vous continuer la création/modification", null,
+												JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+										if (z == 1 || z == -1) {
+											t = 1;
+											annuler = false;
+										}else{
+											inputrc = "ddg";						
+										}
+									}
 								}
 //								char t5[] = inputrc.toCharArray();
 //								ArrayList<Expr> inv = (ArrayList<Expr>) j1.inventaire().clone();
 								// System.out.println(t5);
-
+							if (annuler){
 								m = Parser.ExpressionCorrecte1(inputrc);
 								m = new Node(Operateur.Star, null, m);
 								Coordonnees c = Terrain.spawnRed();
@@ -448,14 +485,15 @@ public class MapGameState extends BasicGameState {
 								cmptr_robots.add(1);
 								secsrobots.add(0);
 								automaterobot.add(inputrc);
+								}
 
 							}
 							tab5.clear();
-							if (inputrc == null) {
+							if (inputrc == null && t!=1) {
 								int k = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
 										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-								if (k == 1) {
+								if (k == 1 || k== -1) {
 									t = 1;
 								}else{
 									t--;
@@ -514,9 +552,24 @@ public class MapGameState extends BasicGameState {
 							String inputbm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
 							if (inputbm != null){
 								Node n = new Node(null);
-								while (!Parser.ExpressionCorrecte(inputbm) || !(Parser.InventaireOk(inputbm, j2))) {
-									inputbm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
+								boolean annuler = true;
+								while (annuler && (!Parser.ExpressionCorrecte(inputbm) || !Parser.InventaireOk(inputbm, j2))) {
+									if ( inputbm != null){
+										inputbm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
+									}
+									if (inputbm == null){
+										int z = JOptionPane.showOptionDialog(null,
+												"Voulez-vous continuer la création/modification", null,
+												JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+										if (z == 1 || z == -1) {
+											t2 = 1;
+											annuler = false;
+										}else{
+											inputbm = "ddg";						
+										}
+									}
 								}
+								if (annuler){
 								String k = (String)robots.getSelectedItem();
 								System.out.println(k);
 								n = Parser.ExpressionCorrecte1(inputbm);
@@ -526,13 +579,13 @@ public class MapGameState extends BasicGameState {
 								j2.robots().get(i-1).modificationRobot(n);
 
 								automaterobot.set(i-1, inputbm);
-
+								}
 							}
-							if (inputbm == null) {
+							if (inputbm == null && t2!=1) {
 								int k2 = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
 										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-								if (k2 == 1) {
+								if (k2 == 1 || k2 == -1) {
 									t2 = 1;
 								}else{
 									t2--;
@@ -546,10 +599,24 @@ public class MapGameState extends BasicGameState {
 							String inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 							if (inputbc != null) {
 								Node n = new Node(null);
-								while (!Parser.ExpressionCorrecte(inputbc) || !(Parser.InventaireOk(inputbc, j2))) {
-									inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
+								boolean annuler = true;
+								while (annuler && (!Parser.ExpressionCorrecte(inputbc) || !Parser.InventaireOk(inputbc, j2))) {
+									if ( inputbc != null){
+										inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
+									}
+									if (inputbc == null){
+										int z = JOptionPane.showOptionDialog(null,
+												"Voulez-vous continuer la création/modification", null,
+												JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+										if (z == 1 || z == -1) {
+											t2 = 1;
+											annuler = false;
+										}else{
+											inputbc = "ddg";						
+										}
+									}
 								}
-
+								if (annuler){
 								n = Parser.ExpressionCorrecte1(inputbc);
 								n = new Node(Operateur.Star, null, n);
 								Coordonnees c = Terrain.spawnBlue();
@@ -562,13 +629,14 @@ public class MapGameState extends BasicGameState {
 								cmptr_robots.add(1);
 								secsrobots.add(0);
 								automaterobot.add(inputbc);
+								}
 							}
 							tab4.clear();
-							if (inputbc == null) {
+							if (inputbc == null && t2!=1) {
 								int k2 = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
 										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-								if (k2 == 1) {
+								if (k2 == 1 || k2 == -1) {
 									t2 = 1;
 								}else{
 									t2--;
