@@ -175,34 +175,22 @@ Node EXPRbis() :
 {
   < LACC > arbre = EXPRbis() < RACC > arbre2 = Lbis()
   {
-<<<<<<< HEAD
-    if (arbre2.Gram() == Operateur.PointVirgule && arbre2.FG() != null)
-    {
-      Node.SetLeftChild(arbre2.FG(), arbre);
-      return arbre2;
-    }
-    else if (arbre2.Gram() == Operateur.PointVirgule && arbre2.FG() == null)
-    {
-      return new Node(arbre2.Gram(), arbre, arbre2.FD());
-    }
-    else return new Node(arbre2.Gram(), arbre, arbre2.FD());
-=======
+
     if (arbre2 != null)
     {
-      if (arbre2.Gram == Operateur.PointVirgule && arbre2.FG != null)
+      if (arbre2.Gram() == Operateur.PointVirgule && arbre2.FG() != null)
       {
-        Node.SetLeftChild(arbre2.FG, arbre);
+        Node.SetLeftChild(arbre2.FG(), arbre);
         return arbre2;
       }
-      else if (arbre2.Gram == Operateur.PointVirgule && arbre2.FG == null)
+      else if (arbre2.Gram() == Operateur.PointVirgule && arbre2.FG() == null)
       {
-        return new Node(arbre2.Gram, arbre, arbre2.FD);
+        return new Node(arbre2.Gram(), arbre, arbre2.FD());
       }
-      else return new Node(arbre2.Gram, arbre, arbre2.FD);
+      else return new Node(arbre2.Gram(), arbre, arbre2.FD());
     }else {
 		return arbre;
     }
->>>>>>> 522f24db4b857188686b6093e0f9af48cdf4a65a
   }
 | c = < COMP > arbre = L()
   {

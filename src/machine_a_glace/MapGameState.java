@@ -248,19 +248,6 @@ public class MapGameState extends BasicGameState {
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
 		
-		allrobots.add(new Robot(4,15,Couleur.Rouge,new Node(Operateur.Star,null,new Node(Attack.ATTACK))));
-		allrobots.get(0).setD(Direction.Sud);
-		
-		canmoverobots.add(false);
-		cmptr_robots.add(1);
-		secsrobots.add(0);
-		automaterobot.add("{A}");
-		
-		allrobots.add(new Robot(7,15,Couleur.Bleu,new Node(Operateur.Star,null,new Node(Explore.EXPLORE))));
-		canmoverobots.add(false);
-		cmptr_robots.add(1);
-		secsrobots.add(0);
-		automaterobot.add("{X}");
 		
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();

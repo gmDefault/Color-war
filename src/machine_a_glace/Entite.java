@@ -7,7 +7,7 @@ public abstract class Entite {
 	private Direction d;
 	private int col, line;
 	private Couleur couleur;
-	int pdv;
+	private int pdv;
 
 	/**
 	 * Si ajout des bonus/malus : Ajout des variables Portée et dégâts

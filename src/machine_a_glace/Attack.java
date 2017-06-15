@@ -1,14 +1,13 @@
 package machine_a_glace;
 
-
 public class Attack extends Comportement {
 
 	public static Attack ATTACK = new Attack("maps/A.png");
-	
-	private Attack(String s){
-		super.image=s;
+
+	private Attack(String s) {
+		super.image = s;
 	}
-	
+
 	@Override
 	public boolean execute(Robot r) {
 		// TODO Auto-generated method stub
@@ -28,7 +27,10 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
-				case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv() > 30)
+					case_r.getEntite().Degat(30 * coeff_degat);
+				else 
+					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
 			}
 			// Attaque l'ennemi à sa droite
@@ -37,7 +39,10 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
-				case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv() > 30)
+					case_r.getEntite().Degat(30 * coeff_degat);
+				else 
+					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
 			}
 			// Attaque l'ennemi à sa gauche
@@ -46,7 +51,10 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
-				case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv() > 30)
+					case_r.getEntite().Degat(30 * coeff_degat);
+				else 
+					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
 			}
 			return false;
@@ -56,7 +64,10 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
-				case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv() > 30)
+					case_r.getEntite().Degat(30 * coeff_degat);
+				else 
+					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
 			}
 			case_r = Terrain.terrain[line][col - 1];
@@ -64,7 +75,10 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
-				case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv() > 30)
+					case_r.getEntite().Degat(30 * coeff_degat);
+				else 
+					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
 			}
 			case_r = Terrain.terrain[line][col + 1];
@@ -72,7 +86,10 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
-				case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv() > 30)
+					case_r.getEntite().Degat(30 * coeff_degat);
+				else 
+					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
 			}
 			return false;
@@ -82,7 +99,10 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
-				case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv() > 30)
+					case_r.getEntite().Degat(30 * coeff_degat);
+				else 
+					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
 			}
 			case_r = Terrain.terrain[line][col - 1];
@@ -90,7 +110,10 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
-				case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv() > 30)
+					case_r.getEntite().Degat(30 * coeff_degat);
+				else 
+					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
 			}
 			case_r = Terrain.terrain[line][col + 1];
@@ -98,7 +121,10 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
-				case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv() > 30)
+					case_r.getEntite().Degat(30 * coeff_degat);
+				else 
+					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
 			}
 			return false;
@@ -109,7 +135,10 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
-				case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv() > 30)
+					case_r.getEntite().Degat(30 * coeff_degat);
+				else 
+					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
 			}
 			// Attaque l'ennemi à sa gauche
@@ -118,7 +147,10 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
-				case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv() > 30)
+					case_r.getEntite().Degat(30 * coeff_degat);
+				else 
+					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
 			}
 			// Attaque l'ennemi à sa droite
@@ -127,7 +159,10 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					coeff_degat = 1 / 3;
 				}
-				case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv() > 30)
+					case_r.getEntite().Degat(30 * coeff_degat);
+				else 
+					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
 			}
 			return false;
