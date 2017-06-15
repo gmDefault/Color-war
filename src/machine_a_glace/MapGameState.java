@@ -131,12 +131,6 @@ public class MapGameState extends BasicGameState {
 		// TODO Auto-generated method stub
 		this.container = container;
 
-<<<<<<< HEAD
-		boolean y = Parser.ExpressionCorrecte("{{X:4};{X:2}}");
-		System.out.println(y);
-=======
-		Node n = Reader.read("{A:2>X;K}");
->>>>>>> ae5831fddb678e9d809887839a1442240859fb70
 
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
