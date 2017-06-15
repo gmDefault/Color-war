@@ -24,11 +24,13 @@ public class MainScreenGameState extends BasicGameState {
 
 	public static final int ID = 1;
 	private Image background;
+	private Image menuimg;
 	private StateBasedGame game;
 	private GameContainer container;
 	public static boolean joueur_1_gagne = false;
 	public static boolean joueur_2_gagne = false;
 	public static boolean egalite = false;
+	public static boolean aide = false;
 	private int timer = 0;
 	java.awt.Font UIFont1;
 	org.newdawn.slick.UnicodeFont uniFont, uniFont2;
@@ -41,7 +43,8 @@ public class MainScreenGameState extends BasicGameState {
 		this.game = game;
 		this.container = container;
 		this.background = new Image("maps/colorwar.png");
-		
+		this.menuimg = new Image ("maps/menuaide.png");
+
 		try {
 			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
 					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/cartoon.ttf"));
@@ -77,32 +80,39 @@ public class MainScreenGameState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		background.draw(0, 0, container.getWidth(), container.getHeight());
-		if (joueur_1_gagne) {
-			
-			uniFont.drawString(450-40, 200, "Le joueur rouge gagne la partie !", Color.pink);
+		if (this.aide == false) {
+			background.draw(0, 0, container.getWidth(), container.getHeight());
+			if (joueur_1_gagne) {
+				
+				uniFont.drawString(450-40, 200, "Le joueur rouge gagne la partie !", Color.pink);
 
-		} else if (joueur_2_gagne) {
-			uniFont.drawString(450-40, 200, "Le joueur bleu gagne la partie !", Color.cyan);
-		} else if (egalite) {
-			uniFont.drawString(780, 200, "EGALITE !", Color.orange);
-		}
-		if (timer<25) {
-			uniFont2.drawString(450-40, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.white);
-			uniFont2.drawString(475-40, 550, "Appuyer sur \"C\" pour charger une partie", Color.white);
-
-			uniFont2.drawString(480-40, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.white);
-			timer++;
-		} else {
-			uniFont2.drawString(450-40, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.cyan);
-			uniFont2.drawString(475-40, 550, "Appuyer sur \"C\" pour charger une partie", Color.cyan);
-
-			uniFont2.drawString(480-40, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.cyan);
-			timer++;
-			if (timer == 50) {
-				timer = 0;
+			} else if (joueur_2_gagne) {
+				uniFont.drawString(450-40, 200, "Le joueur bleu gagne la partie !", Color.cyan);
+			} else if (egalite) {
+				uniFont.drawString(780, 200, "EGALITE !", Color.orange);
 			}
+			if (timer<25) {
+				uniFont2.drawString(450-40, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.white);
+				uniFont2.drawString(475-40, 550, "Appuyer sur \"C\" pour charger une partie", Color.white);
+
+				uniFont2.drawString(480-40, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.white);
+				uniFont2.drawString(440-40, 750, "Appuyer sur \"M\" pour lancer le menu d'aide", Color.white);
+				timer++;
+			} else {
+				uniFont2.drawString(450-40, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.cyan);
+				uniFont2.drawString(475-40, 550, "Appuyer sur \"C\" pour charger une partie", Color.cyan);
+
+				uniFont2.drawString(480-40, 650, "Appuyer sur \"Q\" pour quitter le jeu", Color.cyan);
+				uniFont2.drawString(440-40, 750, "Appuyer sur \"M\" pour lancer le menu d'aide", Color.cyan);
+				timer++;
+				if (timer == 50) {
+					timer = 0;
+				}
+			}
+		} else {
+			menuimg.draw(0, 0, container.getWidth(), container.getHeight());
 		}
+		
 		
 
 //		g.drawString("Appuyer sur Entrée pour lancer la partie", 800, 300);
@@ -146,6 +156,13 @@ public class MainScreenGameState extends BasicGameState {
 			break;
 		case Input.KEY_Q: 
 			this.container.exit();
+			break;
+		case Input.KEY_M:
+			if (this.aide == true) {
+				this.aide = false;
+			} else {
+				this.aide = true;
+			}
 			break;
 		case Input.KEY_C:
 			
