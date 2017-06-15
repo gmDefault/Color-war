@@ -26,9 +26,12 @@ public class Sauvegarde {
 		String str = "";
 		String str_1, str_2 = "";
 		try {
+			MapGameState.allrobots.clear();
+			MapGameState.canmoverobots.clear();
 			BufferedReader reader = new BufferedReader(new FileReader(new File("w4jr1krkd1042kd42.txt")));
 			ReplacePlayer(reader);
 			str = reader.readLine();
+			ReplaceRobots(reader);
 			ReplaceColor(reader);
 			str_1 = reader.readLine();
 			str_2 = reader.readLine();
@@ -41,6 +44,75 @@ public class Sauvegarde {
 			e.printStackTrace();
 		}
 		return str;
+	}
+
+	public static void ReplaceRobots(BufferedReader rdr) throws IOException {
+		String str;
+		String[] inter;
+		int i, j;
+		int line, col, nbr, pdv;
+		Case case_r;
+		Node n;
+		Direction d = Direction.Nord;
+		Couleur c = Couleur.Neutre;
+		Robot r;
+		str = rdr.readLine();
+		nbr = Integer.parseInt(str);
+		for (i = 0; i < nbr; i++) {
+			str = rdr.readLine();
+			inter = str.split(" ");
+			line = Integer.parseInt(inter[0]);
+			col = Integer.parseInt(inter[1]);
+			switch (inter[2]) {
+			case "Ouest":
+				d = Direction.Ouest;
+				break;
+			case "Nord":
+				d = Direction.Nord;
+				break;
+			case "Sud":
+				d = Direction.Sud;
+				break;
+			case "Est":
+				d = Direction.Est;
+				break;
+			}
+			pdv = Integer.parseInt(inter[3]);
+			switch (inter[4]) {
+			case "B":
+				c = Couleur.Bleu;
+				break;
+			case "R":
+				c = Couleur.Rouge;
+				break;
+			}
+			case_r = Terrain.terrain[line][col];
+			if (c == Couleur.Neutre) {
+				throw new JeuException("Couleur du robot non initialisé");
+			}
+			n = Parser.ExpressionCorrecte1(inter[5]);
+			r = new Robot(line, col, c, n);
+			switch(c){
+			case Rouge : 
+				r.setJoueur(MapGameState.j2);
+				break;
+			case Bleu : 
+				r.setJoueur(MapGameState.j1);
+				break;
+			default : 
+				throw new JeuException();
+			}
+			r.setD(d);
+			r.setPdv(pdv);
+			case_r.setEntite(r);
+			case_r.setCase(Contenu.Robot);
+			MapGameState.canmoverobots.add(true);
+			MapGameState.automaterobot.add(inter[5]);
+			MapGameState.allrobots.add(r);
+//			r.modificationRobot(n);
+			
+			
+		}
 	}
 
 	public static void ReplaceRepop(BufferedReader rdr) throws IOException {
@@ -68,6 +140,7 @@ public class Sauvegarde {
 	public static void ReplacePlayer(BufferedReader rdr) throws IOException {
 		String s;
 		String[] inter, invent;
+		invent = null;
 		int i, j;
 		Joueur p1 = null, p2 = null;
 		int line, col, pdv, nrj, nbcasecol, nbitem;
@@ -108,14 +181,16 @@ public class Sauvegarde {
 			nrj = Integer.parseInt(inter[5]);
 			nbcasecol = Integer.parseInt(inter[6]);
 			nbitem = Integer.parseInt(inter[7]);
-			s = rdr.readLine();
-			invent = s.split(" ");
+			if (nbitem != 0) {
+				s = rdr.readLine();
+				invent = s.split(" ");
+			}
 			case_r = Terrain.terrain[line][col];
 			if (i == 0) {
 				lineact = MapGameState.j1.getLine();
 				colact = MapGameState.j1.getCol();
 				Terrain.terrain[lineact][colact].setCase(Contenu.Vide);
-				MapGameState.j1.pdv = pdv;
+				MapGameState.j1.setPdv(pdv);;
 				MapGameState.j1.SetNrj(nrj);
 				MapGameState.j1.setD(d);
 				MapGameState.j1.setLine(line);
@@ -167,7 +242,7 @@ public class Sauvegarde {
 				lineact = MapGameState.j2.getLine();
 				colact = MapGameState.j2.getCol();
 				Terrain.terrain[lineact][colact].setCase(Contenu.Vide);
-				MapGameState.j2.pdv = pdv;
+				MapGameState.j2.setPdv(pdv);;
 				MapGameState.j2.SetNrj(nrj);
 				MapGameState.j2.setD(d);
 				MapGameState.j2.setLine(line);
@@ -290,16 +365,18 @@ public class Sauvegarde {
 	}
 
 	public static void WrtMap(BufferedWriter wrt, int min, int sec) throws IOException {
-		int i, j, k, l;
+		int i, j, k, l,m;
 		int countExpr = 0;
 		int taille;
 		String s;
 		Case case_r;
 		Joueur[] player = new Joueur[2];
 		Coordonnees[] expr = new Coordonnees[30];
+		String[] auto = new String[8];
 		taille = Terrain.getTaille();
 		k = 0;
 		l = 0;
+		m = 0;
 		for (i = 0; i < taille; i++) {
 			for (j = 0; j < taille; j++) {
 				case_r = Terrain.terrain[i][j];
@@ -312,28 +389,28 @@ public class Sauvegarde {
 		for (k = 0; k < 2; k++) {
 			wrt.write(player[k].getLine() + " " + player[k].getCol() + " " + player[k].getD().toString() + " "
 					+ player[k].getCouleur().toString() + " " + player[k].getPdv() + " " + player[k].getNrj() + " "
-					+ player[k].getNombre_Case_Coloriees() + " " + player[k].inventaire().size());
-			if (player[k].inventaire().size() != 0)
-				wrt.write("\n");
+					+ player[k].getNombre_Case_Coloriees() + " " + player[k].inventaire().size() + " ");
+
 
 			for (Expr inv : player[k].inventaire()) {
 				wrt.write(inv.toString() + " ");
 			}
-
-			wrt.write("\n" + MapGameState.allrobots.size() + "\n");
-			if (MapGameState.allrobots.size() != 0)
-				wrt.write("\n");
-			for (Robot rob : MapGameState.allrobots) {
-				wrt.write(rob.getLine() + " " + rob.getCol() + " " + rob.getD() + " " + rob.getPdv() + " "
-						+ rob.getCouleur().toString() + "\n");
-			}
-
-			for (String rob : MapGameState.automaterobot) {
-				wrt.write(rob + "\n");
-			}
 			wrt.write("\n");
 		}
-		wrt.write(min + " " + sec + "\n");
+		for (String rob : MapGameState.automaterobot) {
+			auto[m] = rob;
+			m++;
+		}
+		wrt.write(min + " " + sec);
+		wrt.write("\n" + MapGameState.allrobots.size());
+		m = 0;
+		for (Robot rob : MapGameState.allrobots) {
+			wrt.write("\n" + rob.getLine() + " " + rob.getCol() + " " + rob.getD() + " " + rob.getPdv() + " "
+					+ rob.getCouleur().toString() + " " + auto[m++]);
+		}
+
+		
+		wrt.write("\n");
 		for (i = 0; i < taille; i++) {
 			for (j = 0; j < taille; j++) {
 				case_r = Terrain.terrain[i][j];
