@@ -133,6 +133,8 @@ public class MapGameState extends BasicGameState {
 		// TODO Auto-generated method stub
 		this.container = container;
 
+
+
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
 
