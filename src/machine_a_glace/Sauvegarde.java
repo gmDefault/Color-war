@@ -1,6 +1,7 @@
 package machine_a_glace;
 
 import java.io.*;
+import java.util.Spliterator;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -12,8 +13,8 @@ public class Sauvegarde {
 	public static void Writer(int min, int sec) {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("w4jr1krkd1042kd42.txt")));
-			writer.write(min + " " + sec + "\n");
-			WrtMap(writer);
+			WrtMap(writer, min, sec);
+
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -26,12 +27,13 @@ public class Sauvegarde {
 		String str_1, str_2 = "";
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File("w4jr1krkd1042kd42.txt")));
+			ReplacePlayer(reader);
 			str = reader.readLine();
 			ReplaceColor(reader);
 			str_1 = reader.readLine();
 			str_2 = reader.readLine();
 			ReplaceExpr(str_1, str_2);
-			ReplacePlayer(reader);
+			ReplaceRepop(reader);
 			reader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -41,12 +43,35 @@ public class Sauvegarde {
 		return str;
 	}
 
+	public static void ReplaceRepop(BufferedReader rdr) throws IOException {
+		String str;
+		String[] inter;
+		int line, col, timer;
+		int nbr;
+		int i = 0;
+		IntCoor intco;
+		str = rdr.readLine();
+		System.out.println(str);
+		nbr = Integer.parseInt(str);
+		Terrain.Repop.clear();
+		for (i = 0; i < nbr; i++) {
+			str = rdr.readLine();
+			inter = str.split(" ");
+			line = Integer.parseInt(inter[0]);
+			col = Integer.parseInt(inter[1]);
+			timer = Integer.parseInt(inter[2]);
+			intco = new IntCoor(timer, new Coordonnees(line, col));
+			Terrain.Repop.add(intco);
+		}
+	}
+
 	public static void ReplacePlayer(BufferedReader rdr) throws IOException {
 		String s;
-		String[] inter;
-		int i;
-		Joueur j1 = null, j2 = null;
-		int line, col, pdv, nrj;
+		String[] inter, invent;
+		int i, j;
+		Joueur p1 = null, p2 = null;
+		int line, col, pdv, nrj, nbcasecol, nbitem;
+		int colact, lineact;
 		Case case_r;
 		// new AppGameContainer(new ColorWar(), 1920, 960, false).start();
 		Direction d = Direction.Nord;
@@ -56,6 +81,7 @@ public class Sauvegarde {
 			inter = s.split(" ");
 			line = Integer.parseInt(inter[0]);
 			col = Integer.parseInt(inter[1]);
+			System.out.println(line + " " + col);
 			switch (inter[2]) {
 			case "Ouest":
 				d = Direction.Ouest;
@@ -80,14 +106,112 @@ public class Sauvegarde {
 			}
 			pdv = Integer.parseInt(inter[4]);
 			nrj = Integer.parseInt(inter[5]);
+			nbcasecol = Integer.parseInt(inter[6]);
+			nbitem = Integer.parseInt(inter[7]);
+			s = rdr.readLine();
+			invent = s.split(" ");
 			case_r = Terrain.terrain[line][col];
 			if (i == 0) {
-				j1 = new Joueur(line, col, c, d, pdv, nrj);
-				MapGameState.j1 = j1;
+				lineact = MapGameState.j1.getLine();
+				colact = MapGameState.j1.getCol();
+				Terrain.terrain[lineact][colact].setCase(Contenu.Vide);
+				MapGameState.j1.pdv = pdv;
+				MapGameState.j1.SetNrj(nrj);
+				MapGameState.j1.setD(d);
+				MapGameState.j1.setLine(line);
+				MapGameState.j1.setCol(col);
+				MapGameState.j1.setNb_cases_coloriees(nbcasecol);
+				Terrain.terrain[lineact][colact].setEntite(null);
+				Terrain.terrain[line][col].setCase(Contenu.Joueur);
+				Terrain.terrain[line][col].setEntite(MapGameState.j1);
+				MapGameState.j1.tabinv.clear();
+				MapGameState.j1.inventaire().clear();
+				for (j = 0; j < nbitem; j++) {
+					MapGameState.j1.tabinv.add(invent[j]);
+					switch (invent[j]) {
+					case "/":
+						MapGameState.j1.inventaire().add(Operateur.Choix);
+						break;
+					case ";":
+						MapGameState.j1.inventaire().add(Operateur.PointVirgule);
+						break;
+					case ">":
+						MapGameState.j1.inventaire().add(Operateur.Priorite);
+						break;
+					case ":":
+						MapGameState.j1.inventaire().add(Operateur.Deuxpoints);
+						break;
+					case "|":
+						MapGameState.j1.inventaire().add(Operateur.Choixequi);
+						break;
+					case "*":
+						MapGameState.j1.inventaire().add(Operateur.Star);
+						break;
+					case "K":
+						MapGameState.j1.inventaire().add(Kamikaze.KAMIKAZE);
+						break;
+					case "X":
+						MapGameState.j1.inventaire().add(Explore.EXPLORE);
+						break;
+					case "A":
+						MapGameState.j1.inventaire().add(Attack.ATTACK);
+						break;
+					case "P":
+						MapGameState.j1.inventaire().add(Protect.PROTECT);
+						break;
+					}
+
+				}
 			}
 			if (i == 1) {
-				j1 = new Joueur(line, col, c, d, pdv, nrj);
-				MapGameState.j2 = j2;
+				lineact = MapGameState.j2.getLine();
+				colact = MapGameState.j2.getCol();
+				Terrain.terrain[lineact][colact].setCase(Contenu.Vide);
+				MapGameState.j2.pdv = pdv;
+				MapGameState.j2.SetNrj(nrj);
+				MapGameState.j2.setD(d);
+				MapGameState.j2.setLine(line);
+				MapGameState.j2.setCol(col);
+				Terrain.terrain[lineact][colact].setEntite(null);
+				Terrain.terrain[line][col].setCase(Contenu.Joueur);
+				Terrain.terrain[line][col].setEntite(MapGameState.j2);
+				MapGameState.j2.tabinv.clear();
+				MapGameState.j2.inventaire().clear();
+				for (j = 0; j < nbitem; j++) {
+					MapGameState.j2.tabinv.add(invent[j]);
+					switch (invent[j]) {
+					case "/":
+						MapGameState.j2.inventaire().add(Operateur.Choix);
+						break;
+					case ";":
+						MapGameState.j2.inventaire().add(Operateur.PointVirgule);
+						break;
+					case ">":
+						MapGameState.j2.inventaire().add(Operateur.Priorite);
+						break;
+					case ":":
+						MapGameState.j2.inventaire().add(Operateur.Deuxpoints);
+						break;
+					case "|":
+						MapGameState.j2.inventaire().add(Operateur.Choixequi);
+						break;
+					case "*":
+						MapGameState.j2.inventaire().add(Operateur.Star);
+						break;
+					case "K":
+						MapGameState.j2.inventaire().add(Kamikaze.KAMIKAZE);
+						break;
+					case "X":
+						MapGameState.j2.inventaire().add(Explore.EXPLORE);
+						break;
+					case "A":
+						MapGameState.j2.inventaire().add(Attack.ATTACK);
+						break;
+					case "P":
+						MapGameState.j2.inventaire().add(Protect.PROTECT);
+						break;
+					}
+				}
 			}
 		}
 
@@ -165,7 +289,7 @@ public class Sauvegarde {
 
 	}
 
-	public static void WrtMap(BufferedWriter wrt) throws IOException {
+	public static void WrtMap(BufferedWriter wrt, int min, int sec) throws IOException {
 		int i, j, k, l;
 		int countExpr = 0;
 		int taille;
@@ -176,6 +300,32 @@ public class Sauvegarde {
 		taille = Terrain.getTaille();
 		k = 0;
 		l = 0;
+		for (i = 0; i < taille; i++) {
+			for (j = 0; j < taille; j++) {
+				case_r = Terrain.terrain[i][j];
+				if (case_r.isJoueur()) {
+					player[k] = (Joueur) case_r.getEntite();
+					k++;
+				}
+			}
+		}
+		for (k = 0; k < 2; k++) {
+			wrt.write(player[k].getLine() + " " + player[k].getCol() + " " + player[k].getD().toString() + " "
+					+ player[k].getCouleur().toString() + " " + player[k].getPdv() + " " + player[k].getNrj() + " "
+					+ player[k].getNombre_Case_Coloriees() + " " + player[k].inventaire().size() + "\n");
+
+			for (Expr inv : player[k].inventaire()) {
+				wrt.write(inv.toString() + " ");
+			}
+			
+			
+			wrt.write("\n" + player[k].robots().size() + "\n");
+			for(Robot rob : player[k].robots()){
+				
+			}
+			wrt.write("\n");
+		}
+		wrt.write(min + " " + sec + "\n");
 		for (i = 0; i < taille; i++) {
 			for (j = 0; j < taille; j++) {
 				case_r = Terrain.terrain[i][j];
@@ -195,27 +345,13 @@ public class Sauvegarde {
 						countExpr++;
 						wrt.write(i + " " + j + " " + case_r.expr().toString());
 						wrt.write(" ");
-					} else if (case_r.isJoueur()) {
-						player[k] = (Joueur) case_r.getEntite();
-						k++;
 					}
-
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		}
-		wrt.write("\n" + countExpr);
-		wrt.write("\n");
-		for (k = 0; k < 2; k++) {
-			wrt.write(player[k].getLine() + " " + player[k].getCol() + " " + player[k].getD().toString() + " "
-					+ player[k].getCouleur().toString() + " " + player[k].getPdv() + " " + player[k].getNrj() + " ");
-
-			for (Expr inv : player[k].inventaire()) {
-				wrt.write(inv.toString() + " ");
-			}
-			wrt.write("\n");
-		}
+		wrt.write("\n" + countExpr + "\n" + Terrain.Repop.size() + "\n");
 
 		for (IntCoor rep : Terrain.Repop) {
 			Coordonnees x;

@@ -988,6 +988,7 @@ public class MapGameState extends BasicGameState {
 			break;
 		case Input.KEY_D:
 			this.moving2 = false;
+			break;
 		case Input.KEY_N:
 			Sauvegarde.Writer(minute,seconde);
 			break;
