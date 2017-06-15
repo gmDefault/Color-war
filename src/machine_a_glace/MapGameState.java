@@ -113,7 +113,7 @@ public class MapGameState extends BasicGameState {
 	private Robot r4b;
 
 	private ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
-	private ArrayList<String> automaterobot = new ArrayList<String>();
+	public static ArrayList<String> automaterobot = new ArrayList<String>();
 
 
 

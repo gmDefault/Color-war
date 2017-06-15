@@ -312,16 +312,24 @@ public class Sauvegarde {
 		for (k = 0; k < 2; k++) {
 			wrt.write(player[k].getLine() + " " + player[k].getCol() + " " + player[k].getD().toString() + " "
 					+ player[k].getCouleur().toString() + " " + player[k].getPdv() + " " + player[k].getNrj() + " "
-					+ player[k].getNombre_Case_Coloriees() + " " + player[k].inventaire().size() + "\n");
+					+ player[k].getNombre_Case_Coloriees() + " " + player[k].inventaire().size());
+			if (player[k].inventaire().size() != 0)
+				wrt.write("\n");
 
 			for (Expr inv : player[k].inventaire()) {
 				wrt.write(inv.toString() + " ");
 			}
-			
-			
+
 			wrt.write("\n" + MapGameState.allrobots.size() + "\n");
-			for(Robot rob : MapGameState.allrobots){
-				
+			if (MapGameState.allrobots.size() != 0)
+				wrt.write("\n");
+			for (Robot rob : MapGameState.allrobots) {
+				wrt.write(rob.getLine() + " " + rob.getCol() + " " + rob.getD() + " " + rob.getPdv() + " "
+						+ rob.getCouleur().toString() + "\n");
+			}
+
+			for (String rob : MapGameState.automaterobot) {
+				wrt.write(rob + "\n");
 			}
 			wrt.write("\n");
 		}
