@@ -2,8 +2,9 @@ package machine_a_glace;
 
 public class Node {
 
-	public Node FG, FD;
-	public Expr Gram;
+	private Node FG, FD;
+	private Expr Gram;
+	private Chiffre save;
 
 	public Node(Expr Gram, Node FG, Node FD) {
 		this.FG = FG;
@@ -46,6 +47,62 @@ public class Node {
 
 		G.FG = NG;
 
+	}
+
+	public Expr Gram() {
+		return Gram;
+	}
+
+	public Node FD() {
+		return FD;
+	}
+
+	public Node FG() {
+		return FG;
+	}
+
+	public void setSave(Chiffre c) {
+		save = c;
+	}
+
+	public Chiffre getSave() {
+		return save;
+	}
+
+	public void decrementer_chiffre() {
+		if (Gram.isChiffre())
+			switch ((Chiffre) Gram) {
+			case Deux:
+				Gram = Chiffre.Un;
+				break;
+			case Trois:
+				Gram = Chiffre.Deux;
+				break;
+			case Quatre:
+				Gram = Chiffre.Trois;
+				break;
+			case Cinq:
+				Gram = Chiffre.Quatre;
+				break;
+			case Six:
+				Gram = Chiffre.Cinq;
+				break;
+			case Sept:
+				Gram = Chiffre.Six;
+				break;
+			case Huit:
+				Gram = Chiffre.Sept;
+				break;
+			case Neuf:
+				Gram = Chiffre.Huit;
+				break;
+			default:
+				throw new JeuException("Ce chiffre n'existe pas");
+			}
+	}
+	
+	public void setGram(Expr e){
+		Gram=e;
 	}
 
 }

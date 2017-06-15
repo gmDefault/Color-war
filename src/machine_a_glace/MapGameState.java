@@ -92,7 +92,9 @@ public class MapGameState extends BasicGameState {
 	private boolean canmove2 = false;
 
 
+
 	public static Joueur j1, j2;
+
 
 
 	private ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
@@ -134,8 +136,6 @@ public class MapGameState extends BasicGameState {
 		// TODO Auto-generated method stub
 		this.container = container;
 
-		boolean y = Parser.ExpressionCorrecte("{{X:2};{X:2}}");
-		System.out.println(y);
 
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
@@ -240,7 +240,6 @@ public class MapGameState extends BasicGameState {
 		this.animations5[5] = loadAnimation(spriteSheet5, 1, 9, 1);
 		this.animations5[6] = loadAnimation(spriteSheet5, 1, 9, 2);
 		this.animations5[7] = loadAnimation(spriteSheet5, 1, 9, 3);
-
 
 
 		int tileW = this.map.getTileWidth();
@@ -405,7 +404,7 @@ public class MapGameState extends BasicGameState {
 								}
 								if (annuler){
 								String p = (String)robots.getSelectedItem();
-								System.out.println(p);
+//								System.out.println(p);
 								n = Parser.ExpressionCorrecte1(inputrm);
 								n = new Node(Operateur.Star, null, n);
 								int i = p.charAt(6)-'0';
@@ -1160,15 +1159,22 @@ public class MapGameState extends BasicGameState {
 	
 	public void afficher_robots(Graphics g) throws SlickException{
 		Image e;
-		for(int i=0; i<j1.robots().size();i++){
-			e=new Image("maps/tete_robot_rouge.png");
-			e.draw(1729, 690 + (i*42), 32, 32);
-			g.drawString(j1.robots().get(i).automate().toString(),1605,698 + (i*42));
-		}
-		for(int i=0; i<j2.robots().size();i++){
-			e=new Image("maps/tete_robot_bleu.png");
-			e.draw(140, 690 + (i*42), 32, 32);
-			g.drawString(j2.robots().get(i).automate().toString(),180,698 + (i*42));
+		int nb_robot_rouge=0;
+		int nb_robot_bleu=0;
+		for(int i=0; i<allrobots.size();i++){
+			if(allrobots.get(i).getCouleur() == Couleur.Rouge){
+				e=new Image("maps/tete_robot_rouge.png");
+				e.draw(1729, 690 + (nb_robot_rouge*42), 32, 32);
+				g.drawString("*" + automaterobot.get(i),1605,698 + (nb_robot_rouge*42));
+				nb_robot_rouge++;
+			}else{
+				e=new Image("maps/tete_robot_bleu.png");
+				e.draw(140, 690 + (nb_robot_bleu*42), 32, 32);
+				g.drawString("*" + automaterobot.get(i),180,698 + (nb_robot_bleu*42));
+				nb_robot_bleu++;
+
+			}
+			
 		}
 	}
 
