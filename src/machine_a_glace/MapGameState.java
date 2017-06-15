@@ -43,7 +43,7 @@ public class MapGameState extends BasicGameState {
 
 	boolean jeufini = false;
 
-	private ArrayList<Integer> cmptr_robots = new ArrayList<Integer>();
+	private ArrayList<Integer> cmptr_robots;
 
 	boolean bool1 = false;
 	boolean bool2 = false;
@@ -68,9 +68,9 @@ public class MapGameState extends BasicGameState {
 
 	private int secs1 = 0;
 	private int secs2 = 0;
-	private ArrayList<Integer> secsrobots = new ArrayList<Integer>();
+	private ArrayList<Integer> secsrobots;
 
-	public static ArrayList<Robot> allrobots = new ArrayList<Robot>();
+	public static ArrayList<Robot> allrobots;
 
 	private final float DEBUT_VIE_ROUGE_X = 1631;
 	private final float FIN_VIE_ROUGE_X = 1778;
@@ -162,6 +162,10 @@ public class MapGameState extends BasicGameState {
 
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
+		
+		 this.secsrobots = new ArrayList<Integer>();
+		 this.allrobots = new ArrayList<Robot>();
+		 this.cmptr_robots = new ArrayList<Integer>();
 
 		try {
 			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
