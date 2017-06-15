@@ -220,7 +220,7 @@ Node L() :
     {
       return new Node(Arbre1.Gram, new Node(StringtoOp(exp.image), null, new Node(StringtoChiffre(exp2.image))), Arbre1.FD);
     }
-    else return new Node(StringtoOp(exp.image), null, new Node(StringtoComp(exp2.image)));
+    else return new Node(StringtoOp(exp.image), null, new Node(StringtoChiffre(exp2.image)));
   }
 |
   {
