@@ -126,14 +126,17 @@ public class MainScreenGameState extends BasicGameState {
 		switch(key){
 		case Input.KEY_ENTER :
 			try {
+				if (this.joueur_1_gagne || this.joueur_2_gagne || this.egalite) {
+					this.container.reinit();
+					Terrain.initialiser();
+					MapGameState.j1 = new Joueur(1, 15, Couleur.Rouge, 50, 100);
+					MapGameState.j1.setD(Direction.Sud);
+					MapGameState.j2 = new Joueur(28, 15, Couleur.Bleu, 100, 100);
+				}
 				this.joueur_1_gagne = false;
 				this.joueur_2_gagne = false;
 				this.egalite = false;
-				container.reinit();
-				Terrain.initialiser();
-				MapGameState.j1 = new Joueur(1, 15, Couleur.Rouge, 50, 100);
-				MapGameState.j1.setD(Direction.Sud);
-				MapGameState.j2 = new Joueur(28, 15, Couleur.Bleu, 100, 100);
+		
 
 			} catch (SlickException e) {
 				// TODO Auto-generated catch block
