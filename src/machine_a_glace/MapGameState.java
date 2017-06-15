@@ -250,7 +250,6 @@ public class MapGameState extends BasicGameState {
 		int logicLayer = this.map.getLayerIndex("Collision");
 		Image tile;
 
-		// for (int i = 15*32; i < )
 		for (int i = 16 * 32; i <= 56 * 32; i += 32) {
 			for (int j = 32; j <= 28 * 32; j += 32) {
 				tile = this.map.getTileImage((int) i / tileW, (int) j / tileH, logicLayer);
@@ -259,16 +258,6 @@ public class MapGameState extends BasicGameState {
 				}
 			}
 		}
-
-		// Terrain.afficher();
-
-		// System.out.println("get line : "+j1.getLine());
-
-		// this.e = new Entite(15, 20);
-		// this.e2 = new Entite(16, 19);
-
-		// Music background = new Music("maps/FoxieEpic.OGG");
-		// background.loop();
 
 	}
 
@@ -352,6 +341,8 @@ public class MapGameState extends BasicGameState {
 
 			robots_inv.draw(120, 670);
 			robots_inv2.draw(1580, 670);
+			
+			afficher_robots(g);
 
 			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
 
@@ -1027,6 +1018,21 @@ public class MapGameState extends BasicGameState {
 		else if(allrobots.get(i).getCouleur() == Couleur.Bleu && (! j2.robots().contains(allrobots.get(i))) )
 				allrobots.remove(i);
 		}	
+	}
+	
+	
+	public void afficher_robots(Graphics g) throws SlickException{
+		Image e;
+		for(int i=0; i<j1.robots().size();i++){
+			e=new Image("maps/tete_robot_rouge.png");
+			e.draw(1729, 690 + (i*42), 32, 32);
+			g.drawString(j1.robots().get(i).automate().toString(),1605,698 + (i*42));
+		}
+		for(int i=0; i<j2.robots().size();i++){
+			e=new Image("maps/tete_robot_bleu.png");
+			e.draw(140, 690 + (i*42), 32, 32);
+			g.drawString(j2.robots().get(i).automate().toString(),150,698 + (i*42));
+		}
 	}
 
 }

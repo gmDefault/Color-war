@@ -226,5 +226,9 @@ public class Robot extends Entite {
 	public Joueur getMaitre(){
 		return maitre;
 	}
+	
+	public Node automate(){
+		return automate;
+	}
 }
 
