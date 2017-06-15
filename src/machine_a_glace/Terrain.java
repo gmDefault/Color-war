@@ -3,8 +3,6 @@ package machine_a_glace;
 import java.util.ArrayList;
 import java.util.Map;
 
-
-
 import java.util.LinkedHashMap;
 
 public class Terrain {
@@ -14,9 +12,10 @@ public class Terrain {
 	private static ArrayList<Coordonnees> coordonnees_cp_op = new ArrayList<Coordonnees>(Nbr_Cp_Op);
 	private static Coordonnees CreationRouge = new Coordonnees(3, 15);
 	private static Coordonnees CreationBleu = new Coordonnees(26, 15);
-	private static Coordonnees BonusMalus = new Coordonnees(5,15);
+	private static Coordonnees BonusMalus = new Coordonnees(5, 15);
 	public static ArrayList<IntCoor> Repop = new ArrayList<IntCoor>(Nbr_Cp_Op);
 	public static int Index = 0;
+
 	private Terrain() {
 
 	}
@@ -69,32 +68,35 @@ public class Terrain {
 		coordonnees_cp_op.add(new Coordonnees(28, 1));
 
 	}
-	
-	// Fonction qui crée un timer de repop pour une expression qui vient d'être ramassé
+
+	// Fonction qui crée un timer de repop pour une expression qui vient d'être
+	// ramassé
 	public static void PutTimer(int line, int col) {
 		Coordonnees c = new Coordonnees(line, col);
 		IntCoor ic = new IntCoor(30000, c);
 		Repop.add(ic);
-		Index ++;
+		Index++;
 	}
 
-	
-	// Fonction qui décompte le temps qu'il reste avant le repop d'un Comportement/Opérateur
+	// Fonction qui décompte le temps qu'il reste avant le repop d'un
+	// Comportement/Opérateur
 	public static boolean ReduceTimer() {
 		boolean b = false;
 		for (IntCoor i : Repop) {
 			i.timer -= 17;
 		}
-		if (Repop.get(0).timer <= 0) {
-			Coordonnees c = Repop.get(0).coord;
-			Expr e = New_Cp_Op();
-			while(!e.isOperateur() && !e.isComportement())
-				e = New_Cp_Op();
-			Terrain.terrain[c.getLigne()][c.getCol()].setCase(Contenu.Expression);
-			Terrain.terrain[c.getLigne()][c.getCol()].setExpr(e);
-			Repop.remove(Repop.get(0));
-			Index --;
-			b = true;
+		if (Repop.size() > 0) {
+			if (Repop.get(0).timer <= 0) {
+				Coordonnees c = Repop.get(0).coord;
+				Expr e = New_Cp_Op();
+				while (!e.isOperateur() && !e.isComportement())
+					e = New_Cp_Op();
+				Terrain.terrain[c.getLigne()][c.getCol()].setCase(Contenu.Expression);
+				Terrain.terrain[c.getLigne()][c.getCol()].setExpr(e);
+				Repop.remove(Repop.get(0));
+				Index--;
+				b = true;
+			}
 		}
 		return b;
 	}
@@ -221,44 +223,46 @@ public class Terrain {
 	public static int getTaille() {
 		return taille;
 	}
-	public static Coordonnees spawnRed(){
-		if (casexy(4,15).isAccessible()){
-			return new Coordonnees (4,15);
-		}else if(casexy(3,16).isAccessible()){
-			return new Coordonnees (3,16);
-		}else if(casexy(3,14).isAccessible()){
-			return new Coordonnees (3,14);
-		}else{
+
+	public static Coordonnees spawnRed() {
+		if (casexy(4, 15).isAccessible()) {
+			return new Coordonnees(4, 15);
+		} else if (casexy(3, 16).isAccessible()) {
+			return new Coordonnees(3, 16);
+		} else if (casexy(3, 14).isAccessible()) {
+			return new Coordonnees(3, 14);
+		} else {
 			int line = 5;
 			int col = 14;
-			while(!casexy(line,col).isAccessible()){
+			while (!casexy(line, col).isAccessible()) {
 				col++;
-				if (col == 17){
-					col=14;
+				if (col == 17) {
+					col = 14;
 					line++;
 				}
 			}
-			return new Coordonnees (line,col);
+			return new Coordonnees(line, col);
 		}
 	}
-	public static Coordonnees spawnBlue(){
-		if (casexy(25,15).isAccessible()){
-			return new Coordonnees (25,15);
-		}else if(casexy(26,16).isAccessible()){
-			return new Coordonnees (26,16);
-		}else if(casexy(26,14).isAccessible()){
-			return new Coordonnees (26,14);
-		}else{
+
+	public static Coordonnees spawnBlue() {
+		if (casexy(25, 15).isAccessible()) {
+			return new Coordonnees(25, 15);
+		} else if (casexy(26, 16).isAccessible()) {
+			return new Coordonnees(26, 16);
+		} else if (casexy(26, 14).isAccessible()) {
+			return new Coordonnees(26, 14);
+		} else {
 			int line = 25;
 			int col = 14;
-			while(!casexy(line,col).isAccessible()){
+			while (!casexy(line, col).isAccessible()) {
 				col++;
-				if (col == 17){
-					col=14;
+				if (col == 17) {
+					col = 14;
 					line--;
 				}
 			}
-			return new Coordonnees (line,col);
+			return new Coordonnees(line, col);
 		}
 	}
 }
