@@ -109,6 +109,7 @@ public class MapGameState extends BasicGameState {
 	private Robot r4b;
 
 	private ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
+	private ArrayList<String> automaterobot = new ArrayList<String>();
 
 
 
@@ -373,8 +374,24 @@ public class MapGameState extends BasicGameState {
 								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, this.icr, bouton,
 								bouton[0]);
 						if (retour == 1 && j1.robots().size() >0) {
-							String inputrm = JOptionPane.showInputDialog(null, robot, "Coucou");
-
+							
+							String[] robot = j1.arrayRobottoString();
+							JComboBox robots = new JComboBox(robot);
+							String inputrm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
+							if (inputrm != null){
+								Node n = new Node(null);
+								while (!Parser.ExpressionCorrecte(inputrm) || !(Parser.InventaireOk(inputrm, j1))) {
+									inputrm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
+								}
+								String p = (String)robots.getSelectedItem();
+								System.out.println(p);
+								n = Parser.ExpressionCorrecte1(inputrm);
+								n = new Node(Operateur.Star, null, n);
+								int i = p.charAt(6)-'0';
+//								System.out.println(i);
+								j1.robots().get(i-1).modificationRobot(n);
+								automaterobot.set(i-1, inputrm);
+							}
 							if (inputrm == null) {
 								int k = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
@@ -390,15 +407,15 @@ public class MapGameState extends BasicGameState {
 							JOptionPane p = new JOptionPane();
 							ArrayList<String> tab5 = j1.inventaire_toString();
 
-							String inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
+							String inputrc = p.showInputDialog(tab5,"Saisissez votre expression");
 							if (inputrc != null) {
 								// System.out.println(inputrc);
 								Node m = new Node(null);
 								while (!Parser.ExpressionCorrecte(inputrc) || !Parser.InventaireOk(inputrc, j1)) {
 									inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 								}
-								char t5[] = inputrc.toCharArray();
-								ArrayList<Expr> inv = (ArrayList<Expr>) j1.inventaire().clone();
+//								char t5[] = inputrc.toCharArray();
+//								ArrayList<Expr> inv = (ArrayList<Expr>) j1.inventaire().clone();
 								// System.out.println(t5);
 
 								m = Parser.ExpressionCorrecte1(inputrc);
@@ -412,6 +429,7 @@ public class MapGameState extends BasicGameState {
 								canmoverobots.add(false);
 								cmptr_robots.add(1);
 								secsrobots.add(0);
+								automaterobot.add(inputrc);
 
 							}
 							tab5.clear();
@@ -430,6 +448,9 @@ public class MapGameState extends BasicGameState {
 						}
 
 						else if (retour == 0 && j1.robots().size() == 4) {
+							t--;
+						}
+						else if (retour == 1 && j1.robots().size() == 0) {
 							t--;
 						}
 						if (retour == 2 || retour == -1) {
@@ -470,8 +491,23 @@ public class MapGameState extends BasicGameState {
 								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2,
 								bouton2[0]);
 						if (retour2 == 1 && j2.robots().size()>0) {
-							String inputbm = JOptionPane.showInputDialog(null, robot2, "ccou");
-
+							String[] robot = j2.arrayRobottoString();
+							JComboBox robots = new JComboBox(robot);
+							String inputbm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
+							if (inputbm != null){
+								Node n = new Node(null);
+								while (!Parser.ExpressionCorrecte(inputbm) || !(Parser.InventaireOk(inputbm, j2))) {
+									inputbm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
+								}
+								String k = (String)robots.getSelectedItem();
+								System.out.println(k);
+								n = Parser.ExpressionCorrecte1(inputbm);
+								n = new Node(Operateur.Star, null, n);
+								int i = k.charAt(6)-'0';
+//								System.out.println(i);
+								j2.robots().get(i-1).modificationRobot(n);
+								automaterobot.set(i-1, inputbm);
+							}
 							if (inputbm == null) {
 								int k2 = JOptionPane.showOptionDialog(null,
 										"Voulez-vous continuer la création/modification", null,
@@ -490,7 +526,7 @@ public class MapGameState extends BasicGameState {
 							String inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 							if (inputbc != null) {
 								Node n = new Node(null);
-								while (!Parser.ExpressionCorrecte(inputbc)) {
+								while (!Parser.ExpressionCorrecte(inputbc) || !(Parser.InventaireOk(inputbc, j2))) {
 									inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
 								}
 
@@ -505,6 +541,7 @@ public class MapGameState extends BasicGameState {
 								canmoverobots.add(false);
 								cmptr_robots.add(1);
 								secsrobots.add(0);
+								automaterobot.add(inputbc);
 							}
 							tab4.clear();
 							if (inputbc == null) {
@@ -517,6 +554,10 @@ public class MapGameState extends BasicGameState {
 									t2--;
 								}
 							}
+						}else if (retour2 == 0 && j1.robots().size() == 4) {
+							t2--;
+						}else if (retour2 == 1 && j1.robots().size() == 0) {
+							t2--;
 						}
 						if (retour2 == 2 || retour2 == -1) {
 							t2 = 1;
@@ -572,10 +613,9 @@ public class MapGameState extends BasicGameState {
 		}
 	}
 
-	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
-		
+
+	public void update(GameContainer container, StateBasedGame game, int delta)
+			throws SlickException {
 		
 		if (Terrain.Index > 0)
 			bool3 = Terrain.ReduceTimer();
@@ -1031,7 +1071,7 @@ public class MapGameState extends BasicGameState {
 		for(int i=0; i<j2.robots().size();i++){
 			e=new Image("maps/tete_robot_bleu.png");
 			e.draw(140, 690 + (i*42), 32, 32);
-			g.drawString(j2.robots().get(i).automate().toString(),150,698 + (i*42));
+			g.drawString(j2.robots().get(i).automate().toString(),180,698 + (i*42));
 		}
 	}
 

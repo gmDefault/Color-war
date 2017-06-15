@@ -230,5 +230,11 @@ public class Robot extends Entite {
 	public Node automate(){
 		return automate;
 	}
+
+	public void modificationRobot(Node automate){
+		this.automate = automate;
+		etat_courant = this.automate;
+		next_etat();
+	}
 }
 
