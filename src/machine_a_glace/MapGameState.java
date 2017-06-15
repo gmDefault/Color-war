@@ -927,7 +927,7 @@ public class MapGameState extends BasicGameState {
 			// JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
 			break;
 			
-		case Input.KEY_M:
+		case Input.KEY_H:
 			if (pause == false) {
 				this.container.pause();
 				this.pause = true;
