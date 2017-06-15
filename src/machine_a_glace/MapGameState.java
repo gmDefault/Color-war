@@ -39,11 +39,11 @@ public class MapGameState extends BasicGameState {
 
 	int seconde = 10000;
 
-	int minute = 5 ;
+	int minute =5;
 
 	boolean jeufini = false;
 
-	private ArrayList<Integer> cmptr_robots = new ArrayList<Integer>();
+	private ArrayList<Integer> cmptr_robots;
 
 	boolean bool1 = false;
 	boolean bool2 = false;
@@ -68,9 +68,9 @@ public class MapGameState extends BasicGameState {
 
 	private int secs1 = 0;
 	private int secs2 = 0;
-	private ArrayList<Integer> secsrobots = new ArrayList<Integer>();
+	private ArrayList<Integer> secsrobots;
 
-	public static ArrayList<Robot> allrobots = new ArrayList<Robot>();
+	public static ArrayList<Robot> allrobots;
 
 	private final float DEBUT_VIE_ROUGE_X = 1631;
 	private final float FIN_VIE_ROUGE_X = 1778;
@@ -154,11 +154,15 @@ public class MapGameState extends BasicGameState {
 		// TODO Auto-generated method stub
 		this.container = container;
 
-		boolean y = Parser.ExpressionCorrecte("{X:4}");
+		boolean y = Parser.ExpressionCorrecte("{{X:2};{X:2}}");
 		System.out.println(y);
 
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
+		
+		 this.secsrobots = new ArrayList<Integer>();
+		 this.allrobots = new ArrayList<Robot>();
+		 this.cmptr_robots = new ArrayList<Integer>();
 
 		try {
 			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
@@ -297,8 +301,11 @@ public class MapGameState extends BasicGameState {
 			if (this.j1.getNombre_Case_Coloriees() > this.j2.getNb_cases_coloriees()) {
 				MainScreenGameState.joueur_1_gagne = true;
 				game.enterState(MainScreenGameState.ID);
-			} else {
+			} else if (this.j1.getNombre_Case_Coloriees() < this.j2.getNb_cases_coloriees()){
 				MainScreenGameState.joueur_2_gagne = true;
+				game.enterState(MainScreenGameState.ID);
+			} else {
+				MainScreenGameState.egalite = true;
 				game.enterState(MainScreenGameState.ID);
 			}
 

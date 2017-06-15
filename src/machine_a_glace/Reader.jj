@@ -63,9 +63,8 @@ public class Reader
   }
   Chiffre StringtoChiffre(String s)
   {
-
-    switch(s) {
-		
+    switch (s)
+    {
       case "1" : return Chiffre.Un;
       case "2" : return Chiffre.Deux;
       case "3" : return Chiffre.Trois;
@@ -176,16 +175,21 @@ Node EXPRbis() :
 {
   < LACC > arbre = EXPRbis() < RACC > arbre2 = Lbis()
   {
-    if (arbre2.Gram == Operateur.PointVirgule && arbre2.FG != null)
+    if (arbre2 != null)
     {
-      Node.SetLeftChild(arbre2.FG, arbre);
-      return arbre2;
+      if (arbre2.Gram == Operateur.PointVirgule && arbre2.FG != null)
+      {
+        Node.SetLeftChild(arbre2.FG, arbre);
+        return arbre2;
+      }
+      else if (arbre2.Gram == Operateur.PointVirgule && arbre2.FG == null)
+      {
+        return new Node(arbre2.Gram, arbre, arbre2.FD);
+      }
+      else return new Node(arbre2.Gram, arbre, arbre2.FD);
+    }else {
+		return arbre;
     }
-    else if (arbre2.Gram == Operateur.PointVirgule && arbre2.FG == null)
-    {
-      return new Node(arbre2.Gram, arbre, arbre2.FD);
-    }
-    else return new Node(arbre2.Gram, arbre, arbre2.FD);
   }
 | c = < COMP > arbre = L()
   {

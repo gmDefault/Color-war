@@ -28,6 +28,7 @@ public class MainScreenGameState extends BasicGameState {
 	private GameContainer container;
 	public static boolean joueur_1_gagne = false;
 	public static boolean joueur_2_gagne = false;
+	public static boolean egalite = false;
 	private int timer = 0;
 	java.awt.Font UIFont1;
 	org.newdawn.slick.UnicodeFont uniFont, uniFont2;
@@ -83,6 +84,8 @@ public class MainScreenGameState extends BasicGameState {
 
 		} else if (joueur_2_gagne) {
 			uniFont.drawString(450-40, 200, "Le joueur bleu gagne la partie !", Color.cyan);
+		} else if (egalite) {
+			uniFont.drawString(780, 200, "EGALITE !", Color.orange);
 		}
 		if (timer<25) {
 			uniFont2.drawString(450-40, 450, "Appuyer sur \"Entree\" pour lancer la partie", Color.white);
@@ -123,9 +126,18 @@ public class MainScreenGameState extends BasicGameState {
 		switch(key){
 		case Input.KEY_ENTER :
 			try {
+				if (this.joueur_1_gagne || this.joueur_2_gagne || this.egalite) {
+					this.container.reinit();
+					Terrain.initialiser();
+					MapGameState.j1 = new Joueur(1, 15, Couleur.Rouge, 50, 100);
+					MapGameState.j1.setD(Direction.Sud);
+					MapGameState.j2 = new Joueur(28, 15, Couleur.Bleu, 100, 100);
+				}
 				this.joueur_1_gagne = false;
 				this.joueur_2_gagne = false;
-				container.reinit();
+				this.egalite = false;
+		
+
 			} catch (SlickException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
