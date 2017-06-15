@@ -16,7 +16,7 @@ public class Attack extends Comportement {
 		line = r.getLine();
 		col = r.getCol();
 		int taille_t = Terrain.getTaille();
-		int coeff_degat = 1;
+		int degat = 30;
 		Direction d = r.direction();
 		Case case_r;
 		switch (d) {
@@ -25,34 +25,34 @@ public class Attack extends Comportement {
 			case_r = Terrain.terrain[line][col - 1];
 			if (col - 1 > 0 && case_r.isEnnemi(r)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
-					coeff_degat = 1 / 3;
+					degat = 10;
 				}
-				if (case_r.getEntite().getPdv() > 30)
-					case_r.getEntite().Degat(30 * coeff_degat);
-				else 
-					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
+				if (case_r.getEntite().getPdv() - degat > 0)
+					case_r.getEntite().Degat(degat);
+				else
+					Kill(case_r.getEntite().getLine(), case_r.getEntite().getCol(), (Robot) case_r.getEntite());
 				return true;
 			}
 			// Attaque l'ennemi à sa droite
 			case_r = Terrain.terrain[line - 1][col];
 			if (line - 1 > 0 && case_r.isEnnemi(r)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
-					coeff_degat = 1 / 3;
+					degat = 10;
 				}
-				if (case_r.getEntite().getPdv() > 30)
-					case_r.getEntite().Degat(30 * coeff_degat);
-				else 
-					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
+				if (case_r.getEntite().getPdv() - degat > 0)
+					case_r.getEntite().Degat(degat);
+				else
+					Kill(case_r.getEntite().getLine(), case_r.getEntite().getCol(), (Robot) case_r.getEntite());
 				return true;
 			}
 			// Attaque l'ennemi à sa gauche
 			case_r = Terrain.terrain[line + 1][col];
 			if (line + 1 < taille_t && case_r.isEnnemi(r)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
-					coeff_degat = 1 / 3;
+					degat = 10;
 				}
-				if (case_r.getEntite().getPdv() > 30)
-					case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv()- degat > 0)
+					case_r.getEntite().Degat(degat);
 				else 
 					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
@@ -62,10 +62,10 @@ public class Attack extends Comportement {
 			case_r = Terrain.terrain[line - 1][col];
 			if (line - 1 > 0 && case_r.isEnnemi(r)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
-					coeff_degat = 1 / 3;
+					degat = 10;
 				}
-				if (case_r.getEntite().getPdv() > 30)
-					case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv()- degat > 0)
+					case_r.getEntite().Degat(degat);
 				else 
 					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
@@ -73,10 +73,10 @@ public class Attack extends Comportement {
 			case_r = Terrain.terrain[line][col - 1];
 			if (col - 1 > 0 && case_r.isEnnemi(r)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
-					coeff_degat = 1 / 3;
+					degat = 10;
 				}
-				if (case_r.getEntite().getPdv() > 30)
-					case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv()- degat > 0)
+					case_r.getEntite().Degat(degat);
 				else 
 					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
@@ -84,10 +84,10 @@ public class Attack extends Comportement {
 			case_r = Terrain.terrain[line][col + 1];
 			if (col + 1 < taille_t && case_r.isEnnemi(r)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
-					coeff_degat = 1 / 3;
+					degat = 10;
 				}
-				if (case_r.getEntite().getPdv() > 30)
-					case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv()- degat > 0)
+					case_r.getEntite().Degat(degat);
 				else 
 					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
@@ -97,10 +97,10 @@ public class Attack extends Comportement {
 			case_r = Terrain.terrain[line + 1][col];
 			if (line + 1 < taille_t && case_r.isEnnemi(r)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
-					coeff_degat = 1 / 3;
+					degat = 10;
 				}
-				if (case_r.getEntite().getPdv() > 30)
-					case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv()- degat > 0)
+					case_r.getEntite().Degat(degat);
 				else 
 					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
@@ -108,10 +108,10 @@ public class Attack extends Comportement {
 			case_r = Terrain.terrain[line][col - 1];
 			if (col - 1 > 0 && case_r.isEnnemi(r)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
-					coeff_degat = 1 / 3;
+					degat = 10;
 				}
-				if (case_r.getEntite().getPdv() > 30)
-					case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv()- degat > 0)
+					case_r.getEntite().Degat(degat);
 				else 
 					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
@@ -119,10 +119,10 @@ public class Attack extends Comportement {
 			case_r = Terrain.terrain[line][col + 1];
 			if (col + 1 < taille_t && case_r.isEnnemi(r)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
-					coeff_degat = 1 / 3;
+					degat = 10;
 				}
-				if (case_r.getEntite().getPdv() > 30)
-					case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv()- degat > 0)
+					case_r.getEntite().Degat(degat);
 				else 
 					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
@@ -133,10 +133,10 @@ public class Attack extends Comportement {
 			case_r = Terrain.terrain[line][col + 1];
 			if (col + 1 < taille_t && case_r.isEnnemi(r)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
-					coeff_degat = 1 / 3;
+					degat = 10;
 				}
-				if (case_r.getEntite().getPdv() > 30)
-					case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv()- degat > 0)
+					case_r.getEntite().Degat(degat);
 				else 
 					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
@@ -145,10 +145,10 @@ public class Attack extends Comportement {
 			case_r = Terrain.terrain[line - 1][col];
 			if (line - 1 > 0 && case_r.isEnnemi(r)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
-					coeff_degat = 1 / 3;
+					degat = 10;
 				}
-				if (case_r.getEntite().getPdv() > 30)
-					case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv()- degat > 0)
+					case_r.getEntite().Degat(degat);
 				else 
 					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;
@@ -157,10 +157,10 @@ public class Attack extends Comportement {
 			case_r = Terrain.terrain[line + 1][col];
 			if (line + 1 < taille_t && case_r.isEnnemi(r)) {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
-					coeff_degat = 1 / 3;
+					degat = 10;
 				}
-				if (case_r.getEntite().getPdv() > 30)
-					case_r.getEntite().Degat(30 * coeff_degat);
+				if (case_r.getEntite().getPdv()- degat > 0)
+					case_r.getEntite().Degat(degat);
 				else 
 					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
 				return true;

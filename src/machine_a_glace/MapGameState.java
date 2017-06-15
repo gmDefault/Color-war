@@ -48,7 +48,7 @@ public class MapGameState extends BasicGameState {
 	boolean bool1 = false;
 	boolean bool2 = false;
 	boolean bool3 = false;
-	
+
 	boolean menu = false;
 
 	boolean pause = false;
@@ -94,8 +94,6 @@ public class MapGameState extends BasicGameState {
 
 	public static Joueur j1, j2;
 
-
-
 	public static ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
 	public static ArrayList<String> automaterobot = new ArrayList<String>();
 
@@ -139,6 +137,7 @@ public class MapGameState extends BasicGameState {
 		this.secsrobots = new ArrayList<Integer>();
 		this.allrobots = new ArrayList<Robot>();
 		this.cmptr_robots = new ArrayList<Integer>();
+
 
 		try {
 			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
@@ -267,7 +266,7 @@ public class MapGameState extends BasicGameState {
 		Image j2g = new Image("maps/j2g.jpg");
 
 		Image pauseimg = new Image("maps/pause.png");
-		Image menuimg = new Image ("maps/menuaide.png");
+		Image menuimg = new Image("maps/menuaide.png");
 
 		if (this.jeufini == true) {
 
@@ -687,6 +686,8 @@ public class MapGameState extends BasicGameState {
 				uniFont.drawString(921, 440, minute + ":" + seconde / 1000, Color.darkGray);
 
 		}
+		if (allrobots.size() > 1)
+			System.out.println(allrobots.get(1).getPdv());
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -926,7 +927,7 @@ public class MapGameState extends BasicGameState {
 			// pause", JOptionPane.DEFAULT_OPTION,
 			// JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
 			break;
-			
+
 		case Input.KEY_H:
 			if (pause == false) {
 				this.container.pause();
