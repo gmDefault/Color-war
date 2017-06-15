@@ -192,7 +192,7 @@ public class Robot extends Entite {
 			if (Terrain.casexy(getLine(), getCol()).isExpr()&&maitre.inventaire().size()<30) {
 				maitre.add_inventaire(Terrain.casexy(getLine(), getCol()).expr());
 				Terrain.casexy(getLine(), getCol()).setExpr(null);
-				Terrain.PutTimer(getLine(), getCol());
+				Terrain.PutTimer(getLine(), getCol(),30000);
 			}
 			if (Terrain.terrain[getLine()][getCol()].getCont() != Contenu.Creer)
 				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Robot);

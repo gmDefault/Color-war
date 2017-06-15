@@ -142,7 +142,9 @@ public class MapGameState extends BasicGameState {
 	org.newdawn.slick.UnicodeFont uniFont;
 
 	java.awt.Font UIFont2;
+	java.awt.Font UIFont4;
 	org.newdawn.slick.UnicodeFont uniFont2;
+	org.newdawn.slick.UnicodeFont uniFont4;
 
 	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
 		Animation animation = new Animation();
@@ -157,7 +159,7 @@ public class MapGameState extends BasicGameState {
 		// TODO Auto-generated method stub
 		this.container = container;
 
-		boolean y = Parser.ExpressionCorrecte("{{X:2};{X:2}}");
+		boolean y = Parser.ExpressionCorrecte("{{X:4};{X:2}}");
 		System.out.println(y);
 
 		this.map = new TiledMap("maps/map/map1.tmx");
@@ -207,6 +209,22 @@ public class MapGameState extends BasicGameState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		try {
+			UIFont4 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
+					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/cartoon.ttf"));
+			UIFont4 = UIFont4.deriveFont(java.awt.Font.PLAIN, 40.f);
+
+			uniFont4 = new org.newdawn.slick.UnicodeFont(UIFont4);
+			uniFont4.addAsciiGlyphs();
+			uniFont4.getEffects().add(new ColorEffect(java.awt.Color.white));
+			uniFont4.addAsciiGlyphs();
+			uniFont4.loadGlyphs();
+
+		} catch (FontFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 
 		SpriteSheet spriteSheet = new SpriteSheet("maps/char_2.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
@@ -368,7 +386,7 @@ public class MapGameState extends BasicGameState {
 			
 			afficher_robots(g);
 
-			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
+			afficher_bonus(g);
 
 			// this.popup_test_1 = 0;
 			// if
@@ -984,10 +1002,13 @@ public class MapGameState extends BasicGameState {
 						e = new Image("maps/deuxpoints.png");
 						e.draw(32 * (15 + j), (32 * i));
 						break;
-					case PointVirgule:
-						e = new Image("maps/pointvirgule.png");
-						e.draw(32 * (15 + j), (32 * i));
-						break;
+//					case Bonus:
+//						e =new Image("maps/bonus.png");
+//						e.draw(32 * (15 + j), (32 * i));
+//					//	e.drawAnimation(animations5[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
+////						e.drawAnimation(animations5[0],
+////								(32 * (15 + j),  (32 * i));
+//						break;
 					case Choix:
 						e = new Image("maps/doublepipe.png");
 						e.draw(32 * (15 + j), (32 * i));
@@ -1012,6 +1033,7 @@ public class MapGameState extends BasicGameState {
 					e.draw(32 * (15 + j), (32 * i));
 
 				}
+			
 
 			}
 		}
@@ -1086,9 +1108,9 @@ public class MapGameState extends BasicGameState {
 				case Deuxpoints:
 					e = new Image("maps/deuxpoints.png");
 					break;
-				case PointVirgule:
-					e = new Image("maps/pointvirgule.png");
-					break;
+//				case PointVirgule:
+//					e = new Image("maps/pointvirgule.png");
+//					break;
 				case Choix:
 					e = new Image("maps/doublepipe.png");
 					break;
@@ -1180,13 +1202,24 @@ public class MapGameState extends BasicGameState {
 		for(int i=0; i<j1.robots().size();i++){
 			e=new Image("maps/tete_robot_rouge.png");
 			e.draw(1729, 690 + (i*42), 32, 32);
+			//uniFont4.drawString(1605, 698 + (i*42), j1.robots().get(i).automate().toString(), Color.white);
 			g.drawString(j1.robots().get(i).automate().toString(),1605,698 + (i*42));
 		}
 		for(int i=0; i<j2.robots().size();i++){
 			e=new Image("maps/tete_robot_bleu.png");
 			e.draw(140, 690 + (i*42), 32, 32);
-			g.drawString(j2.robots().get(i).automate().toString(),180,698 + (i*42));
+		//	uniFont4.drawString(180, 698 + (i*42), j2.robots().get(i).automate().toString(), Color.white);
+		g.drawString(j2.robots().get(i).automate().toString(),180,698 + (i*42));
 		}
 	}
+	
+	public void afficher_bonus(Graphics g) {
+		if (Terrain.terrain[Terrain.BonusMalus.getLigne() ][Terrain.BonusMalus.getCol() ].getCont() == Contenu.Bonus_Malus){
+			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (Terrain.BonusMalus.getCol() * 32 + 15 * 32 + 16) - 32, (Terrain.BonusMalus.getLigne() * 32 + 16) - 60);
+		}
+		if (Terrain.terrain[Terrain.BonusMalu.getLigne() ][Terrain.BonusMalu.getCol() ].getCont() == Contenu.Bonus_Malus){
+	g.drawAnimation(animations5[0 + (true ? 4 : 0)], (Terrain.BonusMalu.getCol() * 32 + 15 * 32 + 16) - 32, (Terrain.BonusMalu.getLigne() * 32 + 16) - 60);
 
+		
+	}}
 }
