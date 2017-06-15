@@ -301,8 +301,11 @@ public class MapGameState extends BasicGameState {
 			if (this.j1.getNombre_Case_Coloriees() > this.j2.getNb_cases_coloriees()) {
 				MainScreenGameState.joueur_1_gagne = true;
 				game.enterState(MainScreenGameState.ID);
-			} else {
+			} else if (this.j1.getNombre_Case_Coloriees() < this.j2.getNb_cases_coloriees()){
 				MainScreenGameState.joueur_2_gagne = true;
+				game.enterState(MainScreenGameState.ID);
+			} else {
+				MainScreenGameState.egalite = true;
 				game.enterState(MainScreenGameState.ID);
 			}
 
