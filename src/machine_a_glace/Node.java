@@ -100,5 +100,9 @@ public class Node {
 				throw new JeuException("Ce chiffre n'existe pas");
 			}
 	}
+	
+	public void setGram(Expr e){
+		Gram=e;
+	}
 
 }

@@ -88,6 +88,8 @@ public class Robot extends Entite {
 				if(b && a.FD().Gram() != Chiffre.Un){
 					a.FD().decrementer_chiffre();
 					b=false;
+				}else{
+					a.FD().setGram(a.getSave());
 				}
 				
 			}

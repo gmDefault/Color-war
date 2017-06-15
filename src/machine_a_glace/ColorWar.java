@@ -20,7 +20,7 @@ public class ColorWar extends StateBasedGame {
 //		m = new Musique();
 //		m.start();
 		Terrain.initialiser();
-		MapGameState.j1 = new Joueur(1, 15, Couleur.Rouge, 50, 100);
+		MapGameState.j1 = new Joueur(1, 15, Couleur.Rouge, 100, 100);
 		MapGameState.j1.setD(Direction.Sud);
 		MapGameState.j2 = new Joueur(28, 15, Couleur.Bleu, 100, 100);
 		new AppGameContainer(new ColorWar(), 1920, 960, false).start();

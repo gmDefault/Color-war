@@ -49,6 +49,7 @@ public class MapGameState extends BasicGameState {
 	boolean bool2 = false;
 	boolean bool3 = false;
 
+	boolean pause = false;
 	public static boolean bonus_malus = false;
 
 	int popup_test_1 = 0;
@@ -69,7 +70,7 @@ public class MapGameState extends BasicGameState {
 	private int secs2 = 0;
 	private ArrayList<Integer> secsrobots = new ArrayList<Integer>();
 
-	private ArrayList<Robot> allrobots = new ArrayList<Robot>();
+	public static ArrayList<Robot> allrobots = new ArrayList<Robot>();
 
 	private final float DEBUT_VIE_ROUGE_X = 1631;
 	private final float FIN_VIE_ROUGE_X = 1778;
@@ -78,6 +79,9 @@ public class MapGameState extends BasicGameState {
 	private final float NRJ_Y = 145;
 	private final float DEBUT_VIE_BLEU_X = 130;
 	private final float FIN_VIE_BLEU_X = 277;
+	
+	java.awt.Font UIFont3;
+	org.newdawn.slick.UnicodeFont uniFont3;
 
 	// private final float DEBUT_NRJ_ROUGE_X = 1631;
 	// private final float FIN_NRJ_ROUGE_X = 1778;
@@ -136,7 +140,6 @@ public class MapGameState extends BasicGameState {
 		// TODO Auto-generated method stub
 		this.container = container;
 
-		boolean y = Parser.ExpressionCorrecte("ddd");
 
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
@@ -144,6 +147,10 @@ public class MapGameState extends BasicGameState {
 		try {
 			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
 					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/reveil.ttf"));
+			
+			UIFont3 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
+					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/cartoon.ttf"));
+			
 			UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 60.f);
 
 			uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
@@ -151,6 +158,15 @@ public class MapGameState extends BasicGameState {
 			uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
 			uniFont.addAsciiGlyphs();
 			uniFont.loadGlyphs();
+			
+			UIFont3 = UIFont3.deriveFont(java.awt.Font.BOLD, 60.f);
+
+			
+			uniFont3 = new org.newdawn.slick.UnicodeFont(UIFont3);
+			uniFont3.addAsciiGlyphs();
+			uniFont3.getEffects().add(new ColorEffect(java.awt.Color.cyan));
+			uniFont3.addAsciiGlyphs();
+			uniFont3.loadGlyphs();
 
 		} catch (FontFormatException | IOException e) {
 			// TODO Auto-generated catch block
@@ -227,7 +243,21 @@ public class MapGameState extends BasicGameState {
 
 		robot.setSize(100, 100);
 		robot2.setSize(100, 100);
-
+		
+		allrobots.add(new Robot(4,15,Couleur.Rouge,new Node(Operateur.Star,null,new Node(Attack.ATTACK))));
+		allrobots.get(0).setD(Direction.Sud);
+		
+		canmoverobots.add(false);
+		cmptr_robots.add(1);
+		secsrobots.add(0);
+		automaterobot.add("{A}");
+		
+		allrobots.add(new Robot(7,15,Couleur.Bleu,new Node(Operateur.Star,null,new Node(Explore.EXPLORE))));
+		canmoverobots.add(false);
+		cmptr_robots.add(1);
+		secsrobots.add(0);
+		automaterobot.add("{X}");
+		
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
 		int logicLayer = this.map.getLayerIndex("Collision");
@@ -257,6 +287,9 @@ public class MapGameState extends BasicGameState {
 
 		Image j1g = new Image("maps/j1g.jpg");
 		Image j2g = new Image("maps/j2g.jpg");
+		
+		Image pauseimg = new Image("maps/pause.png");
+
 
 		if (this.jeufini == true) {
 
@@ -275,6 +308,9 @@ public class MapGameState extends BasicGameState {
 			MainScreenGameState.joueur_1_gagne = true;
 			game.enterState(MainScreenGameState.ID);
 
+		} else if (pause == true) {
+			pauseimg.draw(0, 0, container.getWidth(), container.getHeight());
+			uniFont3.drawString(450-40, 450, "Appuyer sur \"P\" pour relancer la partie", Color.cyan);
 		} else {
 
 			this.map.render(0, 0);
@@ -643,7 +679,10 @@ public class MapGameState extends BasicGameState {
 			secsrobots.set(i, secsrobots.get(i) + delta);
 		}
 
-		this.container.resume();
+		if (pause == false) {
+			this.container.resume();
+		}
+
 
 		if (this.moving) {
 			// switch (this.j1.getD()) {
@@ -767,6 +806,7 @@ public class MapGameState extends BasicGameState {
 			break;
 		case Input.KEY_D:
 			this.moving2 = false;
+			break;
 		case Input.KEY_N:
 			Sauvegarde.Writer(minute,seconde);
 			break;
@@ -789,55 +829,79 @@ public class MapGameState extends BasicGameState {
 		// case Input.KEY_RIGHT: this.direction = 3; this.moving = true; break;
 
 		case Input.KEY_UP:
+			if (pause == false) {
 			j1.setD(Direction.Nord);
 			this.direction = 0;
 			this.moving = true;
+			}
 			break;
 		case Input.KEY_LEFT:
+			if (pause == false) {
 			j1.setD(Direction.Ouest);
 			this.direction = 1;
 			this.moving = true;
+			}
 			break;
 		case Input.KEY_DOWN:
-			j1.setD(Direction.Sud);
-			this.direction = 2;
-			this.moving = true;
-			break;
-		case Input.KEY_RIGHT:
+			if (pause == false) {
+				j1.setD(Direction.Sud);
+				this.direction = 2;
+				this.moving = true;
+			}
+				break;
+			
 
+		case Input.KEY_RIGHT:
+			if (pause == false) {
 			j1.setD(Direction.Est);
 			this.direction = 3;
 			this.moving = true;
+			}
 			break;
 
 		case Input.KEY_P:
-			// this.container.pause();
-			JOptionPane pause = new JOptionPane();
-			String[] boutonP = { "Reprendre" };
-			pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION,
-					JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
+			if (pause == false) {
+				this.container.pause();
+				this.pause = true;
+
+			} else {
+				this.pause = false;
+			}
+
+//			JOptionPane pause = new JOptionPane();
+//			String[] boutonP = { "Reprendre" };
+//			pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en pause", JOptionPane.DEFAULT_OPTION,
+//					JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
 			break;
 
 		case Input.KEY_Z:
 			// this.container.resume();
+			if (pause == false) {
 			this.j2.setD(Direction.Nord);
 			this.direction2 = 0;
 			this.moving2 = true;
+			}
 			break;
 		case Input.KEY_Q:
+			if (pause == false) {
 			this.j2.setD(Direction.Ouest);
 			this.direction2 = 1;
 			this.moving2 = true;
+			}
 			break;
 		case Input.KEY_S:
+			if (pause == false) {
 			this.j2.setD(Direction.Sud);
 			this.direction2 = 2;
 			this.moving2 = true;
+			}
 			break;
 		case Input.KEY_D:
+			if (pause == false) {
 			this.j2.setD(Direction.Est);
 			this.direction2 = 3;
 			this.moving2 = true;
+			}
 			break;
 		}
 	}
@@ -1047,15 +1111,22 @@ public class MapGameState extends BasicGameState {
 	
 	public void afficher_robots(Graphics g) throws SlickException{
 		Image e;
-		for(int i=0; i<j1.robots().size();i++){
-			e=new Image("maps/tete_robot_rouge.png");
-			e.draw(1729, 690 + (i*42), 32, 32);
-			g.drawString(j1.robots().get(i).automate().toString(),1605,698 + (i*42));
-		}
-		for(int i=0; i<j2.robots().size();i++){
-			e=new Image("maps/tete_robot_bleu.png");
-			e.draw(140, 690 + (i*42), 32, 32);
-			g.drawString(j2.robots().get(i).automate().toString(),180,698 + (i*42));
+		int nb_robot_rouge=0;
+		int nb_robot_bleu=0;
+		for(int i=0; i<allrobots.size();i++){
+			if(allrobots.get(i).getCouleur() == Couleur.Rouge){
+				e=new Image("maps/tete_robot_rouge.png");
+				e.draw(1729, 690 + (nb_robot_rouge*42), 32, 32);
+				g.drawString("*" + automaterobot.get(i),1605,698 + (nb_robot_rouge*42));
+				nb_robot_rouge++;
+			}else{
+				e=new Image("maps/tete_robot_bleu.png");
+				e.draw(140, 690 + (nb_robot_bleu*42), 32, 32);
+				g.drawString("*" + automaterobot.get(i),180,698 + (nb_robot_bleu*42));
+				nb_robot_bleu++;
+
+			}
+			
 		}
 	}
 

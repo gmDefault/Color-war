@@ -12,6 +12,7 @@ public class Attack extends Comportement {
 	@Override
 	public boolean execute(Robot r) {
 		// TODO Auto-generated method stub
+		r.setProtection(false);
 		int line, col;
 		line = r.getLine();
 		col = r.getCol();

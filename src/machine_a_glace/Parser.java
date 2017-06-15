@@ -68,11 +68,25 @@ public class Parser {
 	  
 	  public static boolean InventaireOk(String s, Joueur j){
 		  int i=0;
+		  int nb=0;
+		  int nb2=0;
 		  char t []=s.toCharArray();
 		  ArrayList<Expr> inv_copy = (ArrayList<Expr>) j.inventaire().clone();
+		  int nbpp = nbdeuxpoints(inv_copy);
+		  for (int k=0;k<t.length;k++){
+			  if (t[k]==':'){
+				   nb += t[k+1]-'0';
+				   nb2++;
+				  
+			  }
+		  }
+		  nb-=nb2;
+		  if(nbpp<nb){
+			  return false;
+		  }
 		  
 		  while(i<t.length-1){
-			  if (!(t[i]=='{'||t[i]=='}')){
+			  if (!(t[i]=='{'||t[i]=='}'||t[i]==';'||t[i]=='1'||t[i]=='2'||t[i]=='3'||t[i]=='4'||t[i]=='5'||t[i]=='6'||t[i]=='7'||t[i]=='8'||t[i]=='9')){
 //				  if(t[i]==t[i+1]&&t[i]=='|'){
 //					  t[i]='/';
 //					  t[i+1]='{';
@@ -91,5 +105,14 @@ public class Parser {
 		  j.inventaire().clear();
 		  j.inventaire().addAll(inv_copy);
 		  return true;
+	  }
+	  private static int nbdeuxpoints (ArrayList<Expr> pp){
+		  int c =0;
+		  for (int i=0;i<pp.size();i++){
+			  if (pp.get(i)==Operateur.Deuxpoints){
+				  c++;
+			  }
+		  }
+		  return c;
 	  }
 }
