@@ -251,7 +251,6 @@ public class MapGameState extends BasicGameState {
 		int logicLayer = this.map.getLayerIndex("Collision");
 		Image tile;
 
-		// for (int i = 15*32; i < )
 		for (int i = 16 * 32; i <= 56 * 32; i += 32) {
 			for (int j = 32; j <= 28 * 32; j += 32) {
 				tile = this.map.getTileImage((int) i / tileW, (int) j / tileH, logicLayer);
@@ -260,16 +259,6 @@ public class MapGameState extends BasicGameState {
 				}
 			}
 		}
-
-		// Terrain.afficher();
-
-		// System.out.println("get line : "+j1.getLine());
-
-		// this.e = new Entite(15, 20);
-		// this.e2 = new Entite(16, 19);
-
-		// Music background = new Music("maps/FoxieEpic.OGG");
-		// background.loop();
 
 	}
 
@@ -353,6 +342,8 @@ public class MapGameState extends BasicGameState {
 
 			robots_inv.draw(120, 670);
 			robots_inv2.draw(1580, 670);
+			
+			afficher_robots(g);
 
 			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (15 * 32 + 15 * 32 + 16) - 32, (5 * 32 + 16) - 60);
 
@@ -625,11 +616,9 @@ public class MapGameState extends BasicGameState {
 	}
 
 
-	
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		
-
 		if (Terrain.Index > 0)
 			bool3 = Terrain.ReduceTimer();
 		if (bool3) {
@@ -755,201 +744,7 @@ public class MapGameState extends BasicGameState {
 
 		}
 
-		// if (r1r != null && Terrain.casexy(r1r.getLine(),
-		// r1r.getCol()).getEntite() != null
-		// && Terrain.casexy(r1r.getLine(),
-		// r1r.getCol()).getEntite().isRobot()){
-		// if (canmoverobotr1 && j1.getrb()>=1)
-		// r1r.execute();
-		//
-		// if(secsrobotr1 > 5000 && j1.getrb()>=1){
-		// r1r.next_etat();
-		//// System.out.println("CHANGEMENT " + secsrobotr1 +" "
-		// +r1r.etat_courant());
-		// secsrobotr1=0;
-		// cmptr_robotr1=1;
-		//
-		// }else if(secsrobotr1 > 500*cmptr_robotr1){
-		// canmoverobotr1= true;
-		// cmptr_robotr1++;
-		// }else{
-		// canmoverobotr1 = false;
-		// }
-		// }
-
-		//
-		// if (r1b != null && Terrain.casexy(r1b.getLine(),
-		// r1b.getCol()).getEntite() != null
-		// && Terrain.casexy(r1b.getLine(),
-		// r1b.getCol()).getEntite().isRobot()){
-		// if (canmoverobotb1 && j2.getrb()>=1)
-		// r1b.execute();
-		//
-		// if(secsrobotb1 > 5000 && j2.getrb()>=1){
-		// r1b.next_etat();
-		//// System.out.println("CHANGEMENT " + secsrobot +" "
-		// +r2b.etat_courant());
-		// secsrobotb1=0;
-		// cmptr_robotb1=1;
-		//
-		// }else if(secsrobotb1 > 500*cmptr_robotb1){
-		// canmoverobotb1= true;
-		// cmptr_robotb1++;
-		// }else{
-		// canmoverobotb1 = false;
-		// }
-		//
-		// }
-		//
-		//
-		// if (r2r != null && Terrain.casexy(r2r.getLine(),
-		// r2r.getCol()).getEntite() != null
-		// && Terrain.casexy(r2r.getLine(),
-		// r2r.getCol()).getEntite().isRobot()){
-		//
-		// if (canmoverobotr2 && j1.getrb()>=2)
-		// r2r.execute();
-		//
-		//
-		// if(secsrobotr2 > 5000 && j1.getrb()>=2){
-		// r2r.next_etat();
-		//// System.out.println("CHANGEMENT " + secsrobot +" "
-		// +r2r.etat_courant());
-		// secsrobotr2=0;
-		// cmptr_robotr2=1;
-		//
-		// }else if(secsrobotr2 > 500*cmptr_robotr2){
-		// canmoverobotr2= true;
-		// cmptr_robotr2++;
-		// }else{
-		// canmoverobotr2 = false;
-		// }
-		//
-		// }
-		//
-		// if (r2b != null && Terrain.casexy(r2b.getLine(),
-		// r2b.getCol()).getEntite() != null
-		// && Terrain.casexy(r2b.getLine(),
-		// r2b.getCol()).getEntite().isRobot()){
-		//
-		// if (canmoverobotb2 && j2.getrb()>=2)
-		// r2b.execute();
-		//
-		// if(secsrobotb2 > 5000 && j2.getrb()>=2){
-		// r2b.next_etat();
-		//// System.out.println("CHANGEMENT " + secsrobot +" "
-		// +r2r.etat_courant());
-		// secsrobotb2=0;
-		// cmptr_robotb2=1;
-		//
-		// }else if(secsrobotb2 > 500*cmptr_robotb2){
-		// canmoverobotb2= true;
-		// cmptr_robotb2++;
-		// }else{
-		// canmoverobotb2 = false;
-		// }
-		//
-		// }
-		//
-		// if (r3r != null && Terrain.casexy(r3r.getLine(),
-		// r3r.getCol()).getEntite() != null
-		// && Terrain.casexy(r3r.getLine(),
-		// r3r.getCol()).getEntite().isRobot()){
-		//
-		// if (canmoverobotr3 && j1.getrb()>=3)
-		// r3r.execute();
-		//
-		//
-		// if(secsrobotr3 > 5000 && j1.getrb()>=3){
-		// r3r.next_etat();
-		//// System.out.println("CHANGEMENT " + secsrobot +" "
-		// +r3r.etat_courant());
-		// secsrobotr3=0;
-		// cmptr_robotr3=1;
-		//
-		// }else if(secsrobotr3 > 500*cmptr_robotr3){
-		// canmoverobotr3= true;
-		// cmptr_robotr3++;
-		// }else{
-		// canmoverobotr3 = false;
-		// }
-		// }
-		//
-		// if (r3b != null && Terrain.casexy(r3b.getLine(),
-		// r3b.getCol()).getEntite() != null
-		// && Terrain.casexy(r3b.getLine(),
-		// r3b.getCol()).getEntite().isRobot()){
-		//
-		// if (canmoverobotb3 && j2.getrb()>=3)
-		// r3b.execute();
-		//
-		//
-		// if(secsrobotb3 > 5000 && j2.getrb()>=3){
-		// r3b.next_etat();
-		//// System.out.println("CHANGEMENT " + secsrobot +" "
-		// +r3b.etat_courant());
-		// secsrobotb3=0;
-		// cmptr_robotb3=1;
-		//
-		// }else if(secsrobotb3 > 500*cmptr_robotb3){
-		// canmoverobotb3= true;
-		// cmptr_robotb3++;
-		// }else{
-		// canmoverobotb3 = false;
-		// }
-		//
-		// }
-		//
-		//
-		// if (r4r != null && Terrain.casexy(r4r.getLine(),
-		// r4r.getCol()).getEntite() != null
-		// && Terrain.casexy(r4r.getLine(),
-		// r4r.getCol()).getEntite().isRobot()){
-		//
-		// if (canmoverobotr4 && j1.getrb()>=4)
-		// r4r.execute();
-		//
-		//
-		// if(secsrobotr4 > 5000 && j1.getrb()>=4){
-		// r4r.next_etat();
-		//// System.out.println("CHANGEMENT " + secsrobot +" "
-		// +r4r.etat_courant());
-		// secsrobotr4=0;
-		// cmptr_robotr4=1;
-		//
-		// }else if(secsrobotr4 > 500*cmptr_robotr4){
-		// canmoverobotr4= true;
-		// cmptr_robotr4++;
-		// }else{
-		// canmoverobotr4 = false;
-		// }
-		//
-		// }
-		//
-		//
-		// if (r4b != null && Terrain.casexy(r4b.getLine(),
-		// r4b.getCol()).getEntite() != null
-		// && Terrain.casexy(r4b.getLine(),
-		// r4b.getCol()).getEntite().isRobot()){
-		//
-		// if (canmoverobotb4 && j2.getrb()>=4)
-		// r4b.execute();
-		//
-		// if(secsrobotb4 > 5000 && j2.getrb()>=4){
-		// r4b.next_etat();
-		//// System.out.println("CHANGEMENT " + secsrobot +" "
-		// +r4b.etat_courant());
-		// secsrobotb4=0;
-		// cmptr_robotb4=1;
-		//
-		// }else if(secsrobotb4 > 500*cmptr_robotb4){
-		// canmoverobotb4= true;
-		// cmptr_robotb4++;
-		// }else{
-		// canmoverobotb4 = false;
-		// }
-		//
-		// }
+	update_arrays();
 
 	}
 
@@ -1256,6 +1051,30 @@ public class MapGameState extends BasicGameState {
 	@Override
 	public int getID() {
 		return ID;
+	}
+
+	public void update_arrays(){
+		for(int i=0; i<allrobots.size();i++){
+			if(allrobots.get(i).getCouleur() == Couleur.Rouge && (! j1.robots().contains(allrobots.get(i))) )
+				allrobots.remove(i);
+		else if(allrobots.get(i).getCouleur() == Couleur.Bleu && (! j2.robots().contains(allrobots.get(i))) )
+				allrobots.remove(i);
+		}	
+	}
+	
+	
+	public void afficher_robots(Graphics g) throws SlickException{
+		Image e;
+		for(int i=0; i<j1.robots().size();i++){
+			e=new Image("maps/tete_robot_rouge.png");
+			e.draw(1729, 690 + (i*42), 32, 32);
+			g.drawString(j1.robots().get(i).automate().toString(),1605,698 + (i*42));
+		}
+		for(int i=0; i<j2.robots().size();i++){
+			e=new Image("maps/tete_robot_bleu.png");
+			e.draw(140, 690 + (i*42), 32, 32);
+			g.drawString(j2.robots().get(i).automate().toString(),180,698 + (i*42));
+		}
 	}
 
 }
