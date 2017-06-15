@@ -48,6 +48,8 @@ public class MapGameState extends BasicGameState {
 	boolean bool1 = false;
 	boolean bool2 = false;
 	boolean bool3 = false;
+	
+	boolean menu = false;
 
 	boolean pause = false;
 	public static boolean bonus_malus = false;
@@ -265,6 +267,7 @@ public class MapGameState extends BasicGameState {
 		Image j2g = new Image("maps/j2g.jpg");
 
 		Image pauseimg = new Image("maps/pause.png");
+		Image menuimg = new Image ("maps/menuaide.png");
 
 		if (this.jeufini == true) {
 
@@ -287,8 +290,13 @@ public class MapGameState extends BasicGameState {
 			game.enterState(MainScreenGameState.ID);
 
 		} else if (pause == true) {
-			pauseimg.draw(0, 0, container.getWidth(), container.getHeight());
-			uniFont3.drawString(450 - 40, 450, "Appuyer sur \"P\" pour relancer la partie", Color.cyan);
+			if (menu == false) {
+				pauseimg.draw(0, 0, container.getWidth(), container.getHeight());
+				uniFont3.drawString(450 - 40, 450, "Appuyer sur \"P\" pour relancer la partie", Color.cyan);
+			} else {
+				menuimg.draw(0, 0, container.getWidth(), container.getHeight());
+			}
+
 		} else {
 
 			this.map.render(0, 0);
@@ -910,6 +918,24 @@ public class MapGameState extends BasicGameState {
 
 			} else {
 				this.pause = false;
+			}
+
+			// JOptionPane pause = new JOptionPane();
+			// String[] boutonP = { "Reprendre" };
+			// pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en
+			// pause", JOptionPane.DEFAULT_OPTION,
+			// JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
+			break;
+			
+		case Input.KEY_H:
+			if (pause == false) {
+				this.container.pause();
+				this.pause = true;
+				this.menu = true;
+
+			} else {
+				this.pause = false;
+				this.menu = false;
 			}
 
 			// JOptionPane pause = new JOptionPane();
