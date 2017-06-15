@@ -126,10 +126,7 @@ public class MapGameState extends BasicGameState {
 	private Animation[] animations4 = new Animation[8];
 	private Animation[] animations5 = new Animation[8];
 
-	private String item[] = { "Robot1", "Robot2", "Robot3" };
-	private String item2[] = { "Robot1", "Robot2", "Robot3" };
-	private JComboBox robot = new JComboBox(item);
-	private JComboBox robot2 = new JComboBox(item2);
+
 	// private ImageIcon ic = new ImageIcon("maps/robot.png");
 	private ImageIcon icr = new ImageIcon("maps/tete_robot_rouge.png");
 	private ImageIcon icb = new ImageIcon("maps/tete_robot_bleu.png");
@@ -260,8 +257,7 @@ public class MapGameState extends BasicGameState {
 		this.animations5[6] = loadAnimation(spriteSheet5, 1, 9, 2);
 		this.animations5[7] = loadAnimation(spriteSheet5, 1, 9, 3);
 
-		robot.setSize(100, 100);
-		robot2.setSize(100, 100);
+
 
 		int tileW = this.map.getTileWidth();
 		int tileH = this.map.getTileHeight();
