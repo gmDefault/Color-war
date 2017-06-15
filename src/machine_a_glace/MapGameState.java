@@ -496,6 +496,11 @@ public class MapGameState extends BasicGameState {
 								int i = k.charAt(6)-'0';
 								System.out.println(i);
 								j2.robots().get(i-1).modificationRobot(n);
+								
+							
+//								canmoverobots.set(i-1, false);
+//								cmptr_robots.set(i-1, 1);
+//								secsrobots.set(i-1, 0);
 							}
 							if (inputbm == null) {
 								int k2 = JOptionPane.showOptionDialog(null,
