@@ -154,7 +154,6 @@ public class MapGameState extends BasicGameState {
 		this.container = container;
 
 		boolean y = Parser.ExpressionCorrecte("ddd");
-		System.out.println(y);
 
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
@@ -384,7 +383,7 @@ public class MapGameState extends BasicGameState {
 									inputrm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
 								}
 								String p = (String)robots.getSelectedItem();
-								System.out.println(p);
+//								System.out.println(p);
 								n = Parser.ExpressionCorrecte1(inputrm);
 								n = new Node(Operateur.Star, null, n);
 								int i = p.charAt(6)-'0';
