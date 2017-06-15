@@ -506,7 +506,9 @@ public class MapGameState extends BasicGameState {
 								int i = k.charAt(6)-'0';
 //								System.out.println(i);
 								j2.robots().get(i-1).modificationRobot(n);
+
 								automaterobot.set(i-1, inputbm);
+
 							}
 							if (inputbm == null) {
 								int k2 = JOptionPane.showOptionDialog(null,
