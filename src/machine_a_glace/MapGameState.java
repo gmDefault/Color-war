@@ -70,7 +70,7 @@ public class MapGameState extends BasicGameState {
 	private int secs2 = 0;
 	private ArrayList<Integer> secsrobots = new ArrayList<Integer>();
 
-	private ArrayList<Robot> allrobots = new ArrayList<Robot>();
+	public static ArrayList<Robot> allrobots = new ArrayList<Robot>();
 
 	private final float DEBUT_VIE_ROUGE_X = 1631;
 	private final float FIN_VIE_ROUGE_X = 1778;

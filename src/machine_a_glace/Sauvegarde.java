@@ -319,8 +319,8 @@ public class Sauvegarde {
 			}
 			
 			
-			wrt.write("\n" + player[k].robots().size() + "\n");
-			for(Robot rob : player[k].robots()){
+			wrt.write("\n" + MapGameState.allrobots.size() + "\n");
+			for(Robot rob : MapGameState.allrobots){
 				
 			}
 			wrt.write("\n");
