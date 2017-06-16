@@ -40,7 +40,6 @@ public class Robot extends Entite {
 
 	public void next_etat() {
 		next_etat_recur(automate, false);
-		boolean truc=true;
 	}
 
 	private boolean next_etat_recur(Node a, boolean b) {
@@ -94,7 +93,7 @@ public class Robot extends Entite {
 				if (b && a.FD().Gram() != Chiffre.Un) {
 					a.FD().decrementer_chiffre();
 					b = false;
-				} else {
+				} else if(a.getSave() != null){
 					a.FD().setGram(a.getSave());
 				}
 
