@@ -40,6 +40,7 @@ public class Robot extends Entite {
 
 	public void next_etat() {
 		next_etat_recur(automate, false);
+		boolean truc=true;
 	}
 
 	private boolean next_etat_recur(Node a, boolean b) {
@@ -53,9 +54,9 @@ public class Robot extends Entite {
 
 			if (a.Gram().isOperateur() && a.Gram() == Operateur.Star) {
 				b = next_etat_recur(a.FD(), b);
-				if (b) {
+				while (b) {
 					nb_tour++;
-					next_etat_recur(a.FD(), b);
+					b=next_etat_recur(a.FD(), b);
 				}
 
 			} else if (a.Gram().isOperateur() && a.Gram() == Operateur.Choixequi) {

@@ -312,7 +312,7 @@ public class TrainGameState extends BasicGameState {
 								Node n = new Node(null);
 								boolean annuler = true;
 								while (annuler
-										&& (!Parser.ExpressionCorrecte(inputrm) || !Parser.InventaireOk(inputrm, j1))) {
+										&& (!Parser.ExpressionCorrecte(inputrm))) {
 									if (inputrm != null) {
 										inputrm = JOptionPane.showInputDialog(null, robots,
 												"Saisissez votre expression");
@@ -362,7 +362,7 @@ public class TrainGameState extends BasicGameState {
 								Node m = new Node(null);
 								boolean annuler = true;
 								while (annuler
-										&& (!Parser.ExpressionCorrecte(inputrc) || !Parser.InventaireOk(inputrc, j1))) {
+										&& (!Parser.ExpressionCorrecte(inputrc))) {
 									if (inputrc != null) {
 										inputrc = p.showInputDialog(tab5, "Saisissez votre expression");
 									}
