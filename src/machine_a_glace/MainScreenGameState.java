@@ -31,6 +31,7 @@ public class MainScreenGameState extends BasicGameState {
 	public static boolean joueur_1_gagne = false;
 	public static boolean joueur_2_gagne = false;
 	public static boolean egalite = false;
+	public static boolean fintraining = false;
 	public static boolean aide = false;
 	private int timer = 0;
 	java.awt.Font UIFont1;
@@ -129,7 +130,7 @@ public class MainScreenGameState extends BasicGameState {
 		switch (key) {
 		case Input.KEY_ENTER:
 			try {
-				if (this.joueur_1_gagne || this.joueur_2_gagne || this.egalite) {
+				if (this.joueur_1_gagne || this.joueur_2_gagne || this.egalite || this.fintraining) {
 					Terrain.initialiser();
 					this.container.reinit();
 					MapGameState.j1 = new Joueur(1, 15, Couleur.Rouge, 50, 100);
@@ -139,6 +140,8 @@ public class MainScreenGameState extends BasicGameState {
 				this.joueur_1_gagne = false;
 				this.joueur_2_gagne = false;
 				this.egalite = false;
+				this.fintraining = false;
+
 
 			} catch (SlickException e) {
 				// TODO Auto-generated catch block
@@ -169,6 +172,9 @@ public class MainScreenGameState extends BasicGameState {
 				this.joueur_1_gagne = false;
 				this.joueur_2_gagne = false;
 				this.egalite = false;
+
+				this.fintraining = false;
+
 
 			} catch (SlickException e) {
 				// TODO Auto-generated catch block
@@ -212,6 +218,7 @@ public class MainScreenGameState extends BasicGameState {
 				TrainGameState.canmoverobots.add(false);
 				TrainGameState.automaterobot.add("{P}");
 				
+
 				this.joueur_1_gagne = false;
 				this.joueur_2_gagne = false;
 				this.egalite = false;

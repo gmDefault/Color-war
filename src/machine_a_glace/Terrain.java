@@ -14,7 +14,7 @@ public class Terrain {
 	private static Coordonnees CreationBleu = new Coordonnees(26, 15);
 	public static Coordonnees BonusMalus = new Coordonnees(5, 15);
 	public static Coordonnees BonusMalu = new Coordonnees(24, 15);
-	public static ArrayList<IntCoor> Repop = new ArrayList<IntCoor>(Nbr_Cp_Op);
+	public static ArrayList<IntCoor> Repop = new ArrayList<IntCoor>(Nbr_Cp_Op+2);
 	public static int Index = 0;
 
 	private Terrain() {
@@ -199,11 +199,11 @@ public class Terrain {
 	}
 
 	public static void Initialiser_bonus(){
-		int nombreAleatoire = 45000 + (int)(Math.random() * ((115000 - 45000) + 1));
+//		int nombreAleatoire = 45000 + (int)(Math.random() * ((115000 - 45000) + 1));
 
-		Terrain.PutTimer(BonusMalus.getLigne(), BonusMalus.getCol(),nombreAleatoire);
-		nombreAleatoire = 45000 + (int)(Math.random() * ((115000 - 45000) + 1));
-		Terrain.PutTimer(BonusMalu.getLigne(), BonusMalu.getCol(),nombreAleatoire);
+		Terrain.PutTimer(BonusMalus.getLigne(), BonusMalus.getCol(),30000);
+//		nombreAleatoire = 45000 + (int)(Math.random() * ((115000 - 45000) + 1));
+		Terrain.PutTimer(BonusMalu.getLigne(), BonusMalu.getCol(),30000);
 	
 	}
 	public static void Initialiser_cases_creer() {
