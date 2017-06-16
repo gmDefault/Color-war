@@ -10,13 +10,11 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.font.effects.ColorEffect;
@@ -24,57 +22,45 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
-/**
- * Code sous licence GPLv3 (http://www.gnu.org/licenses/gpl.html)
- *
- * @author <b>Shionn</b>, shionn@gmail.com <i>http://shionn.org</i><br>
- *         GCS d- s+:+ a+ C++ UL/M P L+ E--- W++ N K- w-- M+ t+ 5 X R+ !tv b+ D+
- *         G- e+++ h+ r- y-
- */
-public class MapGameState extends BasicGameState {
-	public static final int ID = 2;
+public class TrainGameState extends BasicGameState {
+
+	public static final int ID = 3;
 
 	private GameContainer container;
 	private TiledMap map;
 
-	static int seconde = 10000;
-
-	static int minute = 5;
-
-	boolean jeufini = false;
-
-	public static ArrayList<Integer> cmptr_robots=new ArrayList<Integer>();
-	public static ArrayList<Integer> secsrobots= new ArrayList<Integer>();
-	public static ArrayList<Robot> allrobots= new ArrayList<Robot>();
+	public static ArrayList<Integer> cmptr_robots = new ArrayList<Integer>();
+	public static ArrayList<Integer> secsrobots = new ArrayList<Integer>();
+	public static ArrayList<Robot> allrobots = new ArrayList<Robot>();
 	public static ArrayList<Boolean> canmoverobots = new ArrayList<Boolean>();
 	public static ArrayList<String> automaterobot = new ArrayList<String>();
 
+	java.awt.Font UIFont1;
+	org.newdawn.slick.UnicodeFont uniFont;
 
+	java.awt.Font UIFont2;
+	org.newdawn.slick.UnicodeFont uniFont2;
+
+	java.awt.Font UIFont3;
+	org.newdawn.slick.UnicodeFont uniFont3;
+
+	private Animation[] animations = new Animation[8];
+	private Animation[] animations3 = new Animation[8];
+	private Animation[] animations4 = new Animation[8];
+	private Animation[] animations5 = new Animation[8];
+
+	boolean menu = false;
+	boolean pause = false;
+	public static boolean bonus_malus = false;
 	boolean bool1 = false;
 	boolean bool2 = false;
 	boolean bool3 = false;
-
-	boolean sauve = false;
-
-	boolean menu = false;
-
-	boolean pause = false;
-	public static boolean bonus_malus = false;
-
-	int popup_test_1 = 0;
-	int popup_test_2 = 0;
-	private int nrj;
-	private float x = 976, y = 32 + 16;
-	private float PourcentRouge = 0;
-	private float PourcentBleu = 0;
-	private float xx = 976, yy = 960 - 32 - 16;
-	private int direction = 2;
-	private int direction2 = 0;
+	boolean jeufini = false;
+	private boolean canmove = false;
 	private boolean moving = false;
+	public static boolean recolorie_par_dessus = false;
 
-	private int secs1 = 0;
-	private int secs2 = 0;
-	
+	public static Joueur j1, j2;
 
 	private final float DEBUT_VIE_ROUGE_X = 1631;
 	private final float FIN_VIE_ROUGE_X = 1778;
@@ -84,39 +70,20 @@ public class MapGameState extends BasicGameState {
 	private final float DEBUT_VIE_BLEU_X = 130;
 	private final float FIN_VIE_BLEU_X = 277;
 
-	java.awt.Font UIFont3;
-	org.newdawn.slick.UnicodeFont uniFont3;
-
-	// private final float DEBUT_NRJ_ROUGE_X = 1631;
-	// private final float FIN_NRJ_ROUGE_X = 1778;
-	//
-	//
-	// private final float DEBUT_NRJ_BLEU_X = 130;
-	// private final float FIN_NRJ_BLEU_X = 277;
-
-	private boolean canmove = false;
-	private boolean canmove2 = false;
-
-	public static Joueur j1, j2;
-
-	public static boolean recolorie_par_dessus = false;
-
-	private boolean moving2 = false;
-	private Animation[] animations = new Animation[8];
-	private Animation[] animations2 = new Animation[8];
-	private Animation[] animations3 = new Animation[8];
-	private Animation[] animations4 = new Animation[8];
-	private Animation[] animations5 = new Animation[8];
+	int popup_test_1 = 0;
+	int popup_test_2 = 0;
 
 	private ImageIcon icr = new ImageIcon("maps/tete_robot_rouge.png");
 	private ImageIcon icb = new ImageIcon("maps/tete_robot_bleu.png");
 	private Dimension d = new Dimension(100, 100);
 
-	java.awt.Font UIFont1;
-	org.newdawn.slick.UnicodeFont uniFont;
+	private float PourcentRouge = 0;
+	private float PourcentBleu = 0;
 
-	java.awt.Font UIFont2;
-	org.newdawn.slick.UnicodeFont uniFont2;
+	static int seconde = 10000;
+	static int minute = 5;
+	private int secs1 = 0;
+	private int direction = 2;
 
 	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
 		Animation animation = new Animation();
@@ -130,11 +97,16 @@ public class MapGameState extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		// TODO Auto-generated method stub
 		this.container = container;
+		
 
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
 
-	
+//		Terrain.terrain[j2.getCol()][j2.getLine()].setCase(Contenu.Vide);
+//		Terrain.terrain[j2.getCol()][j2.getLine()].setEntite(null);
+
+		
+		
 		try {
 			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
 					org.newdawn.slick.util.ResourceLoader.getResourceAsStream("maps/reveil.ttf"));
@@ -180,7 +152,6 @@ public class MapGameState extends BasicGameState {
 		}
 
 		SpriteSheet spriteSheet = new SpriteSheet("maps/char_2.png", 64, 64);
-		SpriteSheet spriteSheet2 = new SpriteSheet("maps/char_1.png", 64, 64);
 		SpriteSheet spriteSheet3 = new SpriteSheet("maps/robot_red.png", 64, 64);
 
 		SpriteSheet spriteSheet5 = new SpriteSheet("maps/bonus.png", 64, 64);
@@ -194,15 +165,6 @@ public class MapGameState extends BasicGameState {
 		this.animations[5] = loadAnimation(spriteSheet, 1, 9, 1);
 		this.animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
 		this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
-
-		this.animations2[0] = loadAnimation(spriteSheet2, 0, 1, 0);
-		this.animations2[1] = loadAnimation(spriteSheet2, 0, 1, 1);
-		this.animations2[2] = loadAnimation(spriteSheet2, 0, 1, 2);
-		this.animations2[3] = loadAnimation(spriteSheet2, 0, 1, 3);
-		this.animations2[4] = loadAnimation(spriteSheet2, 1, 9, 0);
-		this.animations2[5] = loadAnimation(spriteSheet2, 1, 9, 1);
-		this.animations2[6] = loadAnimation(spriteSheet2, 1, 9, 2);
-		this.animations2[7] = loadAnimation(spriteSheet2, 1, 9, 3);
 
 		this.animations3[0] = loadAnimation(spriteSheet3, 0, 1, 0);
 		this.animations3[1] = loadAnimation(spriteSheet3, 0, 1, 1);
@@ -249,6 +211,7 @@ public class MapGameState extends BasicGameState {
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+
 		Image peinture_rouge = new Image("maps/peinture_rouge.png");
 		Image peinture_bleu = new Image("maps/peinture_bleu.png");
 		Image hud_bleu = new Image("maps/hud_bleu.png");
@@ -265,36 +228,12 @@ public class MapGameState extends BasicGameState {
 		Image menuimg = new Image("maps/menuaide.png");
 
 		if (this.jeufini == true) {
-
-			if (this.j1.getNombre_Case_Coloriees() > this.j2.getNb_cases_coloriees()) {
-				MainScreenGameState.joueur_1_gagne = true;
-				game.enterState(MainScreenGameState.ID);
-			} else if (this.j1.getNombre_Case_Coloriees() < this.j2.getNb_cases_coloriees()) {
-				MainScreenGameState.joueur_2_gagne = true;
-				game.enterState(MainScreenGameState.ID);
-			} else {
-				MainScreenGameState.egalite = true;
-				game.enterState(MainScreenGameState.ID);
-			}
-
-		} else if (this.j1.getPdv() <= 0) {
-			MainScreenGameState.joueur_2_gagne = true;
-			game.enterState(MainScreenGameState.ID);
-		} else if (this.j2.getPdv() <= 0) {
-			MainScreenGameState.joueur_1_gagne = true;
 			game.enterState(MainScreenGameState.ID);
 
 		} else if (pause == true) {
 			if (menu == true) {
 				menuimg.draw(0, 0, container.getWidth(), container.getHeight());
 
-			} else if (sauve == true) {
-				pauseimg.draw(0, 0, container.getWidth(), container.getHeight());
-				uniFont3.drawString(500, 350, "Vous venez de sauvegarder la partie,", Color.cyan);
-				uniFont3.drawString(100, 400, "Appuyez sur \"C\" pour la charger au prochain lancement du jeu",
-						Color.cyan);
-
-				uniFont3.drawString(450 - 40, 650, "Appuyer sur \"P\" pour relancer la partie", Color.cyan);
 			} else {
 				pauseimg.draw(0, 0, container.getWidth(), container.getHeight());
 				uniFont3.drawString(450 - 40, 450, "Appuyer sur \"P\" pour relancer la partie", Color.cyan);
@@ -312,22 +251,6 @@ public class MapGameState extends BasicGameState {
 						peinture_rouge.drawCentered((15 * 32 + j * 32 + 16), (i * 32 + 16));
 					}
 				}
-			}
-
-			if (bonus_malus == true) {
-				double a = Math.random();
-				if (a < 0.20) {
-					BonusMalus.inversionCouleur(j1, j2);
-				} else if (a < 0.40) {
-					BonusMalus.inversionInventaire(j1, j2);
-				} else if (a < 0.60) {
-					BonusMalus.pvAdd(j1, j2);
-				} else if (a < 0.80){
-					BonusMalus.pvLost(j1, j2);
-				} else {
-					BonusMalus.swapPlayer(j1, j2);
-				}
-				bonus_malus = false;
 			}
 
 			afficher_expr();
@@ -517,152 +440,11 @@ public class MapGameState extends BasicGameState {
 
 			}
 
-			if (this.popup_test_2 == 25) {
-				this.popup_test_2 = 0;
-				if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer() && j2.isNrj()) {
-					Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCase(Contenu.Joueur);
-					Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
-					j2.SetNrj(j2.getNrj() - 75);
-					this.container.pause();
-					int t2 = 0;
-					while (t2 < 1) {
-						JOptionPane r2 = new JOptionPane();
-						r2.setSize(d);
-						String[] bouton2 = { "Créer", "Modifier", "Annuler" };
-						int retour2 = r2.showOptionDialog(null, "Faite votre choix", "Menu des robots",
-								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, this.icb, bouton2,
-								bouton2[0]);
-						if (retour2 == 1 && j2.robots().size() > 0) {
-							String[] robot = j2.arrayRobottoString();
-							JComboBox robots = new JComboBox(robot);
-							String inputbm = JOptionPane.showInputDialog(null, robots, "Saisissez votre expression");
-							if (inputbm != null) {
-								Node n = new Node(null);
-								boolean annuler = true;
-								while (annuler
-										&& (!Parser.ExpressionCorrecte(inputbm) || !Parser.InventaireOk(inputbm, j2))) {
-									if (inputbm != null) {
-										inputbm = JOptionPane.showInputDialog(null, robots,
-												"Saisissez votre expression");
-									}
-									if (inputbm == null) {
-										int z = JOptionPane.showOptionDialog(null,
-												"Voulez-vous continuer la création/modification", null,
-												JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null,
-												null);
-										if (z == 1 || z == -1) {
-											t2 = 1;
-											annuler = false;
-										} else {
-											inputbm = "ddg";
-										}
-									}
-								}
-								if (annuler) {
-									String k = (String) robots.getSelectedItem();
-									System.out.println(k);
-									n = Parser.ExpressionCorrecte1(inputbm);
-									n = new Node(Operateur.Star, null, n);
-									int i = k.charAt(6) - '0';
-									// System.out.println(i);
-									j2.robots().get(i - 1).modificationRobot(n);
-
-									automaterobot.set(i - 1, inputbm);
-								}
-							}
-							if (inputbm == null && t2 != 1) {
-								int k2 = JOptionPane.showOptionDialog(null,
-										"Voulez-vous continuer la création/modification", null,
-										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-								if (k2 == 1 || k2 == -1) {
-									t2 = 1;
-								} else {
-									t2--;
-								}
-							}
-						}
-						if (retour2 == 0 && j2.robots().size() < 4) {
-							JOptionPane rbc = new JOptionPane();
-
-							ArrayList<String> tab4 = j2.inventaire_toString();
-							String inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
-							if (inputbc != null) {
-								Node n = new Node(null);
-								boolean annuler = true;
-								while (annuler
-										&& (!Parser.ExpressionCorrecte(inputbc) || !Parser.InventaireOk(inputbc, j2))) {
-									if (inputbc != null) {
-										inputbc = rbc.showInputDialog(tab4, "Saisissez votre expression");
-									}
-									if (inputbc == null) {
-										int z = JOptionPane.showOptionDialog(null,
-												"Voulez-vous continuer la création/modification", null,
-												JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null,
-												null);
-										if (z == 1 || z == -1) {
-											t2 = 1;
-											annuler = false;
-										} else {
-											inputbc = "ddg";
-										}
-									}
-								}
-								if (annuler) {
-									n = Parser.ExpressionCorrecte1(inputbc);
-									n = new Node(Operateur.Star, null, n);
-									Coordonnees c = Terrain.spawnBlue();
-									Robot rob = new Robot(c.getLigne(), c.getCol(), j2.getCouleur(), n);
-
-									rob.setD(Direction.Nord);
-									rob.setJoueur(j2);
-									allrobots.add(rob);
-									canmoverobots.add(false);
-									cmptr_robots.add(1);
-									secsrobots.add(0);
-									automaterobot.add(inputbc);
-								}
-							}
-							tab4.clear();
-							if (inputbc == null && t2 != 1) {
-								int k2 = JOptionPane.showOptionDialog(null,
-										"Voulez-vous continuer la création/modification", null,
-										JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-								if (k2 == 1 || k2 == -1) {
-									t2 = 1;
-								} else {
-									t2--;
-								}
-							}
-						} else if (retour2 == 0 && j1.robots().size() == 4) {
-							t2--;
-						} else if (retour2 == 1 && j1.robots().size() == 0) {
-							t2--;
-						}
-						if (retour2 == 2 || retour2 == -1) {
-							t2 = 1;
-						}
-						t2++;
-
-					}
-				}
-			} else if (Terrain.terrain[this.j2.getLine()][this.j2.getCol()].isCreer() && !j2.isNrj()) {
-				Terrain.terrain[this.j2.getLine()][this.j2.getCol()].setCouleur(Couleur.Neutre);
-				if (bool2) {
-					bool2 = false;
-					this.j2.setNb_cases_coloriees(this.j2.getNb_cases_coloriees() - 1);
-				}
-
-			} else {
-				this.popup_test_2++;
-
-			}
-
 			// System.out.println("( "+ x + " , " + y + " ) ");
 			// g.drawString(minute + " m " + seconde / 1000 + " s", 945,
 			// 470);
-			
-			afficher_bonus(g);
-			
+
+
 			g.setColor(new Color(255, 255, 255));
 			uniFont2.drawString(290, 10, (int) (PourcentBleu * 100) + " % ", Color.blue);
 			g.drawString("" + j2.getPdv(), 190, 120);
@@ -692,10 +474,12 @@ public class MapGameState extends BasicGameState {
 				uniFont.drawString(921, 440, minute + ":" + seconde / 1000, Color.darkGray);
 
 		}
+
 	}
 
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
+
 		if (Terrain.Index > 0)
 			bool3 = Terrain.ReduceTimer();
 		if (bool3) {
@@ -732,7 +516,6 @@ public class MapGameState extends BasicGameState {
 		}
 		seconde -= delta;
 		this.secs1 += delta;
-		this.secs2 += delta;
 
 		for (int i = 0; i < secsrobots.size(); i++) {
 			secsrobots.set(i, secsrobots.get(i) + delta);
@@ -767,40 +550,6 @@ public class MapGameState extends BasicGameState {
 				canmove = true;
 			}
 		}
-		if (this.moving2) {
-			// switch (this.j1.getD()) {
-			// case Nord:
-			if (canmove2) {
-				// if (!isCollision(15*32+this.j1.getCol()*32+16,
-				// this.j1.getLine()*32+16 - (1024/32))) {
-				// this.j1.setD(Direction.Ouest);
-				// this.y -= (1024/32);
-				this.j2.Avancer(1);
-				Terrain.Initialiser_cases_creer();
-
-				if (this.recolorie_par_dessus == true) {
-					this.j1.setNb_cases_coloriees(this.j1.getNb_cases_coloriees() - 1);
-					this.recolorie_par_dessus = false;
-				}
-
-				// System.out.println("passe ici");
-				// Terrain.afficher();
-
-				// this.container.getGraphics().drawImage(grass_b, x, y);
-				// arg0.getGraphics().drawImage(grass_b, x, y);
-				// grass_b.draw(x, y);
-
-				// }
-
-			}
-			// System.out.println("pos : " + x + " - " + y);
-			if (this.secs2 < 500) {
-				canmove2 = false;
-			} else {
-				this.secs2 = 0;
-				canmove2 = true;
-			}
-		}
 
 		for (int i = 0; i < allrobots.size(); i++) {
 			Robot r = allrobots.get(i);
@@ -812,7 +561,6 @@ public class MapGameState extends BasicGameState {
 
 			if (secsrobots.get(i) > 5000) {
 				r.next_etat();
-				r.execute();
 				secsrobots.set(i, 0);
 				cmptr_robots.set(i, 1);
 			} else if (secsrobots.get(i) > 500 * cmptr_robots.get(i)) {
@@ -829,157 +577,8 @@ public class MapGameState extends BasicGameState {
 	}
 
 	@Override
-	public void keyReleased(int key, char c) {
-		if (Input.KEY_ESCAPE == key) {
-			container.exit();
-		}
-		// System.out.println(key + "- " + c);
-		switch (key) {
-		case Input.KEY_UP:
-
-			this.moving = false;
-			break;
-		case Input.KEY_LEFT:
-			this.moving = false;
-
-			break;
-		case Input.KEY_DOWN:
-			this.moving = false;
-
-			break;
-		case Input.KEY_RIGHT:
-			this.moving = false;
-
-			break;
-		case Input.KEY_Z:
-			this.moving2 = false;
-
-			break;
-		case Input.KEY_Q:
-			this.moving2 = false;
-
-			break;
-		case Input.KEY_S:
-			this.moving2 = false;
-
-			break;
-		case Input.KEY_D:
-			this.moving2 = false;
-			break;
-
-		}
-	}
-
-	@Override
-	public void keyPressed(int key, char c) {
-		switch (key) {
-		// case Input.KEY_UP: this.direction = 0; this.moving = true; break;
-		// case Input.KEY_LEFT: this.direction = 1; this.moving = true; break;
-		// case Input.KEY_DOWN: this.direction = 2; this.moving = true; break;
-		// case Input.KEY_RIGHT: this.direction = 3; this.moving = true; break;
-
-		case Input.KEY_UP:
-			if (pause == false) {
-				j1.setD(Direction.Nord);
-				this.direction = 0;
-				this.moving = true;
-			}
-			break;
-		case Input.KEY_LEFT:
-			if (pause == false) {
-				j1.setD(Direction.Ouest);
-				this.direction = 1;
-				this.moving = true;
-			}
-			break;
-		case Input.KEY_DOWN:
-			if (pause == false) {
-				j1.setD(Direction.Sud);
-				this.direction = 2;
-				this.moving = true;
-			}
-			break;
-
-		case Input.KEY_RIGHT:
-			if (pause == false) {
-				j1.setD(Direction.Est);
-				this.direction = 3;
-				this.moving = true;
-			}
-			break;
-
-		case Input.KEY_P:
-			if (pause == false) {
-				this.container.pause();
-				this.pause = true;
-
-			} else {
-				this.pause = false;
-				this.sauve = false;
-			}
-
-			// JOptionPane pause = new JOptionPane();
-			// String[] boutonP = { "Reprendre" };
-			// pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en
-			// pause", JOptionPane.DEFAULT_OPTION,
-			// JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
-			break;
-
-		case Input.KEY_H:
-			if (pause == false) {
-				this.container.pause();
-				this.pause = true;
-				this.menu = true;
-
-			} else {
-				this.pause = false;
-				this.menu = false;
-			}
-
-			// JOptionPane pause = new JOptionPane();
-			// String[] boutonP = { "Reprendre" };
-			// pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en
-			// pause", JOptionPane.DEFAULT_OPTION,
-			// JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
-			break;
-
-		case Input.KEY_Z:
-			// this.container.resume();
-			if (pause == false) {
-				this.j2.setD(Direction.Nord);
-				this.direction2 = 0;
-				this.moving2 = true;
-			}
-			break;
-		case Input.KEY_Q:
-			if (pause == false) {
-				this.j2.setD(Direction.Ouest);
-				this.direction2 = 1;
-				this.moving2 = true;
-			}
-			break;
-		case Input.KEY_S:
-			if (pause == false) {
-				this.j2.setD(Direction.Sud);
-				this.direction2 = 2;
-				this.moving2 = true;
-			}
-			break;
-		case Input.KEY_D:
-			if (pause == false) {
-				this.j2.setD(Direction.Est);
-				this.direction2 = 3;
-				this.moving2 = true;
-			}
-			break;
-
-		case Input.KEY_N:
-			this.pause = true;
-			this.sauve = true;
-			Sauvegarde.Writer(minute, seconde);
-			break;
-		}
-
+	public int getID() {
+		return 3;
 	}
 
 	public void afficher_expr() throws SlickException {
@@ -1159,42 +758,12 @@ public class MapGameState extends BasicGameState {
 						if (ent.getCouleur() == Couleur.Rouge) {
 							g.drawAnimation(animations[ent.getD().entier() + (moving ? 4 : 0)],
 									(15 * 32 + ent.getCol() * 32 + 16) - 32, (ent.getLine() * 32 + 16) - 60);
-						} else {
-							g.drawAnimation(animations2[ent.getD().entier() + (moving2 ? 4 : 0)],
-									(15 * 32 + ent.getCol() * 32 + 16) - 32, (ent.getLine() * 32 + 16) - 60);
 						}
 					}
 				}
 
 			}
 		}
-	}
-
-	@Override
-	public int getID() {
-		return ID;
-	}
-
-	public void update_arrays() {
-		for (int i = 0; i < allrobots.size(); i++) {
-			if (allrobots.get(i).getCouleur() == Couleur.Rouge && (!j1.robots().contains(allrobots.get(i)))) {
-				allrobots.remove(i);
-				automaterobot.remove(i);
-				canmoverobots.remove(i);
-				cmptr_robots.remove(i);
-				secsrobots.remove(i);
-			}
-
-			else if (allrobots.get(i).getCouleur() == Couleur.Bleu && (!j2.robots().contains(allrobots.get(i)))) {
-				allrobots.remove(i);
-				automaterobot.remove(i);
-				canmoverobots.remove(i);
-				cmptr_robots.remove(i);
-				secsrobots.remove(i);
-			}
-
-		}
-
 	}
 
 	public void afficher_robots(Graphics g) throws SlickException {
@@ -1218,16 +787,126 @@ public class MapGameState extends BasicGameState {
 		}
 	}
 
-	public void afficher_bonus(Graphics g) {
-		if (Terrain.terrain[Terrain.BonusMalus.getLigne()][Terrain.BonusMalus.getCol()]
-				.getCont() == Contenu.Bonus_Malus) {
-			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (Terrain.BonusMalus.getCol() * 32 + 15 * 32 + 16) - 32,
-					(Terrain.BonusMalus.getLigne() * 32 + 16) - 60);
+	
+
+	public void update_arrays() {
+		for (int i = 0; i < allrobots.size(); i++) {
+			if (allrobots.get(i).getCouleur() == Couleur.Rouge && (!j1.robots().contains(allrobots.get(i)))) {
+				allrobots.remove(i);
+				automaterobot.remove(i);
+				canmoverobots.remove(i);
+				cmptr_robots.remove(i);
+				secsrobots.remove(i);
+			}
+
+			else if (allrobots.get(i).getCouleur() == Couleur.Bleu && (!j2.robots().contains(allrobots.get(i)))) {
+				allrobots.remove(i);
+				automaterobot.remove(i);
+				canmoverobots.remove(i);
+				cmptr_robots.remove(i);
+				secsrobots.remove(i);
+			}
+
 		}
-		if (Terrain.terrain[Terrain.BonusMalu.getLigne()][Terrain.BonusMalu.getCol()]
-				.getCont() == Contenu.Bonus_Malus) {
-			g.drawAnimation(animations5[0 + (true ? 4 : 0)], (Terrain.BonusMalu.getCol() * 32 + 15 * 32 + 16) - 32,
-					(Terrain.BonusMalu.getLigne() * 32 + 16) - 60);
+
+	}
+
+	public void keyPressed(int key, char c) {
+		switch (key) {
+		// case Input.KEY_UP: this.direction = 0; this.moving = true; break;
+		// case Input.KEY_LEFT: this.direction = 1; this.moving = true; break;
+		// case Input.KEY_DOWN: this.direction = 2; this.moving = true; break;
+		// case Input.KEY_RIGHT: this.direction = 3; this.moving = true; break;
+
+		case Input.KEY_UP:
+			if (pause == false) {
+				j1.setD(Direction.Nord);
+				this.direction = 0;
+				this.moving = true;
+			}
+			break;
+		case Input.KEY_LEFT:
+			if (pause == false) {
+				j1.setD(Direction.Ouest);
+				this.direction = 1;
+				this.moving = true;
+			}
+			break;
+		case Input.KEY_DOWN:
+			if (pause == false) {
+				j1.setD(Direction.Sud);
+				this.direction = 2;
+				this.moving = true;
+			}
+			break;
+
+		case Input.KEY_RIGHT:
+			if (pause == false) {
+				j1.setD(Direction.Est);
+				this.direction = 3;
+				this.moving = true;
+			}
+			break;
+
+		case Input.KEY_P:
+			if (pause == false) {
+				this.container.pause();
+				this.pause = true;
+
+			} else {
+				this.pause = false;
+			}
+
+			// JOptionPane pause = new JOptionPane();
+			// String[] boutonP = { "Reprendre" };
+			// pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en
+			// pause", JOptionPane.DEFAULT_OPTION,
+			// JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
+			break;
+
+		case Input.KEY_H:
+			if (pause == false) {
+				this.container.pause();
+				this.pause = true;
+				this.menu = true;
+
+			} else {
+				this.pause = false;
+				this.menu = false;
+			}
+
+			// JOptionPane pause = new JOptionPane();
+			// String[] boutonP = { "Reprendre" };
+			// pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en
+			// pause", JOptionPane.DEFAULT_OPTION,
+			// JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
+			break;
+
+		}
+	}
+
+	public void keyReleased(int key, char c) {
+		if (Input.KEY_ESCAPE == key) {
+			container.exit();
+		}
+		// System.out.println(key + "- " + c);
+		switch (key) {
+		case Input.KEY_UP:
+			this.moving = false;
+			break;
+		case Input.KEY_LEFT:
+			this.moving = false;
+
+			break;
+		case Input.KEY_DOWN:
+			this.moving = false;
+
+			break;
+		case Input.KEY_RIGHT:
+			this.moving = false;
+
+			break;
+
 		}
 	}
 
