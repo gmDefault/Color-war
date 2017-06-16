@@ -252,6 +252,7 @@ public class Sauvegarde {
 				MapGameState.j2.setD(d);
 				MapGameState.j2.setLine(line);
 				MapGameState.j2.setCol(col);
+				MapGameState.j2.setNb_cases_coloriees(nbcasecol);
 				Terrain.terrain[lineact][colact].setEntite(null);
 				Terrain.terrain[line][col].setCase(Contenu.Joueur);
 				Terrain.terrain[line][col].setEntite(MapGameState.j2);
