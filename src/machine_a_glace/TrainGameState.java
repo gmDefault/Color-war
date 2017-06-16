@@ -101,6 +101,8 @@ public class TrainGameState extends BasicGameState {
 
 		this.map = new TiledMap("maps/map/map1.tmx");
 		container.setShowFPS(false);
+		
+
 
 //		Terrain.terrain[j2.getCol()][j2.getLine()].setCase(Contenu.Vide);
 //		Terrain.terrain[j2.getCol()][j2.getLine()].setEntite(null);
@@ -242,6 +244,7 @@ public class TrainGameState extends BasicGameState {
 		} else {
 
 			this.map.render(0, 0);
+			g.drawString("MODE TRAINING, appuyez sur \"S\" pour revenir au menu principal", 0, 0);
 
 			for (int i = 0; i < 30; i++) {
 				for (int j = 0; j < 30; j++) {
@@ -880,6 +883,10 @@ public class TrainGameState extends BasicGameState {
 			// pause.showOptionDialog(null, "Reprendre le jeu ?", "Jeu en
 			// pause", JOptionPane.DEFAULT_OPTION,
 			// JOptionPane.QUESTION_MESSAGE, null, boutonP, null);
+			break;
+		case Input.KEY_S:
+			this.jeufini = true;
+			MainScreenGameState.fintraining = true;
 			break;
 
 		}
