@@ -664,7 +664,14 @@ public class MapGameState extends BasicGameState {
 			afficher_bonus(g);
 			
 			g.setColor(new Color(255, 255, 255));
-			uniFont2.drawString(290, 10, (int) (PourcentBleu * 100) + " % ", Color.blue);
+			int PB, PR;
+			PB = (int) (PourcentBleu * 100);
+			PR = (int) (PourcentRouge * 100);
+			if(PB + PR == 99){
+				if(PB > PR) PR++;
+				else PB++;
+			}
+			uniFont2.drawString(290, 10, PB + " % ", Color.blue);
 			g.drawString("" + j2.getPdv(), 190, 120);
 			g.drawString("" + j1.getPdv(), 1700, 120);
 			g.drawString(" Inventaire ", 187, 170);
@@ -673,7 +680,7 @@ public class MapGameState extends BasicGameState {
 			g.drawString(" Etat des robots ", 140, 650);
 			g.drawString(" Etat des robots  ", 1617, 650);
 
-			uniFont2.drawString(1472, 10, (int) (PourcentRouge * 100) + " % ", Color.red);
+			uniFont2.drawString(1472, 10, PR + " % ", Color.red);
 			if (minute < 10) {
 				if (seconde / 1000 < 30) {
 					if (minute == 0 && seconde / 1000 >= 10) {
