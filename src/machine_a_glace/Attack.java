@@ -29,8 +29,11 @@ public class Attack extends Comportement {
 				}
 				if (case_r.getEntite().getPdv() - degat > 0)
 					case_r.getEntite().Degat(degat);
-				else
+				else if (case_r.isRobot())
 					Kill(case_r.getEntite().getLine(), case_r.getEntite().getCol(), (Robot) case_r.getEntite());
+				else if (case_r.isJoueur()){
+					case_r.getEntite().Degat(degat);
+				}
 				return true;
 			}
 			// Attaque l'ennemi à sa droite
@@ -41,8 +44,11 @@ public class Attack extends Comportement {
 				}
 				if (case_r.getEntite().getPdv() - degat > 0)
 					case_r.getEntite().Degat(degat);
-				else
+				else if (case_r.isRobot())
 					Kill(case_r.getEntite().getLine(), case_r.getEntite().getCol(), (Robot) case_r.getEntite());
+				else if (case_r.isJoueur()){
+					case_r.getEntite().Degat(degat);
+				}
 				return true;
 			}
 			// Attaque l'ennemi à sa gauche
@@ -51,10 +57,13 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					degat = 10;
 				}
-				if (case_r.getEntite().getPdv()- degat > 0)
+				if (case_r.getEntite().getPdv() - degat > 0)
 					case_r.getEntite().Degat(degat);
-				else 
-					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
+				else if (case_r.isRobot())
+					Kill(case_r.getEntite().getLine(), case_r.getEntite().getCol(), (Robot) case_r.getEntite());
+				else if (case_r.isJoueur()){
+					case_r.getEntite().Degat(degat);
+				}
 				return true;
 			}
 			return false;
@@ -64,10 +73,13 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					degat = 10;
 				}
-				if (case_r.getEntite().getPdv()- degat > 0)
+				if (case_r.getEntite().getPdv() - degat > 0)
 					case_r.getEntite().Degat(degat);
-				else 
-					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
+				else if (case_r.isRobot())
+					Kill(case_r.getEntite().getLine(), case_r.getEntite().getCol(), (Robot) case_r.getEntite());
+				else if (case_r.isJoueur()){
+					case_r.getEntite().Degat(degat);
+				}
 				return true;
 			}
 			case_r = Terrain.terrain[line][col - 1];
@@ -75,10 +87,13 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					degat = 10;
 				}
-				if (case_r.getEntite().getPdv()- degat > 0)
+				if (case_r.getEntite().getPdv() - degat > 0)
 					case_r.getEntite().Degat(degat);
-				else 
-					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
+				else if (case_r.isRobot())
+					Kill(case_r.getEntite().getLine(), case_r.getEntite().getCol(), (Robot) case_r.getEntite());
+				else if (case_r.isJoueur()){
+					case_r.getEntite().Degat(degat);
+				}
 				return true;
 			}
 			case_r = Terrain.terrain[line][col + 1];
@@ -86,10 +101,13 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					degat = 10;
 				}
-				if (case_r.getEntite().getPdv()- degat > 0)
+				if (case_r.getEntite().getPdv() - degat > 0)
 					case_r.getEntite().Degat(degat);
-				else 
-					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
+				else if (case_r.isRobot())
+					Kill(case_r.getEntite().getLine(), case_r.getEntite().getCol(), (Robot) case_r.getEntite());
+				else if (case_r.isJoueur()){
+					case_r.getEntite().Degat(degat);
+				}
 				return true;
 			}
 			return false;
@@ -99,10 +117,13 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					degat = 10;
 				}
-				if (case_r.getEntite().getPdv()- degat > 0)
+				if (case_r.getEntite().getPdv() - degat > 0)
 					case_r.getEntite().Degat(degat);
-				else 
-					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
+				else if (case_r.isRobot())
+					Kill(case_r.getEntite().getLine(), case_r.getEntite().getCol(), (Robot) case_r.getEntite());
+				else if (case_r.isJoueur()){
+					case_r.getEntite().Degat(degat);
+				}
 				return true;
 			}
 			case_r = Terrain.terrain[line][col - 1];
@@ -110,10 +131,13 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					degat = 10;
 				}
-				if (case_r.getEntite().getPdv()- degat > 0)
+				if (case_r.getEntite().getPdv() - degat > 0)
 					case_r.getEntite().Degat(degat);
-				else 
-					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
+				else if (case_r.isRobot())
+					Kill(case_r.getEntite().getLine(), case_r.getEntite().getCol(), (Robot) case_r.getEntite());
+				else if (case_r.isJoueur()){
+					case_r.getEntite().Degat(degat);
+				}
 				return true;
 			}
 			case_r = Terrain.terrain[line][col + 1];
@@ -121,10 +145,13 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					degat = 10;
 				}
-				if (case_r.getEntite().getPdv()- degat > 0)
+				if (case_r.getEntite().getPdv() - degat > 0)
 					case_r.getEntite().Degat(degat);
-				else 
-					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
+				else if (case_r.isRobot())
+					Kill(case_r.getEntite().getLine(), case_r.getEntite().getCol(), (Robot) case_r.getEntite());
+				else if (case_r.isJoueur()){
+					case_r.getEntite().Degat(degat);
+				}
 				return true;
 			}
 			return false;
@@ -135,10 +162,13 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					degat = 10;
 				}
-				if (case_r.getEntite().getPdv()- degat > 0)
+				if (case_r.getEntite().getPdv() - degat > 0)
 					case_r.getEntite().Degat(degat);
-				else 
-					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
+				else if (case_r.isRobot())
+					Kill(case_r.getEntite().getLine(), case_r.getEntite().getCol(), (Robot) case_r.getEntite());
+				else if (case_r.isJoueur()){
+					case_r.getEntite().Degat(degat);
+				}
 				return true;
 			}
 			// Attaque l'ennemi à sa gauche
@@ -147,10 +177,13 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					degat = 10;
 				}
-				if (case_r.getEntite().getPdv()- degat > 0)
+				if (case_r.getEntite().getPdv() - degat > 0)
 					case_r.getEntite().Degat(degat);
-				else 
-					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
+				else if (case_r.isRobot())
+					Kill(case_r.getEntite().getLine(), case_r.getEntite().getCol(), (Robot) case_r.getEntite());
+				else if (case_r.isJoueur()){
+					case_r.getEntite().Degat(degat);
+				}
 				return true;
 			}
 			// Attaque l'ennemi à sa droite
@@ -159,10 +192,13 @@ public class Attack extends Comportement {
 				if (case_r.getEntite().isRobot() && case_r.getEntite().robot().isProtected()) {
 					degat = 10;
 				}
-				if (case_r.getEntite().getPdv()- degat > 0)
+				if (case_r.getEntite().getPdv() - degat > 0)
 					case_r.getEntite().Degat(degat);
-				else 
-					Kill(case_r.getEntite().getLine(),case_r.getEntite().getCol(),(Robot)case_r.getEntite());
+				else if (case_r.isRobot())
+					Kill(case_r.getEntite().getLine(), case_r.getEntite().getCol(), (Robot) case_r.getEntite());
+				else if (case_r.isJoueur()){
+					case_r.getEntite().Degat(degat);
+				}
 				return true;
 			}
 			return false;

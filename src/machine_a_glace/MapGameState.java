@@ -316,14 +316,16 @@ public class MapGameState extends BasicGameState {
 
 			if (bonus_malus == true) {
 				double a = Math.random();
-				if (a < 0.25) {
+				if (a < 0.20) {
 					BonusMalus.inversionCouleur(j1, j2);
-				} else if (a < 0.5) {
+				} else if (a < 0.40) {
 					BonusMalus.inversionInventaire(j1, j2);
-				} else if (a < 0.75) {
+				} else if (a < 0.60) {
 					BonusMalus.pvAdd(j1, j2);
-				} else {
+				} else if (a < 0.80){
 					BonusMalus.pvLost(j1, j2);
+				} else {
+					BonusMalus.swapPlayer(j1, j2);
 				}
 				bonus_malus = false;
 			}
