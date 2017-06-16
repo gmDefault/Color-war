@@ -54,6 +54,14 @@ public class BonusMalus {
 			j2.setPdv(j2.getPdv()-15);
 		}
 	}
-	
-//	public static void 
+	public static void swapPlayer(Joueur j1, Joueur j2){
+		int l = j1.getLine();
+		int c = j1.getCol();
+		j1.setCol(j2.getCol());
+		j1.setLine(j2.getLine());
+		Terrain.terrain[j2.getLine()][j2.getCol()].setEntite(j1);
+		j2.setCol(c);
+		j2.setLine(l);
+		Terrain.terrain[l][c].setEntite(j2);
+	}
 }
