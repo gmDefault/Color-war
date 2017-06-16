@@ -199,11 +199,11 @@ public class Terrain {
 	}
 
 	public static void Initialiser_bonus(){
-		int nombreAleatoire = 45000 + (int)(Math.random() * ((115000 - 45000) + 1));
+//		int nombreAleatoire = 45000 + (int)(Math.random() * ((115000 - 45000) + 1));
 
-		Terrain.PutTimer(BonusMalus.getLigne(), BonusMalus.getCol(),nombreAleatoire);
-		nombreAleatoire = 45000 + (int)(Math.random() * ((115000 - 45000) + 1));
-		Terrain.PutTimer(BonusMalu.getLigne(), BonusMalu.getCol(),nombreAleatoire);
+		Terrain.PutTimer(BonusMalus.getLigne(), BonusMalus.getCol(),30000);
+//		nombreAleatoire = 45000 + (int)(Math.random() * ((115000 - 45000) + 1));
+		Terrain.PutTimer(BonusMalu.getLigne(), BonusMalu.getCol(),30000);
 	
 	}
 	public static void Initialiser_cases_creer() {

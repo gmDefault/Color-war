@@ -144,8 +144,8 @@ public class Joueur extends Entite {
 			if (Terrain.terrain[getLine()][getCol()].getCont() == Contenu.Bonus_Malus) {
 				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
 				MapGameState.bonus_malus = true;
-				double rand = 45000 + (int)(Math.random() * (115000 - 45000 -1));
-				Terrain.PutTimer(getLine(), getCol(),(int)rand);
+				//double rand = 45000 + (int)(Math.random() * (115000 - 45000 -1));
+				Terrain.PutTimer(getLine(), getCol(),30000);
 				
 				
 			}

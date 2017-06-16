@@ -205,6 +205,14 @@ public class Robot extends Entite {
 				}
 
 			}
+			if (Terrain.terrain[getLine()][getCol()].getCont() == Contenu.Bonus_Malus) {
+				Terrain.terrain[getLine()][getCol()].setCase(Contenu.Vide);
+				MapGameState.bonus_malus = true;
+				//double rand = 45000 + (int)(Math.random() * (115000 - 45000 -1));
+				Terrain.PutTimer(getLine(), getCol(),30000);
+				
+				
+			}
 			if (Terrain.casexy(getLine(), getCol()).isExpr() && maitre.inventaire().size() < 30) {
 				maitre.add_inventaire(Terrain.casexy(getLine(), getCol()).expr());
 				Terrain.casexy(getLine(), getCol()).setExpr(null);
