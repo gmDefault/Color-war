@@ -23,7 +23,13 @@ public class ColorWar extends StateBasedGame {
 		MapGameState.j1 = new Joueur(1, 15, Couleur.Rouge, 100, 100);
 		MapGameState.j1.setD(Direction.Sud);
 		MapGameState.j2 = new Joueur(28, 15, Couleur.Bleu, 100, 100);
-		new AppGameContainer(new ColorWar(), 1920, 960, false).start();
+		
+		TrainGameState.j1 = MapGameState.j1;
+		TrainGameState.j2 = MapGameState.j2;
+		
+		new AppGameContainer(new ColorWar(), 
+				1920, 960, false).
+		start();
 	}
 
 	public ColorWar() {
@@ -41,6 +47,7 @@ public class ColorWar extends StateBasedGame {
 
 		addState(new MainScreenGameState());
 		addState(new MapGameState());
+		addState(new TrainGameState());
 	}
 
 }
